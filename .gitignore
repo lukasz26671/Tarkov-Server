@@ -1,0 +1,49 @@
+# building for kio since node v15 doesn't work :)
+node_runtime/
+build_with_runtime.bat
+
+## JustEmuTarkov - Server
+package-lock.json
+ResourceHacker.ini
+output
+logs
+events
+[Pp]roject/[Uu]ser/[Cc]ache/
+[Pp]roject/[Uu]ser/[Pp]rofiles/
+
+## visual studio
+.vs
+.idea
+slnx.sqlite
+slnx-journal.sqlite
+
+## nodejs
+node_modules
+node.exe
+## if you dont want to push cache folders
+user/cache
+Server JET*
+_Build
+# ignore cache backup folder
+user/cacheBak 
+coreMinified
+DB_removable
+Server.7z
+Release
+_mods
+_core
+coreMinify
+!user/mods/
+user/mods/*.7z
+user/mods/*.zip
+user/mods/*.rar
+user/cache
+db-propNextStructure/
+## windows
+desktop.ini
+JET-Backend-Server.7z
+src/____responses
+Server-Icon.exe
+Server-Uncompressed.exe
+Server.exe
+user/mods/*

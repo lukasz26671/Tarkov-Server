@@ -1,0 +1,23 @@
+{
+  "name": "JustEmuTarkov",
+  "version": "1.2.0",
+  "main": "core/main.js",
+  "author": "TheMaoci",
+  "license": "MIT",
+  "scripts": {
+    "start": "node core/main.js"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "ps-list": "7.2.0",
+    "selfsigned": "1.10.7",
+    "uuid": "^8.3.2",
+    "write-json-file": "^4.3.0"
+  },
+  "devDependencies": {
+    "child_process": "1.0.2",
+    "nexe": "3.3.3",
+    "node-minify": "3.6.0",
+    "upx": "1.0.6"
+  }
+}
