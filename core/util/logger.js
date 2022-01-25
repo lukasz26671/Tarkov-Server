@@ -49,38 +49,43 @@ class Logger {
     let colors = ["", ""];
 
     if (colorFront !== "") {
-      colors[0] = colorFront;
+        colors[0] = colorFront;
     }
 
     if (colorBack !== "") {
-      colors[1] = colorBack;
+        colors[1] = colorBack;
     }
 
     // properly set colorString indicator
     for (let i = 0; i < colors.length; i++) {
-      if (colors[i] !== "") {
+        if (colors[i] !== "") {
         setColors += colorData[i][colors[i]];
-      }
+        }
     }
-    let deltaTime = serverConfig.debugTimer ? "[" + ((new Date().getTime() - global.startTimestamp) / 1000).toFixed(2) + "s] " : " ";
+    
+    let date = new Date().toISOString().
+    replace(/T/, ' ').
+    replace(/\..+/, '');
+
+    let deltaTime = serverConfig.debugTimer ? "[" + date + "] " : " ";
     // print data
     if (colors[0] !== "" || colors[1] !== "") {
-      if (type != "" && type != "LogData") console.log(setColors + type + "\x1b[0m" + deltaTime + data);
-      else console.log(setColors + data + "\x1b[0m");
+        if (type != "" && type != "LogData") console.log(setColors + type + "\x1b[0m" + deltaTime + data);
+        else console.log(setColors + data + "\x1b[0m");
     } else {
-      if (type != "" && type != "LogData") console.log(type + deltaTime + data);
-      else console.log(data);
+        if (type != "" && type != "LogData") console.log(type + deltaTime + data);
+        else console.log(data);
     }
 
     // write the logged data to the file
     if (type == "LogData") {
-      this.fileStream.write(internal.util.format(data));
-      this.fileStream.write(internal.util.format("\n")); //just new line
+        this.fileStream.write(internal.util.format(data));
+        this.fileStream.write(internal.util.format("\n")); //just new line
     } else {
-      this.fileStream.write(internal.util.format(deltaTime + type + "-" + data + "\n"));
+        this.fileStream.write(internal.util.format(deltaTime + type + "-" + data + "\n"));
     }
   }
-
+  
   logError(text) {
     this.log("[ERROR]", text, "white", "red");
   }

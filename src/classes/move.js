@@ -237,58 +237,52 @@ function discardItem(pmcData, body, sessionID) {
   return removeItem(pmcData, body.item, sessionID);
 }
 
-/* Split Item
- * spliting 1 item into 2 separate items ...
- * */
-function splitItem(pmcData, body, sessionID) {
-  let output = item_f.handler.getOutput(sessionID);
-  logger.logInfo(body, true);
+
+/**
+ * Split Item
+ * spliting 1 item-stack into 2 separate items ...
+ *
+ * @param {Object} pmcData
+ * @param {Object} body
+ * @param {string} sessionID
+ * @returns
+ */
+ function splitItem(pmcData, body, sessionID) {
+  const output = item_f.handler.getOutput(sessionID);
   let location = body.container.location;
-  let inventoryItems = getOwnerInventoryItems(body, sessionID);
-  if (!("location" in body.container) && body.container.container === "cartridges") {
+
+  const items = getOwnerInventoryItems(body, sessionID);
+
+  if (
+    !("location" in body.container) &&
+    body.container.container === "cartridges"
+  ) {
     let tmp_counter = 0;
-    let AlreadyLoaded = 0;
-    let MagazineTemplate = "";
-    for (let item_ammo in inventoryItems.to) {
-      if (inventoryItems.to[item_ammo].parentId === body.container.id) {
-        AlreadyLoaded += inventoryItems.to[item_ammo].upd.StackObjectsCount;
+
+    for (const item_ammo in items.to) {
+      if (items.to[item_ammo].parentId === body.container.id) {
         tmp_counter++;
       }
-      if (inventoryItems.to[item_ammo]._id == body.container.id) MagazineTemplate = inventoryItems.to[item_ammo]._tpl;
     }
-    // make sure you wont overclip the magazine
-    if (MagazineTemplate != "")
-      if (typeof global._database.items[MagazineTemplate]._props.Cartridges != "undefined")
-        if (AlreadyLoaded > global._database.items[MagazineTemplate]._props.Cartridges[0]._max_count) return output;
+
     location = tmp_counter; //wrong location for first cartrige
   }
 
-  let items = getOwnerInventoryItems(body, sessionID);
   // The item being merged is possible from three different sources: pmc, scav, or mail.
-  for (let item of items.from) {
+  for (const item of items.from) {
     if (item._id && item._id === body.item) {
       item.upd.StackObjectsCount -= body.count;
 
-      let newItem = utility.generateNewItemId();
+      const newItemId = utility.generateNewItemId();
 
-      if (typeof output.profileChanges[pmcData._id].items.change == "undefined") output.profileChanges[pmcData._id].items.change = [];
-      if(body.container.container != "cartridges")
-        output.profileChanges[pmcData._id].items.change.push(item);
-
-      //output.profileChanges[pmcData._id].items.change.push(item);
-
-      if (typeof output.profileChanges[pmcData._id].items.new == "undefined") output.profileChanges[pmcData._id].items.new = [];
       output.profileChanges[pmcData._id].items.new.push({
-        _id: newItem,
+        _id: newItemId,
         _tpl: item._tpl,
-        parentId: body.container.id,
-        slotId: body.container.container,
-        location: location,
         upd: { StackObjectsCount: body.count },
       });
 
       items.to.push({
-        _id: newItem,
+        _id: newItemId,
         _tpl: item._tpl,
         parentId: body.container.id,
         slotId: body.container.container,
@@ -296,64 +290,63 @@ function splitItem(pmcData, body, sessionID) {
         upd: { StackObjectsCount: body.count },
       });
 
-      item_f.handler.setOutput(output);
+      return output;
     }
   }
-  logger.logData(output.profileChanges[pmcData._id].items, true);
-  return output;
+
+  return "";
 }
 
-/* Merge Item
- * merges 2 items into one, deletes item from body.item and adding number of stacks into body.with
- * */
-function mergeItem(pmcData, body, sessionID) {
-  let output = item_f.handler.getOutput(sessionID);
-  let inventoryItems = getOwnerInventoryItems(body, sessionID);
-  for (let key in inventoryItems.to) {
-    if (inventoryItems.to[key]._id === body.with) {
-      for (let key2 in inventoryItems.from) {
-        if (inventoryItems.from[key2]._id && inventoryItems.from[key2]._id === body.item) {
+/**
+ * Merge Item
+ * merges 2 items into one, deletes item from `body.item` and adding number of stacks into `body.with`
+ *
+ * @param {Object} pmcData      - PMC Part of profile
+ * @param {Object} body         - Request Body
+ * @param {string} sessionID    - Session ID
+ * @returns response
+ */
+ function mergeItem(pmcData, body, sessionID) {
+  const output = item_f.handler.getOutput(sessionID);
+  const items = getOwnerInventoryItems(body, sessionID);
+
+  for (const key in items.to) {
+    if (items.to[key]._id === body.with) {
+      for (const key2 in items.from) {
+        if (items.from[key2]._id && items.from[key2]._id === body.item) {
           let stackItem0 = 1;
           let stackItem1 = 1;
 
-          if (!(inventoryItems.to[key].upd && inventoryItems.to[key].upd.StackObjectsCount)) {
-            inventoryItems.to[key].upd = { StackObjectsCount: 1 };
-          } else if (!(inventoryItems.to[key2].upd && inventoryItems.to[key2].upd.StackObjectsCount)) {
-            inventoryItems.from[key2].upd = { StackObjectsCount: 1 };
+          if (!(items.to[key].upd && items.to[key].upd.StackObjectsCount)) {
+            items.to[key].upd = { StackObjectsCount: 1 };
+          } else if (
+            !(items.from[key2].upd && items.from[key2].upd.StackObjectsCount)
+          ) {
+            items.from[key2].upd = { StackObjectsCount: 1 };
           }
 
-          if ("upd" in inventoryItems.to[key]) {
-            stackItem0 = inventoryItems.to[key].upd.StackObjectsCount;
+          if (items.to[key].upd !== undefined) {
+            stackItem0 = items.to[key].upd.StackObjectsCount;
           }
 
-          if ("upd" in inventoryItems.from[key2]) {
-            stackItem1 = inventoryItems.from[key2].upd.StackObjectsCount;
+          if ("upd" in items.from[key2]) {
+            stackItem1 = items.from[key2].upd.StackObjectsCount;
           }
 
           if (stackItem0 === 1) {
-            Object.assign(inventoryItems.to[key], {
-              upd: { StackObjectsCount: 1 },
-            });
+            Object.assign(items.to[key], { upd: { StackObjectsCount: 1 } });
           }
 
-          inventoryItems.to[key].upd.StackObjectsCount = stackItem0 + stackItem1;
-
-          if (typeof output.profileChanges[pmcData._id].items.change == "undefined") output.profileChanges[pmcData._id].items.change = [];
-          output.profileChanges[pmcData._id].items.change.push(inventoryItems.to[key]);
-
-          if (typeof output.profileChanges[pmcData._id].items.del == "undefined") output.profileChanges[pmcData._id].items.del = [];
+          items.to[key].upd.StackObjectsCount = stackItem0 + stackItem1;
           output.profileChanges[pmcData._id].items.del.push({
-            _id: inventoryItems.from[key2]._id,
+            _id: items.from[key2]._id,
           });
-
-          inventoryItems.from.splice(key2, 1);
-          item_f.handler.setOutput(output);
+          items.from.splice(key2, 1);
           return output;
         }
       }
     }
   }
-
   return "";
 }
 
@@ -411,26 +404,29 @@ function transferItem(pmcData, body, sessionID) {
  * */
 function swapItem(pmcData, body, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
-
   for (let iterItem of pmcData.Inventory.items) {
     if (iterItem._id === body.item) {
       iterItem.parentId = body.to.id; // parentId
       iterItem.slotId = body.to.container; // slotId
       iterItem.location = body.to.location; // location
-      if (!output.profileChanges[pmcData._id].change) output.profileChanges[pmcData._id].change = [];
+      if (!output.profileChanges[pmcData._id].change)
+        output.profileChanges[pmcData._id].change = [];
       output.profileChanges[pmcData._id].change.push(iterItem);
     }
-
     if (iterItem._id === body.item2) {
       iterItem.parentId = body.to2.id;
       iterItem.slotId = body.to2.container;
       delete iterItem.location;
-      output.profileChanges[pmcData._id].change.push(iterItem);
+      // added this condition to avoid crashing due to array change being empty
+      if (output.profileChanges[pmcData._id].change) {
+        output.profileChanges[pmcData._id].change.push(iterItem);
+      }
     }
   }
   item_f.handler.setOutput(output);
   return output;
 }
+
 
 /* Give Item
  * its used for "add" item like gifts etc.

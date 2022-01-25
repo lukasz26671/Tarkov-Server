@@ -336,7 +336,9 @@ module.exports.continuousProductionStart = (pmcData, body, sessionID) => {
 
 module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
   for (let itemToPay of body.items) {
-    let itemFromInventory = pmcData.Inventory.items.find((item) => item._id == itemToPay.id);
+    let itemFromInventory = pmcData.Inventory.items.find(
+      (item) => item._id == itemToPay.id,
+    );
     if (!itemFromInventory) {
       logger.logWarning("Unable to find items to pay: " + itemToPay.id);
       return;
@@ -355,35 +357,71 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
     }
   }
 
-  const databaseHideoutScavcase = _database.hideout.scavcase.find((scavcase) => scavcase._id == body.recipeId);
+  const databaseHideoutScavcase = _database.hideout.scavcase.find(
+    (scavcase) => scavcase._id == body.recipeId,
+  );
 
   if (!databaseHideoutScavcase) {
-    logger.logWarning(`Unable to find hideout scavcase ${body.recipeId} in database`);
+    logger.logWarning(
+      `Unable to find hideout scavcase ${body.recipeId} in database`,
+    );
     return;
   }
 
-  let rarityItemCounter = {};
   let products = [];
 
-  const filterEndProducts = databaseHideoutScavcase.EndProducts.filter((product) => product.min > 0 && product.max > 0);
+  const filterEndProducts = Object.fromEntries(
+    Object.entries(databaseHideoutScavcase["EndProducts"]).filter((arr) => {
+      return arr[1].max > 0 && arr[1].min > 0;
+    }),
+  );
   if (Object.keys(filterEndProducts).length == 0) {
-    logger.logWarning(`Not found any EndProducts meeting criteria of product.max > 0`);
+    logger.logWarning(
+      `Not found any EndProducts meeting criteria of product.max > 0`,
+    );
     return;
   }
   for (let rarity in filterEndProducts) {
-    //rarityItemCounter[rarity] = filterEndProducts[rarity].max;
+    const rollAmountOfRewards = utility.getRandomInt(
+      filterEndProducts[rarity].min,
+      filterEndProducts[rarity].max,
+    );
 
-    // TODO: check if line below WORKS !?!?
+    logger.logInfo(
+      `ScavCase[${rarity}]: ${rollAmountOfRewards} [min:${filterEndProducts[rarity].min},max:${filterEndProducts[rarity].max}]`,
+    );
 
-    const rollAmountOfRewards = utility.getRandomInt(filterEndProducts[rarity].min, filterEndProducts[rarity].max);
-    logger.logInfo(`ScavCase[${rarity}]: ${rollAmountOfRewards} [min:${filterEndProducts[rarity].min},max:${filterEndProducts[rarity].max}]`);
+    let objectList = Object.keys(global._database.items);
+    let objectArray = [];
+    for (let i = 0; i < objectList.length; i++) {
+      objectArray.push(global._database.items[objectList[i]]);
+    }
+
     for (let i = 0; i < rollAmountOfRewards; i++) {
-      const filteredByRarity = global._database.items.filter((item) => item._props.Rarity && item._props.Rarity === rarity);
+      const filteredByRarity = objectArray.filter((item) => {
+        let price = helper_f.getTemplatePrice(item._id);
+
+        let itemRarity;
+        if (price > 32500) {
+          itemRarity = "Superrare";
+        } else if (price > 15000) {
+          itemRarity = "Rare";
+        } else if (price > 2) {
+          itemRarity = "Common";
+        }
+        return itemRarity == rarity;
+      });
+
       if (Object.keys(filteredByRarity).length == 0) {
-        logger.logWarning(`filteredByRarity returned length of 0 which shouldnt be happening!!!`);
+        logger.logWarning(
+          `filteredByRarity returned length of 0 which shouldnt be happening!!!`,
+        );
         continue;
       }
-      const rolledItem = Object.keys(filteredByRarity)[utility.getRandomIntEx(Object.keys(filteredByRarity).length)];
+      const rolledItem =
+        filteredByRarity[
+          utility.getRandomIntEx(Object.keys(filteredByRarity).length)
+        ];
       if (!rolledItem) {
         // fallback
         i--;
@@ -412,8 +450,11 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
 };
 
 module.exports.takeProduction = (pmcData, body, sessionID) => {
+  let cacheditems = global._database.items; //fileIO.readParsed("./user/cache/items.json");
+
+  let output = item_f.handler.getOutput();
   if (body.recipeId === "5d5c205bd582a50d042a3c0e") {
-    return handleBitcoinReproduction(pmcData, sessionID);
+    return hideout_f.handleBitcoinReproduction(pmcData, sessionID);
   }
 
   for (let recipe in _database.hideout.production) {
@@ -458,7 +499,8 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
       if (pmcData.Hideout.Production[prod].RecipeId !== body.recipeId) {
         continue;
       }
-      pmcData.Hideout.Production[prod].Products = pmcData.Hideout.Production["141"].Products;
+      pmcData.Hideout.Production[prod].Products =
+        pmcData.Hideout.Production["141"].Products;
       // give items BEFORE deleting the production
       for (let itemProd of pmcData.Hideout.Production[prod].Products) {
         pmcData = profile_f.handler.getPmcProfile(sessionID);
@@ -469,14 +511,28 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
           tid: "ragfair",
         };
 
-        output = move_f.addItem(pmcData, newReq, output, sessionID, true);
+        if (cacheditems._type != "Node") {
+          if (
+            cacheditems[itemProd._tpl]._parent === "5485a8684bdc2da71d8b4567"
+          ) {
+            console.log("Ammo Found");
+            if (cacheditems[itemProd._tpl]._props.StackMaxSize !== 1) {
+              console.log("Checking Stack Size");
+              let min = cacheditems[itemProd._tpl]._props.StackMinRandom;
+              let max = cacheditems[itemProd._tpl]._props.StackMaxRandom * 2;
+
+              newReq.count = utility.getRandomInt(min, max);
+              console.log(min, max);
+            }
+          }
+        }
+        output = move_f.addItem(pmcData, newReq, sessionID, true);
       }
 
       delete pmcData.Hideout.Production[prod];
       delete pmcData.Hideout.Production["141"];
+
       return output;
     }
   }
-
-  return "";
 };

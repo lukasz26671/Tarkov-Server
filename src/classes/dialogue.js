@@ -3,20 +3,98 @@
 class DialogueServer {
   constructor() {
     this.dialogues = {};
+    this.dialogueFileAge = {}
   }
 
+  /**
+   * Initial load of dialogue file content to memory.
+   * @param {*} sessionID 
+   */
   initializeDialogue(sessionID) {
+    // Load saved dialogues from disk
     this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
+
+    // Set the file age for the dialogues save file.
+		let stats = global.internal.fs.statSync(getPath(sessionID));
+    this.dialogueFileAge[sessionID] = stats.mtimeMs;
+
+    logger.logSuccess(`[CLUSTER] Loaded dialogues for AID ${sessionID} successfully.`);
   }
+
+  freeFromMemory(sessionID) {
+		delete this.dialogues[sessionID];
+	}
+
+  /**
+   * Reload the dialoge for a specified session from disk, if the file was changed by another server / source.
+   * @param {*} sessionID 
+   */
+  reloadDialogue(sessionID) {
+    // Check if the dialogue save file exists
+		if(global.internal.fs.existsSync(getPath(sessionID))) {
+
+      // Compare the file age saved in memory with the file age on disk.
+			let stats = global.internal.fs.statSync(getPath(sessionID));
+			if(stats.mtimeMs != this.dialogueFileAge[sessionID]) {
+
+        //Load saved dialogues from disk.
+        this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
+
+        // Reset the file age for the sessions dialogues.
+				let stats = global.internal.fs.statSync(getPath(sessionID));
+				this.dialogueFileAge[sessionID] = stats.mtimeMs;
+        logger.logWarning(`[CLUSTER] Dialogues for AID ${sessionID} were modified elsewhere. Dialogue was reloaded successfully.`)
+			}
+		}
+	}
 
   saveToDisk(sessionID) {
+    // Check if dialogues exist in the server memory.
     if (sessionID in this.dialogues) {
-      fileIO.write(getPath(sessionID), this.dialogues[sessionID]);
+      // Check if the dialogue file exists.
+      if(global.internal.fs.existsSync(getPath(sessionID))) {
+        // Check if the file was modified elsewhere.
+        let statsPreSave = global.internal.fs.statSync(getPath(sessionID));
+        if (statsPreSave.mtimeMs == this.dialogueFileAge[sessionID]) {
+
+          // Compare the dialogues from server memory with the ones saved on disk.
+          let currentDialogues = this.dialogues[sessionID];
+          let savedDialogues = fileIO.readParsed(getPath(sessionID));
+          if (JSON.stringify(currentDialogues) !== JSON.stringify(savedDialogues)) {
+            // Save the dialogues stored in memory to disk.
+            fileIO.write(getPath(sessionID), this.dialogues[sessionID]);
+
+            // Reset the file age for the sessions dialogues.
+            let stats = global.internal.fs.statSync(getPath(sessionID));
+            this.dialogueFileAge[sessionID] = stats.mtimeMs;
+            logger.logSuccess(`[CLUSTER] Dialogues for AID ${sessionID} was saved.`);
+          }
+        } else {
+          //Load saved dialogues from disk.
+          this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
+
+          // Reset the file age for the sessions dialogues.
+          let stats = global.internal.fs.statSync(getPath(sessionID));
+          this.dialogueFileAge[sessionID] = stats.mtimeMs;
+          logger.logWarning(`[CLUSTER] Dialogues for AID ${sessionID} were modified elsewhere. Dialogue was reloaded successfully.`)
+        }
+      } else {
+        // Save the dialogues stored in memory to disk.
+        fileIO.write(getPath(sessionID), this.dialogues[sessionID]);
+
+        // Reset the file age for the sessions dialogues.
+        let stats = global.internal.fs.statSync(getPath(sessionID));
+        this.dialogueFileAge[sessionID] = stats.mtimeMs;
+        logger.logSuccess(`[CLUSTER] Dialogues for AID ${sessionID} was created and saved.`);
+      }
     }
   }
 
   /* Set the content of the dialogue on the list tab. */
   generateDialogueList(sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+    
     let data = [];
     for (let dialogueId in this.dialogues[sessionID]) {
       data.push(this.getDialogueInfo(dialogueId, sessionID));
@@ -43,6 +121,9 @@ class DialogueServer {
    * for the specified dialogue.
    */
   generateDialogueView(dialogueId, sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     let dialogue = this.dialogues[sessionID][dialogueId];
     dialogue.new = 0;
 
@@ -63,6 +144,9 @@ class DialogueServer {
    * Add a templated message to the dialogue.
    */
   addDialogueMessage(dialogueID, messageContent, sessionID, rewards = []) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     if (this.dialogues[sessionID] === undefined) {
       this.initializeDialogue(sessionID);
     }
@@ -144,6 +228,9 @@ class DialogueServer {
    * Get the item contents for a particular message.
    */
   getMessageItemContents(messageId, sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     let dialogueData = this.dialogues[sessionID];
 
     for (let dialogueId in dialogueData) {
@@ -165,14 +252,23 @@ class DialogueServer {
   }
 
   removeDialogue(dialogueId, sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+    
     delete this.dialogues[sessionID][dialogueId];
   }
 
   setDialoguePin(dialogueId, shouldPin, sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     this.dialogues[sessionID][dialogueId].pinned = shouldPin;
   }
 
   setRead(dialogueIds, sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     let dialogueData = this.dialogues[sessionID];
 
     for (let dialogId of dialogueIds) {
@@ -182,6 +278,9 @@ class DialogueServer {
   }
 
   getAllAttachments(dialogueId, sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     let output = [];
     let timeNow = Date.now() / 1000;
 
@@ -198,6 +297,9 @@ class DialogueServer {
   // deletion of items that has been expired. triggers when updating traders.
 
   removeExpiredItems(sessionID) {
+    // Reload dialogues before continuing.
+    this.reloadDialogue(sessionID);
+
     for (let dialogueId in this.dialogues[sessionID]) {
       for (let message of this.dialogues[sessionID][dialogueId].messages) {
         if (Date.now() / 1000 > message.dt + message.maxStorageTime) {

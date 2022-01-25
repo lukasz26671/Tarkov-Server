@@ -7,10 +7,20 @@ function _load_Globals() {
   //allow to use file with {data:{}} as well as {}
   if (typeof _database.globals.data != "undefined") _database.globals = _database.globals.data;
 }
+
+function _load_ClusterConfig() {
+  _database.clusterConfig = fileIO.readParsed("./" + db.user.configs.cluster);
+}
+
 function _load_GameplayConfig() {
   _database.gameplayConfig = fileIO.readParsed("./" + db.user.configs.gameplay);
   _database.gameplay = _database.gameplayConfig;
 }
+
+function _load_BlacklistConfig() {
+  _database.blacklist = fileIO.readParsed("./" + db.user.configs.blacklist);
+}
+
 function _load_BotsData() {
   _database.bots = {};
   for (let botType in db.bots) {
@@ -178,6 +188,10 @@ exports.load = () => {
   _load_CoreData();
   logger.logInfo("Load: 'Globals'");
   _load_Globals();
+  logger.logInfo("Load: 'Cluster Config'")
+  _load_ClusterConfig();
+  logger.logInfo("Load: 'Blacklist'")
+  _load_BlacklistConfig();
   logger.logInfo("Load: 'Gameplay'");
   _load_GameplayConfig();
   logger.logInfo("Load: 'Bots'");

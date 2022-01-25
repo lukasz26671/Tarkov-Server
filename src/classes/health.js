@@ -7,6 +7,10 @@ class HealthServer {
     this.effects = {};
   }
 
+  freeFromMemory(sessionID) {
+    delete this.healths[sessionID];
+  }  
+
   /* resets the healh response */
   initializeHealth(sessionID) {
     this.healths[sessionID] = {

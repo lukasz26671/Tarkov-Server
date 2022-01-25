@@ -138,7 +138,7 @@ function fromRUB(value, currency) {
 function payMoney(pmcData, body, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
   let trader = trader_f.handler.getTrader(body.tid, sessionID);
-  let currencyTpl = getCurrency(trader.currency);
+  let currencyTpl = helper_f.getCurrency(trader.currency);
 
   // delete barter things(not a money) from inventory
   if (body.Action === "TradingConfirm") {
@@ -152,7 +152,7 @@ function payMoney(pmcData, body, sessionID) {
       }
 
       if (item !== undefined) {
-        if (!isMoneyTpl(item._tpl)) {
+        if (!helper_f.isMoneyTpl(item._tpl)) {
           output = move_f.removeItem(pmcData, item._id, sessionID);
           body.scheme_items[index].count = 0;
         } else {
@@ -170,7 +170,7 @@ function payMoney(pmcData, body, sessionID) {
   let barterPrice = 0;
 
   for (let item of body.scheme_items) {
-    barterPrice += item.count;
+    barterPrice +=item.count;
   }
 
   // prepare the amount of money in the profile
@@ -181,8 +181,10 @@ function payMoney(pmcData, body, sessionID) {
   }
 
   // if no money in inventory or amount is not enough we return false
-  if (moneyItems.length <= 0 || amountMoney < barterPrice) {
-    return false;
+  if (amountMoney != 0){
+    if (moneyItems.length <= 0 ||amountMoney < barterPrice) {
+        return false;
+      }
   }
 
   let leftToPay = barterPrice;
@@ -217,7 +219,7 @@ function payMoney(pmcData, body, sessionID) {
   }
   output.profileChanges[pmcData._id].traderRelations = pmcData.TradersInfo;
   // set current sale sum -- convert barterPrice itemTpl into RUB then convert RUB into trader currency
-  pmcData.TradersInfo[body.tid].salesSum += fromRUB(inRUB(barterPrice, currencyTpl), getCurrency(trader.currency));
+  pmcData.TradersInfo[body.tid].salesSum += helper_f.fromRUB(helper_f.inRUB(barterPrice, currencyTpl), helper_f.getCurrency(trader.currency));
 
   // save changes
   logger.logInfo("Items taken. Status OK.");

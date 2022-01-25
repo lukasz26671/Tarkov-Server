@@ -395,14 +395,11 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGameStart(url, info, sessionID) {
-    let accounts = account_f.handler.getList();
-    for (let account in accounts) {
-      if (account == sessionID) {
-        if (!fileIO.exist("user/profiles/" + sessionID + "/character.json")) logger.logWarning("New account login!");
-        return response_f.getBody({utc_time: Date.now() / 1000}, 0, null);
-      }
+    if(account_f.handler.clientHasProfile(sessionID)) {
+      return response_f.getBody({utc_time: Date.now() / 1000}, 0, null);
+    } else {
+        return response_f.getBody({utc_time: Date.now() / 1000}, 999, "Profile Not Found!!");
     }
-    return response_f.getBody(null, 999, "Profile Not Found!!");
   }
   clientGameVersionValidate(url, info, sessionID) {
     logger.logInfo("User connected with client version " + info.version.major);
@@ -630,6 +627,7 @@ class Responses {
   launcherProfileGet(url, info, sessionID) {
     let accountId = account_f.handler.login(info);
     let output = account_f.handler.find(accountId);
+    output['server'] = server.name;
     return fileIO.stringify(output);
   }
   launcherProfileLogin(url, info, sessionID) {

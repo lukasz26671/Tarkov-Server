@@ -19,6 +19,5 @@ exports.cache = () => {
 			base.data.Items = _data;
 		}
     }
-
     fileIO.write(`./user/cache/templates.json`, base, true, false);
 }

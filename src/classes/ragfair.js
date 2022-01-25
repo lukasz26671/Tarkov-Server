@@ -130,49 +130,58 @@ function countCategories(response) {
 function getOffers(sessionID, request) {
   //if its traders items, just a placeholder it will be handled differently later
   if (request.offerOwnerType === 1) {
-    return getOffersFromTraders(sessionID, request);
+      return getOffersFromTraders(sessionID, request);
   }
 
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
   let itemsToAdd = [];
   let offers = [];
 
+  if (fleaConfig.fleaLock) {
+      if (!fleaLock(sessionID)) { //check if false
+          return response; //return response
+      }
+  }
+
   if (!request.linkedSearchId && !request.neededSearchId) {
-    response.categories = trader_f.handler.getAssort(sessionID, "ragfair").loyal_level_items;
+      response.categories = trader_f.handler.getAssort(sessionID, "ragfair").loyal_level_items;
   }
 
   if (request.buildCount) {
-    // Case: weapon builds
-    itemsToAdd = itemsToAdd.concat(Object.keys(request.buildItems));
+      // Case: weapon builds
+      itemsToAdd = itemsToAdd.concat(Object.keys(request.buildItems));
   } else {
-    // Case: search
-    if (request.linkedSearchId) {
-      itemsToAdd = getLinkedSearchList(request.linkedSearchId);
-    } else if (request.neededSearchId) {
-      itemsToAdd = getNeededSearchList(request.neededSearchId);
-    }
-
-    // Case: category
-    if (request.handbookId) {
-      let handbook = getCategoryList(request.handbookId);
-
-      if (itemsToAdd.length) {
-        itemsToAdd = helper_f.arrayIntersect(itemsToAdd, handbook);
-      } else {
-        itemsToAdd = handbook;
+      // Case: search
+      if (request.linkedSearchId) {
+          itemsToAdd = getLinkedSearchList(request.linkedSearchId);
+      } else if (request.neededSearchId) {
+          itemsToAdd = getNeededSearchList(request.neededSearchId);
       }
-    }
+
+      // Case: category
+      if (request.handbookId) {
+          let handbook = getCategoryList(request.handbookId);
+
+          if (itemsToAdd.length) {
+              itemsToAdd = helper_f.arrayIntersect(itemsToAdd, handbook);
+          } else {
+              itemsToAdd = handbook;
+          }
+      }
   }
 
   for (let item of itemsToAdd) {
-    offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
+      if (_database.blacklist.includes(item)) {
+          continue;
+      }
+      offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0, sessionID));
   }
 
   // merge trader offers with player offers display offers is set to 'ALL'
   if (request.offerOwnerType === 0) {
-    const traderOffers = getOffersFromTraders(sessionID, request).offers;
+      const traderOffers = getOffersFromTraders(sessionID, request).offers;
 
-    offers = [...offers, ...traderOffers];
+      offers = [...offers, ...traderOffers];
   }
 
   response.offers = sortOffers(request, offers);

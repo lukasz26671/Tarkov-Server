@@ -6,6 +6,10 @@ class InsuranceServer {
         events.scheduledEventHandler.addEvent("insuranceReturn", this.processReturn.bind(this));
     }
 
+    freeFromMemory(sessionID) {
+        delete this.insured[sessionID];
+    }
+
     checkExpiredInsurance() {
         let scheduledEvents = events.scheduledEventHandler.scheduledEvents;
         let now = Date.now();
