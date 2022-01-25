@@ -128,6 +128,16 @@
 				"upd": {
 					"StackObjectsCount": 500000000
 				}
+			},
+            {
+				"_id": "I-39ed1cea-13e2-4c10-ab34-ed4eb0bbab47",
+				"_tpl": "5c093ca986f7740a1867ab12",
+				"parentId": "5fe49444ae6628187a2e77b8",
+				"slotId": "SecuredContainer",
+				"upd": {
+					"StackObjectsCount": 1,
+					"SpawnedInSession": true
+				}
 			}
 		],
 		"equipment": "5fe49444ae6628187a2e77b8",
