@@ -1,0 +1,159 @@
+{
+  "name": "AE_Core",
+  "author": "AE_Team",
+  "description": "Overhaul of mod structure",
+  "license": "MIT",
+  "version": "1.0.0",
+  "checkUpdateUrl": "",
+  "autoUpdate": false,
+  "settings": {
+    "": "Enables Altered Escape databases for item customization",
+    "databasesEnabled": false,
+
+    "": "Punisher Toggle",
+    "punisherEnabled": false,
+
+    "": "Nugent Toggle",
+    "nugentEnabled": true,
+
+    "": "Trader Overhaul settings",
+    "traderOverhaul": {
+      "toggle": true,
+      "config": {
+        "fleaLock": false,
+        "fleaKeyLife": 60,
+        "ragfairMultiplier": 0
+      }
+    },
+
+    "": "Cluster Aware toggles",
+    "clusterAwareServers": {
+      "enableClusterAwareServers": true,
+      "autoSaveEnabled": true,
+      "autoSaveOnExit": true,
+      "autoSaveOnReceive": true,
+      "autoSaveInterval": 10,
+      "autoSaveAllowedSkips": 360
+    },
+
+    "": "Mod Weapons in Raid toggle",
+    "modInRaid": true,
+
+    "": "Fold All ((Foldable)) Weapons toggle",
+    "unblockFolding": true,
+
+    "": "Bot Spawning Configuration",
+    "botConfig": {
+      "toggle": true,
+      "bot_waves": {
+        "": "default - false / 1.0 / 1.4 / 1.8 / 10",
+
+        "as_online": false,
+        "low": 1.0,
+        "medium": 1.3,
+        "high": 1.6,
+        "horde": 10.0
+      },
+      "bot_count": {
+        "": "default - 20",
+        "MaxBotsAliveOnMap": 8
+      }
+    },
+
+    "": "Weapon Recoil modifiers",
+    "recoilConfig": {
+      "": "Weapon Recoil Adjustment toggle",
+      "toggle": true,
+
+      "pistolRecoil": {
+        "cameraRecoil": 0.75,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.7,
+        "horizontalRecoil": 0.6
+      },
+      "smgRecoil": {
+        "cameraRecoil": 0.75,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 1.1,
+        "horizontalRecoil": 1.1
+      },
+      "shotgunRecoil": {
+        "cameraRecoil": 0.55,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.7,
+        "horizontalRecoil": 0.7
+      },
+      "assaultRifleRecoil": {
+        "cameraRecoil": 0.55,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.7,
+        "horizontalRecoil": 0.35
+      },
+      "assaultCarbineRecoil": {
+        "cameraRecoil": 0.55,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.75,
+        "horizontalRecoil": 0.45
+      },
+      "machinegunRecoil": {
+        "cameraRecoil": 0.55,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.7,
+        "horizontalRecoil": 0.35
+      },
+      "marksmanRifleRecoil": {
+        "cameraRecoil": 0.55,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.75,
+        "horizontalRecoil": 0.75
+      },
+      "sniperRifleRecoil": {
+        "cameraRecoil": 0.5,
+        "cameraSnap": 0.75,
+        "verticalRecoil": 0.75,
+        "horizontalRecoil": 0.75
+      }
+    },
+
+    "": "Headset and Helmet hearing modifiers",
+    "hearingConfig": {
+      "": "Helmet and Headset modifier toggle",
+      "toggle": true,
+
+      "distortion_Multiplier": 0,
+
+      "ambient_noise_reduction_moltiplier": 4,
+
+      "maximum_helmet_deafness": "Low",
+
+      "full_Stat_Control": false,
+      "stats": {
+        "CompressorTreshold": -31,
+        "CompressorAttack": 24,
+        "CompressorRelease": 164,
+        "CompressorGain": 13,
+        "CutoffFreq": 120,
+        "Resonance": 3,
+        "CompressorVolume": -5,
+        "DryVolume": -60
+      }
+    },
+
+    "": "",
+    "writeServerObjectStructure": false
+  },
+  "src": {
+    "src/cacheloader.js": "CacheModLoad",
+    "src/tamperloader.js": "TamperModLoad",
+    "src/punishercacheloader.js": "CacheModLoad",
+    "src/punishertamperloader.js": "TamperModLoad"
+  },
+  "res": {
+    "bundles": {
+      "folders": [""]
+    },
+    "trader": {}
+  },
+  "filenames": [],
+  "required": []
+}

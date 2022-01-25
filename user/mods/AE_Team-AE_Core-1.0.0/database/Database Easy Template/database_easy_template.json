@@ -1,0 +1,35 @@
+{
+  "change_me": {
+    "modifier": "none",
+    "addToTrader": {
+      "traderName": [],
+      "loyality": 1,
+      "currency": "5449016a4bdc2d6f028b456f"
+    },
+    "item": {
+
+    },
+    "translation": {
+      "english": {
+        "Name": "",
+        "ShortName": "",
+        "Description": ""
+      },
+      "russian": {
+        "Name": "HK UMP .45 ACP, ствол 8 дюймов (с резьбой)",
+        "ShortName": "8\" UMP .45 ACP (T)",
+        "Description": "Ствол для пистолета-пулемета HK UMP под патрон .45 ACP, длина 8 дюймов (200 мм) с резьбой для дульных насадок."
+      },
+      "french": {
+        "Name": "Canon HK UMP .45 ACP 8 pouces (fileté)",
+        "ShortName": "8\" UMP .45 ACP (T)",
+        "Description": "Un canon pour HK UMP SMG, chambré dans des munitions .45 ACP, 8 pouces (200 mm) de long avec des filetages pour les fixations de bouche."
+      },
+      "german": {
+        "Name": "HK UMP .45 ACP 8 Zoll Lauf (Gewinde)",
+        "ShortName": "8\" UMP .45 ACP (T)",
+        "Description": "Ein Lauf für HK UMP SMG, gekammert in .45 ACP Munition, 8 Zoll (200 mm) lang mit Gewinden für Mündungsbefestigungen."
+      }
+    }
+  }
+}

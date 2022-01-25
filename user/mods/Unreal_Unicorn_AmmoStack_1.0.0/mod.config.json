@@ -1,0 +1,14 @@
+{
+	"name": "AmmoStack",
+	"author": "Unreal_Unicorn",
+	"description": "Adds a multiplier to the Ammo Max Stack",
+	"license": "MIT",
+	"version": "1.0.0",
+	"src":{ 
+		"src/AmmoStack.js": "TamperModLoad"
+	},
+	"required": [],
+	"settings": {
+		"maxstackmultiplier": 2
+	}
+}

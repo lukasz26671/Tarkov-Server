@@ -1,0 +1,11 @@
+{
+	"name": "HideoutQOL",
+	"author": "Jizera",
+	"description": "Hideout 'Quality of Life'",
+	"license": "MIT",
+	"version": "1.0.0",
+	"src":{ 
+		"src/HideoutQOLCache.js": "CacheModLoad"
+	},
+	"required":[]
+}

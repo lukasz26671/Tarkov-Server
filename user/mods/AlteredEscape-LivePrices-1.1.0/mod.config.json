@@ -1,0 +1,10 @@
+{
+	"name": "LivePrices",
+	"author": "AlteredEscape",
+	"version": "1.1.0",
+	"license": "MIT",
+	"src": {
+		"src/cached.js": "CacheModLoad"
+	},
+	"required":[]
+}
