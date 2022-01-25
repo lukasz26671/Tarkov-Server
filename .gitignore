@@ -19,3 +19,5 @@ user/cache
 # ignore cache backup folder
 ## windows
 desktop.ini
+.vscode/sftp.json
+user/configs/server.json
