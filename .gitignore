@@ -21,3 +21,4 @@ user/cache
 desktop.ini
 .vscode/sftp.json
 user/configs/server.json
+user/profiles
