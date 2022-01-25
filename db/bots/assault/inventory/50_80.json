@@ -61,7 +61,7 @@
       "5aa2b923e5b5b000137b7589",
       "5d6d2ef3a4b93618084f58bd"
     ],
-    "ArmBand": ["5b3f16c486f7747c327f55f7"],
+    "ArmBand": ["619bdeb986e01e16f839a99e"],
     "TacticalVest": [
       "59e7643b86f7742cbf2c109a",
       "5e4abfed86f77406a2713cf7",
@@ -544,7 +544,7 @@
     },
     "5c0e2f26d174af02a9625114": {
       "mod_barrel": ["55d3632e4bdc2d972f8b4569"],
-      "mod_handguard": ["55d459824bdc2d892f8b4573", "5ae30db85acfc408fb139a05", "5a329052c4a28200741e22d3"],
+      "mod_handguard": ["55d459824bdc2d892f8b4573", "5ae30db85acfc408fb139a05"],
       "mod_sight_rear": ["5ae30bad5acfc400185c2dc4", "55d5f46a4bdc2d1b198b4567"]
     },
     "55d3632e4bdc2d972f8b4569": {

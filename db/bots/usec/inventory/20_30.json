@@ -27,7 +27,6 @@
       "5e71fad086f77422443d4604"
     ],
     "ArmorVest": [
-      "THOR_conc",
       "5b44d22286f774172b0c9de8",
       "5c0e53c886f7747fa54205c7",
       "5c0e51be86f774598e797894",
@@ -47,7 +46,7 @@
       "5c1a1cc52e221602b3136e3d",
       "557ff21e4bdc2d89578b4586"
     ],
-    "ArmBand": ["5b3f3af486f774679e752c1f"],
+    "ArmBand": ["619bdfd4c9546643a67df6fa"],
     "TacticalVest": [
       "5c0e3eb886f7742015526062",
       "5d5d646386f7742797261fd9",
@@ -478,7 +477,7 @@
       "mod_equipment_001": ["5c1793902e221602b21d3de2"]
     },
     "5c17a7ed2e2216152142459c": {
-      "mod_equipment_000": ["5e01f37686f774773c6f6c15", "5e00cdd986f7747473332240", "5a16b672fcdbcb001912fa83"],
+      "mod_equipment_000": ["5a16b672fcdbcb001912fa83"],
       "mod_nvg": ["5ea058e01dbce517f324b3e2", "5f60bf4558eff926626a60f2", "5a16b8a9fcdbcb00165aa6ca"],
       "mod_mount": ["5a398b75c4a282000a51a266", "5a398ab9c4a282000c5a9842"],
       "mod_equipment_001": ["5c178a942e22164bef5ceca3", "5c1793902e221602b21d3de2"]

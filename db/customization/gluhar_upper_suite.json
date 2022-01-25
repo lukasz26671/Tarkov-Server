@@ -1,0 +1,15 @@
+{
+  "_id": "gluhar_upper_suite",
+  "_name": "gluhar",
+  "_parent": "5cd944ca1388ce03a44dc2a4",
+  "_type": "Item",
+  "_props": {
+    "Name": "KillaUpperSuite",
+    "ShortName": "KillaUpperSuite",
+    "Description": "KillaUpperSuite",
+    "Side": ["Bear", "Usec", "Savage"],
+    "AvailableAsDefault": false,
+    "Body": "5d5e7dd786f7744a7a274322",
+    "Hands": "5cc2e68f14c02e28b47de290"
+  }
+}

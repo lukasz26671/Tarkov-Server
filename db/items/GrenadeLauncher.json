@@ -319,7 +319,7 @@
 					"_proto": "55d4af244bdc2d962f8b4571"
 				}
 			],
-			"CameraRecoil": 0.04,
+			"CameraRecoil": 0.05,
 			"CameraSnap": 3.5,
 			"ReloadMode": "OnlyBarrel",
 			"CenterOfImpact": 0.7,

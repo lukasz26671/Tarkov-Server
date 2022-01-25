@@ -19,7 +19,8 @@
       "5ea05cf85ad9772e6624305d",
       "5b4329f05acfc47a86086aa1",
       "5b432d215acfc4771e1c6624",
-      "5aa7d03ae5b5b00016327db5"
+      "5aa7d03ae5b5b00016327db5",
+      "618aef6d0a5a59657e5f55ee"
     ],
     "Earpiece": ["5b432b965acfc47a8774094e", "5aa2ba71e5b5b000137b758f"],
     "FaceCover": [
@@ -58,7 +59,7 @@
       "5c1a1cc52e221602b3136e3d",
       "557ff21e4bdc2d89578b4586"
     ],
-    "ArmBand": ["5b3f3af486f774679e752c1f"],
+    "ArmBand": ["619bdfd4c9546643a67df6fa"],
     "TacticalVest": [
       "5d5d646386f7742797261fd9",
       "5c0e446786f7742013381639",
@@ -382,7 +383,7 @@
       "mod_equipment_001": ["5c1793902e221602b21d3de2"]
     },
     "5c17a7ed2e2216152142459c": {
-      "mod_equipment_000": ["5e01f37686f774773c6f6c15", "5e00cdd986f7747473332240", "5a16b672fcdbcb001912fa83"],
+      "mod_equipment_000": ["5a16b672fcdbcb001912fa83"],
       "mod_nvg": ["5ea058e01dbce517f324b3e2", "5f60bf4558eff926626a60f2", "5a16b8a9fcdbcb00165aa6ca"],
       "mod_mount": ["5a398b75c4a282000a51a266", "5a398ab9c4a282000c5a9842"],
       "mod_equipment_001": ["5c178a942e22164bef5ceca3", "5c1793902e221602b21d3de2"]

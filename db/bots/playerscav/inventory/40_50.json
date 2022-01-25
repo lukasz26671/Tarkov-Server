@@ -677,9 +677,9 @@
     },
     "5e870397991fd70db46995c8": {
       "mod_barrel": ["5e87071478f43e51ca2de5e1"],
-      "mod_handguard": ["5eea21647547d6330471b3c9", "5e87076ce2db31558c75a11d", "590_handguard_wood"],
+      "mod_handguard": ["5eea21647547d6330471b3c9", "5e87076ce2db31558c75a11d"],
       "mod_magazine": ["5e87080c81c4ed43e83cefda"],
-      "mod_stock": ["5e87116b81c4ed43e83cefdd", "5eea217fc64c5d0dfc05712a", "590_stock_wood"],
+      "mod_stock": ["5e87116b81c4ed43e83cefdd", "5eea217fc64c5d0dfc05712a"],
       "mod_mount": ["5e87114fe2db31558c75a120"]
     },
     "5a7828548dc32e5a9c28b516": {
@@ -1302,8 +1302,6 @@
         "576fd4ec2459777f0b518431",
         "591ee00d86f774592f7b841e",
         "57acb6222459771ec34b5cb0",
-        "5c90c3622e221601da359851",
-        "5c61a40d2e2216001403158d",
         "5c1cdd302e221602b3137250",
         "57adff4f24597737f373b6e6",
         "570fd721d2720bc5458b4596",

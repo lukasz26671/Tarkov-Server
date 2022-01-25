@@ -33,7 +33,7 @@
       "5c1a1cc52e221602b3136e3d",
       "557ff21e4bdc2d89578b4586"
     ],
-    "ArmBand": ["5b3f3b0186f774021a2afef7"],
+    "ArmBand": ["619bdd8886e01e16f839a99c"],
     "TacticalVest": [
       "5b44cad286f77402a54ae7e5",
       "5e4ac41886f77406a511c9a8",
@@ -112,7 +112,7 @@
     },
     "5a71e22f8dc32e00094b97f4": {
       "mod_sight_front": ["5a7d90eb159bd400165484f1", "5a7d9104159bd400134c8c21"],
-      "mod_sight_rear": ["5a7d9122159bd4001438dbf4", "5a7d912f159bd400165484f3", "5a32aa8bc4a2826c6e06d737"]
+      "mod_sight_rear": ["5a7d9122159bd4001438dbf4", "5a7d912f159bd400165484f3"]
     },
     "5a71e4f48dc32e001207fb26": {
       "mod_sight_front": ["5a7d90eb159bd400165484f1", "5a7d9104159bd400134c8c21"],
@@ -232,8 +232,8 @@
       "mod_pistol_grip": ["5b30ac585acfc433000eb79c", "5649ae4a4bdc2d1b2b8b4588"],
       "mod_barrel": ["5beec1bd0db834001e6006f3", "5beec2820db834001b095426"],
       "mod_charge": ["5648ac824bdc2ded0b8b457d"],
-      "mod_handguard": ["5beec3e30db8340019619424", "ak12_handguard"],
-      "mod_reciever": ["5beec91a0db834001961942d", "ak12_upper"],
+      "mod_handguard": ["5beec3e30db8340019619424"],
+      "mod_reciever": ["5beec91a0db834001961942d"],
       "mod_stock_001": ["5beec8b20db834001961942a"],
       "mod_magazine": ["5bed625c0db834001c062946", "55d482194bdc2d1d4e8b456b"]
     },
@@ -545,13 +545,13 @@
       "mod_equipment": ["5aa7e373e5b5b000137b76f0"]
     },
     "5f60c74e3b85f6263c145586": {
-      "mod_equipment": ["5c0919b50db834001b7ce3b9"]
+      "mod_equipment": ["5f60c85b58eff926626a60f7"]
     },
     "5c0e874186f7745dc7616606": {
-      "mod_equipment": ["5f60c85b58eff926626a60f7", "5c0919b50db834001b7ce3b9", "5c0e842486f77443a74d2976"]
+      "mod_equipment": ["5c0919b50db834001b7ce3b9", "5c0e842486f77443a74d2976"]
     },
     "5c091a4e0db834001d5addc8": {
-      "mod_equipment": ["5aa7e3abe5b5b000171d064d", "5c0919b50db834001b7ce3b9", "5c0e842486f77443a74d2976"]
+      "mod_equipment": ["5c0919b50db834001b7ce3b9", "5c0e842486f77443a74d2976"]
     }
   },
   "items": {

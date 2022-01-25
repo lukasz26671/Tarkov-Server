@@ -1,271 +1,5 @@
 [
 	{
-		"_id": "5ca20abf86f77418567a43f2",
-		"_name": "item_equipment_rig_triton",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "commando",
-			"ShortName": "commando",
-			"Description": "commando",
-			"Weight": 1.3,
-			"BackgroundColor": "default",
-			"Width": 4,
-			"Height": 3,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_triton/item_equipment_rig_triton.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": true,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "5ca20abf86f77418567a43f4",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "5ca20abf86f77418567a43f5",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "5ca20abf86f77418567a43f6",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "5ca20abf86f77418567a43f7",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "5",
-					"_id": "5ca20abf86f77418567a43f8",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "6",
-					"_id": "5ca20abf86f77418567a43f9",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "7",
-					"_id": "5ca20abf86f77418567a43fa",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "8",
-					"_id": "5ca20abf86f77418567a43fb",
-					"_parent": "5ca20abf86f77418567a43f2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": false,
-			"RigLayoutName": "Commando",
-			"Durability": 0,
-			"MaxDurability": 0,
-			"armorZone": [],
-			"armorClass": 0,
-			"speedPenaltyPercent": -1,
-			"mousePenalty": 0,
-			"weaponErgonomicPenalty": -2,
-			"BluntThroughput": 0,
-			"ArmorMaterial": "UHMWPE"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
 		"_id": "5c0e9f2c86f77432297fe0a3",
 		"_name": "item_equipment_rig_commando_black",
 		"_parent": "5448e5284bdc2dcb718b4567",
@@ -526,6 +260,272 @@
 			"speedPenaltyPercent": 0,
 			"mousePenalty": 0,
 			"weaponErgonomicPenalty": 0,
+			"BluntThroughput": 0,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
+	},
+	{
+		"_id": "5ca20abf86f77418567a43f2",
+		"_name": "item_equipment_rig_triton",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "commando",
+			"ShortName": "commando",
+			"Description": "commando",
+			"Weight": 1.3,
+			"BackgroundColor": "default",
+			"Width": 4,
+			"Height": 3,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_triton/item_equipment_rig_triton.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": true,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5ca20abf86f77418567a43f4",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5ca20abf86f77418567a43f5",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5ca20abf86f77418567a43f6",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5ca20abf86f77418567a43f7",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "5",
+					"_id": "5ca20abf86f77418567a43f8",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "6",
+					"_id": "5ca20abf86f77418567a43f9",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "7",
+					"_id": "5ca20abf86f77418567a43fa",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "8",
+					"_id": "5ca20abf86f77418567a43fb",
+					"_parent": "5ca20abf86f77418567a43f2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": false,
+			"RigLayoutName": "Commando",
+			"Durability": 0,
+			"MaxDurability": 0,
+			"armorZone": [],
+			"armorClass": 0,
+			"speedPenaltyPercent": -1,
+			"mousePenalty": 0,
+			"weaponErgonomicPenalty": -2,
 			"BluntThroughput": 0,
 			"ArmorMaterial": "UHMWPE"
 		},
@@ -1079,251 +1079,6 @@
 		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
 	{
-		"_id": "5f5f41f56760b4138443b352",
-		"_name": "item_equipment_rig_thunderbolt",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "BEAR Rig 6h112",
-			"ShortName": "Rig 6h112",
-			"Description": "Rig 6h112",
-			"Weight": 0.62,
-			"BackgroundColor": "default",
-			"Width": 3,
-			"Height": 3,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_thunderbolt/item_equipment_rig_thunderbolt.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "5f5f41f56760b4138443b354",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "5f5f41f56760b4138443b355",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "5f5f41f56760b4138443b356",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "5f5f41f56760b4138443b357",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "5",
-					"_id": "5f5f546e6760b4138443b364",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "6",
-					"_id": "5f5f5487354701500f60f77a",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "7",
-					"_id": "5f5f549647344c2e4f6c42e8",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "8",
-					"_id": "5f5f54a80bc58666c37e783e",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "9",
-					"_id": "5f5f54cf6bdad616ad46d640",
-					"_parent": "5f5f41f56760b4138443b352",
-					"_props": {
-						"filters": [],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": false,
-			"RigLayoutName": "Thunder_compl",
-			"Durability": 0,
-			"MaxDurability": 0,
-			"armorZone": [],
-			"armorClass": 0,
-			"speedPenaltyPercent": 0,
-			"mousePenalty": 0,
-			"weaponErgonomicPenalty": 0,
-			"BluntThroughput": 0,
-			"ArmorMaterial": "UHMWPE"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
 		"_id": "5e9db13186f7742f845ee9d3",
 		"_name": "item_equipment_rig_bearing",
 		"_parent": "5448e5284bdc2dcb718b4567",
@@ -1577,6 +1332,251 @@
 			"SearchSound": "looting_body_extended",
 			"BlocksArmorVest": false,
 			"RigLayoutName": "Bearing",
+			"Durability": 0,
+			"MaxDurability": 0,
+			"armorZone": [],
+			"armorClass": 0,
+			"speedPenaltyPercent": 0,
+			"mousePenalty": 0,
+			"weaponErgonomicPenalty": 0,
+			"BluntThroughput": 0,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
+	},
+	{
+		"_id": "5f5f41f56760b4138443b352",
+		"_name": "item_equipment_rig_thunderbolt",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "BEAR Rig 6h112",
+			"ShortName": "Rig 6h112",
+			"Description": "Rig 6h112",
+			"Weight": 0.62,
+			"BackgroundColor": "default",
+			"Width": 3,
+			"Height": 3,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_thunderbolt/item_equipment_rig_thunderbolt.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5f5f41f56760b4138443b354",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5f5f41f56760b4138443b355",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5f5f41f56760b4138443b356",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5f5f41f56760b4138443b357",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "5",
+					"_id": "5f5f546e6760b4138443b364",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "6",
+					"_id": "5f5f5487354701500f60f77a",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "7",
+					"_id": "5f5f549647344c2e4f6c42e8",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "8",
+					"_id": "5f5f54a80bc58666c37e783e",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "9",
+					"_id": "5f5f54cf6bdad616ad46d640",
+					"_parent": "5f5f41f56760b4138443b352",
+					"_props": {
+						"filters": [],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": false,
+			"RigLayoutName": "Thunder_compl",
 			"Durability": 0,
 			"MaxDurability": 0,
 			"armorZone": [],
@@ -4944,8 +4944,8 @@
 			"Grids": [
 				{
 					"_name": "1",
-					"_id": "61bcc89aef0f505f0c6cd0fe",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fe7",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -4968,8 +4968,8 @@
 				},
 				{
 					"_name": "2",
-					"_id": "61bcc89aef0f505f0c6cd0ff",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fe8",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -4992,8 +4992,8 @@
 				},
 				{
 					"_name": "3",
-					"_id": "61bcc89aef0f505f0c6cd100",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fe9",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -5016,8 +5016,8 @@
 				},
 				{
 					"_name": "4",
-					"_id": "61bcc89aef0f505f0c6cd101",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fea",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -5030,7 +5030,7 @@
 							}
 						],
 						"cellsH": 1,
-						"cellsV": 1,
+						"cellsV": 2,
 						"minCount": 0,
 						"maxCount": 0,
 						"maxWeight": 0,
@@ -5040,8 +5040,8 @@
 				},
 				{
 					"_name": "5",
-					"_id": "61bcc89aef0f505f0c6cd102",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628feb",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -5054,7 +5054,7 @@
 							}
 						],
 						"cellsH": 1,
-						"cellsV": 1,
+						"cellsV": 2,
 						"minCount": 0,
 						"maxCount": 0,
 						"maxWeight": 0,
@@ -5064,8 +5064,8 @@
 				},
 				{
 					"_name": "6",
-					"_id": "61bcc89aef0f505f0c6cd103",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fec",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -5088,8 +5088,8 @@
 				},
 				{
 					"_name": "7",
-					"_id": "61bcc89aef0f505f0c6cd104",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fed",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -5112,8 +5112,32 @@
 				},
 				{
 					"_name": "8",
-					"_id": "61bcc89bef0f505f0c6cd105",
-					"_parent": "61bcc89aef0f505f0c6cd0fc",
+					"_id": "5c0e746986f7741453628fee",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 2,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "9",
+					"_id": "5c0e746986f7741453628fef",
+					"_parent": "5c0e746986f7741453628fe5",
 					"_props": {
 						"filters": [
 							{
@@ -5140,7 +5164,7 @@
 			"CantRemoveFromSlotsDuringRaid": [],
 			"SearchSound": "looting_body_extended",
 			"BlocksArmorVest": true,
-			"RigLayoutName": "Strandhogg",
+			"RigLayoutName": "TV-110",
 			"Durability": 45,
 			"MaxDurability": 45,
 			"armorZone": [
@@ -5692,176 +5716,6 @@
 		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
 	{
-		"_id": "5fd4c4fa16cac650092f6771",
-		"_name": "item_equipment_rig_idea",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "BEAR Rig 6h112",
-			"ShortName": "Rig 6h112",
-			"Description": "Rig 6h112",
-			"Weight": 0.22,
-			"BackgroundColor": "default",
-			"Width": 3,
-			"Height": 2,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_idea/item_equipment_rig_idea.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "5fd4c4fa16cac650092f6773",
-					"_parent": "5fd4c4fa16cac650092f6771",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "5fd4c4fa16cac650092f6774",
-					"_parent": "5fd4c4fa16cac650092f6771",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "5fd4c4fa16cac650092f6775",
-					"_parent": "5fd4c4fa16cac650092f6771",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "5fd4c4fa16cac650092f6776",
-					"_parent": "5fd4c4fa16cac650092f6771",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": false,
-			"RigLayoutName": "bank_robber",
-			"Durability": 0,
-			"MaxDurability": 0,
-			"armorZone": [],
-			"armorClass": 0,
-			"speedPenaltyPercent": 0,
-			"mousePenalty": 0,
-			"weaponErgonomicPenalty": 0,
-			"BluntThroughput": 0,
-			"ArmorMaterial": "UHMWPE"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
 		"_id": "603648ff5a45383c122086ac",
 		"_name": "item_equipment_rig_azimut_black",
 		"_parent": "5448e5284bdc2dcb718b4567",
@@ -6170,6 +6024,176 @@
 			"speedPenaltyPercent": -4,
 			"mousePenalty": 0,
 			"weaponErgonomicPenalty": -5,
+			"BluntThroughput": 0,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
+	},
+	{
+		"_id": "5fd4c4fa16cac650092f6771",
+		"_name": "item_equipment_rig_idea",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "BEAR Rig 6h112",
+			"ShortName": "Rig 6h112",
+			"Description": "Rig 6h112",
+			"Weight": 0.22,
+			"BackgroundColor": "default",
+			"Width": 3,
+			"Height": 2,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_idea/item_equipment_rig_idea.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5fd4c4fa16cac650092f6773",
+					"_parent": "5fd4c4fa16cac650092f6771",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5fd4c4fa16cac650092f6774",
+					"_parent": "5fd4c4fa16cac650092f6771",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5fd4c4fa16cac650092f6775",
+					"_parent": "5fd4c4fa16cac650092f6771",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5fd4c4fa16cac650092f6776",
+					"_parent": "5fd4c4fa16cac650092f6771",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": false,
+			"RigLayoutName": "bank_robber",
+			"Durability": 0,
+			"MaxDurability": 0,
+			"armorZone": [],
+			"armorClass": 0,
+			"speedPenaltyPercent": 0,
+			"mousePenalty": 0,
+			"weaponErgonomicPenalty": 0,
 			"BluntThroughput": 0,
 			"ArmorMaterial": "UHMWPE"
 		},
@@ -7072,274 +7096,6 @@
 		"_proto": "5648a69d4bdc2ded0b8b457b"
 	},
 	{
-		"_id": "61bc85697113f767765c7fe7",
-		"_name": "item_equipment_rig_mmac",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "tactec",
-			"ShortName": "tactec",
-			"Description": "tactec",
-			"Weight": 7.2,
-			"BackgroundColor": "default",
-			"Width": 3,
-			"Height": 3,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_mmac/item_equipment_rig_mmac.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 660,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": false,
-			"CanRequireOnRagfair": false,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "61bc85697113f767765c7fe9",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "61bc85697113f767765c7fea",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "61bc85697113f767765c7feb",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "61bc85697113f767765c7fec",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "5",
-					"_id": "61bc85697113f767765c7fed",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "6",
-					"_id": "61bc85697113f767765c7fee",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "7",
-					"_id": "61bc85697113f767765c7fef",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "8",
-					"_id": "61bc85697113f767765c7ff0",
-					"_parent": "61bc85697113f767765c7fe7",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": true,
-			"RigLayoutName": "mmac",
-			"Durability": 40,
-			"MaxDurability": 40,
-			"armorZone": [
-				"Chest"
-			],
-			"armorClass": 4,
-			"speedPenaltyPercent": -7,
-			"mousePenalty": -5,
-			"weaponErgonomicPenalty": -7,
-			"BluntThroughput": 0.22,
-			"ArmorMaterial": "UHMWPE"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
 		"_id": "5d5d85c586f774279a21cbdb",
 		"_name": "item_equipment_rig_d3crx",
 		"_parent": "5448e5284bdc2dcb718b4567",
@@ -7650,6 +7406,760 @@
 			"weaponErgonomicPenalty": 0,
 			"BluntThroughput": 0,
 			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
+	},
+	{
+		"_id": "61bc85697113f767765c7fe7",
+		"_name": "item_equipment_rig_mmac",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "tactec",
+			"ShortName": "tactec",
+			"Description": "tactec",
+			"Weight": 7.2,
+			"BackgroundColor": "default",
+			"Width": 3,
+			"Height": 3,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_mmac/item_equipment_rig_mmac.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 660,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": false,
+			"CanRequireOnRagfair": false,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5c0e746986f7741453628fe7",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5c0e746986f7741453628fe8",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5c0e746986f7741453628fe9",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5c0e746986f7741453628fea",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "5",
+					"_id": "5c0e746986f7741453628feb",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "6",
+					"_id": "5c0e746986f7741453628fec",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "7",
+					"_id": "5c0e746986f7741453628fed",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "8",
+					"_id": "5c0e746986f7741453628fee",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 2,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "9",
+					"_id": "5c0e746986f7741453628fef",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 2,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": true,
+			"RigLayoutName": "TV-110",
+			"Durability": 40,
+			"MaxDurability": 40,
+			"armorZone": [
+				"Chest"
+			],
+			"armorClass": 4,
+			"speedPenaltyPercent": -7,
+			"mousePenalty": -5,
+			"weaponErgonomicPenalty": -7,
+			"BluntThroughput": 0.22,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
+	},
+	{
+		"_id": "5e4abc1f86f774069619fbaa",
+		"_name": "item_equipment_rig_bankrobber",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "BEAR Rig 6h112",
+			"ShortName": "Rig 6h112",
+			"Description": "Rig 6h112",
+			"Weight": 0.7,
+			"BackgroundColor": "default",
+			"Width": 3,
+			"Height": 2,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_bankrobber/cr_bankrobber.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5e4abc1f86f774069619fbac",
+					"_parent": "5e4abc1f86f774069619fbaa",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5e4abc1f86f774069619fbad",
+					"_parent": "5e4abc1f86f774069619fbaa",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5e4abc1f86f774069619fbae",
+					"_parent": "5e4abc1f86f774069619fbaa",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5e4abc1f86f774069619fbaf",
+					"_parent": "5e4abc1f86f774069619fbaa",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": false,
+			"RigLayoutName": "bank_robber",
+			"Durability": 0,
+			"MaxDurability": 0,
+			"armorZone": [],
+			"armorClass": 0,
+			"speedPenaltyPercent": 0,
+			"mousePenalty": 0,
+			"weaponErgonomicPenalty": 0,
+			"BluntThroughput": 0,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
+	},
+	{
+		"_id": "5c0e746986f7741453628fe5",
+		"_name": "item_equipment_rig_tv110",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "tactec",
+			"ShortName": "tactec",
+			"Description": "tactec",
+			"Weight": 10.3,
+			"BackgroundColor": "default",
+			"Width": 4,
+			"Height": 3,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_tv110/item_equipment_rig_tv110.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 780,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": false,
+			"CanRequireOnRagfair": false,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5c0e746986f7741453628fe7",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5c0e746986f7741453628fe8",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5c0e746986f7741453628fe9",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5c0e746986f7741453628fea",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "5",
+					"_id": "5c0e746986f7741453628feb",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "6",
+					"_id": "5c0e746986f7741453628fec",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "7",
+					"_id": "5c0e746986f7741453628fed",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "8",
+					"_id": "5c0e746986f7741453628fee",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 2,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "9",
+					"_id": "5c0e746986f7741453628fef",
+					"_parent": "5c0e746986f7741453628fe5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 2,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": true,
+			"RigLayoutName": "TV-110",
+			"Durability": 85,
+			"MaxDurability": 85,
+			"armorZone": [
+				"Chest"
+			],
+			"armorClass": 4,
+			"speedPenaltyPercent": -8,
+			"mousePenalty": -4,
+			"weaponErgonomicPenalty": -5,
+			"BluntThroughput": 0.24,
+			"ArmorMaterial": "ArmoredSteel"
 		},
 		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
@@ -8504,468 +9014,6 @@
 		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
 	{
-		"_id": "5c0e746986f7741453628fe5",
-		"_name": "item_equipment_rig_tv110",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "tactec",
-			"ShortName": "tactec",
-			"Description": "tactec",
-			"Weight": 10.3,
-			"BackgroundColor": "default",
-			"Width": 4,
-			"Height": 3,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_tv110/item_equipment_rig_tv110.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 780,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": false,
-			"CanRequireOnRagfair": false,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "5c0e746986f7741453628fe7",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 3,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "5c0e746986f7741453628fe8",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 3,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "5c0e746986f7741453628fe9",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 3,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "5c0e746986f7741453628fea",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "5",
-					"_id": "5c0e746986f7741453628feb",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "6",
-					"_id": "5c0e746986f7741453628fec",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "7",
-					"_id": "5c0e746986f7741453628fed",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "8",
-					"_id": "5c0e746986f7741453628fee",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 2,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "9",
-					"_id": "5c0e746986f7741453628fef",
-					"_parent": "5c0e746986f7741453628fe5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 2,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": true,
-			"RigLayoutName": "TV-110",
-			"Durability": 85,
-			"MaxDurability": 85,
-			"armorZone": [
-				"Chest"
-			],
-			"armorClass": 4,
-			"speedPenaltyPercent": -8,
-			"mousePenalty": -4,
-			"weaponErgonomicPenalty": -5,
-			"BluntThroughput": 0.24,
-			"ArmorMaterial": "ArmoredSteel"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
-		"_id": "5e4abc1f86f774069619fbaa",
-		"_name": "item_equipment_rig_bankrobber",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "BEAR Rig 6h112",
-			"ShortName": "Rig 6h112",
-			"Description": "Rig 6h112",
-			"Weight": 0.7,
-			"BackgroundColor": "default",
-			"Width": 3,
-			"Height": 2,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_bankrobber/cr_bankrobber.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "5e4abc1f86f774069619fbac",
-					"_parent": "5e4abc1f86f774069619fbaa",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "5e4abc1f86f774069619fbad",
-					"_parent": "5e4abc1f86f774069619fbaa",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "5e4abc1f86f774069619fbae",
-					"_parent": "5e4abc1f86f774069619fbaa",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "5e4abc1f86f774069619fbaf",
-					"_parent": "5e4abc1f86f774069619fbaa",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": false,
-			"RigLayoutName": "bank_robber",
-			"Durability": 0,
-			"MaxDurability": 0,
-			"armorZone": [],
-			"armorClass": 0,
-			"speedPenaltyPercent": 0,
-			"mousePenalty": 0,
-			"weaponErgonomicPenalty": 0,
-			"BluntThroughput": 0,
-			"ArmorMaterial": "UHMWPE"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
 		"_id": "5ab8dced86f774646209ec87",
 		"_name": "ana_tactical_m2",
 		"_parent": "5448e5284bdc2dcb718b4567",
@@ -9257,397 +9305,6 @@
 			"ArmorMaterial": "Titan"
 		},
 		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
-		"_id": "5c0e446786f7742013381639",
-		"_name": "item_equipment_rig_6b5_flora",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "ANA Tactical m2",
-			"ShortName": "ANA m2",
-			"Description": "ANA Tactical m2",
-			"Weight": 12.2,
-			"BackgroundColor": "default",
-			"Width": 3,
-			"Height": 4,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/armor_6b5/item_equipment_rig_6b5_flora.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 10,
-			"HideEntrails": true,
-			"RepairCost": 550,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "5c0e446786f774201338163b",
-					"_parent": "5c0e446786f7742013381639",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "5c0e446786f774201338163c",
-					"_parent": "5c0e446786f7742013381639",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "5c0e446786f774201338163d",
-					"_parent": "5c0e446786f7742013381639",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "5c0e446786f774201338163e",
-					"_parent": "5c0e446786f7742013381639",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "5",
-					"_id": "5c0e446786f774201338163f",
-					"_parent": "5c0e446786f7742013381639",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "6",
-					"_id": "5c0e446786f7742013381640",
-					"_parent": "5c0e446786f7742013381639",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": true,
-			"RigLayoutName": "6b5",
-			"Durability": 50,
-			"MaxDurability": 50,
-			"armorZone": [
-				"Chest",
-				"Stomach"
-			],
-			"armorClass": 4,
-			"speedPenaltyPercent": -14,
-			"mousePenalty": -7,
-			"weaponErgonomicPenalty": -12,
-			"BluntThroughput": 0.255,
-			"ArmorMaterial": "Ceramic"
-		},
-		"_proto": "544a5caa4bdc2d1a388b4568"
-	},
-	{
-		"_id": "6034d0230ca681766b6a0fb5",
-		"_name": "item_equipment_rig_cs_assault",
-		"_parent": "5448e5284bdc2dcb718b4567",
-		"_type": "Item",
-		"_props": {
-			"Name": "Wild Vest",
-			"ShortName": "Wild Vest",
-			"Description": "Wild Vest",
-			"Weight": 0.75,
-			"BackgroundColor": "default",
-			"Width": 2,
-			"Height": 3,
-			"StackMaxSize": 1,
-			"ItemSound": "gear_generic",
-			"Prefab": {
-				"path": "assets/content/items/equipment/rig_cs_assault/item_equipment_rig_cs_assault.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 2,
-			"HideEntrails": true,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [
-				{
-					"_name": "1",
-					"_id": "6034d0230ca681766b6a0fb7",
-					"_parent": "6034d0230ca681766b6a0fb5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 3,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "2",
-					"_id": "6034d0230ca681766b6a0fb8",
-					"_parent": "6034d0230ca681766b6a0fb5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "3",
-					"_id": "6034d0230ca681766b6a0fb9",
-					"_parent": "6034d0230ca681766b6a0fb5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "4",
-					"_id": "6034d0230ca681766b6a0fba",
-					"_parent": "6034d0230ca681766b6a0fb5",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 3,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				}
-			],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": false,
-			"RigLayoutName": "mil_tac",
-			"Durability": 0,
-			"MaxDurability": 0,
-			"armorZone": [],
-			"armorClass": 0,
-			"speedPenaltyPercent": 0,
-			"mousePenalty": 0,
-			"weaponErgonomicPenalty": 0,
-			"BluntThroughput": 0,
-			"ArmorMaterial": "UHMWPE"
-		},
-		"_proto": "5648a69d4bdc2ded0b8b457b"
 	},
 	{
 		"_id": "5ab8dab586f77441cd04f2a2",
@@ -9988,22 +9645,22 @@
 		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
 	{
-		"_id": "5fd4c60f875c30179f5d04c2",
-		"_name": "item_equipment_rig_bssmk1",
+		"_id": "5c0e446786f7742013381639",
+		"_name": "item_equipment_rig_6b5_flora",
 		"_parent": "5448e5284bdc2dcb718b4567",
 		"_type": "Item",
 		"_props": {
-			"Name": "commando",
-			"ShortName": "commando",
-			"Description": "commando",
-			"Weight": 1,
+			"Name": "ANA Tactical m2",
+			"ShortName": "ANA m2",
+			"Description": "ANA Tactical m2",
+			"Weight": 12.2,
 			"BackgroundColor": "default",
 			"Width": 3,
-			"Height": 3,
+			"Height": 4,
 			"StackMaxSize": 1,
 			"ItemSound": "gear_generic",
 			"Prefab": {
-				"path": "assets/content/items/equipment/rig_bssmk1/item_equipment_rig_bssmk1.bundle",
+				"path": "assets/content/items/equipment/armor_6b5/item_equipment_rig_6b5_flora.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -10023,7 +9680,7 @@
 			"LootExperience": 20,
 			"ExamineExperience": 10,
 			"HideEntrails": true,
-			"RepairCost": 0,
+			"RepairCost": 550,
 			"RepairSpeed": 0,
 			"ExtraSizeLeft": 0,
 			"ExtraSizeRight": 0,
@@ -10044,8 +9701,8 @@
 			"Grids": [
 				{
 					"_name": "1",
-					"_id": "5fd4c60f875c30179f5d04c4",
-					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_id": "5c0e446786f774201338163b",
+					"_parent": "5c0e446786f7742013381639",
 					"_props": {
 						"filters": [
 							{
@@ -10068,8 +9725,8 @@
 				},
 				{
 					"_name": "2",
-					"_id": "5fd4c60f875c30179f5d04c5",
-					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_id": "5c0e446786f774201338163c",
+					"_parent": "5c0e446786f7742013381639",
 					"_props": {
 						"filters": [
 							{
@@ -10092,8 +9749,8 @@
 				},
 				{
 					"_name": "3",
-					"_id": "5fd4c60f875c30179f5d04c6",
-					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_id": "5c0e446786f774201338163d",
+					"_parent": "5c0e446786f7742013381639",
 					"_props": {
 						"filters": [
 							{
@@ -10116,8 +9773,8 @@
 				},
 				{
 					"_name": "4",
-					"_id": "5fd4c60f875c30179f5d04c7",
-					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_id": "5c0e446786f774201338163e",
+					"_parent": "5c0e446786f7742013381639",
 					"_props": {
 						"filters": [
 							{
@@ -10140,8 +9797,8 @@
 				},
 				{
 					"_name": "5",
-					"_id": "5fd4c60f875c30179f5d04c8",
-					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_id": "5c0e446786f774201338163f",
+					"_parent": "5c0e446786f7742013381639",
 					"_props": {
 						"filters": [
 							{
@@ -10154,7 +9811,7 @@
 							}
 						],
 						"cellsH": 1,
-						"cellsV": 2,
+						"cellsV": 1,
 						"minCount": 0,
 						"maxCount": 0,
 						"maxWeight": 0,
@@ -10164,104 +9821,8 @@
 				},
 				{
 					"_name": "6",
-					"_id": "5fd4c60f875c30179f5d04c9",
-					"_parent": "5fd4c60f875c30179f5d04c2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 2,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "7",
-					"_id": "5fd4c60f875c30179f5d04ca",
-					"_parent": "5fd4c60f875c30179f5d04c2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "8",
-					"_id": "5fd4c60f875c30179f5d04cb",
-					"_parent": "5fd4c60f875c30179f5d04c2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "9",
-					"_id": "5fd4c60f875c30179f5d04cc",
-					"_parent": "5fd4c60f875c30179f5d04c2",
-					"_props": {
-						"filters": [
-							{
-								"Filter": [
-									"54009119af1c881c07000029"
-								],
-								"ExcludedFilter": [
-									"5448bf274bdc2dfc2f8b456a"
-								]
-							}
-						],
-						"cellsH": 1,
-						"cellsV": 1,
-						"minCount": 0,
-						"maxCount": 0,
-						"maxWeight": 0,
-						"isSortingTable": false
-					},
-					"_proto": "55d329c24bdc2d892f8b4567"
-				},
-				{
-					"_name": "10",
-					"_id": "5fd4c60f875c30179f5d04cd",
-					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_id": "5c0e446786f7742013381640",
+					"_parent": "5c0e446786f7742013381639",
 					"_props": {
 						"filters": [
 							{
@@ -10287,17 +9848,20 @@
 			"CanPutIntoDuringTheRaid": true,
 			"CantRemoveFromSlotsDuringRaid": [],
 			"SearchSound": "looting_body_extended",
-			"BlocksArmorVest": false,
-			"RigLayoutName": "D3crx",
-			"Durability": 0,
-			"MaxDurability": 0,
-			"armorZone": [],
-			"armorClass": 0,
-			"speedPenaltyPercent": 0,
-			"mousePenalty": 0,
-			"weaponErgonomicPenalty": 0,
-			"BluntThroughput": 0,
-			"ArmorMaterial": "UHMWPE"
+			"BlocksArmorVest": true,
+			"RigLayoutName": "6b5",
+			"Durability": 50,
+			"MaxDurability": 50,
+			"armorZone": [
+				"Chest",
+				"Stomach"
+			],
+			"armorClass": 4,
+			"speedPenaltyPercent": -14,
+			"mousePenalty": -7,
+			"weaponErgonomicPenalty": -12,
+			"BluntThroughput": 0.255,
+			"ArmorMaterial": "Ceramic"
 		},
 		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
@@ -10664,6 +10228,490 @@
 			"BluntThroughput": 0.225,
 			"ArmorMaterial": "Combined"
 		}
+	},
+	{
+		"_id": "6034d0230ca681766b6a0fb5",
+		"_name": "item_equipment_rig_cs_assault",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "Wild Vest",
+			"ShortName": "Wild Vest",
+			"Description": "Wild Vest",
+			"Weight": 0.75,
+			"BackgroundColor": "default",
+			"Width": 2,
+			"Height": 3,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_cs_assault/item_equipment_rig_cs_assault.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 2,
+			"HideEntrails": true,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "6034d0230ca681766b6a0fb7",
+					"_parent": "6034d0230ca681766b6a0fb5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "6034d0230ca681766b6a0fb8",
+					"_parent": "6034d0230ca681766b6a0fb5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "6034d0230ca681766b6a0fb9",
+					"_parent": "6034d0230ca681766b6a0fb5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "6034d0230ca681766b6a0fba",
+					"_parent": "6034d0230ca681766b6a0fb5",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 3,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": false,
+			"RigLayoutName": "mil_tac",
+			"Durability": 0,
+			"MaxDurability": 0,
+			"armorZone": [],
+			"armorClass": 0,
+			"speedPenaltyPercent": 0,
+			"mousePenalty": 0,
+			"weaponErgonomicPenalty": 0,
+			"BluntThroughput": 0,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "5648a69d4bdc2ded0b8b457b"
+	},
+	{
+		"_id": "5fd4c60f875c30179f5d04c2",
+		"_name": "item_equipment_rig_bssmk1",
+		"_parent": "5448e5284bdc2dcb718b4567",
+		"_type": "Item",
+		"_props": {
+			"Name": "commando",
+			"ShortName": "commando",
+			"Description": "commando",
+			"Weight": 1,
+			"BackgroundColor": "default",
+			"Width": 3,
+			"Height": 3,
+			"StackMaxSize": 1,
+			"ItemSound": "gear_generic",
+			"Prefab": {
+				"path": "assets/content/items/equipment/rig_bssmk1/item_equipment_rig_bssmk1.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 10,
+			"HideEntrails": true,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [
+				{
+					"_name": "1",
+					"_id": "5fd4c60f875c30179f5d04c4",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "2",
+					"_id": "5fd4c60f875c30179f5d04c5",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "3",
+					"_id": "5fd4c60f875c30179f5d04c6",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "4",
+					"_id": "5fd4c60f875c30179f5d04c7",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "5",
+					"_id": "5fd4c60f875c30179f5d04c8",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "6",
+					"_id": "5fd4c60f875c30179f5d04c9",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 2,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "7",
+					"_id": "5fd4c60f875c30179f5d04ca",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "8",
+					"_id": "5fd4c60f875c30179f5d04cb",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "9",
+					"_id": "5fd4c60f875c30179f5d04cc",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				},
+				{
+					"_name": "10",
+					"_id": "5fd4c60f875c30179f5d04cd",
+					"_parent": "5fd4c60f875c30179f5d04c2",
+					"_props": {
+						"filters": [
+							{
+								"Filter": [
+									"54009119af1c881c07000029"
+								],
+								"ExcludedFilter": [
+									"5448bf274bdc2dfc2f8b456a"
+								]
+							}
+						],
+						"cellsH": 1,
+						"cellsV": 1,
+						"minCount": 0,
+						"maxCount": 0,
+						"maxWeight": 0,
+						"isSortingTable": false
+					},
+					"_proto": "55d329c24bdc2d892f8b4567"
+				}
+			],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"SearchSound": "looting_body_extended",
+			"BlocksArmorVest": false,
+			"RigLayoutName": "D3crx",
+			"Durability": 0,
+			"MaxDurability": 0,
+			"armorZone": [],
+			"armorClass": 0,
+			"speedPenaltyPercent": 0,
+			"mousePenalty": 0,
+			"weaponErgonomicPenalty": 0,
+			"BluntThroughput": 0,
+			"ArmorMaterial": "UHMWPE"
+		},
+		"_proto": "544a5caa4bdc2d1a388b4568"
 	},
 	{
 		"_id": "6040dd4ddcf9592f401632d2",

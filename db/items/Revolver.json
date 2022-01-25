@@ -164,7 +164,7 @@
 			"AdjustCollimatorsToTrajectory": false,
 			"shotgunDispersion": 20,
 			"Chambers": [],
-			"CameraRecoil": 0.176,
+			"CameraRecoil": 0.22,
 			"CameraSnap": 3.5,
 			"ReloadMode": "InternalMagazine",
 			"CenterOfImpact": 0.48,

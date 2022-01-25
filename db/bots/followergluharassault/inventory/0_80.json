@@ -15,7 +15,11 @@
       "5aa7e276e5b5b000171d0647"
     ],
     "Earpiece": [],
-    "FaceCover": ["5ab8f4ff86f77431c60d91ba", "5bd073a586f7747e6f135799", "5b432c305acfc40019478128"],
+    "FaceCover": [
+      "5ab8f4ff86f77431c60d91ba",
+      "5bd073a586f7747e6f135799",
+      "5b432c305acfc40019478128"
+    ],
     "ArmorVest": [
       "5c0e53c886f7747fa54205c7",
       "5b44cf1486f77431723e3d05",
@@ -29,7 +33,7 @@
       "5ca21c6986f77479963115a7"
     ],
     "Eyewear": ["5b432be65acfc433000ed01f", "59e770b986f7742cbd762754"],
-    "ArmBand": [],
+    "ArmBand": ["619bde3dc9546643a67df6f2"],
     "TacticalVest": [
       "5ab8dab586f77441cd04f2a2",
       "592c2d1a86f7746dbe2af32a",
@@ -58,7 +62,11 @@
       "5447a9cd4bdc2dbd208b4567",
       "5beed0f50db834001c062b12"
     ],
-    "SecondPrimaryWeapon": ["56dee2bdd2720bc8328b4567", "57d14d2524597714373db789", "54491c4f4bdc2db1078b4568"],
+    "SecondPrimaryWeapon": [
+      "56dee2bdd2720bc8328b4567",
+      "57d14d2524597714373db789",
+      "54491c4f4bdc2db1078b4568"
+    ],
     "Holster": [],
     "Scabbard": []
   },
@@ -92,7 +100,10 @@
       "mod_barrel": ["56deec93d2720bec348b4568"]
     },
     "55d48ebc4bdc2d8c2f8b456c": {
-      "mod_tactical_001": ["560d657b4bdc2da74d8b4572", "5b3a337e5acfc4704b4a19a0"]
+      "mod_tactical_001": [
+        "560d657b4bdc2da74d8b4572",
+        "5b3a337e5acfc4704b4a19a0"
+      ]
     },
     "5aaa4194e5b5b055d06310a5": {
       "cartridges": ["56dff061d2720bb5668b4567"]

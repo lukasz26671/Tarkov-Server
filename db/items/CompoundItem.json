@@ -1,25 +1,10 @@
 [
 	{
-		"_id": "543be5f84bdc2dd4348b456a",
-		"_name": "Equipment",
+		"_id": "5795f317245977243854e041",
+		"_name": "SimpleContainer",
 		"_parent": "566162e44bdc2d3f298b4573",
 		"_type": "Node",
 		"_props": {
-			"BlocksEarpiece": false,
-			"BlocksEyewear": false,
-			"BlocksHeadwear": false,
-			"BlocksFaceCover": false
-		}
-	},
-	{
-		"_id": "5671435f4bdc2d96058b4569",
-		"_name": "LockableContainer",
-		"_parent": "566162e44bdc2d3f298b4573",
-		"_type": "Node",
-		"_props": {
-			"KeyIds": [
-				"543be5e94bdc2df1348b4568"
-			],
 			"TagColor": 0,
 			"TagName": ""
 		}
@@ -30,30 +15,6 @@
 		"_parent": "566162e44bdc2d3f298b4573",
 		"_type": "Node",
 		"_props": {}
-	},
-	{
-		"_id": "55d720f24bdc2d88028b456d",
-		"_name": "Inventory",
-		"_parent": "566162e44bdc2d3f298b4573",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "566abbb64bdc2d144c8b457d",
-		"_name": "Stash",
-		"_parent": "566162e44bdc2d3f298b4573",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "5795f317245977243854e041",
-		"_name": "SimpleContainer",
-		"_parent": "566162e44bdc2d3f298b4573",
-		"_type": "Node",
-		"_props": {
-			"TagColor": 0,
-			"TagName": ""
-		}
 	},
 	{
 		"_id": "5448fe124bdc2da5018b4567",
@@ -78,6 +39,32 @@
 			"SightingRange": 0,
 			"DoubleActionAccuracyPenaltyMult": 1
 		}
+	},
+	{
+		"_id": "566abbb64bdc2d144c8b457d",
+		"_name": "Stash",
+		"_parent": "566162e44bdc2d3f298b4573",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
+		"_id": "543be5f84bdc2dd4348b456a",
+		"_name": "Equipment",
+		"_parent": "566162e44bdc2d3f298b4573",
+		"_type": "Node",
+		"_props": {
+			"BlocksEarpiece": false,
+			"BlocksEyewear": false,
+			"BlocksHeadwear": false,
+			"BlocksFaceCover": false
+		}
+	},
+	{
+		"_id": "55d720f24bdc2d88028b456d",
+		"_name": "Inventory",
+		"_parent": "566162e44bdc2d3f298b4573",
+		"_type": "Node",
+		"_props": {}
 	},
 	{
 		"_id": "5422acb9af1c889c16000029",
@@ -238,6 +225,19 @@
 			"CantRemoveFromSlotsDuringRaid": [],
 			"SearchSound": "cashregister_looting",
 			"BlocksArmorVest": false
+		}
+	},
+	{
+		"_id": "5671435f4bdc2d96058b4569",
+		"_name": "LockableContainer",
+		"_parent": "566162e44bdc2d3f298b4573",
+		"_type": "Node",
+		"_props": {
+			"KeyIds": [
+				"543be5e94bdc2df1348b4568"
+			],
+			"TagColor": 0,
+			"TagName": ""
 		}
 	}
 ]

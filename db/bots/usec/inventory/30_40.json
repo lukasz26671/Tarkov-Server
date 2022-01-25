@@ -45,7 +45,7 @@
       "5c1a1cc52e221602b3136e3d",
       "557ff21e4bdc2d89578b4586"
     ],
-    "ArmBand": ["5b3f3af486f774679e752c1f"],
+    "ArmBand": ["619bdfd4c9546643a67df6fa"],
     "TacticalVest": [
       "5c0e3eb886f7742015526062",
       "5d5d646386f7742797261fd9",
@@ -263,11 +263,11 @@
     },
     "5a34fae7c4a2826c6e06d760": {
       "mod_muzzle": ["5c878e9d2e2216000f201903", "5d026791d7ad1a04a067ea63", "5dfa3cd1b33c0951220c079b"],
-      "mod_gas_block": ["5d00ec68d7ad1a04a067e5be"]
+      "mod_gas_block": ["5a34fbadc4a28200741e230a"]
     },
     "5a34f7f1c4a2826c6e06d75d": {
       "mod_muzzle": ["5c878e9d2e2216000f201903", "5d026791d7ad1a04a067ea63", "5dfa3cd1b33c0951220c079b"],
-      "mod_gas_block": ["5d00ec68d7ad1a04a067e5be"]
+      "mod_gas_block": ["5a34fbadc4a28200741e230a"]
     },
 
     "5df8ce05b11454561e39243b": {
@@ -455,10 +455,7 @@
       "mod_barrel": ["55d3632e4bdc2d972f8b4569"],
       "mod_handguard": [
         "5b2cfa535acfc432ff4db7a0",
-        "5c9a25172e2216000f20314e",
         "5d122e7bd7ad1a07102d6d7f",
-        "5ea16ada09aa976f2e7a51be",
-        "5ea16acdfadf1d18c87b0784",
         "595cf16b86f77427440c32e2"
       ]
     },
@@ -682,7 +679,7 @@
       "mod_equipment_001": ["5c1793902e221602b21d3de2"]
     },
     "5c17a7ed2e2216152142459c": {
-      "mod_equipment_000": ["5e01f37686f774773c6f6c15", "5e00cdd986f7747473332240", "5a16b672fcdbcb001912fa83"],
+      "mod_equipment_000": ["5a16b672fcdbcb001912fa83"],
       "mod_nvg": ["5ea058e01dbce517f324b3e2", "5f60bf4558eff926626a60f2", "5a16b8a9fcdbcb00165aa6ca"],
       "mod_mount": ["5a398b75c4a282000a51a266", "5a398ab9c4a282000c5a9842"],
       "mod_equipment_001": ["5c178a942e22164bef5ceca3", "5c1793902e221602b21d3de2"]

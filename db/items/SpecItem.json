@@ -177,13 +177,6 @@
 		"_proto": "544fb5454bdc2df8738b456a"
 	},
 	{
-		"_id": "5f4fbaaca5573a5ac31db429",
-		"_name": "Compass",
-		"_parent": "5447e0e74bdc2d3c308b4567",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
 		"_id": "61605ddea09d851a0a0c1bbc",
 		"_name": "PortableRangeFinder",
 		"_parent": "5447e0e74bdc2d3c308b4567",
@@ -191,6 +184,13 @@
 		"_props": {
 			"MaxOpticZoom": 0
 		}
+	},
+	{
+		"_id": "5f4fbaaca5573a5ac31db429",
+		"_name": "Compass",
+		"_parent": "5447e0e74bdc2d3c308b4567",
+		"_type": "Node",
+		"_props": {}
 	},
 	{
 		"_id": "544fb5454bdc2df8738b456a",
