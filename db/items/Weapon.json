@@ -1,5 +1,12 @@
 [
 	{
+		"_id": "5447b6254bdc2dc3278b4568",
+		"_name": "SniperRifle",
+		"_parent": "5422acb9af1c889c16000029",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
 		"_id": "5447b6094bdc2dc3278b4567",
 		"_name": "Shotgun",
 		"_parent": "5422acb9af1c889c16000029",
@@ -9,8 +16,8 @@
 		}
 	},
 	{
-		"_id": "5447b6254bdc2dc3278b4568",
-		"_name": "SniperRifle",
+		"_id": "5447b6194bdc2d67278b4567",
+		"_name": "MarksmanRifle",
 		"_parent": "5422acb9af1c889c16000029",
 		"_type": "Node",
 		"_props": {}
@@ -30,36 +37,8 @@
 		"_props": {}
 	},
 	{
-		"_id": "5447b5f14bdc2d61278b4567",
-		"_name": "AssaultRifle",
-		"_parent": "5422acb9af1c889c16000029",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "5447bee84bdc2dc3278b4569",
-		"_name": "SpecialWeapon",
-		"_parent": "5422acb9af1c889c16000029",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "5447bedf4bdc2d87278b4568",
-		"_name": "GrenadeLauncher",
-		"_parent": "5422acb9af1c889c16000029",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "617f1ef5e8b54b0998387733",
-		"_name": "Revolver",
-		"_parent": "5422acb9af1c889c16000029",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "5447b6194bdc2d67278b4567",
-		"_name": "MarksmanRifle",
+		"_id": "5447bed64bdc2d97278b4568",
+		"_name": "MachineGun",
 		"_parent": "5422acb9af1c889c16000029",
 		"_type": "Node",
 		"_props": {}
@@ -72,8 +51,29 @@
 		"_props": {}
 	},
 	{
-		"_id": "5447bed64bdc2d97278b4568",
-		"_name": "MachineGun",
+		"_id": "5447b5f14bdc2d61278b4567",
+		"_name": "AssaultRifle",
+		"_parent": "5422acb9af1c889c16000029",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
+		"_id": "5447bedf4bdc2d87278b4568",
+		"_name": "GrenadeLauncher",
+		"_parent": "5422acb9af1c889c16000029",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
+		"_id": "5447bee84bdc2dc3278b4569",
+		"_name": "SpecialWeapon",
+		"_parent": "5422acb9af1c889c16000029",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
+		"_id": "617f1ef5e8b54b0998387733",
+		"_name": "Revolver",
 		"_parent": "5422acb9af1c889c16000029",
 		"_type": "Node",
 		"_props": {}

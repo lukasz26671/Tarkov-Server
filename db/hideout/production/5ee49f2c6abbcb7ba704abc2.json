@@ -20,8 +20,7 @@
 			"type": "Item"
 		}
 	],
-	"productionTime": 14000,
-	"boosters": null,
+	"productionTime": 8000,
 	"endProduct": "573719df2459775a626ccbc2",
 	"continuous": false,
 	"count": 200,

@@ -8,14 +8,13 @@
 			"type": "Area"
 		},
 		{
-			"templateId": "60363c0c92ec1c31037959f5",
+			"templateId": "5b432c305acfc40019478128",
 			"count": 1,
 			"isFunctional": false,
 			"type": "Item"
 		}
 	],
 	"productionTime": 120,
-	"boosters": null,
 	"endProduct": "590c595c86f7747884343ad7",
 	"continuous": false,
 	"count": 1,

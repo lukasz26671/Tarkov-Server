@@ -43,18 +43,6 @@
 					"count": 4,
 					"isFunctional": false,
 					"type": "Item"
-				},
-				{
-					"templateId": "5d1b376e86f774252519444e",
-					"count": 3,
-					"isFunctional": false,
-					"type": "Item"
-				},
-				{
-					"templateId": "5b7c710788a4506dec015957",
-					"count": 1,
-					"isFunctional": false,
-					"type": "Item"
 				}
 			],
 			"bonuses": [
@@ -69,7 +57,7 @@
 				}
 			],
 			"slots": 0,
-			"constructionTime": 288000,
+			"constructionTime": 144000,
 			"description": ""
 		}
 	}

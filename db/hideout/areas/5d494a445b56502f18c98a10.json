@@ -39,14 +39,8 @@
 					"type": "Item"
 				},
 				{
-					"templateId": "5c05300686f7746dce784e5d",
+					"templateId": "59e35de086f7741778269d84",
 					"count": 1,
-					"isFunctional": false,
-					"type": "Item"
-				},
-				{
-					"templateId": "57347cd0245977445a2d6ff1",
-					"count": 5,
 					"isFunctional": false,
 					"type": "Item"
 				}
@@ -74,7 +68,7 @@
 				}
 			],
 			"slots": 0,
-			"constructionTime": 122400,
+			"constructionTime": 108000,
 			"description": ""
 		},
 		"2": {
@@ -112,12 +106,6 @@
 					"count": 5,
 					"isFunctional": false,
 					"type": "Item"
-				},
-				{
-					"templateId": "5d0378d486f77420421a5ff4",
-					"count": 2,
-					"isFunctional": false,
-					"type": "Item"
 				}
 			],
 			"bonuses": [
@@ -134,7 +122,7 @@
 				}
 			],
 			"slots": 0,
-			"constructionTime": 180000,
+			"constructionTime": 151200,
 			"description": ""
 		},
 		"3": {
@@ -177,12 +165,6 @@
 					"count": 10,
 					"isFunctional": false,
 					"type": "Item"
-				},
-				{
-					"templateId": "5d03794386f77420415576f5",
-					"count": 1,
-					"isFunctional": false,
-					"type": "Item"
 				}
 			],
 			"bonuses": [
@@ -199,7 +181,7 @@
 				}
 			],
 			"slots": 0,
-			"constructionTime": 381600,
+			"constructionTime": 345600,
 			"description": ""
 		}
 	}

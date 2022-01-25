@@ -15,15 +15,14 @@
 		},
 		{
 			"templateId": "5d1c774f86f7746d6620f8db",
-			"count": 3,
+			"count": 2,
 			"isFunctional": false,
 			"type": "Item"
 		}
 	],
-	"productionTime": 59920,
-	"boosters": null,
+	"productionTime": 20920,
 	"endProduct": "5a6086ea4f39f99cd479502f",
 	"continuous": false,
-	"count": 80,
+	"count": 300,
 	"productionLimitCount": 0
 }

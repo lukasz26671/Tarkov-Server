@@ -208,9 +208,17 @@ class InsuranceServer {
 function getItemPrice(_tpl) {
     let price = 0;
 
-    if(typeof _database.itemPriceTable[_tpl] != "undefined")
-    {
-      price = _database.itemPriceTable[_tpl];
+    if (typeof (global.templatesById) === "undefined") {
+        global.templatesById = {};
+        global._database.templates.Items.forEach(i => templatesById[i.Id] = i);
+    }
+
+    if (_tpl in templatesById) {
+        let template = templatesById[_tpl];
+        price = template.Price;
+    } else {
+        let item = global._database.items[_tpl];
+        price = item._props.CreditsPrice;
     }
 
     return price;

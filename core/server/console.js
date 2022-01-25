@@ -103,9 +103,6 @@ class ConsoleResponse {
         case "3":
           edition = "Edge Of Darkness";
           break;
-        case "4":
-          edition = "Developer";
-          break;
       }
     }
     if (commandStructure.length == 4) {
