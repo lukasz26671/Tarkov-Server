@@ -1,6 +1,30 @@
 "use strict";
 
+let generatedBots = [];
+
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
 class Controller {
+  constructor(){
+    logger.logError("Called constructor. bots: "+generatedBots.length);
+  }
+
   generatePlayerScav(sessionID) {
     let scavData = bots_f.botHandler.generate({ conditions: [{ Role: "playerScav", Limit: 1, Difficulty: "normal" }] }, sessionID);
     let scavItems = scavData[0].Inventory.items;
@@ -37,13 +61,47 @@ class Controller {
     bot.aid = botId;
     return bot;
   }
-
+  
+//START -----
   generateBot(bot, role, pmcData) {
-    // generate bot
-    const node = global._database.bots[role.toLowerCase()];
+    require('fs').writeFileSync("./dump.json", require('util').inspect(global));
+    //if bot is pmc, we randomize their sides, this affects the profile selection a few lines down.
+    
+    if(role.toLowerCase() == "pmcbot"){
+      let pmcRoleSelect = utility.getRandomInt(1, 2);
+      switch (pmcRoleSelect) {
+        case 1:
+          bot.Info.Side = "Usec";
+          break;
+        case 2:
+          bot.Info.Side = "Bear";
+          break;
+      }
+    }
+    
+    let node = [];
+    //default
+    node = global._database.bots[role.toLowerCase()];
+    
+    if(role.toLowerCase() == "playerscav"){
+      //required
+      node = global._database.bots[role.toLowerCase()];
+    }else{
+      if(role.toLowerCase() == "pmcbot"){
+        //if bot is a pmc, get customized stuff from usec and bear folders
+        node = global._database.bots[bot.Info.Side.toLowerCase()];
+        //logger.logError("bot db: "+JSON.stringify(global._database.bots, null, 2));
+        
+      } 
+    }
+    
+    //require('fs').writeFileSync("./botsDb.json", JSON.stringify(node, null, 2));
 
     bot.Info.Nickname = utility.getArrayValue(node.names);
-    bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
+    bot.Info.Settings.Experience = utility.getRandomInt(
+      node.experience.reward.min,
+      node.experience.reward.max
+    );
     bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
     bot.Health = bots_f.botHandler.generateHealth(node.health);
     bot.Customization.Head = utility.getArrayValue(node.appearance.head);
@@ -66,18 +124,38 @@ class Controller {
       inventoryData = node.inventory[Object.keys(node.inventory)[0]];
     }
 
-    bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation);
+    // The Punisher Role | CQ: this should be changed in the future.
+    /*
+    if (role === "followergluharsnipe") {
+      bot.Info.Settings.Role = "bossTagilla";
+    }    
+    */    
+   
+    bot.Inventory = bots_f.generator.generateInventory(
+      inventoryData,
+      node.chances,
+      node.generation
+    );
 
-    const levelResult = bots_f.botHandler.generateRandomLevel(node.experience.level.min, node.experience.level.max);
+    const levelResult = bots_f.botHandler.generateRandomLevel(
+      node.experience.level.min,
+      node.experience.level.max,
+      pmcData.Info.Level
+    );
     bot.Info.experience = levelResult.exp;
     bot.Info.Level = levelResult.level;
 
-    // add dogtag to PMC's
-    if (role === "usec" || role === "bear") {
+    if(bot.Info.Settings.Role.toLowerCase() == "pmcbot"){
       bot = bots_f.botHandler.generateDogtag(bot);
-      bot.Info.Settings.Role = "pmcBot";
-    }
+    }    
 
+    //debug
+    /*
+    if(role.toLowerCase() == "pmcbot"){
+      bot.Info.Side = "Savage";
+    }
+    */
+   
     // generate new bot ID
     bot = bots_f.botHandler.generateId(bot);
 
@@ -87,41 +165,107 @@ class Controller {
     return bot;
   }
 
+  //if bots generated correctly, then this method should only be called once.
+  //added a global list of bots generated in case it gets called again, for performance reasons.
   generate(info, sessionID) {
+    let count = 0;
     let output = [];
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
+    if(generatedBots.length <= 1){    
     for (const condition of info.conditions) {
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
-        const isPmc = role in global._database.gameplayConfig.bots.pmc.types && utility.getRandomInt(0, 99) < global._database.gameplayConfig.bots.pmc.types[role];
         let bot = utility.wipeDepend(global._database.core.botBase);
         bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
-
+        /*
+        this part of the code is not needed anymore, since we handle it in generateBot
+        const isPmc = role in global._database.gameplayConfig.bots.pmc.types && utility.getRandomInt(0, 99) < global._database.gameplayConfig.bots.pmc.types[role];
         if (isPmc) {
           const pmcSide = utility.getRandomInt(0, 99) < global._database.gameplayConfig.bots.pmc.usecChance ? "Usec" : "Bear";
           bot.Info.Side = pmcSide;
           role = pmcSide.toLowerCase();
         }
-
+        */
         bot = bots_f.botHandler.generateBot(bot, role, pmcData);
-
-        logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
+        //logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
         output.unshift(bot);
+        count++;
       }
     }
+    generatedBots = output;
+    }else{
+      //failsafe part. Should never enter here if everything went right.
+      //This code avoids big stutters and unnecessary bot generation
+      //we don't need to generate thousands anymore, we just need to filter them by role
+      //and generate the ONE needed.
+      logger.logWarning("If you see this, please report in AE discord, or inform CQInmanis about it. [BOT GENERATION]");
+      let matchingBots = [];
+      for(let condition of info.conditions){
+        for(let bot of generatedBots){
+          if(bot.Info.Settings.Role == condition.Role && bot.Info.Settings.BotDifficulty == condition.Difficulty){
+            matchingBots.push(bot);
+          }else{
+            //debug
+          }
+        }
+      }
+      if(matchingBots.length >= 1){
+        //if we actually have matching bots
+        //we pull a random one from the matching list
+        logger.logSuccess("Found matching bot(s)");
+        let randomBot = matchingBots[
+          utility.getRandomInt(0, (matchingBots.length - 1))
+        ];
+        randomBot = bots_f.botHandler.generateBot(randomBot, randomBot.Info.Settings.Role, pmcData);
+        output.unshift(randomBot);
+      }else{
+        //if we don't, we pull a random one from the big list
+        logger.logWarning("No matching bots were found for"+JSON.stringify(info.conditions, null, 2)+", picking a random one.");
+        let randomBot = generatedBots[
+          utility.getRandomInt(0, (generatedBots.length - 1))
+        ];
+        randomBot = bots_f.botHandler.generateBot(randomBot, randomBot.Info.Settings.Role, pmcData);
+        output.unshift(randomBot);
+      }
+    }
+    if(count > 0){
+      logger.logInfo("Generated: "+count+"bots");    }
+    
+    //require('fs').writeFileSync("./botList.json", JSON.stringify(output, null, 2));
 
-    return output;
+    //shuffle entries for extra safety in random generation
+    return shuffle(output);
+    /*
+    logger.logError("Gen: "+output.length);
+    
+    require('fs').writeFileSync("./keputas.json", JSON.stringify(output, null, 2));
+    logger.logError("YaTaban: "+generatedBots.length);
+    logger.logError("Primero: "+JSON.stringify(generatedBots[0].Info, null, 2));
+    logger.logError("Cualquiera: "+JSON.stringify(generatedBots[utility.getRandomInt(0, generatedBots.length)].Info, null, 2));
+    return generatedBots[utility.getRandomInt(0, generatedBots.length)];
+    */
   }
 
-  generateRandomLevel(min, max) {
+  generateRandomLevel(min, max, playerLevel) {
     const expTable = global._database.globals.config.exp.level.exp_table;
     const maxLevel = Math.min(max, expTable.length);
 
+    // limit the bots level to match the player level
+    let limitted_max_level = playerLevel + 5;
+    let limitted_min_level = playerLevel - 5;
+    if (limitted_max_level > maxLevel){
+      limitted_max_level = maxLevel;
+    }
+    if (playerLevel <= 5){
+      limitted_min_level = 1;
+    };
+
     // Get random level based on the exp table.
     let exp = 0;
-    let level = utility.getRandomInt(min, maxLevel);
+
+    let level = utility.getRandomInt(limitted_min_level, limitted_max_level);
 
     for (let i = 0; i < level; i++) {
       exp += expTable[i].exp;
@@ -1007,6 +1151,6 @@ module.exports.generate = controller.generate;
 module.exports.getBotLimit = controller.getBotLimit;
 module.exports.getBotDifficulty = controller.getBotDifficulty;
 module.exports.generatePlayerScav = controller.generatePlayerScav;
-
+module.exports.generatedBots = generatedBots;
 module.exports.generator = new Generator();
 //module.exports.Controller = Controller;

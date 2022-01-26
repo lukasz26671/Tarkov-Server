@@ -7,6 +7,8 @@ class InraidServer {
   }
 
   addPlayer(sessionID, info) {
+    logger.logError("Cleaned BOT LIST");
+    bots_f.generatedBots = [];
     this.players[sessionID] = info;
   }
   getPlayer(sessionID) {
