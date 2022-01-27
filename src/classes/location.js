@@ -103,18 +103,6 @@ const ItemParentsList = [
   "5448e5724bdc2ddf718b4568",
   "5422acb9af1c889c16000029",
 ];
-let _LootContainerNode = [];
-/*
-5cdeb229d7f00c000e7ce174 heavy machine gun
-5d52cc5ba4b9367408500062 automatic grenade launcher
-*/
-function LoadLootContainerNode() {
-  if (_LootContainerNode.length == 0)
-    _LootContainerNode = Object.values(global._database.items).filter(
-      (item) => item._parent === "566965d44bdc2d814c8b4571",
-    );
-  return _LootContainerNode;
-}
 
 function GenerateDynamicLootSpawnTable(lootData, mapName) {
   let containsSpawns = [];
@@ -145,7 +133,7 @@ function GenerateDynamicLootSpawnTable(lootData, mapName) {
         for (const loot in lootList) {
           if (ItemParentsList.includes(lootList[loot])) {
             logger.logWarning(
-              `In Map ${mapName}: there is dynamic loot ${lootList[loot]} as prohibited ParentId... skipping`
+              `In Map ${mapName}: there is dynamic loot ${lootList[loot]} as prohibited ParentId... skipping`,
             );
             continue;
           }
@@ -170,27 +158,45 @@ function GenerateLootList(containerId) {
   for (const item of ItemList.SpawnList) {
     if (ItemParentsList.includes(item)) {
       logger.logWarning(
-        `In Container ${containerId}: there is static loot ${item} as prohibited ParentId... skipping`
+        `In Container ${containerId}: there is static loot ${item} as prohibited ParentId... skipping`,
       );
       continue;
     }
     const itemTemplate = global._database.items[item];
-    if (typeof itemTemplate._props.LootExperience == "undefined") {
-      logger.logWarning(
-        `itemTemplate._props.LootExperience == "undefined" for ${itemTemplate._id}`
-      );
+    let spawnChance = utility.getRandomInt(0, 1000);
+    let price = helper_f.getTemplatePrice(itemTemplate._id);
+
+    /*
+    common = 10000
+    rare = 10001-30000
+    epic = 30001+  
+    */
+
+    let lootModifier;
+    let rarityModifier;
+    if (price > 30000) {
+      lootModifier = 5;
+      rarityModifier = 0.125;
+      epic++;
+    } else if (price > 12500) {
+      lootModifier = 30;
+      rarityModifier = 0.39;
+      superrare++;
+    } else if (price > 5000) {
+      lootModifier = 60;
+      rarityModifier = 0.7;
+      rare++;
+    } else if (price > 2) {
+      lootModifier = 100;
+      rarityModifier = 1.25;
+      common++;
     }
+    const itemSpawnChance = spawnChance * lootModifier * rarityModifier;
+    console.log(itemSpawnChance, "<<<<<< itemSpawnChance");
     const rollSpawnChance = utility.getRandomInt(0, 10000);
-    const itemSpawnChance = utility.valueBetween(
-      itemTemplate._props.LootExperience,
-      0,
-      250,
-      0,
-      100,
-    );
+    console.log(rollSpawnChance, "<<<<<<< rollSpawnChance");
     if (itemSpawnChance < rollSpawnChance) {
-      //logger.logInfo(`SpawnItemInContainer: ${itemTemplate._id} ==> ${rollSpawnChance} < ${itemTemplate._props.SpawnChance*100} * ${GetRarityMultiplier(itemTemplate._props.Rarity)}`)
-      LootList[item] = global._database.items[item];
+      LootList[item] = itemTemplate;
       if (typeof LootList[item] == "undefined") {
         // remove added item if undefined
         delete LootList[item];
@@ -198,19 +204,11 @@ function GenerateLootList(containerId) {
       } else LootList[item]["preset"] = FindIfItemIsAPreset(LootList[item]._id);
     }
   }
-  // Shuffle LootList for added randomization -300 ms for customs ~1000 things to calculate
-  // LootList = Object.keys(LootList)
-  //   .map((key) => ({ key, value: LootList[key] }))
-  //   .sort((a, b) => b.key.localeCompare(a.key))
-  //   .reduce((acc, e) => {
-  //     acc[e.key] = e.value;
-  //     return acc;
-  //   }, {});
   return LootList;
 }
 function FindIfItemIsAPreset(ID_TO_SEARCH) {
   let foundPresetsList = Object.values(_database.globals.ItemPresets).filter(
-    (preset) => preset._encyclopedia && preset._encyclopedia == ID_TO_SEARCH
+    (preset) => preset._encyclopedia && preset._encyclopedia == ID_TO_SEARCH,
   );
   if (foundPresetsList.length == 0) return null;
   return foundPresetsList[0];
@@ -376,7 +374,7 @@ function _GenerateContainerLoot(_items) {
 
   const ContainerId = _items[0]._tpl;
   const LootContainerIdTable = Object.keys(
-    global._database.locationConfigs.StaticLootTable
+    global._database.locationConfigs.StaticLootTable,
   );
   if (!LootContainerIdTable.includes(ContainerId)) {
     // Check if static weapon.
@@ -387,7 +385,7 @@ function _GenerateContainerLoot(_items) {
       logger.logWarning(
         "GetLootContainerData is null something goes wrong please check if container template: " +
           _items[0]._tpl +
-          " exists"
+          " exists",
       );
       return;
     } else {
@@ -486,7 +484,7 @@ function _GenerateContainerLoot(_items) {
 
       if (typeof rolledRandomItemToPlace == "undefined") {
         logger.logWarning(
-          `Undefined in container: ${ContainerId}  ${LootListItems.length} ${RollIndex}`
+          `Undefined in container: ${ContainerId}  ${LootListItems.length} ${RollIndex}`,
         );
         continue;
       }
@@ -515,7 +513,7 @@ function _GenerateContainerLoot(_items) {
           const size = helper_f.getItemSize(
             rolledRandomItemToPlace._id,
             rolledRandomItemToPlace.preset._items[0]._id,
-            rolledRandomItemToPlace.preset._items
+            rolledRandomItemToPlace.preset._items,
           );
           // Guns will need to load a preset of items
           rolledRandomItemToPlace._props.presetId =
@@ -537,14 +535,14 @@ function _GenerateContainerLoot(_items) {
         result.y,
         itemWidth,
         itemHeight,
-        result.rotation
+        result.rotation,
       );
       let rot = result.rotation ? 1 : 0;
 
       if (rolledRandomItemToPlace._props.presetId) {
         // Process gun preset into container items
         let preset = helper_f.getPreset(
-          rolledRandomItemToPlace._props.presetId
+          rolledRandomItemToPlace._props.presetId,
         );
         if (preset == null) continue;
         preset._items[0].parentId = parentId;
@@ -587,7 +585,7 @@ function _GenerateContainerLoot(_items) {
         // Money or Ammo stack
         let stackCount = utility.getRandomInt(
           rolledRandomItemToPlace._props.StackMinRandom,
-          rolledRandomItemToPlace._props.StackMaxRandom
+          rolledRandomItemToPlace._props.StackMaxRandom,
         );
         containerItem.upd = { StackObjectsCount: stackCount };
       } else if (
@@ -657,16 +655,20 @@ function _GenerateContainerLoot(_items) {
 			}
      * @returns boolean
      */
-      function isThereLootAtLocation(lootObject, position){
-        for(let item of lootObject){
-          if(item.Position.x == position.x && item.Position.y == position.y && item.Position.z == position.z){
-            //logger.logWarning("Found overlapping loot item, skipping.");
-            return true;
-          }
-        }
-        return false;
-      }
-      
+function isThereLootAtLocation(lootObject, position) {
+  for (let item of lootObject) {
+    if (
+      item.Position.x == position.x &&
+      item.Position.y == position.y &&
+      item.Position.z == position.z
+    ) {
+      //logger.logWarning("Found overlapping loot item, skipping.");
+      return true;
+    }
+  }
+  return false;
+}
+
 //========> LOOT CREATION START !!!!!
 class Generator {
   lootMounted(typeArray, output) {
@@ -745,13 +747,13 @@ class Generator {
       //loot overlap removed its useless...
       let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(
         lootData,
-        MapName
+        MapName,
       ); // add this function
       // should return Array() of strings where they are item ID's
       // check server settigns if auto detect or use Items strings to detect predefined items
       if (DynamicLootSpawnTable.length == 0) {
         logger.logWarning(
-          `LootSpawn: ${lootData.Id} has not found any loot table for the spawn automatically. Skipping...`
+          `LootSpawn: ${lootData.Id} has not found any loot table for the spawn automatically. Skipping...`,
         );
         continue;
       }
@@ -797,7 +799,7 @@ class Generator {
           global._database.items[createEndLootData.Items[0]._tpl]._props
             .StackMinRandom,
           global._database.items[createEndLootData.Items[0]._tpl]._props
-            .StackMaxRandom
+            .StackMaxRandom,
         );
         let locationCount = 0;
         for (let i = 0; i < randomizedBulletsCount; i += ammoMaxStack) {
@@ -856,7 +858,7 @@ class Generator {
       }
       // spawn change calculation
       const num = utility.getRandomInt(0, 10000);
-/*       const itemSpawnChance = utility.valueBetween(
+      /*       const itemSpawnChance = utility.valueBetween(
         helper_f.getItem(createdItem._tpl)[1]["_props"]["LootExperience"],
         0,
         250,
@@ -864,8 +866,7 @@ class Generator {
         100
       ); */
 
-      const spawnChance = utility.getRandomInt(0, 2500);
-
+      const spawnChance = utility.getRandomInt(0, 1000);
       let price = helper_f.getTemplatePrice(createdItem._tpl);
 
       /*
@@ -875,7 +876,7 @@ class Generator {
       */
 
       let lootModifier;
-      if (price > 32500) {
+      if (price > 30000) {
         lootModifier = 5;
         epic++;
       } else if (price > 12500) {
@@ -890,22 +891,25 @@ class Generator {
       }
 
       //const itemChance = itemSpawnChance * locationLootChanceModifier;
-      const itemChance = spawnChance * lootModifier * locationLootChanceModifier;
+      const itemChance =
+        spawnChance * lootModifier * locationLootChanceModifier;
       if (num >= itemChance) {
-        if(!isThereLootAtLocation(output.Loot, lootData.Position)){
+        if (!isThereLootAtLocation(output.Loot, lootData.Position)) {
           //if loot won't overlap
           count++;
           output.Loot.push(createEndLootData);
-        }else{
+        } else {
           //overlaps
           overlapped++;
+        }
       }
     }
-  }
 
     //fileIO.write("./generatedLoot.json", JSON.stringify(output.Loot, null, 2)); //this contains the final generated loot for debugging purposes
-    logger.logSuccess("Prevented "+overlapped+" overlapped dynamic loot items.");
-    logger.logSuccess("Generated "+count+" dynamic loot items.");
+    logger.logSuccess(
+      "Prevented " + overlapped + " overlapped dynamic loot items.",
+    );
+    logger.logSuccess("Generated " + count + " dynamic loot items.");
     return count;
   }
 }
@@ -990,7 +994,7 @@ class LocationServer {
       dynamic,
       output,
       _location.base.GlobalLootChanceModifier,
-      name
+      name,
     );
     logger.logInfo(`State Dynamic, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
@@ -1003,7 +1007,7 @@ class LocationServer {
         `Generated location ${name} with [mounted: ${counters[0]}/${mounted.length} | forcedLoot: ${counters[1]}/${forced.length} | statics: ${counters[2]}/${statics.length} | dynamic: ${counters[3]}/${dynamic.length}]`,
       );
       logger.logSuccess(
-        `Loot Generated [Epic: ${epic}] | [Super Rare: ${superrare}] | [Rare: ${rare}] | [Common: ${common}]`
+        `Loot Generated [Epic: ${epic}] | [Super Rare: ${superrare}] | [Rare: ${rare}] | [Common: ${common}]`,
       );
     }
     counters = null;
