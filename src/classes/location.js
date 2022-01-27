@@ -318,31 +318,6 @@ function DeepCopy(target, map = new WeakMap()) {
   return cloneTarget;
 }
 
-/* END NEW DEEPCOPY CODE */
-
-/* function DeepCopy(obj) {
-  return JSON.parse(JSON.stringify(obj));
-} */
-
-/* function GetRarityMultiplier(rarity) {
-  switch (rarity) {
-    case "Not_exist":
-      return global._database.gameplayConfig.locationloot.RarityMultipliers
-        .Not_exist;
-    case "Rare":
-      return global._database.gameplayConfig.locationloot.RarityMultipliers
-        .Rare;
-    case "Superrare":
-      return global._database.gameplayConfig.locationloot.RarityMultipliers
-        .Superrare;
-    case "Common":
-      return global._database.gameplayConfig.locationloot.RarityMultipliers
-        .Common;
-    default:
-      return 0;
-  } 
-}*/
-
 function _RollMaxItemsToSpawn(container) {
   let minCount = 0;
   const maxItemsPossibleToSpawn =
