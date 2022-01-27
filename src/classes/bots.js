@@ -1,7 +1,4 @@
 "use strict";
-
-let generatedBots = [];
-
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
@@ -22,7 +19,7 @@ function shuffle(array) {
 
 class Controller {
   constructor(){
-    logger.logError("Called constructor. bots: "+generatedBots.length);
+
   }
 
   generatePlayerScav(sessionID) {
@@ -64,9 +61,8 @@ class Controller {
   
 //START -----
   generateBot(bot, role, pmcData) {
-    require('fs').writeFileSync("./dump.json", require('util').inspect(global));
-    //if bot is pmc, we randomize their sides, this affects the profile selection a few lines down.
     
+    //if bot is pmc, we randomize their sides, this affects the profile selection a few lines down.
     if(role.toLowerCase() == "pmcbot"){
       let pmcRoleSelect = utility.getRandomInt(1, 2);
       switch (pmcRoleSelect) {
@@ -89,13 +85,10 @@ class Controller {
     }else{
       if(role.toLowerCase() == "pmcbot"){
         //if bot is a pmc, get customized stuff from usec and bear folders
+        //else, they will sound and behave like raiders/scavs
         node = global._database.bots[bot.Info.Side.toLowerCase()];
-        //logger.logError("bot db: "+JSON.stringify(global._database.bots, null, 2));
-        
       } 
-    }
-    
-    //require('fs').writeFileSync("./botsDb.json", JSON.stringify(node, null, 2));
+    }       
 
     bot.Info.Nickname = utility.getArrayValue(node.names);
     bot.Info.Settings.Experience = utility.getRandomInt(
@@ -155,7 +148,7 @@ class Controller {
       bot.Info.Side = "Savage";
     }
     */
-   
+
     // generate new bot ID
     bot = bots_f.botHandler.generateId(bot);
 
@@ -165,13 +158,14 @@ class Controller {
     return bot;
   }
 
-  //if bots generated correctly, then this method should only be called once.
-  //added a global list of bots generated in case it gets called again, for performance reasons.
-  generate(info, sessionID) {
+  //if bots generated correctly, then this method should only be called once per raid.
+  //IF IT GETS CALLED MORE THAN ONCE PER RAID, IT MEANS SOMETHING IS WRONG EITHER IN
+  //THE MAP JSON OR IN THE BOT GENERATION. DO NOT HANDLE BOT CUSTOMIZATION/MODDING IN BOT GENERATION CODE!!!!
+  generate(info, sessionID) {        
     let count = 0;
     let output = [];
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
-    if(generatedBots.length <= 1){    
+    
     for (const condition of info.conditions) {
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
@@ -179,73 +173,23 @@ class Controller {
         bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
-        /*
-        this part of the code is not needed anymore, since we handle it in generateBot
-        const isPmc = role in global._database.gameplayConfig.bots.pmc.types && utility.getRandomInt(0, 99) < global._database.gameplayConfig.bots.pmc.types[role];
-        if (isPmc) {
-          const pmcSide = utility.getRandomInt(0, 99) < global._database.gameplayConfig.bots.pmc.usecChance ? "Usec" : "Bear";
-          bot.Info.Side = pmcSide;
-          role = pmcSide.toLowerCase();
-        }
-        */
         bot = bots_f.botHandler.generateBot(bot, role, pmcData);
+        //any looped log = bad for performance
         //logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
         output.unshift(bot);
         count++;
       }
     }
-    generatedBots = output;
-    }else{
-      //failsafe part. Should never enter here if everything went right.
-      //This code avoids big stutters and unnecessary bot generation
-      //we don't need to generate thousands anymore, we just need to filter them by role
-      //and generate the ONE needed.
-      logger.logWarning("If you see this, please report in AE discord, or inform CQInmanis about it. [BOT GENERATION]");
-      let matchingBots = [];
-      for(let condition of info.conditions){
-        for(let bot of generatedBots){
-          if(bot.Info.Settings.Role == condition.Role && bot.Info.Settings.BotDifficulty == condition.Difficulty){
-            matchingBots.push(bot);
-          }else{
-            //debug
-          }
-        }
-      }
-      if(matchingBots.length >= 1){
-        //if we actually have matching bots
-        //we pull a random one from the matching list
-        logger.logSuccess("Found matching bot(s)");
-        let randomBot = matchingBots[
-          utility.getRandomInt(0, (matchingBots.length - 1))
-        ];
-        randomBot = bots_f.botHandler.generateBot(randomBot, randomBot.Info.Settings.Role, pmcData);
-        output.unshift(randomBot);
-      }else{
-        //if we don't, we pull a random one from the big list
-        logger.logWarning("No matching bots were found for"+JSON.stringify(info.conditions, null, 2)+", picking a random one.");
-        let randomBot = generatedBots[
-          utility.getRandomInt(0, (generatedBots.length - 1))
-        ];
-        randomBot = bots_f.botHandler.generateBot(randomBot, randomBot.Info.Settings.Role, pmcData);
-        output.unshift(randomBot);
-      }
+    //debugging purposes
+    //if we generated bots and are in raid
+    if(count > 0 && offraid_f.handler.getPlayer(sessionID)){
+      logger.logSuccess(
+        "\u001b[32;1mGenerated: "+count+" bots for "+offraid_f.handler.getPlayer(sessionID).Location+" map."
+      );
+      //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
+      logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
-    if(count > 0){
-      logger.logInfo("Generated: "+count+"bots");    }
-    
-    //require('fs').writeFileSync("./botList.json", JSON.stringify(output, null, 2));
-
-    //shuffle entries for extra safety in random generation
     return shuffle(output);
-    /*
-    logger.logError("Gen: "+output.length);
-    
-    require('fs').writeFileSync("./keputas.json", JSON.stringify(output, null, 2));
-    logger.logError("YaTaban: "+generatedBots.length);
-    logger.logError("Primero: "+JSON.stringify(generatedBots[0].Info, null, 2));
-    logger.logError("Cualquiera: "+JSON.stringify(generatedBots[utility.getRandomInt(0, generatedBots.length)].Info, null, 2));
-    return generatedBots[utility.getRandomInt(0, generatedBots.length)];
-    */
   }
 
   generateRandomLevel(min, max, playerLevel) {
@@ -1151,6 +1095,4 @@ module.exports.generate = controller.generate;
 module.exports.getBotLimit = controller.getBotLimit;
 module.exports.getBotDifficulty = controller.getBotDifficulty;
 module.exports.generatePlayerScav = controller.generatePlayerScav;
-module.exports.generatedBots = generatedBots;
 module.exports.generator = new Generator();
-//module.exports.Controller = Controller;

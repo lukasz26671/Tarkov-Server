@@ -12,6 +12,16 @@
 		}
 	},
 	{
+		"_id": "543be5cb4bdc2deb348b4568",
+		"_name": "AmmoBox",
+		"_parent": "5661632d4bdc2d903d8b456b",
+		"_type": "Node",
+		"_props": {
+			"ammoCaliber": "9mm_PM",
+			"StackSlots": []
+		}
+	},
+	{
 		"_id": "5485a8684bdc2da71d8b4567",
 		"_name": "Ammo",
 		"_parent": "5661632d4bdc2d903d8b456b",
@@ -87,16 +97,6 @@
 			"DurabilityBurnModificator": 1,
 			"HeatFactor": 1,
 			"MalfFeedChance": 0
-		}
-	},
-	{
-		"_id": "543be5cb4bdc2deb348b4568",
-		"_name": "AmmoBox",
-		"_parent": "5661632d4bdc2d903d8b456b",
-		"_type": "Node",
-		"_props": {
-			"ammoCaliber": "9mm_PM",
-			"StackSlots": []
 		}
 	}
 ]

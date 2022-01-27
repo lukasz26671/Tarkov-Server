@@ -1,5 +1,115 @@
 [
 	{
+		"_id": "57ae0171245977343c27bfcf",
+		"_name": "scope_all_belomo_pk_06",
+		"_parent": "55818acf4bdc2dde698b456b",
+		"_type": "Item",
+		"_props": {
+			"Name": "scope_all_belomo_pk_06",
+			"ShortName": "scope_all_belomo_pk_06",
+			"Description": "scope_all_belomo_pk_06",
+			"Weight": 0.09,
+			"BackgroundColor": "blue",
+			"Width": 1,
+			"Height": 1,
+			"StackMaxSize": 1,
+			"ItemSound": "mod",
+			"Prefab": {
+				"path": "assets/content/items/mods/scopes/scope_all_belomo_pk_06.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 23,
+			"ExamineExperience": 2,
+			"HideEntrails": false,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": true,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 0,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"Grids": [],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": [],
+			"Durability": 100,
+			"Accuracy": 0,
+			"Recoil": 0,
+			"Loudness": 0,
+			"EffectiveDistance": 0,
+			"Ergonomics": 0,
+			"Velocity": 0,
+			"RaidModdable": true,
+			"ToolModdable": true,
+			"BlocksFolding": false,
+			"BlocksCollapsible": false,
+			"IsAnimated": false,
+			"HasShoulderContact": false,
+			"SightingRange": 100,
+			"DoubleActionAccuracyPenaltyMult": 1,
+			"CustomAimPlane": "",
+			"sightModType": "reflex",
+			"aimingSensitivity": 0.6,
+			"SightModesCount": 3,
+			"OpticCalibrationDistances": [
+				25,
+				50,
+				100
+			],
+			"ScopesCount": 1,
+			"AimSensitivity": [
+				[
+					0.7,
+					0.7,
+					0.7
+				]
+			],
+			"ModesCount": [
+				3
+			],
+			"Zooms": [
+				[
+					1,
+					1,
+					1
+				]
+			],
+			"CalibrationDistances": [
+				[
+					25,
+					50,
+					100
+				]
+			]
+		},
+		"_proto": "57655f7d2459777aa2064c85"
+	},
+	{
 		"_id": "616442e4faa1272e43152193",
 		"_name": "scope_base_aimpoint_acro_p1",
 		"_parent": "55818acf4bdc2dde698b456b",
@@ -212,22 +322,22 @@
 		"_proto": "544a39de4bdc2d24388b4567"
 	},
 	{
-		"_id": "57ae0171245977343c27bfcf",
-		"_name": "scope_all_belomo_pk_06",
+		"_id": "58d399e486f77442e0016fe7",
+		"_name": "scope_base_aimpoint_micro_t1",
 		"_parent": "55818acf4bdc2dde698b456b",
 		"_type": "Item",
 		"_props": {
-			"Name": "scope_all_belomo_pk_06",
-			"ShortName": "scope_all_belomo_pk_06",
-			"Description": "scope_all_belomo_pk_06",
-			"Weight": 0.09,
+			"Name": "scope_base_aimpoint_micro_t1",
+			"ShortName": "scope_base_aimpoint_micro_t1",
+			"Description": "scope_base_aimpoint_micro_t1",
+			"Weight": 0.084,
 			"BackgroundColor": "blue",
 			"Width": 1,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "mod",
 			"Prefab": {
-				"path": "assets/content/items/mods/scopes/scope_all_belomo_pk_06.bundle",
+				"path": "assets/content/items/mods/scopes/scope_base_aimpoint_micro_t1.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -244,7 +354,7 @@
 			"IsUngivable": false,
 			"IsLockedafterEquip": false,
 			"QuestItem": false,
-			"LootExperience": 23,
+			"LootExperience": 20,
 			"ExamineExperience": 2,
 			"HideEntrails": false,
 			"RepairCost": 0,
@@ -276,18 +386,18 @@
 			"EffectiveDistance": 0,
 			"Ergonomics": 0,
 			"Velocity": 0,
-			"RaidModdable": true,
+			"RaidModdable": false,
 			"ToolModdable": true,
 			"BlocksFolding": false,
 			"BlocksCollapsible": false,
 			"IsAnimated": false,
 			"HasShoulderContact": false,
-			"SightingRange": 100,
+			"SightingRange": 150,
 			"DoubleActionAccuracyPenaltyMult": 1,
 			"CustomAimPlane": "",
 			"sightModType": "reflex",
 			"aimingSensitivity": 0.6,
-			"SightModesCount": 3,
+			"SightModesCount": 1,
 			"OpticCalibrationDistances": [
 				25,
 				50,
@@ -296,18 +406,14 @@
 			"ScopesCount": 1,
 			"AimSensitivity": [
 				[
-					0.7,
-					0.7,
 					0.7
 				]
 			],
 			"ModesCount": [
-				3
+				1
 			],
 			"Zooms": [
 				[
-					1,
-					1,
 					1
 				]
 			],
@@ -319,25 +425,25 @@
 				]
 			]
 		},
-		"_proto": "57655f7d2459777aa2064c85"
+		"_proto": "544a39de4bdc2d24388b4567"
 	},
 	{
-		"_id": "58d268fc86f774111273f8c2",
-		"_name": "scope_base_leupold_deltapoint",
+		"_id": "577d141e24597739c5255e01",
+		"_name": "scope_base_burris_fast_fire_3",
 		"_parent": "55818acf4bdc2dde698b456b",
 		"_type": "Item",
 		"_props": {
-			"Name": "scope_base_leupold_deltapoint",
-			"ShortName": "scope_base_leupold_deltapoint",
-			"Description": "scope_base_leupold_deltapoint",
-			"Weight": 0.053,
+			"Name": "scope_base_burris_fast_fire_3",
+			"ShortName": "scope_base_burris_fast_fire_3",
+			"Description": "scope_base_burris_fast_fire_3",
+			"Weight": 0.025,
 			"BackgroundColor": "blue",
 			"Width": 1,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "mod",
 			"Prefab": {
-				"path": "assets/content/items/mods/scopes/scope_base_leupold_deltapoint.bundle",
+				"path": "assets/content/items/mods/scopes/scope_base_burris_fast_fire_3.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -392,7 +498,7 @@
 			"BlocksCollapsible": false,
 			"IsAnimated": false,
 			"HasShoulderContact": false,
-			"SightingRange": 150,
+			"SightingRange": 100,
 			"DoubleActionAccuracyPenaltyMult": 1,
 			"CustomAimPlane": "",
 			"sightModType": "reflex",
@@ -640,22 +746,22 @@
 		"_proto": "544a39de4bdc2d24388b4567"
 	},
 	{
-		"_id": "577d141e24597739c5255e01",
-		"_name": "scope_base_burris_fast_fire_3",
+		"_id": "58d268fc86f774111273f8c2",
+		"_name": "scope_base_leupold_deltapoint",
 		"_parent": "55818acf4bdc2dde698b456b",
 		"_type": "Item",
 		"_props": {
-			"Name": "scope_base_burris_fast_fire_3",
-			"ShortName": "scope_base_burris_fast_fire_3",
-			"Description": "scope_base_burris_fast_fire_3",
-			"Weight": 0.025,
+			"Name": "scope_base_leupold_deltapoint",
+			"ShortName": "scope_base_leupold_deltapoint",
+			"Description": "scope_base_leupold_deltapoint",
+			"Weight": 0.053,
 			"BackgroundColor": "blue",
 			"Width": 1,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "mod",
 			"Prefab": {
-				"path": "assets/content/items/mods/scopes/scope_base_burris_fast_fire_3.bundle",
+				"path": "assets/content/items/mods/scopes/scope_base_leupold_deltapoint.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -705,112 +811,6 @@
 			"Ergonomics": 0,
 			"Velocity": 0,
 			"RaidModdable": true,
-			"ToolModdable": true,
-			"BlocksFolding": false,
-			"BlocksCollapsible": false,
-			"IsAnimated": false,
-			"HasShoulderContact": false,
-			"SightingRange": 100,
-			"DoubleActionAccuracyPenaltyMult": 1,
-			"CustomAimPlane": "",
-			"sightModType": "reflex",
-			"aimingSensitivity": 0.6,
-			"SightModesCount": 1,
-			"OpticCalibrationDistances": [
-				25,
-				50,
-				100
-			],
-			"ScopesCount": 1,
-			"AimSensitivity": [
-				[
-					0.7
-				]
-			],
-			"ModesCount": [
-				1
-			],
-			"Zooms": [
-				[
-					1
-				]
-			],
-			"CalibrationDistances": [
-				[
-					25,
-					50,
-					100
-				]
-			]
-		},
-		"_proto": "544a39de4bdc2d24388b4567"
-	},
-	{
-		"_id": "58d399e486f77442e0016fe7",
-		"_name": "scope_base_aimpoint_micro_t1",
-		"_parent": "55818acf4bdc2dde698b456b",
-		"_type": "Item",
-		"_props": {
-			"Name": "scope_base_aimpoint_micro_t1",
-			"ShortName": "scope_base_aimpoint_micro_t1",
-			"Description": "scope_base_aimpoint_micro_t1",
-			"Weight": 0.084,
-			"BackgroundColor": "blue",
-			"Width": 1,
-			"Height": 1,
-			"StackMaxSize": 1,
-			"ItemSound": "mod",
-			"Prefab": {
-				"path": "assets/content/items/mods/scopes/scope_base_aimpoint_micro_t1.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 2,
-			"HideEntrails": false,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": true,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 0,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"Grids": [],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": [],
-			"Durability": 100,
-			"Accuracy": 0,
-			"Recoil": 0,
-			"Loudness": 0,
-			"EffectiveDistance": 0,
-			"Ergonomics": 0,
-			"Velocity": 0,
-			"RaidModdable": false,
 			"ToolModdable": true,
 			"BlocksFolding": false,
 			"BlocksCollapsible": false,

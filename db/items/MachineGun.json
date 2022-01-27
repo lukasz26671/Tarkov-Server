@@ -1,13 +1,13 @@
 [
 	{
-		"_id": "5d52cc5ba4b9367408500062",
-		"_name": "weapon_zid_ags30_30x29",
+		"_id": "5cdeb229d7f00c000e7ce174",
+		"_name": "weapon_ckib_nsv_utes_127x108",
 		"_parent": "5447bed64bdc2d97278b4568",
 		"_type": "Item",
 		"_props": {
-			"Name": "weapon_zid_ags30_30x29",
-			"ShortName": "weapon_zid_ags30_30x29",
-			"Description": "weapon_zid_ags30_30x29\n",
+			"Name": "weapon_ckib_nsv_utes_127x108",
+			"ShortName": "weapon_ckib_nsv_utes_127x108",
+			"Description": "weapon_ckib_nsv_utes_127x108\n",
 			"Weight": 0.1,
 			"BackgroundColor": "black",
 			"Width": 2,
@@ -15,7 +15,7 @@
 			"StackMaxSize": 1,
 			"ItemSound": "weap_ar",
 			"Prefab": {
-				"path": "assets/content/weapons/ags/weapon_zid_ags30_30x29_container.bundle",
+				"path": "assets/content/weapons/utes/weapon_ckib_nsv_utes_127x108_container.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -57,14 +57,14 @@
 			"Slots": [
 				{
 					"_name": "mod_magazine",
-					"_id": "5d52cc5ba4b9367408500065",
-					"_parent": "5d52cc5ba4b9367408500062",
+					"_id": "5cffa611d7ad1a59283b17d6",
+					"_parent": "5cdeb229d7f00c000e7ce174",
 					"_props": {
 						"filters": [
 							{
 								"AnimationIndex": -1,
 								"Filter": [
-									"5d52d479a4b936793d58c76b"
+									"5cffa483d7ad1a049e54ef1c"
 								]
 							}
 						]
@@ -72,31 +72,13 @@
 					"_required": false,
 					"_mergeSlotWithChildren": false,
 					"_proto": "55d30c394bdc2dae468b4577"
-				},
-				{
-					"_name": "mod_scope",
-					"_id": "5d53fdd4a4b93652177610c7",
-					"_parent": "5d52cc5ba4b9367408500062",
-					"_props": {
-						"filters": [
-							{
-								"Shift": 0,
-								"Filter": [
-									"5d53f4b7a4b936793d58c780"
-								]
-							}
-						]
-					},
-					"_required": false,
-					"_mergeSlotWithChildren": false,
-					"_proto": "55d30c4c4bdc2db4468b457e"
 				}
 			],
 			"CanPutIntoDuringTheRaid": true,
 			"CantRemoveFromSlotsDuringRaid": [],
-			"weapClass": "grenadeLauncher",
+			"weapClass": "machinegun",
 			"weapUseType": "primary",
-			"ammoCaliber": "Caliber30x29",
+			"ammoCaliber": "Caliber545x39",
 			"Durability": 100,
 			"MaxDurability": 100,
 			"OperatingResource": 5000,
@@ -104,7 +86,7 @@
 			"durabSpawnMin": 25,
 			"durabSpawnMax": 75,
 			"isFastReload": true,
-			"RecoilForceUp": 50,
+			"RecoilForceUp": 30,
 			"RecoilForceBack": 165,
 			"Convergence": 1.7,
 			"RecoilAngle": 90,
@@ -112,30 +94,31 @@
 				"fullauto"
 			],
 			"RecolDispersion": 45,
-			"SingleFireRate": 425,
+			"SingleFireRate": 450,
 			"CanQueueSecondShot": true,
-			"bFirerate": 425,
-			"Ergonomics": 200,
-			"Velocity": 0,
+			"bFirerate": 650,
+			"Ergonomics": 100,
+			"Velocity": 1.8,
 			"bEffDist": 650,
 			"bHearDist": 80,
 			"isChamberLoad": false,
 			"chamberAmmoCount": 1,
 			"isBoltCatch": false,
-			"defMagType": "5d52d479a4b936793d58c76b",
-			"defAmmo": "5d70e500a4b9364de70d38ce",
+			"defMagType": "5cffa483d7ad1a049e54ef1e",
+			"defAmmo": "5cde8864d7f00c0010373be1",
 			"AdjustCollimatorsToTrajectory": false,
 			"shotgunDispersion": 0,
 			"Chambers": [
 				{
 					"_name": "patron_in_weapon",
-					"_id": "5d52cc5ba4b9367408500064",
-					"_parent": "5d52cc5ba4b9367408500062",
+					"_id": "5cdeb229d7f00c000e7ce176",
+					"_parent": "5cdeb229d7f00c000e7ce174",
 					"_props": {
 						"filters": [
 							{
 								"Filter": [
-									"5d70e500a4b9364de70d38ce"
+									"5cde8864d7f00c0010373be1",
+									"5d2f2ab648f03550091993ca"
 								]
 							}
 						]
@@ -145,10 +128,10 @@
 					"_proto": "55d4af244bdc2d962f8b4571"
 				}
 			],
-			"CameraRecoil": 0.5,
+			"CameraRecoil": 0.08,
 			"CameraSnap": 8,
 			"ReloadMode": "ExternalMagazine",
-			"CenterOfImpact": 1,
+			"CenterOfImpact": 0.15,
 			"AimPlane": 0.19,
 			"DeviationCurve": 1,
 			"DeviationMax": 100,
@@ -482,7 +465,7 @@
 					"_proto": "55d4af244bdc2d962f8b4571"
 				}
 			],
-			"CameraRecoil": 0.2,
+			"CameraRecoil": 0.16,
 			"CameraSnap": 3.5,
 			"ReloadMode": "ExternalMagazine",
 			"CenterOfImpact": 0.04,
@@ -545,14 +528,14 @@
 		"_proto": "5447a9cd4bdc2dbd208b4567"
 	},
 	{
-		"_id": "5cdeb229d7f00c000e7ce174",
-		"_name": "weapon_ckib_nsv_utes_127x108",
+		"_id": "5d52cc5ba4b9367408500062",
+		"_name": "weapon_zid_ags30_30x29",
 		"_parent": "5447bed64bdc2d97278b4568",
 		"_type": "Item",
 		"_props": {
-			"Name": "weapon_ckib_nsv_utes_127x108",
-			"ShortName": "weapon_ckib_nsv_utes_127x108",
-			"Description": "weapon_ckib_nsv_utes_127x108\n",
+			"Name": "weapon_zid_ags30_30x29",
+			"ShortName": "weapon_zid_ags30_30x29",
+			"Description": "weapon_zid_ags30_30x29\n",
 			"Weight": 0.1,
 			"BackgroundColor": "black",
 			"Width": 2,
@@ -560,7 +543,7 @@
 			"StackMaxSize": 1,
 			"ItemSound": "weap_ar",
 			"Prefab": {
-				"path": "assets/content/weapons/utes/weapon_ckib_nsv_utes_127x108_container.bundle",
+				"path": "assets/content/weapons/ags/weapon_zid_ags30_30x29_container.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -602,14 +585,14 @@
 			"Slots": [
 				{
 					"_name": "mod_magazine",
-					"_id": "5cffa611d7ad1a59283b17d6",
-					"_parent": "5cdeb229d7f00c000e7ce174",
+					"_id": "5d52cc5ba4b9367408500065",
+					"_parent": "5d52cc5ba4b9367408500062",
 					"_props": {
 						"filters": [
 							{
 								"AnimationIndex": -1,
 								"Filter": [
-									"5cffa483d7ad1a049e54ef1c"
+									"5d52d479a4b936793d58c76b"
 								]
 							}
 						]
@@ -617,13 +600,31 @@
 					"_required": false,
 					"_mergeSlotWithChildren": false,
 					"_proto": "55d30c394bdc2dae468b4577"
+				},
+				{
+					"_name": "mod_scope",
+					"_id": "5d53fdd4a4b93652177610c7",
+					"_parent": "5d52cc5ba4b9367408500062",
+					"_props": {
+						"filters": [
+							{
+								"Shift": 0,
+								"Filter": [
+									"5d53f4b7a4b936793d58c780"
+								]
+							}
+						]
+					},
+					"_required": false,
+					"_mergeSlotWithChildren": false,
+					"_proto": "55d30c4c4bdc2db4468b457e"
 				}
 			],
 			"CanPutIntoDuringTheRaid": true,
 			"CantRemoveFromSlotsDuringRaid": [],
-			"weapClass": "machinegun",
+			"weapClass": "grenadeLauncher",
 			"weapUseType": "primary",
-			"ammoCaliber": "Caliber545x39",
+			"ammoCaliber": "Caliber30x29",
 			"Durability": 100,
 			"MaxDurability": 100,
 			"OperatingResource": 5000,
@@ -631,7 +632,7 @@
 			"durabSpawnMin": 25,
 			"durabSpawnMax": 75,
 			"isFastReload": true,
-			"RecoilForceUp": 30,
+			"RecoilForceUp": 50,
 			"RecoilForceBack": 165,
 			"Convergence": 1.7,
 			"RecoilAngle": 90,
@@ -639,31 +640,30 @@
 				"fullauto"
 			],
 			"RecolDispersion": 45,
-			"SingleFireRate": 450,
+			"SingleFireRate": 425,
 			"CanQueueSecondShot": true,
-			"bFirerate": 650,
-			"Ergonomics": 100,
-			"Velocity": 1.8,
+			"bFirerate": 425,
+			"Ergonomics": 200,
+			"Velocity": 0,
 			"bEffDist": 650,
 			"bHearDist": 80,
 			"isChamberLoad": false,
 			"chamberAmmoCount": 1,
 			"isBoltCatch": false,
-			"defMagType": "5cffa483d7ad1a049e54ef1e",
-			"defAmmo": "5cde8864d7f00c0010373be1",
+			"defMagType": "5d52d479a4b936793d58c76b",
+			"defAmmo": "5d70e500a4b9364de70d38ce",
 			"AdjustCollimatorsToTrajectory": false,
 			"shotgunDispersion": 0,
 			"Chambers": [
 				{
 					"_name": "patron_in_weapon",
-					"_id": "5cdeb229d7f00c000e7ce176",
-					"_parent": "5cdeb229d7f00c000e7ce174",
+					"_id": "5d52cc5ba4b9367408500064",
+					"_parent": "5d52cc5ba4b9367408500062",
 					"_props": {
 						"filters": [
 							{
 								"Filter": [
-									"5cde8864d7f00c0010373be1",
-									"5d2f2ab648f03550091993ca"
+									"5d70e500a4b9364de70d38ce"
 								]
 							}
 						]
@@ -673,10 +673,10 @@
 					"_proto": "55d4af244bdc2d962f8b4571"
 				}
 			],
-			"CameraRecoil": 0.1,
+			"CameraRecoil": 0.4,
 			"CameraSnap": 8,
 			"ReloadMode": "ExternalMagazine",
-			"CenterOfImpact": 0.15,
+			"CenterOfImpact": 1,
 			"AimPlane": 0.19,
 			"DeviationCurve": 1,
 			"DeviationMax": 100,
