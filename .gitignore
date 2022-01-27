@@ -22,5 +22,7 @@ desktop.ini
 .vscode/sftp.json
 user/configs/server.json
 user/profiles
+user/logs
+user/events/schedule.json
 user/configs/server.json
 .vscode/sftp.json
