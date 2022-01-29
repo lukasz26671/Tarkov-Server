@@ -263,62 +263,6 @@ function forEach(array, iteratee) {
   return array;
 }
 
-// core function
-function DeepCopy(target, map = new WeakMap()) {
-  // clone primitive types
-  if (typeof target != "object" || target == null) {
-    return target;
-  }
-
-  const type = toRawType(target);
-  let cloneTarget = null;
-
-  if (map.get(target)) {
-    return map.get(target);
-  }
-  map.set(target, cloneTarget);
-
-  if (type != "Set" && type != "Map" && type != "Array" && type != "Object") {
-    return cloneOtherType(target);
-  }
-
-  // clone Set
-  if (type == "Set") {
-    cloneTarget = new Set();
-    target.forEach((value) => {
-      cloneTarget.add(DeepCopy(value, map));
-    });
-    return cloneTarget;
-  }
-
-  // clone Map
-  if (type == "Map") {
-    cloneTarget = new Map();
-    target.forEach((value, key) => {
-      cloneTarget.set(key, DeepCopy(value, map));
-    });
-    return cloneTarget;
-  }
-
-  // clone Array
-  if (type == "Array") {
-    cloneTarget = new Array();
-    forEach(target, (value, index) => {
-      cloneTarget[index] = DeepCopy(value, map);
-    });
-  }
-
-  // clone normal Object
-  if (type == "Object") {
-    cloneTarget = new Object();
-    forEach(Object.keys(target), (key, index) => {
-      cloneTarget[key] = DeepCopy(target[key], map);
-    });
-  }
-
-  return cloneTarget;
-}
-
 function _RollMaxItemsToSpawn(container) {
   let minCount = 0;
   const maxItemsPossibleToSpawn =
@@ -526,7 +470,7 @@ function _GenerateContainerLoot(_items) {
         preset._items[0].location = { x: result.x, y: result.y, r: rot };
 
         for (var p in preset._items) {
-          _items.push(DeepCopy(preset._items[p]));
+          _items.push(utility.DeepCopy(preset._items[p]));
 
           if (preset._items[p].slotId === "mod_magazine") {
             let mag = helper_f.getItem(preset._items[p]._tpl)[1];
@@ -650,7 +594,7 @@ class Generator {
   lootMounted(typeArray, output) {
     let count = 0;
     for (let i in typeArray) {
-      let data = DeepCopy(typeArray[i]);
+      let data = utility.DeepCopy(typeArray[i]);
 
       let changedIds = {};
       for (var item of data.Items) {
@@ -670,7 +614,7 @@ class Generator {
   lootForced(typeArray, output) {
     let count = 0;
     for (let i in typeArray) {
-      let data = DeepCopy(typeArray[i]);
+      let data = utility.DeepCopy(typeArray[i]);
       let newItemsData = [];
       // forced loot should be only contain 1 item... (there shouldnt be any weapon in there...)
       const newId = utility.generateNewItemId();
@@ -807,7 +751,7 @@ class Generator {
         let idSuffix = 0;
         let OldIds = {};
         for (var p in preset._items) {
-          let currentItem = DeepCopy(preset._items[p]);
+          let currentItem = utility.DeepCopy(preset._items[p]);
           OldIds[currentItem.id] = utility.generateNewItemId();
           if (currentItem.parentId == oldBaseItem._id)
             currentItem.parentId = createEndLootData.Items[0]._id;
@@ -935,10 +879,10 @@ class LocationServer {
     }
 
     // Deep copy so the variable contents can be edited non-destructively
-    let forced = DeepCopy(_location.loot.forced);
-    let mounted = DeepCopy(_location.loot.mounted);
-    let statics = DeepCopy(_location.loot.static);
-    let dynamic = DeepCopy(_location.loot.dynamic);
+    let forced = utility.DeepCopy(_location.loot.forced);
+    let mounted = utility.DeepCopy(_location.loot.mounted);
+    let statics = utility.DeepCopy(_location.loot.static);
+    let dynamic = utility.DeepCopy(_location.loot.dynamic);
     logger.logInfo(`State Prepare, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
@@ -1005,7 +949,7 @@ class LocationServer {
       let newData = {};
       for (let location in global._database.locations) {
         newData[global._database.locations[location].base._Id] =
-          utility.wipeDepend(global._database.locations[location].base);
+          utility.DeepCopy(global._database.locations[location].base);
         newData[global._database.locations[location].base._Id].Loot = [];
       }
       base.locations = newData;

@@ -190,7 +190,7 @@ class Controller {
     for (const condition of info.conditions) {
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
-        let bot = utility.wipeDepend(global._database.core.botBase);
+        let bot = utility.DeepCopy(global._database.core.botBase);
         bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;    
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
@@ -407,7 +407,7 @@ class Generator {
 
     bots_f.generator.generateLoot(templateInventory.items, generation.items);
 
-    return utility.wipeDepend(this.inventory);
+    return utility.DeepCopy(this.inventory);
   }
 
   generateInventoryBase() {
@@ -1087,7 +1087,7 @@ class Generator {
 
 class ExhaustableArray {
   constructor(itemPool) {
-    this.pool = utility.wipeDepend(itemPool);
+    this.pool = utility.DeepCopy(itemPool);
   }
 
   getRandomValue() {
@@ -1096,7 +1096,7 @@ class ExhaustableArray {
     }
 
     const index = utility.getRandomInt(0, this.pool.length - 1);
-    const toReturn = utility.wipeDepend(this.pool[index]);
+    const toReturn = utility.DeepCopy(this.pool[index]);
     this.pool.splice(index, 1);
     return toReturn;
   }
