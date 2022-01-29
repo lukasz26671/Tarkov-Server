@@ -192,9 +192,10 @@ function GenerateLootList(containerId) {
       common++;
     }
     const itemSpawnChance = spawnChance * lootModifier * rarityModifier;
-    console.log(itemSpawnChance, "<<<<<< itemSpawnChance");
     const rollSpawnChance = utility.getRandomInt(0, 10000);
-    console.log(rollSpawnChance, "<<<<<<< rollSpawnChance");
+    if(itemSpawnChance == NaN || rollSpawnChance == NaN){
+      logger.logWarning(`Found NaN when creating loot on item id: ${item} and container: ${containerId}`);
+    }
     if (itemSpawnChance < rollSpawnChance) {
       LootList[item] = itemTemplate;
       if (typeof LootList[item] == "undefined") {

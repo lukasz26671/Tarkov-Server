@@ -34,7 +34,7 @@
       "BotSide": "Savage",
       "BotPreset": "normal",
       "WildSpawnType": "assault",
-      "isPlayers": true
+      "isPlayers": false
     },
     {
       "number": 1,
@@ -43,9 +43,9 @@
       "slots_min": 2,
       "slots_max": 4,
       "SpawnPoints": "BotZone",
-      "BotSide": "Savage",
       "BotPreset": "normal",
       "WildSpawnType": "pmcBot",
+      "BotSide": "Savage",
       "isPlayers": false
     },
     {
@@ -70,7 +70,7 @@
       "BotSide": "Savage",
       "BotPreset": "hard",
       "WildSpawnType": "assault",
-      "isPlayers": true
+      "isPlayers": false
     },
     {
       "number": 4,
@@ -2248,7 +2248,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "bossTagilla",
-      "BossChance": 100,
+      "BossChance": 75,
       "BossZone": "BotZone",
       "BossPlayer": false,
       "BossDifficult": "normal",
