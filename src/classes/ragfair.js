@@ -137,10 +137,14 @@ function getOffers(sessionID, request) {
   let itemsToAdd = [];
   let offers = [];
 
-  if (fleaConfig.fleaLock) {
+  
+  //this should be a mod...
+  if (typeof fleaConfig !== 'undefined') {
+    if(fleaConfig.fleaLock){
       if (!fleaLock(sessionID)) { //check if false
-          return response; //return response
+        return response; //return response
       }
+    }      
   }
 
   if (!request.linkedSearchId && !request.neededSearchId) {
