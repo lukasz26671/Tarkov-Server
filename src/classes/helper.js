@@ -138,7 +138,7 @@ function fromRUB(value, currency) {
 function payMoney(pmcData, body, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
   let trader = trader_f.handler.getTrader(body.tid, sessionID);
-  let currencyTpl = helper_f.getCurrency(trader.currency);
+  let currencyTpl = getCurrency(trader.currency);
 
   // delete barter things(not a money) from inventory
   if (body.Action === "TradingConfirm") {
@@ -152,7 +152,7 @@ function payMoney(pmcData, body, sessionID) {
       }
 
       if (item !== undefined) {
-        if (!helper_f.isMoneyTpl(item._tpl)) {
+        if (!isMoneyTpl(item._tpl)) {
           output = move_f.removeItem(pmcData, item._id, sessionID);
           body.scheme_items[index].count = 0;
         } else {
@@ -170,8 +170,9 @@ function payMoney(pmcData, body, sessionID) {
   let barterPrice = 0;
 
   for (let item of body.scheme_items) {
-    barterPrice +=item.count;
+    barterPrice += item.count;
   }
+
 
   // prepare the amount of money in the profile
   let amountMoney = 0;
@@ -182,9 +183,9 @@ function payMoney(pmcData, body, sessionID) {
 
   // if no money in inventory or amount is not enough we return false
   if (amountMoney != 0){
-    if (moneyItems.length <= 0 ||amountMoney < barterPrice) {
-        return false;
-      }
+    if (moneyItems.length <= 0 || amountMoney < barterPrice) {
+      return false;
+    }
   }
 
   let leftToPay = barterPrice;
@@ -219,7 +220,7 @@ function payMoney(pmcData, body, sessionID) {
   }
   output.profileChanges[pmcData._id].traderRelations = pmcData.TradersInfo;
   // set current sale sum -- convert barterPrice itemTpl into RUB then convert RUB into trader currency
-  pmcData.TradersInfo[body.tid].salesSum += helper_f.fromRUB(helper_f.inRUB(barterPrice, currencyTpl), helper_f.getCurrency(trader.currency));
+  pmcData.TradersInfo[body.tid].salesSum += fromRUB(inRUB(barterPrice, currencyTpl), getCurrency(trader.currency));
 
   // save changes
   logger.logInfo("Items taken. Status OK.");
@@ -445,10 +446,11 @@ note from Maoci: you can merge and split items from parent-childrens
 */
 module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash) => {
   let toDo = [itemID];
-  let tmpItem = getItem(itemtpl)[1];
+  let tmpItem = helper_f.getItem(itemtpl)[1];
   let rootItem = inventoryItemHash.byItemId[itemID];
+  if (typeof tmpItem._props == "undefined"){ return; }
   let FoldableWeapon = tmpItem._props.Foldable;
-  let FoldedSlot = tmpItem._props.FoldedSlot;
+  let FoldedSlot = tmpItem._props.FoldedSlot; 
 
   let SizeUp = 0,
     SizeDown = 0,
@@ -484,7 +486,7 @@ module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash)
           toDo.push(item._id);
 
           // If the barrel is folded the space in the barrel is not counted
-          let itm = getItem(item._tpl)[1];
+          let itm = helper_f.getItem(item._tpl)[1];
           let childFoldable = itm._props.Foldable;
           let childFolded = item.upd && item.upd.Foldable && item.upd.Foldable.Folded === true;
 

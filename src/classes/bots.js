@@ -88,7 +88,35 @@ class Controller {
         //else, they will sound and behave like raiders/scavs
         node = global._database.bots[bot.Info.Side.toLowerCase()];
       } 
-    }       
+    }
+
+    //Examples for randomizing properties without the need for roles.
+    //this could be used an "event" or something
+    //just change false to true if wanting to test
+    if(role.toLowerCase() == "assault" && false){
+      let scavRoleSelect = utility.getRandomInt(1, 6)
+      switch (scavRoleSelect) 
+      {
+          case 1:
+              node = global._database.bots["followersanitar"];
+          break;
+          case 2:
+              node = global._database.bots["followergluharscout"];
+          break;
+          case 3:
+              node = global._database.bots["followergluharassault"];
+          break;
+          case 4:
+              node = global._database.bots["followergluharsecurity"];
+          break;
+          case 5:
+              node = global._database.bots["followerbully"];
+          break;
+          case 6:
+              node = global._database.bots["sectantpriest"];
+          break;
+      }
+    }
 
     bot.Info.Nickname = utility.getArrayValue(node.names);
     bot.Info.Settings.Experience = utility.getRandomInt(
@@ -138,16 +166,9 @@ class Controller {
     bot.Info.experience = levelResult.exp;
     bot.Info.Level = levelResult.level;
 
-    if(bot.Info.Settings.Role.toLowerCase() == "pmcbot"){
+    if(bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear"){
       bot = bots_f.botHandler.generateDogtag(bot);
     }    
-
-    //debug
-    /*
-    if(role.toLowerCase() == "pmcbot"){
-      bot.Info.Side = "Savage";
-    }
-    */
 
     // generate new bot ID
     bot = bots_f.botHandler.generateId(bot);
@@ -171,7 +192,7 @@ class Controller {
         let role = condition.Role.toLowerCase();
         let bot = utility.wipeDepend(global._database.core.botBase);
         bot.Info.Side = "Savage";
-        bot.Info.Settings.Role = condition.Role;
+        bot.Info.Settings.Role = condition.Role;    
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
         bot = bots_f.botHandler.generateBot(bot, role, pmcData);
         //any looped log = bad for performance

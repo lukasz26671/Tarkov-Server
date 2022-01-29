@@ -345,6 +345,10 @@ function saveProgress(offraidData, sessionID) {
   }
 
   pmcData.Info.Level = offraidData.profile.Info.Level;
+  //remove skill fatigue before applying skill points to profile
+  for(let skill in offraidData.profile.Skills.Common){
+    offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession = 0;
+  }
   pmcData.Skills = offraidData.profile.Skills;
   pmcData.Stats = offraidData.profile.Stats;
   pmcData.Encyclopedia = offraidData.profile.Encyclopedia;
@@ -383,6 +387,10 @@ function saveProgress(offraidData, sessionID) {
       insurance_f.handler.storeDeadGear(pmcData, offraidData, preRaidGear, sessionID);
     }
     pmcData = deleteInventory(pmcData, sessionID);
+
+    //remove completed conditions related to QuestItem to avoid causing the item not spawning
+    profile_f.handler.getPmcProfile(sessionID).Quests = removeLooseQuestItemsConditions(profile_f.handler.getPmcProfile(sessionID));
+
     //Delete carried quests items
     offraidData.profile.Stats.CarriedQuestItems = [];
   }
@@ -392,6 +400,54 @@ function saveProgress(offraidData, sessionID) {
 
   offraid_f.handler.removeMapAccessKey(offraidData, sessionID);
   offraid_f.handler.removePlayer(sessionID);
+}
+
+//takes a profile and checks/remove for completed conditions in profile's quests section, that are
+//related to a quest item which you don't have or that you lost in a raid.
+//example: Extortionist's Folder.
+//returns cleaned quests section.
+function removeLooseQuestItemsConditions(profile){
+  //let curQuests = profile_f.handler.getPmcProfile(sessionID).Quests;
+  let curQuests = profile.Quests;
+  for(let i = 0; i < curQuests.length; i++){
+    //if active quest
+    if(curQuests[i].status === "Started"){
+      for(let k = 0; k < curQuests[i].completedConditions.length; k++){
+        if(isConditionRelatedToQuestItem(curQuests[i].completedConditions[k], curQuests[i].qid)){
+          //if true : remove completed condition
+          logger.logWarning("condition related to quest item found in profile. Removing.");
+          curQuests[i].completedConditions[k] = "";
+        }
+      }
+    }
+  }
+  return curQuests;
+}
+
+//function that a quest condition id (found in pmc profile)
+//and a questId to check if the quest is related to an item that needs to be found in raid.
+//returns false if the condition is not related to item
+function isConditionRelatedToQuestItem(conditionId, questId){
+  let cachedQuest = undefined;
+  //iterate quests to find the desired quest by questId and save it locally
+  for (let quest of global._database.quests) {
+    if (quest._id === questId) {
+      cachedQuest = quest;
+    }
+  }
+  //iterate quest conditions that are relevant
+  for(let condAFF of cachedQuest.conditions.AvailableForFinish){
+    if(condAFF._props.id === conditionId){
+      //if quest condition is of "FindItem" nature, then it's related to an item found in raid.
+      if(condAFF._parent === "FindItem"){
+        //if that item is an item with QuestItem = true
+        if(global._database.items[condAFF._props.target[0]]._props.QuestItem === true){
+          return true;
+        }     
+      }
+    }
+  }
+  return false;
 }
 
 module.exports.handler = new InraidServer();
