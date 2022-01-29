@@ -18,7 +18,7 @@
 
     "": "Trader Overhaul settings",
     "traderOverhaul": {
-      "toggle": true,
+      "toggle": false,
       "config": {
         "fleaLock": false,
         "fleaKeyLife": 60,
@@ -37,10 +37,10 @@
     },
 
     "": "Mod Weapons in Raid toggle",
-    "modInRaid": true,
+    "modInRaid": false,
 
     "": "Fold All ((Foldable)) Weapons toggle",
-    "unblockFolding": true,
+    "unblockFolding": false,
 
     "": "Bot Spawning Configuration",
     "botConfig": {
@@ -63,7 +63,7 @@
     "": "Weapon Recoil modifiers",
     "recoilConfig": {
       "": "Weapon Recoil Adjustment toggle",
-      "toggle": true,
+      "toggle": false,
 
       "pistolRecoil": {
         "cameraRecoil": 0.75,
@@ -118,7 +118,7 @@
     "": "Headset and Helmet hearing modifiers",
     "hearingConfig": {
       "": "Helmet and Headset modifier toggle",
-      "toggle": true,
+      "toggle": false,
 
       "distortion_Multiplier": 0,
 
