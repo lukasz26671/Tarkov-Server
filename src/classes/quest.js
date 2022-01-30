@@ -277,27 +277,14 @@ function handoverQuest(pmcData, body, sessionID) {
   let counter = 0;
   let amount;
 
-  // fetch tpl of the item that is being turned in
-  let itemTemplate;
-  for (let itemIndex in body.items){
-    let item_id = body.items[itemIndex].id
-    for (let playerItem of pmcData.Inventory.items){
-      if (playerItem._id === item_id){
-        itemTemplate = playerItem._tpl;
-        break
-      }
-    }
-  }
-
-  // Check if the backend counters is for the same item
   // Set the counter to the backend counter if it exists.
   for (let k in pmcData.BackendCounters) {
     if (pmcData.BackendCounters[k].qid === body.qid) {
-      try {
-        if (pmcData.BackendCounters[k].id == itemTemplate){
+      if (pmcData.BackendCounters[k].id === body.conditionId){
+        try {
           counter = pmcData.BackendCounters[k].value > 0 ? pmcData.BackendCounters[k].value : 0;
-        }
-      } catch (_) {}
+        } catch (_) {}
+      }
     }
   }
 
@@ -344,7 +331,7 @@ function handoverQuest(pmcData, body, sessionID) {
   }
 
   if (body.conditionId in pmcData.BackendCounters) {
-    pmcData.BackendCounters[body.conditionId].value += counter;
+    pmcData.BackendCounters[body.conditionId].value = counter;
   } else {
     pmcData.BackendCounters[body.conditionId] = { id: body.conditionId, qid: body.qid, value: counter };
   }
