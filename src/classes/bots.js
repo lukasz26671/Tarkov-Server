@@ -138,6 +138,7 @@ class Controller {
 
       if (pmcData.Info.Level >= levelFrom && pmcData.Info.Level < levelTo) {
         inventoryData = node.inventory[inventoryNode];
+        break;  // once we got our datas, no need to keep looping
       }
     }
     if (inventoryData == "") {
