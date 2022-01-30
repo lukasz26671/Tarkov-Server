@@ -77,7 +77,7 @@ class Controller {
     
     let node = [];
     //default
-    node = global._database.bots[role.toLowerCase()];
+    node = global._database.bots[bot.Info.Settings.Role.toLowerCase()];
     
     if(role.toLowerCase() == "playerscav"){
       //required
