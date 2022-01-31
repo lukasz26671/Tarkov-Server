@@ -374,6 +374,42 @@ function calculateLevel(pmcData) {
   return pmcData.Info.Level;
 }
 
+/**
+ * Get player loyalty for current trader...
+ *
+ * @param {Object} pmcData -> player infos,
+ * @param {string} traderID -> current trader ID,
+ * @returns {number} calculatedLoyalty -> loyalty level
+ */
+function getLoyalty(pmcData, traderID){
+  // we fetch player's trader related data
+  const playerSaleSum = pmcData.TradersInfo[traderID].salesSum;
+  const playerStanding = pmcData.TradersInfo[traderID].standing;
+  const playerLevel = pmcData.Info.Level;
+
+  // we fetch the trader data
+  const traderInfo = global._database.traders[traderID].base;
+
+  let calculatedLoyalty = 0;
+  if (traderID !== "ragfair"){
+    // we check if player meet loyalty requirements
+    for (let loyaltyLevel of traderInfo.loyaltyLevels){
+      if (playerSaleSum >= loyaltyLevel.minSalesSum &&
+        playerStanding >= loyaltyLevel.minStanding &&
+        playerLevel >= loyaltyLevel.minLevel){
+            calculatedLoyalty++;
+        }
+      else{
+        if (calculatedLoyalty == 0){calculatedLoyalty = 1;}
+        break;
+      }
+    }
+  }else{return "ragfair"}
+
+  return calculatedLoyalty;
+}
+
 module.exports.handler = new ProfileServer();
 module.exports.getStashType = getStashType;
 module.exports.calculateLevel = calculateLevel;
+module.exports.getLoyalty = getLoyalty;
