@@ -149,7 +149,7 @@
   "AveragePlayTime": 15,
   "AveragePlayerLevel": 1,
   "escape_time_limit": 20,
-  "Rules": "AvoidOwnPmc",
+  "Rules": "normal",
   "IsSecret": false,
   "doors": [],
   "tmp_location_field_remove_me": 0,

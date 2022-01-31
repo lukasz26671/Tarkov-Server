@@ -16,27 +16,32 @@ exports.buyItem = (pmcData, body, sessionID) => {
   };
 
   let tAssort = global._database.traders[body.tid].assort; //fileIO.readParsed(db.traders[body.tid].assort);
-  if (typeof tAssort[body.item_id] != "undefined" && tAssort[body.item_id].currentStack) {
+  if (
+    typeof tAssort[body.item_id] != "undefined" &&
+    tAssort[body.item_id].currentStack
+  ) {
     tAssort[body.item_id].currentStack -= body.count;
     fileIO.write(db.traders[body.tid].assort, tAssort);
   }
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
   let output = item_f.handler.getOutput(sessionID);
-  output.profileChanges[pmcData._id].traderRelations = { [body.tid]: pmcData.TradersInfo[body.tid] };
+  output.profileChanges[pmcData._id].traderRelations = {
+    [body.tid]: pmcData.TradersInfo[body.tid],
+  };
   logger.logSuccess(`Bought item: ${body.item_id}`);
 };
 
 // Selling item to trader
 exports.sellItem = (pmcData, body, sessionID) => {
   let money = 0;
-  let prices = trader_f.handler.getPurchasesData(body.tid, sessionID);
+  const prices = trader_f.handler.getPurchasesData(body.tid, sessionID);
   let output = item_f.handler.getOutput(sessionID);
 
-  for (let sellItem of body.items) {
+  for (const sellItem of body.items) {
     for (let item of pmcData.Inventory.items) {
       // profile inventory, look into it if item exist
-      let isThereSpace = sellItem.id.search(" ");
+      const isThereSpace = sellItem.id.search(" ");
       let checkID = sellItem.id;
 
       if (isThereSpace !== -1) {
@@ -61,7 +66,9 @@ exports.sellItem = (pmcData, body, sessionID) => {
       }
     }
   }
-  item_f.handler.setOutput(helper_f.getMoney(pmcData, money, body, output, sessionID));
+  item_f.handler.setOutput(
+    helper_f.getMoney(pmcData, money, body, output, sessionID),
+  );
   return;
 };
 
@@ -69,12 +76,12 @@ exports.sellItem = (pmcData, body, sessionID) => {
 exports.confirmTrading = (pmcData, body, sessionID) => {
   // buying
   if (body.type === "buy_from_trader") {
-    return this.buyItem(pmcData, body, sessionID);
+    return trade_f.buyItem(pmcData, body, sessionID);
   }
 
   // selling
   if (body.type === "sell_to_trader") {
-    return this.sellItem(pmcData, body, sessionID);
+    return trade_f.sellItem(pmcData, body, sessionID);
   }
 
   return "";
@@ -84,7 +91,6 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
   let ragfair_offers_traders = fileIO.readParsed(db.user.cache.ragfair_offers);
   let offers = body.offers;
-  //let output = item_f.handler.getOutput(sessionID);
 
   for (let offer of offers) {
     pmcData = profile_f.handler.getPmcProfile(sessionID);
