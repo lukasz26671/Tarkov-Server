@@ -382,11 +382,21 @@ function calculateLevel(pmcData) {
  * @returns {number} calculatedLoyalty -> loyalty level
  */
 function getLoyalty(pmcData, traderID){
-  // we fetch player's trader related data
-  const playerSaleSum = pmcData.TradersInfo[traderID].salesSum;
-  const playerStanding = pmcData.TradersInfo[traderID].standing;
-  const playerLevel = pmcData.Info.Level;
+  let playerSaleSum;
+  let playerStanding;
+  let playerLevel;
 
+  if(pmcData.TradersInfo[traderID]) {
+    // we fetch player's trader related data
+    playerSaleSum = pmcData.TradersInfo[traderID].salesSum;
+    playerStanding = pmcData.TradersInfo[traderID].standing;
+    playerLevel = pmcData.Info.Level;
+  }else{
+    // default traders value
+    playerSaleSum = 0;
+    playerStanding = 0;
+    playerLevel = pmcData.Info.Level;
+  }
   // we fetch the trader data
   const traderInfo = global._database.traders[traderID].base;
 

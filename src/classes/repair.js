@@ -4,41 +4,12 @@ exports.main = (pmcData, body, sessionID) => {
     let output = item_f.handler.getOutput(sessionID);
     let trader = trader_f.handler.getTrader(body.tid, sessionID);
     
-    let curStanding = 0;
-    let curSales = 0;
-    
-    //check if profile has been populated with TradersInfo first to avoid crash
-    if(pmcData.TradersInfo[body.tid] != undefined){
-        //variables containing profile info for comparison with trader requirements.
-        curStanding = pmcData.TradersInfo[body.tid].standing; //gets current standing with specified trader in profile
-        curSales = pmcData.TradersInfo[body.tid].salesSum; //gets current salesSum with specified trader in profile
-        
-    }else{
-        curStanding = 0; //assume it's 0 as in first loyalty level
-        curSales = 0; //assume it's 0 as in first loyalty level
-    }
+    const TraderLevel = profile_f.getLoyalty(pmcData, body.tid);
 
-    let curPMCLevel = pmcData.Info.Level; //gets current profile level
-
-    //cheap way to do this, but it works
-    let loyaltyLevelIndex = 0;
-    for(let lLevel of trader.loyaltyLevels){
-        if(lLevel === trader.loyaltyLevels[0]){
-            //if it's the first loyalty level, skip.
-        }else{
-            //if pmc has requirements met for next loyalty level
-            if(curPMCLevel >= lLevel.minLevel && curStanding >= lLevel.minStanding && curSales >= lLevel.minSalesSum){ 
-                loyaltyLevelIndex = loyaltyLevelIndex + 1;
-            }
-        }        
-    }
-    //just in case it wants to go over 3 which is the max index (level 4)
-    if(loyaltyLevelIndex >= 3){
-        loyaltyLevelIndex = 3;
-    }
+    const LoyaltyIndex = TraderLevel - 1;
 
     //calculation of price coeficient. Result is always 1 + coeficient shown in repair window.
-    let coef = 1 + ((trader.loyaltyLevels[loyaltyLevelIndex].repair_price_coef) / 100);
+    let coef = 1 + ((trader.loyaltyLevels[LoyaltyIndex].repair_price_coef) / 100);
 
     // find the item to repair
     for (let repairItem of body.repairItems) {

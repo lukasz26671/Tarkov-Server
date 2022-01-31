@@ -266,30 +266,6 @@ class TraderServer {
     const TraderLevel = profile_f.getLoyalty(pmcData, traderID);
 
     if (TraderLevel !== "ragfair") {
-      
-      //const ProfileSaleSum =
-      //  typeof pmcData.TradersInfo[traderID] != "undefined"
-      //    ? pmcData.TradersInfo[traderID].salesSum
-      //    : 0;
-      //const ProfileStanding =
-      //  typeof pmcData.TradersInfo[traderID] != "undefined"
-      //    ? pmcData.TradersInfo[traderID].standing
-      //    : 0;
-      //const ProfileLevel = pmcData.Info.Level;
-      //let calcLevel = 0;
-      //for (const loyalityObject of global._database.traders[traderID].base
-      //  .loyaltyLevels) {
-      //  if (
-      //    ProfileLevel >= loyalityObject.minLevel &&
-      //    ProfileStanding >= loyalityObject.minStanding &&
-      //    ProfileSaleSum >= loyalityObject.minSalesSum
-      //  ) {
-      //    calcLevel++;
-      //  }
-      //}
-      //if (calcLevel == 0) calcLevel = 1;
-      
-
       // 1 is min level, 4 is max level
       let questassort = { started: {}, success: {}, fail: {} };
       if (typeof db.traders[traderID] != "undefined") {
@@ -336,6 +312,7 @@ class TraderServer {
     }
     return assorts;
   }
+
   getCustomization(traderID, sessionID) {
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
