@@ -47,7 +47,6 @@ function _load_BotsData() {
     for (const name in db.bots[botType].inventory) {
       _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
     }
-    //_database.bots[botType].inventory = fileIO.readParsed("./" + db.bots[botType].inventory);
     _database.bots[botType].names = fileIO.readParsed("./" + db.bots[botType].names);
   }
 }
@@ -181,33 +180,33 @@ function _load_WeatherData() {
   }
 }
 exports.load = () => {
-  logger.logInfo("Load: 'Core1'");
+  logger.logDebug("Load: 'Core'");
   _load_CoreData();
-  logger.logInfo("Load: 'Globals'");
+  logger.logDebug("Load: 'Globals'");
   _load_Globals();
-  logger.logInfo("Load: 'Cluster Config'")
+  logger.logDebug("Load: 'Cluster Config'")
   _load_ClusterConfig();
-  logger.logInfo("Load: 'Blacklist'")
+  logger.logDebug("Load: 'Blacklist'")
   _load_BlacklistConfig();
-  logger.logInfo("Load: 'Gameplay'");
+  logger.logDebug("Load: 'Gameplay'");
   _load_GameplayConfig();
-  logger.logInfo("Load: 'Bots'");
+  logger.logDebug("Load: 'Bots'");
   _load_BotsData();
-  logger.logInfo("Load: 'Hideout'");
+  logger.logDebug("Load: 'Hideout'");
   _load_HideoutData();
-  logger.logInfo("Load: 'Quests'");
+  logger.logDebug("Load: 'Quests'");
   _load_QuestsData();
-  logger.logInfo("Load: 'Items'");
+  logger.logDebug("Load: 'Items'");
   _load_ItemsData();
-  logger.logInfo("Load: 'Customizations'");
+  logger.logDebug("Load: 'Customizations'");
   _load_CustomizationData();
-  logger.logInfo("Load: 'Locales'");
+  logger.logDebug("Load: 'Locales'");
   _load_LocaleData();
-  logger.logInfo("Load: 'Locations'");
+  logger.logDebug("Load: 'Locations'");
   _load_LocationData();
-  logger.logInfo("Load: 'Traders'");
+  logger.logDebug("Load: 'Traders'");
   _load_TradersData();
-  logger.logInfo("Load: 'Weather'");
+  logger.logDebug("Load: 'Weather'");
   _load_WeatherData();
-  logger.logInfo("Database loaded");
+  logger.logDebug("Database loaded");
 };

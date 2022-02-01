@@ -13,7 +13,11 @@ class TarkovSend {
     };
   }
   zlibJson(resp, output, sessionID) {
-    resp.writeHead(200, "OK", { "Content-Type": this.mime["json"]/*, "content-encoding": "deflate"*/, "Set-Cookie": "PHPSESSID=" + sessionID });
+    let Header = {"Content-Type": this.mime["json"], "Set-Cookie": "PHPSESSID=" + sessionID };
+    if(typeof sessionID == "undefined"){
+      Header["content-encoding"] == "deflate";
+    }
+    resp.writeHead(200, "OK", Header);
     internal.zlib.deflate(output, function (err, buf) {
       resp.end(buf);
     });
@@ -195,6 +199,8 @@ class Server {
       logger.logError(`[UNHANDLED][${req.url}]`);
       logger.logData(body);
       output = `{"err": 404, "errmsg": "UNHANDLED RESPONSE: ${req.url}", "data": null}`;
+    }else {
+      logger.logDebug(body, true);
     }
     // execute data received callback
     for (let type in this.receiveCallback) {
@@ -340,12 +346,13 @@ class Server {
 
   start() {
     // execute cache callback
-    logger.logInfo("[Warmup]: Cache callbacks...");
-    for (let type in this.cacheCallback) {
-      this.cacheCallback[type]();
+    if (serverConfig.rebuildCache) {
+      logger.logInfo("[Warmup]: Cache callbacks...");
+      for (let type in this.cacheCallback) {
+        this.cacheCallback[type]();
+      }
+      global.mods_f.CacheModLoad(); // CacheModLoad
     }
-    if (serverConfig.rebuildCache) global.mods_f.CacheModLoad(); // CacheModLoad
-    global.mods_f.ResModLoad(); // load Res Mods
 
     logger.logInfo("[Warmup]: Loading Database");
     const databasePath = "/src/functions/database.js";

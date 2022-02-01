@@ -1,8 +1,4 @@
 "use strict";
-// WipeDependencies
-// exports.wipeDepend = (data) => {
-	// return JSON.parse(JSON.stringify(data));
-// }
 
 /* START NEW DEEPCOPY CODE */
 

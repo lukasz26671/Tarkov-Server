@@ -229,10 +229,40 @@ function getItemPrice(_tpl) {
 }
 
 function getPremium(pmcData, inventoryItem, traderId) {
-    let premium = getItemPrice(inventoryItem._tpl) * (global._database.gameplayConfig.trading.insureMultiplier * 3);
+/*     let premium = getItemPrice(inventoryItem._tpl) * (global._database.gameplayConfig.trading.insureMultiplier * 3);
 	if(typeof pmcData.TradersInfo[traderId] != "undefined")
 		premium -= premium * (pmcData.TradersInfo[traderId].standing > 0.5 ? 0.5 : pmcData.TradersInfo[traderId].standing);
+    return Math.round(premium); */
+
+    let insuranceMultiplier;
+    const insurerMultiplier = _database.gameplayConfig.trading.insurerMultiplier[traderId];
+    console.log(insuranceMultiplier, "<<<<<<<<<<< insuranceMultiplier");
+    
+    const loyaltyLevel = trader_f.handler.getLoyaltyLevel(traderId, pmcData);
+    console.log(loyaltyLevel, "<<<<<<<<<<<<< loyaltyLevel")
+
+    insuranceMultiplier = loyaltyLevel.indexOf(insurerMultiplier.id);
+    console.log(insuranceMultiplier, "<<<<<<< insuranceMultiplier")
+
+    insuranceMultiplier = insurerMultiplier[insuranceMultiplier];
+
+    console.log(insuranceMultiplier, "<<<<<<<< new insuranceMultiplier")
+    if (!insuranceMultiplier)
+    {
+        insuranceMultiplier = 0.3;
+        Logger.warning(`No multiplier found for trader ${traderId}, check it exists in InsuranceConfig.js, falling back to a default value of 0.3`);
+    }
+
+    let premium = helper_f.getTemplatePrice(inventoryItem._tpl) * insuranceMultiplier;
+    const coef = loyaltyLevel.insurance_price_coef;
+
+    if (coef > 0)
+    {
+        premium *= (1 - loyaltyLevel.insurance_price_coef / 100);
+    }
+
     return Math.round(premium);
+
 }
 
 /* calculates insurance cost */

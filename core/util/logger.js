@@ -98,7 +98,12 @@ class Logger {
     this.log("[SUCCESS]", text, "white", "green");
   }
 
-  logDebug(text) {
+  logDebug(text, isStructData = false) {
+    if(isStructData){
+      this.log("[DEBUG]", "Data Output:", "black", "white");
+      this.log("LogData", isStructData);
+      return;
+    }
     this.log("[DEBUG]", text, "black", "white");
   }
 

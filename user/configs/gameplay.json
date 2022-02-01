@@ -57,6 +57,14 @@
     "ragfairMultiplier": 3.5,
     "repairMultiplier": 1,
     "insureMultiplier": 0.1,
+    "insurerMultiplier":{
+      "5a7c2eca46aef81a7ca2145d":{
+        "0": 0.3,
+        "1": 0.25,
+        "2": 0.19,
+        "3": 0.13
+      }
+    },
     "insureReturnChance": 75,
     "fenceAssortSize": 5,
     "buyItemsMarkedFound": true,
