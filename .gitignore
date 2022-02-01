@@ -26,3 +26,4 @@ user/logs
 user/events/schedule.json
 user/configs/server.json
 .vscode/sftp.json
+user/configs/mods.json
