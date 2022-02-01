@@ -758,8 +758,8 @@ class Generator {
             idSuffix++;
           }
         }
-        output.Loot.push(data);
-        count++;
+        //output.Loot.push(data);
+        //count++;
       }
 
       // spawn change calculation
