@@ -198,7 +198,7 @@ class Responses {
     const splittedUrl = url.split("/");
     const type = splittedUrl[splittedUrl.length - 2].toLowerCase();
     const difficulty = splittedUrl[splittedUrl.length - 1];
-    process.stdout.write(`${type}[${difficulty}] `);
+    //process.stdout.write(`${type}[${difficulty}] `);
     return response_f.noBody(bots_f.getBotDifficulty(type, difficulty));
   }
   dynSingleplayerSettingsBotLimit(url, info, sessionID) {
