@@ -12,9 +12,9 @@ class Server {
     this.initializeCallbacks();
   }
 
+
   initializeCallbacks() {
-    const callbacks = require(executedDir +
-      "/src/functions/callbacks.js").callbacks;
+    const callbacks = require(executedDir + "/src/functions/callbacks.js").callbacks;
 
     this.receiveCallback = callbacks.getReceiveCallbacks();
     this.respondCallback = callbacks.getRespondCallbacks();
@@ -26,10 +26,7 @@ class Server {
     this.buffers[sessionID] = undefined;
   }
   putInBuffer(sessionID, data, bufLength) {
-    if (
-      this.buffers[sessionID] === undefined ||
-      this.buffers[sessionID].allocated !== bufLength
-    ) {
+    if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
       this.buffers[sessionID] = {
         written: 0,
         allocated: bufLength,
@@ -56,9 +53,7 @@ class Server {
     return this.port;
   }
   getBackendUrl() {
-    return this.second_backendUrl != null
-      ? this.second_backendUrl
-      : this.backendUrl;
+    return this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
   }
   getVersion() {
     return global.core.constants.ServerVersion;
@@ -66,31 +61,10 @@ class Server {
 
   sendResponse(sessionID, req, resp, body) {
     let output = "";
-    if (req.url == "/favicon.ico") {
-      this.tarkovSend.file(resp, "res/icon.ico");
-      return;
-    }
-    if (req.url.includes(".css")) {
-      this.tarkovSend.file(resp, "res/style.css");
-      return;
-    }
-    if (req.url.includes("bender.light.otf")) {
-      this.tarkovSend.file(resp, "res/bender.light.otf");
-      return;
-    }
 
-    if (req.url.includes("/server/config")) {
-      // load html page represented by home_f
-      output = router.getResponse(req, body, sessionID);
-      this.tarkovSend.html(resp, output, "");
-    }
-    if (req.url == "/") {
-      //home_f.processSaveData(body);
-      // its hard to create a file `.js` in folder in windows cause it looks cancerous so we gonna write this code here
-      output = home_f.RenderHomePage();
-      this.tarkovSend.html(resp, output, "");
+    //check if page is static html page or requests like 
+    if(this.tarkovSend.sendStaticFile(req, resp))
       return;
-    }
 
     // get response
     if (req.method === "POST" || req.method === "PUT") {
@@ -120,15 +94,17 @@ class Server {
     }
   }
 
-  async handleRequest(req, resp) {
+  handleAsyncRequest(req, resp){
+    return new Promise(resolve => {
+      resolve(this.handleRequest(req, resp));
+    });
+  }
+
+  // Logs the requests made by users. Also stripped from bullshit requests not important ones.
+  requestLog(req, sessionID) {
     let IP = req.connection.remoteAddress.replace("::ffff:", "");
     IP = IP == "127.0.0.1" ? "LOCAL" : IP;
 
-    let sessionID_test = utility.getCookies(req)["PHPSESSID"];
-    if (consoleResponse.getDebugEnabled()) {
-      sessionID_test = consoleResponse.getSession();
-    }
-    const sessionID = sessionID_test;
 
     let displaySessID = typeof sessionID != "undefined" ? `[${sessionID}]` : "";
 
@@ -143,47 +119,48 @@ class Server {
       !req.url.includes("singleplayer/settings/bot/difficulty")
     )
       logger.logRequest(req.url, `${displaySessID}[${IP}] `);
+  }
 
-    // request without data
-    if (req.method === "GET") {
-      server.sendResponse(sessionID, req, resp, "");
-    }
+  handleRequest(req, resp) {
+    const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
 
-    // request with data
-    if (req.method === "POST") {
-      req.on("data", function (data) {
-        if (req.url == "/" || req.url.includes("/server/config")) {
-          let _Data = data.toString();
-          _Data = _Data.split("&");
-          let _newData = {};
-          for (let item in _Data) {
-            let datas = _Data[item].split("=");
-            _newData[datas[0]] = datas[1];
+    this.requestLog(req, sessionID);
+
+    switch(req.method) {
+      case "GET": 
+      {
+        server.sendResponse(sessionID, req, resp, "");
+        return true;
+      }
+      case "POST": 
+      {
+        req.on("data", function (data) {
+          if (req.url == "/" || req.url.includes("/server/config")) {
+            let _Data = data.toString();
+            _Data = _Data.split("&");
+            let _newData = {};
+            for (let item in _Data) {
+              let datas = _Data[item].split("=");
+              _newData[datas[0]] = datas[1];
+            }
+            server.sendResponse(sessionID, req, resp, _newData);
+            return;
           }
-          server.sendResponse(sessionID, req, resp, _newData);
-          return;
-        }
-        internal.zlib.inflate(data, function (err, body) {
-          let jsonData =
-            body !== typeof "undefined" && body !== null && body !== ""
-              ? body.toString()
-              : "{}";
-          server.sendResponse(sessionID, req, resp, jsonData);
+          internal.zlib.inflate(data, function (err, body) {
+            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+            server.sendResponse(sessionID, req, resp, jsonData);
+          });
         });
-      });
-    }
-
-    // emulib responses
-    if (req.method === "PUT") {
-      req
-        .on("data", function (data) {
+        return true;
+      }
+      case "PUT": 
+      {
+        req.on("data", function (data) {
           // receive data
           if ("expect" in req.headers) {
             const requestLength = parseInt(req.headers["content-length"]);
 
-            if (
-              !server.putInBuffer(req.headers.sessionid, data, requestLength)
-            ) {
+            if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
               resp.writeContinue();
             }
           }
@@ -193,65 +170,56 @@ class Server {
           server.resetBuffer(sessionID);
 
           internal.zlib.inflate(data, function (err, body) {
-            let jsonData =
-              body !== typeof "undefined" && body !== null && body !== ""
-                ? body.toString()
-                : "{}";
+            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
             server.sendResponse(sessionID, req, resp, jsonData);
           });
         });
+        return true;
+      }
+      default: 
+      {
+        return true;
+      }
     }
   }
 
-  _serverStart() {
+  CreateServer() {
     let backend = this.backendUrl;
     /* create server */
     const certificate = require("./certGenerator.js").certificate;
 
-    let httpsServer = internal.https
-      .createServer(certificate.generate(), (req, res) => {
-        this.handleRequest(req, res);
-      })
-      .listen(this.port, this.ip, function () {
-        logger.logSuccess(`Server is working at: ${backend}`);
-      });
+    let httpsServer = internal.https.createServer(certificate.generate());
+    httpsServer.on('request', async (req, res) => {
+      this.handleAsyncRequest(req, res);
+    });
 
     /* server is already running or program using privileged port without root */
     httpsServer.on("error", function (e) {
-      if (
-        internal.process.platform === "linux" &&
-        !(internal.process.getuid && internal.process.getuid() === 0) &&
-        e.port < 1024
-      ) {
-        logger.throwErr(
-          "» Non-root processes cannot bind to ports below 1024.",
-          ">> core/server.server.js line 274",
-        );
+      if (internal.process.platform === "linux" && !(internal.process.getuid && internal.process.getuid() === 0) && e.port < 1024) {
+        logger.throwErr("» Non-root processes cannot bind to ports below 1024.", ">> core/server.server.js line 274");
       } else if (e.code == "EADDRINUSE") {
         internal.psList().then((data) => {
           let cntProc = 0;
           for (let proc of data) {
             let procName = proc.name.toLowerCase();
             if (
-              (procName.indexOf("node") != -1 ||
-                procName.indexOf("server") != -1 ||
-                procName.indexOf("emu") != -1 ||
-                procName.indexOf("justemu") != -1) &&
+              (procName.indexOf("node") != -1 || procName.indexOf("server") != -1 || procName.indexOf("emu") != -1 || procName.indexOf("justemu") != -1) &&
               proc.pid != internal.process.pid
             ) {
               logger.logWarning(`ProcessID: ${proc.pid} - Name: ${proc.name}`);
               cntProc++;
             }
           }
-          if (cntProc > 0)
-            logger.logError(
-              "Please close this process'es before starting this server.",
-            );
+          if (cntProc > 0) logger.logError("Please close this process'es before starting this server.");
         });
         logger.throwErr(`» Port ${e.port} is already in use`, "");
       } else {
         throw e;
       }
+    });
+
+    httpsServer.listen(this.port, this.ip, function () {
+      logger.logSuccess(`Server is working at: ${backend}`);
     });
   }
 
@@ -273,20 +241,26 @@ class Server {
   }
 
   start() {
-    logger.logInfo("[Warmup]: Loading Database");
+    logger.logDebug("Loading Database...");
     const databasePath = "/src/functions/database.js";
     require(executedDir + databasePath).load();
 
     // will not be required if all data is loaded into memory
+    logger.logDebug("Initialize account...")
     account_f.handler.initialize();
+    logger.logDebug("Initialize save handler...")
     savehandler_f.initialize();
+    logger.logDebug("Initialize locale...")
     locale_f.handler.initialize();
+    logger.logDebug("Initialize preset...")
     preset_f.handler.initialize();
 
+    logger.logDebug("Load Tamper Mods...")
     global.mods_f.TamperModLoad(); // TamperModLoad
+    logger.logDebug("Initialize bundles...")
     bundles_f.handler.initialize();
     logger.logInfo("Starting server...");
-    this._serverStart();
+    this.CreateServer();
   }
 }
 

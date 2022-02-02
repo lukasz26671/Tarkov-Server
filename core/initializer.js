@@ -7,8 +7,8 @@ class Initializer {
     this.initializeCacheCallbacks();
 
     // start watermark and server
-    require("./server/watermark.js").run();
-    global.consoleResponse = require("./server/console.js").consoleResponse;
+    require("./watermark.js").run();
+    global.consoleResponse = require("./console.js").consoleResponse;
     server.start();
   }
 
