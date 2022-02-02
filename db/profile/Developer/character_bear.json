@@ -94,35 +94,35 @@
   "Inventory": {
     "items": [
       {
-        "_id": "61b7367440281631fc83f198",
+        "_id": "61b7367440281631fc83f17f",
         "_tpl": "602543c13fee350cd564d032"
       },
       {
-        "_id": "5fe49444ae6628187a2e77b8",
+        "_id": "61b7367440281631fc83f199",
         "_tpl": "55d7217a4bdc2d86028b456d"
       },
       {
         "_id": "5fe49444ae6628187a2e77b6",
         "_tpl": "557ffd194bdc2d28148b457f",
-        "parentId": "5fe49444ae6628187a2e77b8",
+        "parentId": "61b7367440281631fc83f199",
         "slotId": "Pockets"
       },
       {
-        "_id": "5fe49444ae6628187a2e78b8",
+        "_id": "61b7367440281631fc83f197",
         "_tpl": "5811ce772459770e9e5f9532"
       },
       {
-        "_id": "5fe49444ae6628187a2e78ba",
+        "_id": "61b7367440281631fc83f19b",
         "_tpl": "5963866b86f7747bfa1c4462"
       },
       {
-        "_id": "5fe49444ae6628187a2e78b9",
+        "_id": "61b7367440281631fc83f19a",
         "_tpl": "5963866286f7747bf429b572"
       },
       {
         "_id": "I-8084a867-dee4-4d55-8b86-2099099bc611",
         "_tpl": "5449016a4bdc2d6f028b456f",
-        "parentId": "5fe49444ae6628187a2e78b8",
+        "parentId": "61b7367440281631fc83f197",
         "slotId": "hideout",
         "location": {
           "x": 2,
@@ -136,7 +136,7 @@
       {
         "_id": "I-39ed1cea-13e2-4c10-ab34-ed4eb0bbab47",
         "_tpl": "5c093ca986f7740a1867ab12",
-        "parentId": "5fe49444ae6628187a2e77b8",
+        "parentId": "61b7367440281631fc83f199",
         "slotId": "SecuredContainer",
         "upd": {
           "StackObjectsCount": 1,
@@ -144,10 +144,10 @@
         }
       }
     ],
-    "equipment": "5fe49444ae6628187a2e77b8",
-    "stash": "5fe49444ae6628187a2e78b8",
-    "sortingTable": "61b7367440281631fc83f198",
-    "questRaidItems": "5fe49444ae6628187a2e78b9",
+    "equipment": "61b7367440281631fc83f199",
+    "stash": "61b7367440281631fc83f197",
+    "sortingTable": "61b7367440281631fc83f17f",
+    "questRaidItems": "61b7367440281631fc83f19a",
     "questStashItems": "5fe49444ae6628187a2e78ba",
     "fastPanel": {}
   },
