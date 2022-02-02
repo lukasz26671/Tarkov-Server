@@ -49,8 +49,6 @@ class Initializer {
     /* setup routes and cache */
     global.mods_f = require("./server/mods.js");
     global.mods_f.load();
-    //delete require.cache[global.internal.path.resolve("../src/functions/database.js")];
-    //global.database_f = require(executedDir +"/src/functions/database.js");
 
     /* core logic */
     global.router = require("./server/router.js").router;

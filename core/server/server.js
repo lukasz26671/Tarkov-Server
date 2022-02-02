@@ -7,9 +7,8 @@ class Server {
     this.ip = serverConfig.ip;
     this.port = serverConfig.port;
     this.backendUrl = "https://" + this.ip + ":" + this.port;
-    this.second_backendUrl =
-      "https://" + serverConfig.ip_backend + ":" + this.port;
-
+    this.second_backendUrl = "https://" + serverConfig.ip_backend + ":" + this.port;
+    this.buffers = {}; // THIS SEEMS TO FIX THAT FIRST ERROR (Server.putInBuffer)
     this.initializeCallbacks();
   }
 
