@@ -69,6 +69,7 @@ exports.sellItem = (pmcData, body, sessionID) => {
   item_f.handler.setOutput(
     helper_f.getMoney(pmcData, money, body, output, sessionID),
   );
+
   return;
 };
 

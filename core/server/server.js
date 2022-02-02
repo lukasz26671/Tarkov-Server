@@ -1,79 +1,21 @@
 "use strict";
 
-class TarkovSend {
-  constructor() {
-    this.mime = {
-      html: "text/html",
-      txt: "text/plain",
-      jpg: "image/jpeg",
-      png: "image/png",
-      css: "text/css",
-      otf: "font/opentype",
-      json: "application/json",
-    };
-  }
-  zlibJson(resp, output, sessionID) {
-    let Header = {"Content-Type": this.mime["json"], "Set-Cookie": "PHPSESSID=" + sessionID };
-    if(typeof sessionID == "undefined"){
-      Header["content-encoding"] == "deflate";
-    }
-    resp.writeHead(200, "OK", Header);
-    internal.zlib.deflate(output, function (err, buf) {
-      resp.end(buf);
-    });
-  }
-
-  txtJson(resp, output) {
-    resp.writeHead(200, "OK", { "Content-Type": this.mime["json"] });
-    resp.end(output);
-  }
-
-  html(resp, output) {
-    resp.writeHead(200, "OK", { "Content-Type": this.mime["html"] });
-    resp.end(output);
-  }
-
-  file(resp, file) {
-    const _split = file.split(".");
-    let type = this.mime[_split[_split.length - 1]] || this.mime["txt"];
-    let fileStream = fileIO.createReadStream(file);
-
-    fileStream.on("open", function () {
-      resp.setHeader("Content-Type", type);
-      fileStream.pipe(resp);
-    });
-  }
-}
-
 class Server {
   constructor() {
-    this.tarkovSend = new TarkovSend();
-    this.buffers = {};
+    this.tarkovSend = require("./tarkovSend.js").struct;
     this.name = serverConfig.name;
     this.ip = serverConfig.ip;
     this.port = serverConfig.port;
     this.backendUrl = "https://" + this.ip + ":" + this.port;
-    this.second_backendUrl = "https://" + serverConfig.ip_backend + ":" + this.port;
+    this.second_backendUrl =
+      "https://" + serverConfig.ip_backend + ":" + this.port;
 
-    this.version = "1.2.0 v12.12-TestBuild";
-
-    this.createCache();
-    this.createCallback();
+    this.initializeCallbacks();
   }
 
-  createCache() {
-    this.cacheCallback = {};
-    let path = "./src/cache";
-    let files = fileIO.readDir(path);
-    for (let file of files) {
-      let scriptName = "cache" + file.replace(".js", "");
-      this.cacheCallback[scriptName] = require("../../src/cache/" + file).cache;
-    }
-    logger.logSuccess("Create: Cache Callback");
-  }
-
-  createCallback() {
-    const callbacks = require(executedDir + "/src/functions/callbacks.js").callbacks;
+  initializeCallbacks() {
+    const callbacks = require(executedDir +
+      "/src/functions/callbacks.js").callbacks;
 
     this.receiveCallback = callbacks.getReceiveCallbacks();
     this.respondCallback = callbacks.getRespondCallbacks();
@@ -85,7 +27,10 @@ class Server {
     this.buffers[sessionID] = undefined;
   }
   putInBuffer(sessionID, data, bufLength) {
-    if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
+    if (
+      this.buffers[sessionID] === undefined ||
+      this.buffers[sessionID].allocated !== bufLength
+    ) {
       this.buffers[sessionID] = {
         written: 0,
         allocated: bufLength,
@@ -112,51 +57,12 @@ class Server {
     return this.port;
   }
   getBackendUrl() {
-    return this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
+    return this.second_backendUrl != null
+      ? this.second_backendUrl
+      : this.backendUrl;
   }
   getVersion() {
-    return this.version;
-  }
-
-  generateCertificate() {
-    const certDir = internal.resolve(__dirname, "../../user/certs");
-
-    const certFile = internal.resolve(certDir, "cert.pem");
-    const keyFile = internal.resolve(certDir, "key.pem");
-
-    let cert, key;
-
-    if (fileIO.exist(certFile) && fileIO.exist(keyFile)) {
-      cert = fileIO.readParsed(certFile);
-      key = fileIO.readParsed(keyFile);
-    } else {
-      if (!fileIO.exist(certDir)) {
-        fileIO.mkDir(certDir);
-      }
-
-      let fingerprint;
-
-      ({
-        cert,
-        private: key,
-        fingerprint,
-      } = internal.selfsigned.generate(null, {
-        keySize: 2048, // the size for the private key in bits (default: 1024)
-        days: 365, // how long till expiry of the signed certificate (default: 365)
-        algorithm: "sha256", // sign the certificate with specified algorithm (default: 'sha1')
-        extensions: [{ name: "commonName", cA: true, value: this.ip + "/" }], // certificate extensions array
-        pkcs7: true, // include PKCS#7 as part of the output (default: false)
-        clientCertificate: true, // generate client cert signed by the original key (default: false)
-        clientCertificateCN: "jdoe", // client certificate's common name (default: 'John Doe jdoe123')
-      }));
-
-      logger.logInfo(`Generated self-signed sha256/2048 certificate ${fingerprint}, valid 365 days`);
-
-      fileIO.write(certFile, cert, true);
-      fileIO.write(keyFile, key, true);
-    }
-
-    return { cert, key };
+    return global.core.constants.ServerVersion;
   }
 
   sendResponse(sessionID, req, resp, body) {
@@ -199,7 +105,7 @@ class Server {
       logger.logError(`[UNHANDLED][${req.url}]`);
       logger.logData(body);
       output = `{"err": 404, "errmsg": "UNHANDLED RESPONSE: ${req.url}", "data": null}`;
-    }else {
+    } else {
       logger.logDebug(body, true);
     }
     // execute data received callback
@@ -215,7 +121,7 @@ class Server {
     }
   }
 
-  handleRequest(req, resp) {
+  async handleRequest(req, resp) {
     let IP = req.connection.remoteAddress.replace("::ffff:", "");
     IP = IP == "127.0.0.1" ? "LOCAL" : IP;
 
@@ -259,7 +165,10 @@ class Server {
           return;
         }
         internal.zlib.inflate(data, function (err, body) {
-          let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+          let jsonData =
+            body !== typeof "undefined" && body !== null && body !== ""
+              ? body.toString()
+              : "{}";
           server.sendResponse(sessionID, req, resp, jsonData);
         });
       });
@@ -273,7 +182,9 @@ class Server {
           if ("expect" in req.headers) {
             const requestLength = parseInt(req.headers["content-length"]);
 
-            if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+            if (
+              !server.putInBuffer(req.headers.sessionid, data, requestLength)
+            ) {
               resp.writeContinue();
             }
           }
@@ -283,7 +194,10 @@ class Server {
           server.resetBuffer(sessionID);
 
           internal.zlib.inflate(data, function (err, body) {
-            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+            let jsonData =
+              body !== typeof "undefined" && body !== null && body !== ""
+                ? body.toString()
+                : "{}";
             server.sendResponse(sessionID, req, resp, jsonData);
           });
         });
@@ -293,8 +207,10 @@ class Server {
   _serverStart() {
     let backend = this.backendUrl;
     /* create server */
+    const certificate = require("./certGenerator.js").certificate;
+
     let httpsServer = internal.https
-      .createServer(this.generateCertificate(), (req, res) => {
+      .createServer(certificate.generate(), (req, res) => {
         this.handleRequest(req, res);
       })
       .listen(this.port, this.ip, function () {
@@ -303,22 +219,35 @@ class Server {
 
     /* server is already running or program using privileged port without root */
     httpsServer.on("error", function (e) {
-      if (internal.process.platform === "linux" && !(internal.process.getuid && internal.process.getuid() === 0) && e.port < 1024) {
-        logger.throwErr("» Non-root processes cannot bind to ports below 1024.", ">> core/server.server.js line 274");
+      if (
+        internal.process.platform === "linux" &&
+        !(internal.process.getuid && internal.process.getuid() === 0) &&
+        e.port < 1024
+      ) {
+        logger.throwErr(
+          "» Non-root processes cannot bind to ports below 1024.",
+          ">> core/server.server.js line 274",
+        );
       } else if (e.code == "EADDRINUSE") {
         internal.psList().then((data) => {
           let cntProc = 0;
           for (let proc of data) {
             let procName = proc.name.toLowerCase();
             if (
-              (procName.indexOf("node") != -1 || procName.indexOf("server") != -1 || procName.indexOf("emu") != -1 || procName.indexOf("justemu") != -1) &&
+              (procName.indexOf("node") != -1 ||
+                procName.indexOf("server") != -1 ||
+                procName.indexOf("emu") != -1 ||
+                procName.indexOf("justemu") != -1) &&
               proc.pid != internal.process.pid
             ) {
               logger.logWarning(`ProcessID: ${proc.pid} - Name: ${proc.name}`);
               cntProc++;
             }
           }
-          if (cntProc > 0) logger.logError("Please close this process'es before starting this server.");
+          if (cntProc > 0)
+            logger.logError(
+              "Please close this process'es before starting this server.",
+            );
         });
         logger.throwErr(`» Port ${e.port} is already in use`, "");
       } else {
@@ -345,15 +274,6 @@ class Server {
   }
 
   start() {
-    // execute cache callback
-    if (serverConfig.rebuildCache) {
-      logger.logInfo("[Warmup]: Cache callbacks...");
-      for (let type in this.cacheCallback) {
-        this.cacheCallback[type]();
-      }
-      global.mods_f.CacheModLoad(); // CacheModLoad
-    }
-
     logger.logInfo("[Warmup]: Loading Database");
     const databasePath = "/src/functions/database.js";
     require(executedDir + databasePath).load();

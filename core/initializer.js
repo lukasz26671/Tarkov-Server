@@ -1,6 +1,7 @@
 class Initializer {
   constructor() {
     this.initializeCore();
+    this.initializeCacheCallbacks();
     this.initializeExceptions();
     this.initializeClasses();
     this.initializeItemRoute();
@@ -18,6 +19,9 @@ class Initializer {
     global.db = {}; // used only for caching
     global.res = {}; // used for deliver files
     global._database = {};
+    global.cache = {};
+
+    global.core.constants = require("./constants.js").struct;
 
     global.startTimestamp = new Date().getTime();
 
@@ -52,16 +56,29 @@ class Initializer {
     global.router = require("./server/router.js").router;
     global.events = require("./server/events.js");
     global.server = require("./server/server.js").server;
+    
   }
 
-  // initializeFunctionsFolder() {
-  //   const loadOrder = ["callbacks.js", "database.js", "response.js"];
-  //   for (let file of loadOrder) {
-  //     loadedModules += file.replace(".js", ", ");
-  //     let name = file.replace(".js", "").toLowerCase() + "_func"; // fixes the weaponbuilds.js file bug ... lol
-  //     global[name] = require(executedDir + "/src/classes/" + file);
-  //   }
-  // }
+  initializeCacheCallbacks() {
+    this.cacheCallback = {};
+    let path = "./src/cache";
+    let files = fileIO.readDir(path);
+    for (let file of files) {
+      let scriptName = "cache" + file.replace(".js", "");
+      this.cacheCallback[scriptName] = require("../src/cache/" + file).cache;
+    }
+    logger.logSuccess("Create: Cache Callback");
+
+    // execute cache callback
+    if (serverConfig.rebuildCache) {
+      logger.logInfo("[Warmup]: Cache callbacks...");
+      for (let type in this.cacheCallback) {
+        this.cacheCallback[type]();
+      }
+      global.mods_f.CacheModLoad(); // CacheModLoad
+    }
+    global.mods_f.ResModLoad(); // load Res Mods
+  }
 
   /* load exception handler */
   initializeExceptions() {
