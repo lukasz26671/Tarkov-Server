@@ -33,7 +33,7 @@
       "SpawnPoints": "BotZone",
       "BotSide": "Savage",
       "BotPreset": "normal",
-      "WildSpawnType": "assault",
+      "WildSpawnType": "pmcBot",
       "isPlayers": false
     },
     {
@@ -2248,7 +2248,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "bossTagilla",
-      "BossChance": 75,
+      "BossChance": 100,
       "BossZone": "BotZone",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -2256,6 +2256,17 @@
       "BossEscortDifficult": "normal",
       "BossEscortAmount": "0",
       "Time": -1
+    },
+    {
+      "BossName": "bossKilla",
+      "BossChance": 100,
+      "BossZone": "BotZone",
+      "BossPlayer": false,
+      "BossDifficult": "normal",
+      "BossEscortType": "followerBully",
+      "BossEscortDifficult": "normal",
+      "BossEscortAmount": "0",
+      "Time": 50
     }
   ],
   "Id": "factory4_day",

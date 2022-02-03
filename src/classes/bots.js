@@ -113,7 +113,7 @@ class Controller {
               node = global._database.bots["followerbully"];
           break;
           case 6:
-              node = global._database.bots["sectantpriest"];
+              node = global._database.bots["sectantwarrior"];
           break;
       }
     }
@@ -164,7 +164,7 @@ class Controller {
       node.experience.level.max,
       pmcData.Info.Level
     );
-    bot.Info.experience = levelResult.exp;
+    bot.Info.Experience = levelResult.exp;
     bot.Info.Level = levelResult.level;
 
     if(bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear"){

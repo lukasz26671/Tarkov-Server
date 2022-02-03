@@ -498,7 +498,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "sectantPriest",
-      "BossChance": 20,
+      "BossChance": 75,
       "BossZone": "ZoneForestGasStation,ZoneForestSpawn",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -509,7 +509,7 @@
     },
     {
       "BossName": "bossSanitar",
-      "BossChance": 32,
+      "BossChance": 100,
       "BossZone": "ZonePort,ZoneGreenHouses,ZoneSanatorium1,ZoneGreenHouses,ZoneSanatorium2",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -520,7 +520,7 @@
     },
     {
       "BossName": "sectantPriest",
-      "BossChance": 20,
+      "BossChance": 75,
       "BossZone": "ZoneSanatorium1,ZoneSanatorium2",
       "BossPlayer": false,
       "BossDifficult": "normal",
