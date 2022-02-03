@@ -2219,7 +2219,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "bossTagilla",
-      "BossChance": 23,
+      "BossChance": 100,
       "BossZone": "BotZone",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -2230,7 +2230,7 @@
     },
     {
       "BossName": "sectantPriest",
-      "BossChance": 3,
+      "BossChance": 75,
       "BossZone": "BotZone",
       "BossPlayer": false,
       "BossDifficult": "normal",

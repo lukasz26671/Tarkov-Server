@@ -113,7 +113,7 @@ class Controller {
               node = global._database.bots["followerbully"];
           break;
           case 6:
-              node = global._database.bots["sectantpriest"];
+              node = global._database.bots["sectantwarrior"];
           break;
       }
     }

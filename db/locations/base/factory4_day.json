@@ -33,7 +33,7 @@
       "SpawnPoints": "BotZone",
       "BotSide": "Savage",
       "BotPreset": "normal",
-      "WildSpawnType": "assault",
+      "WildSpawnType": "pmcBot",
       "isPlayers": false
     },
     {
@@ -2259,7 +2259,7 @@
     },
     {
       "BossName": "bossKilla",
-      "BossChance": 75,
+      "BossChance": 100,
       "BossZone": "BotZone",
       "BossPlayer": false,
       "BossDifficult": "normal",
