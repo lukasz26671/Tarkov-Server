@@ -470,7 +470,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "sectantPriest",
-      "BossChance": 30,
+      "BossChance": 75,
       "BossZone": "ZoneMiniHouse,ZoneBrokenVill",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -481,7 +481,7 @@
     },
     {
       "BossName": "bossKojaniy",
-      "BossChance": 29,
+      "BossChance": 100,
       "BossZone": "ZoneWoodCutter",
       "BossPlayer": false,
       "BossDifficult": "normal",
