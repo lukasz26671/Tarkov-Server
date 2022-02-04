@@ -44,7 +44,7 @@
       "slots_max": 4,
       "SpawnPoints": "BotZone",
       "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "BotSide": "Savage",
       "isPlayers": false
     },
@@ -81,7 +81,7 @@
       "SpawnPoints": "BotZone",
       "BotSide": "Savage",
       "BotPreset": "hard",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "isPlayers": false
     },
     {
@@ -149,7 +149,7 @@
   "AveragePlayTime": 15,
   "AveragePlayerLevel": 1,
   "escape_time_limit": 20,
-  "Rules": "normal",
+  "Rules": "AvoidOwnPmc",
   "IsSecret": false,
   "doors": [],
   "tmp_location_field_remove_me": 0,
@@ -2248,7 +2248,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "bossTagilla",
-      "BossChance": 75,
+      "BossChance": 100,
       "BossZone": "BotZone",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -2256,6 +2256,17 @@
       "BossEscortDifficult": "normal",
       "BossEscortAmount": "0",
       "Time": -1
+    },
+    {
+      "BossName": "bossKilla",
+      "BossChance": 100,
+      "BossZone": "BotZone",
+      "BossPlayer": false,
+      "BossDifficult": "impossible",
+      "BossEscortType": "followerBully",
+      "BossEscortDifficult": "impossible",
+      "BossEscortAmount": "0",
+      "Time": 50
     }
   ],
   "Id": "factory4_day",

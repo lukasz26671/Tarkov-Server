@@ -14,7 +14,7 @@
     "punisherEnabled": false,
 
     "": "Nugent Toggle",
-    "nugentEnabled": true,
+    "nugentEnabled": false,
 
     "": "Trader Overhaul settings",
     "traderOverhaul": {
@@ -44,7 +44,7 @@
 
     "": "Bot Spawning Configuration",
     "botConfig": {
-      "toggle": true,
+      "toggle": false,
       "bot_waves": {
         "": "default - false / 1.0 / 1.4 / 1.8 / 10",
 

@@ -88,6 +88,72 @@ function Create_StaticMountedStruct(item_data) {
   };
 }
 
+/* Kings Bullshit
+
+  exports.cache = () => {
+  if (!serverConfig.rebuildCache) {
+    return;
+  }
+  let cacheLocation;
+  if (!fileIO.exist("locations")) cacheLocation = fileIO.mkDir("locations") ;
+  else cacheLocation = fileIO.readDir("locations");
+
+  logger.logInfo("Caching: Locations");
+  //let locations = {};
+  for (let name in db.locations.base) {
+    let _location = { base: {}, waves: {}, exits: {}, SpawnPointParams: {}, loot: {} };
+    _location.base = fileIO.readParsed(db.locations.base[name]);
+    locationName = _location.base.Name;
+
+    if (!fileIO.exist("locations/" + locationName + "/")){
+      fileIO.mkDir("locations/" + locationName);
+    }
+
+    _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
+    if (typeof db.locations.loot[name] != "undefined") {
+      let loot_data = fileIO.readParsed(db.locations.loot[name]);
+      for (let type in loot_data) {
+        for (item of loot_data[type]) {
+          if (type == "static" || type == "mounted") {
+            _location.loot[type].push(Create_StaticMountedStruct(item));
+            continue;
+          }
+          _location.loot[type].push(Create_ForcedDynamicStruct(item));
+        }
+      }
+    }
+    if (typeof _location.base.waves != "undefined"){
+      _location.waves = _location.base.waves;
+      fileIO.write("user/cache/locations/" + locationName + "/Waves.json", _location.waves, true, false)
+      _location.base.waves = []
+    }
+  
+      if (typeof _location.base.exits != "undefined"){
+      _location.exits = _location.base.exits;
+      fileIO.write("user/cache/locations/" + locationName + "/Exits.json", _location.exits, true, false)
+      _location.base.exits = []
+    }
+  
+      if (typeof _location.base.SpawnPointParams != "undefined"){
+      _location.SpawnPointParams = _location.base.SpawnPointParams;
+      fileIO.write("user/cache/locations/" + locationName + "/SpawnPointParams.json", _location.SpawnPointParams, true, false)
+      _location.base.SpawnPointParams = []
+    }
+  
+      if (typeof _location.base.AirdropParameters != "undefined"){
+      _location.AirdropParameters = _location.base.AirdropParameters;
+      fileIO.write("user/cache/locations/" + locationName + "/AirdropParameters.json", _location.AirdropParameters, true, false)
+      _location.base.AirdropParameters = []
+    }
+    
+    fileIO.write("user/cache/locations/" + locationName + "/Base.json", _location.base, true, false)
+  }
+}; 
+
+End Kings Bullshit */
+
+
+
 exports.cache = () => {
   if (!serverConfig.rebuildCache) {
     return;

@@ -26,6 +26,30 @@
   "waves": [
     {
       "number": 0,
+      "time_min": -1,
+      "time_max": -1,
+      "slots_min": 1,
+      "slots_max": 3,
+      "SpawnPoints": "",
+      "BotPreset": "normal",
+      "WildSpawnType": "assault",
+      "BotSide": "Savage",
+      "isPlayers": true
+    },
+    {
+      "number": 1,
+      "time_min": -1,
+      "time_max": -1,
+      "slots_min": 1,
+      "slots_max": 3,
+      "SpawnPoints": "",
+      "BotPreset": "normal",
+      "WildSpawnType": "assault",
+      "BotSide": "Savage",
+      "isPlayers": true
+    },
+    {
+      "number": 2,
       "time_min": 55,
       "time_max": 100,
       "slots_min": 1,
@@ -38,7 +62,7 @@
       "OpenZones": ""
     },
     {
-      "number": 1,
+      "number": 3,
       "time_min": 120,
       "time_max": 125,
       "slots_min": 0,
@@ -51,7 +75,7 @@
       "OpenZones": ""
     },
     {
-      "number": 2,
+      "number": 4,
       "time_min": 288,
       "time_max": 499,
       "slots_min": 0,
@@ -64,7 +88,7 @@
       "OpenZones": ""
     },
     {
-      "number": 3,
+      "number": 5,
       "time_min": 400,
       "time_max": 700,
       "slots_min": 1,
@@ -77,7 +101,7 @@
       "OpenZones": ""
     },
     {
-      "number": 4,
+      "number": 6,
       "time_min": 700,
       "time_max": 800,
       "slots_min": 0,
@@ -90,7 +114,7 @@
       "OpenZones": ""
     },
     {
-      "number": 5,
+      "number": 7,
       "time_min": 800,
       "time_max": 1000,
       "slots_min": 0,
@@ -103,7 +127,7 @@
       "OpenZones": ""
     },
     {
-      "number": 6,
+      "number": 8,
       "time_min": 1000,
       "time_max": 1300,
       "slots_min": 0,
@@ -116,7 +140,7 @@
       "OpenZones": ""
     },
     {
-      "number": 7,
+      "number": 9,
       "time_min": 30,
       "time_max": 60,
       "slots_min": 0,
@@ -129,7 +153,7 @@
       "OpenZones": ""
     },
     {
-      "number": 8,
+      "number": 10,
       "time_min": 0,
       "time_max": 9,
       "slots_min": 0,
@@ -142,7 +166,7 @@
       "OpenZones": ""
     },
     {
-      "number": 9,
+      "number": 11,
       "time_min": 20,
       "time_max": 31,
       "slots_min": 1,
@@ -155,7 +179,7 @@
       "OpenZones": ""
     },
     {
-      "number": 0,
+      "number": 12,
       "time_min": 140,
       "time_max": 160,
       "slots_min": 0,
@@ -168,7 +192,7 @@
       "OpenZones": ""
     },
     {
-      "number": 0,
+      "number": 13,
       "time_min": 350,
       "time_max": 400,
       "slots_min": 0,
@@ -181,7 +205,7 @@
       "OpenZones": ""
     },
     {
-      "number": 0,
+      "number": 14,
       "time_min": 180,
       "time_max": 250,
       "slots_min": 0,
@@ -192,111 +216,7 @@
       "WildSpawnType": "assault",
       "isPlayers": true,
       "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 0,
-      "time_max": 120,
-      "slots_min": 2,
-      "slots_max": 3,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "easy",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 150,
-      "time_max": 180,
-      "slots_min": 2,
-      "slots_max": 5,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "normal",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 180,
-      "time_max": 210,
-      "slots_min": 2,
-      "slots_max": 6,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "hard",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 400,
-      "time_max": 600,
-      "slots_min": 2,
-      "slots_max": 6,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "easy",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 600,
-      "time_max": 800,
-      "slots_min": 2,
-      "slots_max": 6,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "normal",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 900,
-      "time_max": 1100,
-      "slots_min": 0,
-      "slots_max": 5,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "hard",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": 400,
-      "time_max": 420,
-      "slots_min": 1,
-      "slots_max": 5,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "normal",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "OpenZones": ""
-    },
-    {
-      "number": 0,
-      "time_min": -1,
-      "time_max": -1,
-      "slots_min": 0,
-      "slots_max": 1,
-      "SpawnPoints": "",
-      "BotSide": "Savage",
-      "BotPreset": "normal",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "OpenZones": ""
-    }
+    }    
   ],
   "limits": [],
   "AveragePlayTime": 25,
@@ -469,25 +389,25 @@
   "DisabledForScav": false,
   "BossLocationSpawn": [
     {
-      "BossName": "sectantPriest",
-      "BossChance": 30,
+      "BossName": "bossKilla",
+      "BossChance": 100,
       "BossZone": "ZoneMiniHouse,ZoneBrokenVill",
       "BossPlayer": false,
-      "BossDifficult": "normal",
+      "BossDifficult": "impossible",
       "BossEscortType": "sectantWarrior",
-      "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
-      "Time": -1
+      "BossEscortDifficult": "impossible",
+      "BossEscortAmount": "3",
+      "Time": 50
     },
     {
       "BossName": "bossKojaniy",
-      "BossChance": 29,
+      "BossChance": 100,
       "BossZone": "ZoneWoodCutter",
       "BossPlayer": false,
       "BossDifficult": "normal",
       "BossEscortType": "followerKojaniy",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "2",
+      "BossEscortAmount": "4",
       "Time": -1
     }
   ],
@@ -6471,15 +6391,15 @@
   "maxItemCountInLocation": [],
   "AirdropParameters": [
     {
-      "PlaneAirdropStartMin": 300,
-      "PlaneAirdropStartMax": 900,
+      "PlaneAirdropStartMin": 30,
+      "PlaneAirdropStartMax": 120,
       "PlaneAirdropEnd": 1200,
       "PlaneAirdropChance": 0.2,
       "PlaneAirdropMax": 1,
       "PlaneAirdropCooldownMin": 600,
       "PlaneAirdropCooldownMax": 900,
       "AirdropPointDeactivateDistance": 50,
-      "MinPlayersCountToSpawnAirdrop": 6,
+      "MinPlayersCountToSpawnAirdrop": 1,
       "UnsuccessfulTryPenalty": 180
     }
   ],

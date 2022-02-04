@@ -33,7 +33,7 @@ module.exports.RenderHomePage = () => {
   html += `<div class="container">
 	<div class="row">
 		<div class="twelve columns">
-			<h1>Version: ${server.version}</h1>
+			<h1>Version: ${server.getVersion()}</h1>
       <h1>Node: ${server.name}</h1>
       <h2>Why are you here.</h2>
 		</div>

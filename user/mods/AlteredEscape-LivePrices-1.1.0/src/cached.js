@@ -32,11 +32,11 @@ exports.mod = (mod_info) => {
     let livePrice = new Map(Object.entries(require('../src/livePrice.json')));
     let traderPrice = fileIO.readParsed(internal.path.resolve('user/cache/items.json'));
     let fleaPrice = fileIO.readParsed(internal.path.resolve('user/cache/templates.json'))
-        for (let item of Object.values(traderPrice.data)) {
-            if (livePrice.has(item._id)) {
-                item._props.CreditsPrice = livePrice.get(item._id).price;
+         for (let item of Object.values(traderPrice.data)) {
+            if (!typeof item._props.CreditsPrice == "undefined" || !typeof item._props.CreditsPrice === 1) {
+                if(livePrice.has(item._id)) item._props.CreditsPrice = livePrice.get(item._id).price;
             }
-        }
+        } 
         for (let item of fleaPrice.data.Items) {
             if (livePrice.has(item.Id)) {
                 item.Price = livePrice.get(item.Id).price;
