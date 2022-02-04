@@ -1,4 +1,34 @@
 "use strict";
+
+//use bot names in lowercase as it matches folders
+const botSwaps = {
+  "Customs": {
+    "bosssanitar" : "sectantpriest"
+  },
+  "Factory": { //no way to distinguish between day and night using name so be careful
+    //"bosssanitar" : "sectantpriest"
+  },
+  "Interchange": {
+
+  },
+  "Laboratory": {
+
+  },
+  "Lighthouse": {
+
+  },
+  "ReserveBase": {
+
+  },
+  "Shoreline": {
+
+  },
+  "Woods": {
+    "bosskilla" : "sectantpriest"
+  }
+}
+
+
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
@@ -62,32 +92,39 @@ class Controller {
 //START -----
   generateBot(bot, role, pmcData) {
     
-    //if bot is pmc, we randomize their sides, this affects the profile selection a few lines down.
-    if(role.toLowerCase() == "pmcbot"){
-      let pmcRoleSelect = utility.getRandomInt(1, 2);
-      switch (pmcRoleSelect) {
-        case 1:
-          bot.Info.Side = "Usec";
-          break;
-        case 2:
-          bot.Info.Side = "Bear";
-          break;
-      }
-    }
-    
     let node = [];
     //default
     node = global._database.bots[bot.Info.Settings.Role.toLowerCase()];
     
-    if(role.toLowerCase() == "playerscav"){
-      //required
-      node = global._database.bots[role.toLowerCase()];
-    }else{
-      if(role.toLowerCase() == "pmcbot"){
-        //if bot is a pmc, get customized stuff from usec and bear folders
-        //else, they will sound and behave like raiders/scavs
-        node = global._database.bots[bot.Info.Side.toLowerCase()];
-      } 
+    //random pmc generation
+    if(role.toLowerCase() == "assault" && true){
+      let scavRoleSelect = utility.getRandomInt(1, 2)
+      switch (scavRoleSelect) 
+      {
+          case 1:
+            //pmc
+            let sideSelect = utility.getRandomInt(1, 2);
+            switch (sideSelect) {
+              case 1:
+                //usec
+                bot.Info.Side = "Usec";
+                node = global._database.bots["usec"];
+                break;
+            
+              case 2:
+                //bear
+                bot.Info.Side = "Bear";
+                node = global._database.bots["bear"];
+                break;
+            }
+          break;
+
+          case 2:
+            //scav
+            bot.Info.Side = "Savage";
+            node = global._database.bots["assault"];
+          break;
+      }
     }
 
     //Examples for randomizing properties without the need for roles.
@@ -180,11 +217,88 @@ class Controller {
     return bot;
   }
 
+  //extended generateBot function for custom types of bot as defined in isCustomBot
+  generateCustomBot(bot, role, pmcData, map){
+
+    let node = [];
+    let newRole = "";
+
+    newRole = botSwaps[map][role.toLowerCase()];
+
+    //default
+    node = global._database.bots[newRole];
+    
+    bot.Info.Nickname = utility.getArrayValue(node.names);
+    bot.Info.Settings.Experience = utility.getRandomInt(
+      node.experience.reward.min,
+      node.experience.reward.max
+    );
+    bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
+    bot.Health = bots_f.botHandler.generateHealth(node.health);
+    bot.Customization.Head = utility.getArrayValue(node.appearance.head);
+    bot.Customization.Body = utility.getArrayValue(node.appearance.body);
+    bot.Customization.Feet = utility.getArrayValue(node.appearance.feet);
+    bot.Customization.Hands = utility.getArrayValue(node.appearance.hands);
+
+    let inventoryData = "";
+    for (const inventoryNode in node.inventory) {
+      const levelFromTo = inventoryNode.split("_");
+      const levelFrom = parseInt(levelFromTo[0]);
+      const levelTo = parseInt(levelFromTo[1]);
+
+      if (pmcData.Info.Level >= levelFrom && pmcData.Info.Level < levelTo) {
+        inventoryData = node.inventory[inventoryNode];
+        break;  // once we got our datas, no need to keep looping
+      }
+    }
+    if (inventoryData == "") {
+      // inventory is empty using fallback
+      inventoryData = node.inventory[Object.keys(node.inventory)[0]];
+    }
+   
+    bot.Inventory = bots_f.generator.generateInventory(
+      inventoryData,
+      node.chances,
+      node.generation
+    );
+
+    const levelResult = bots_f.botHandler.generateRandomLevel(
+      node.experience.level.min,
+      node.experience.level.max,
+      pmcData.Info.Level
+    );
+    bot.Info.Experience = levelResult.exp;
+    bot.Info.Level = levelResult.level;
+
+    if(bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear"){
+      bot = bots_f.botHandler.generateDogtag(bot);
+    }    
+
+    // generate new bot ID
+    bot = bots_f.botHandler.generateId(bot);
+
+    // generate new inventory ID
+    bot = utility.generateInventoryID(bot);
+
+    return bot;
+  
+  }
+
+  //bot is a complete bot object, map is a string with the location Name (not id)
+  isCustomBot(bot, map){
+    if(bot.Info.Settings.Role.toLowerCase() in botSwaps[map]){
+      //logger.logError("CUSTOM BOT: "+bot.Info.Settings.Role+" in "+map);
+      return true;
+    }
+    return false;
+  }
+
   //if bots generated correctly, then this method should only be called once per raid.
   //IF IT GETS CALLED MORE THAN ONCE PER RAID, IT MEANS SOMETHING IS WRONG EITHER IN
   //THE MAP JSON OR IN THE BOT GENERATION. DO NOT HANDLE BOT CUSTOMIZATION/MODDING IN BOT GENERATION CODE!!!!
   generate(info, sessionID) {        
     let count = 0;
+    let swapped = 0;
     let output = [];
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
     
@@ -195,9 +309,21 @@ class Controller {
         bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;    
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
-        bot = bots_f.botHandler.generateBot(bot, role, pmcData);
+        
+        //custom bot part
+        //if we in raid
+        if(offraid_f.handler.getPlayer(sessionID) && bots_f.botHandler.isCustomBot(bot, offraid_f.handler.getPlayer(sessionID).Location)){
+          //we in raid and bot is a bot that wants to be swapped
+          bot = bots_f.botHandler.generateCustomBot(bot, role, pmcData, offraid_f.handler.getPlayer(sessionID).Location);
+          swapped++;
+        }else{
+          //regular generation
+          bot = bots_f.botHandler.generateBot(bot, role, pmcData);
+        }
+        
         //any looped log = bad for performance
         //logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
+        
         output.unshift(bot);
         count++;
       }
@@ -208,10 +334,16 @@ class Controller {
       logger.logSuccess(
         "\u001b[32;1mGenerated: "+count+" bots for "+offraid_f.handler.getPlayer(sessionID).Location+" map."
       );
+      if(swapped > 0){
+        logger.logSuccess("\u001b[32;1mSwapped "+swapped+" bot(s).");
+      }
+      const fs = require('fs');
+      fs.writeFileSync('./playerdata.json', JSON.stringify(offraid_f.handler.getPlayer(sessionID), null, '\t'), 'utf8');
       //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
       logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
-    return shuffle(output);
+    return shuffle(output); //extra randomness
+    //return output;
   }
 
   generateRandomLevel(min, max, playerLevel) {
@@ -424,6 +556,9 @@ class Generator {
     const questStashItemsId = utility.generateNewItemId();
     const questStashItemsTpl = "5963866b86f7747bfa1c4462";
 
+    const sortingTableId = utility.generateNewItemId();
+    const sortingTableTpl = "602543c13fee350cd564d032";
+
     return {
       items: [
         {
@@ -442,11 +577,16 @@ class Generator {
           _id: questStashItemsId,
           _tpl: questStashItemsTpl,
         },
+        {
+          _id: sortingTableId,
+          _tpl: sortingTableTpl
+        }
       ],
       equipment: equipmentId,
       stash: stashId,
       questRaidItems: questRaidItemsId,
       questStashItems: questStashItemsId,
+      sortingTable: sortingTableId,
       fastPanel: {},
     };
   }

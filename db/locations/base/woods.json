@@ -32,7 +32,7 @@
       "slots_max": 3,
       "SpawnPoints": "",
       "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "BotSide": "Savage",
       "isPlayers": true
     },
@@ -44,7 +44,7 @@
       "slots_max": 3,
       "SpawnPoints": "",
       "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "BotSide": "Savage",
       "isPlayers": true
     },
@@ -216,34 +216,7 @@
       "WildSpawnType": "assault",
       "isPlayers": true,
       "OpenZones": ""
-    },
-    {
-      "number": 15,
-      "time_min": -1,
-      "time_max": -1,
-      "slots_min": 2,
-      "slots_max": 2,
-      "SpawnPoints": "ZoneMiniHouse,ZoneBrokenVill",
-      "BotSide": "Savage",
-      "BotPreset": "normal",
-      "WildSpawnType": "sectantPriest",
-      "isPlayers": false,
-      "OpenZones": ""
-    },
-    {
-      "number": 16,
-      "time_min": -1,
-      "time_max": -1,
-      "slots_min": 3,
-      "slots_max": 6,
-      "SpawnPoints": "ZoneMiniHouse,ZoneBrokenVill",
-      "BotSide": "Savage",
-      "BotPreset": "normal",
-      "WildSpawnType": "sectantWarrior",
-      "isPlayers": false,
-      "OpenZones": ""
-    }
-    
+    }    
   ],
   "limits": [],
   "AveragePlayTime": 25,
@@ -416,14 +389,14 @@
   "DisabledForScav": false,
   "BossLocationSpawn": [
     {
-      "BossName": "sectantPriest",
+      "BossName": "bossKilla",
       "BossChance": 100,
-      "BossZone": "ZoneMiniHouse",
+      "BossZone": "ZoneMiniHouse,ZoneBrokenVill",
       "BossPlayer": false,
-      "BossDifficult": "normal",
+      "BossDifficult": "impossible",
       "BossEscortType": "sectantWarrior",
-      "BossEscortDifficult": "normal",
-      "BossEscortAmount": "0",
+      "BossEscortDifficult": "impossible",
+      "BossEscortAmount": "3",
       "Time": 50
     },
     {
@@ -6418,15 +6391,15 @@
   "maxItemCountInLocation": [],
   "AirdropParameters": [
     {
-      "PlaneAirdropStartMin": 300,
-      "PlaneAirdropStartMax": 900,
+      "PlaneAirdropStartMin": 30,
+      "PlaneAirdropStartMax": 120,
       "PlaneAirdropEnd": 1200,
       "PlaneAirdropChance": 0.2,
       "PlaneAirdropMax": 1,
       "PlaneAirdropCooldownMin": 600,
       "PlaneAirdropCooldownMax": 900,
       "AirdropPointDeactivateDistance": 50,
-      "MinPlayersCountToSpawnAirdrop": 6,
+      "MinPlayersCountToSpawnAirdrop": 1,
       "UnsuccessfulTryPenalty": 180
     }
   ],

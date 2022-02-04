@@ -1,8 +1,11 @@
+const { logger } = require("../../core/util/logger");
+
 class Responses {
   constructor() {
     this.staticResponses = {
       // NEW REQUESTS
       "/client/repeatalbeQuests/activityPeriods": this.clientRepeatableQuestsActivityPeriods,
+      "/singleplayer/settings/bot/maxCap": this.dynSingleplayerSettingsBotMaxCap,
       // CORE REQUESTS
       "/client/account/customization": this.clientAccountCustomization,
       "/client/chatServer/list": this.clientChatServerList,
@@ -128,6 +131,10 @@ class Responses {
     };
   }
   //dynamic
+  dynSingleplayerSettingsBotMaxCap(url, info, sessionID){
+    return "20"; //random response, needs to be handled
+  }
+
   dynApiLocation(url, info, sessionID) {
     // if (url.includes("factory4_day")) { return response_f.noBody(fileIO.readParsed(db.locations_test.factory4_day1).Location); }
     return response_f.noBody(location_f.handler.get(url.replace("/api/location/", ""), sessionID));

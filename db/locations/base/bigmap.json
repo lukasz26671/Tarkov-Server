@@ -33,7 +33,7 @@
       "SpawnPoints": "",
       "BotSide": "Savage",
       "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "isPlayers": false
     },
     {
@@ -57,7 +57,7 @@
       "SpawnPoints": "",
       "BotSide": "Savage",
       "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "isPlayers": false
     },
     {
@@ -117,7 +117,7 @@
       "SpawnPoints": "",
       "BotSide": "Savage",
       "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
+      "WildSpawnType": "assault",
       "isPlayers": false
     },
     {
@@ -281,7 +281,7 @@
   "AveragePlayTime": 25,
   "AveragePlayerLevel": 20,
   "escape_time_limit": 35,
-  "Rules": "AvoidAllPmc",
+  "Rules": "AvoidOwnPmc",
   "IsSecret": false,
   "doors": [],
   "tmp_location_field_remove_me": 0,
@@ -468,25 +468,25 @@
   "DisabledForScav": false,
   "BossLocationSpawn": [
     {
-      "BossName": "sectantPriest",
-      "BossChance": 75,
+      "BossName": "bossSanitar",
+      "BossChance": 100,
       "BossZone": "ZoneScavBase",
       "BossPlayer": false,
-      "BossDifficult": "normal",
+      "BossDifficult": "impossible",
       "BossEscortType": "sectantWarrior",
-      "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
-      "Time": 50
+      "BossEscortDifficult": "impossible",
+      "BossEscortAmount": "3",
+      "Time": -1
     },
     {
       "BossName": "bossBully",
-      "BossChance": 75,
+      "BossChance": 100,
       "BossZone": "ZoneDormitory,ZoneGasStation,ZoneScavBase",
       "BossPlayer": false,
-      "BossDifficult": "normal",
+      "BossDifficult": "impossible",
       "BossEscortType": "followerBully",
-      "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
+      "BossEscortDifficult": "impossible",
+      "BossEscortAmount": "3",
       "Time": -1
     }
   ],
