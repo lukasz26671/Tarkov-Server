@@ -88,25 +88,103 @@ function Create_StaticMountedStruct(item_data) {
   };
 }
 
-/* Kings Bullshit
+function Create_WavesStruct(wave) {
+  let number = 0; //int
+  let time_min = 0; //int
+  let time_max = 0; //int
+  let slots_min = 0; //int
+  let slots_max = 0; //int
+  let SpawnPoints = ""; //string
+  let BotSide = ""; //string
+  let BotPreset = ""; //string
+  let WildSpawnType = ""; //string
+  let isPlayers = false; //bool
 
-  exports.cache = () => {
+  if (typeof wave.number != "undefined") {
+    number = wave.number;
+  }
+  if (typeof wave.time_min != "undefined") {
+    time_min = wave.time_min;
+  }
+  if (typeof wave.time_max != "undefined") {
+    time_max = wave.time_max;
+  }
+  if (typeof wave.slots_min != "undefined") {
+    slots_min = wave.slots_min;
+  }
+  if (typeof wave.slots_max != "undefined") {
+    slots_max = wave.slots_max;
+  }
+  if (typeof wave.SpawnPoints != "undefined") {
+    SpawnPoints = wave.SpawnPoints;
+  }
+  if (typeof wave.BotSide != "undefined") {
+    BotSide = wave.BotSide;
+  }
+  if (typeof wave.BotPreset != "undefined") {
+    BotPreset = wave.BotPreset;
+  }
+  if (typeof wave.WildSpawnType != "undefined") {
+    WildSpawnType = wave.WildSpawnType;
+  }
+  if (typeof wave.isPlayers != "undefined") {
+    isPlayers = wave.isPlayers;
+  }
+
+  return {
+    number: number,
+    time_min: time_min,
+    time_max: time_max,
+    slots_min: slots_min,
+    slots_max: slots_max,
+    SpawnPoints: SpawnPoints,
+    BotSide: BotSide,
+    BotPreset: BotPreset,
+    WildSpawnType: WildSpawnType,
+    isPlayers: isPlayers,
+  };
+}
+
+exports.cache = () => {
   if (!serverConfig.rebuildCache) {
     return;
   }
-  let cacheLocation;
-  if (!fileIO.exist("locations")) cacheLocation = fileIO.mkDir("locations") ;
-  else cacheLocation = fileIO.readDir("locations");
+
+  if (!fileIO.exist("user/cache/locations/")) {
+    fileIO.mkDir("user/cache/locations/");
+  }
 
   logger.logInfo("Caching: Locations");
-  //let locations = {};
   for (let name in db.locations.base) {
-    let _location = { base: {}, waves: {}, exits: {}, SpawnPointParams: {}, loot: {} };
-    _location.base = fileIO.readParsed(db.locations.base[name]);
-    locationName = _location.base.Name;
+    var _location = { base: {}, waves: {}, exits: {}, SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
+    let _locationBase = fileIO.readParsed(db.locations.base[name]);
+    locationName = _locationBase.Id.toLowerCase();
+    locationName = locationName.replace(/\s+/g, "");
 
-    if (!fileIO.exist("locations/" + locationName + "/")){
-      fileIO.mkDir("locations/" + locationName);
+    if (_location.base.Name == "factory") {
+      if (locationName == "factory4_day") locationName = "factory4_day";
+      else locationName = "factory4_night";
+    }
+
+    //_location.waves
+    //console.log(_locationBase.waves, "<<<<<<<<< _locationBase.waves defined????")
+    if (typeof _locationBase.waves != "undefined") {
+      let waves_data = _locationBase.waves;
+      console.log(waves_data, "<<<<<< OG waves_data")
+      for (let wave_data in waves_data) {
+        waves_data = fileIO.stringify(waves_data[wave_data])
+        for (let wave of waves_data[wave_data]) {
+          let wave_struct = Create_WavesStruct(wave);
+          let _locationWaves = _location.waves;
+          console.log(wave_struct, "<<<<<<<< wave_struct")
+          console.log(_locationWaves, "<<<<<<<< _location.waves")
+          console.log(_locationWaves[wave_data], "<<<<<<<< _location.waves[wave_data]")
+          console.log(_locationWaves[wave], "<<<<<<<< _location.waves[wave]")
+          console.log(_locationWaves[waves_data], "<<<<<<<< _location.waves[waves_data]")
+          _location.waves.push(wave_struct);
+          console.log(_location.waves[waves_data], "<<<<<<<<<< _location.waves[waves_data]")
+        }
+      }
     }
 
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
@@ -122,39 +200,15 @@ function Create_StaticMountedStruct(item_data) {
         }
       }
     }
-    if (typeof _location.base.waves != "undefined"){
-      _location.waves = _location.base.waves;
-      fileIO.write("user/cache/locations/" + locationName + "/Waves.json", _location.waves, true, false)
-      _location.base.waves = []
-    }
-  
-      if (typeof _location.base.exits != "undefined"){
-      _location.exits = _location.base.exits;
-      fileIO.write("user/cache/locations/" + locationName + "/Exits.json", _location.exits, true, false)
-      _location.base.exits = []
-    }
-  
-      if (typeof _location.base.SpawnPointParams != "undefined"){
-      _location.SpawnPointParams = _location.base.SpawnPointParams;
-      fileIO.write("user/cache/locations/" + locationName + "/SpawnPointParams.json", _location.SpawnPointParams, true, false)
-      _location.base.SpawnPointParams = []
-    }
-  
-      if (typeof _location.base.AirdropParameters != "undefined"){
-      _location.AirdropParameters = _location.base.AirdropParameters;
-      fileIO.write("user/cache/locations/" + locationName + "/AirdropParameters.json", _location.AirdropParameters, true, false)
-      _location.base.AirdropParameters = []
-    }
-    
-    fileIO.write("user/cache/locations/" + locationName + "/Base.json", _location.base, true, false)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", _location.waves)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Exits.json", _location.exits)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "SpawnPointParams.json", _location.SpawnPointParams)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "AirdropParameters.json", _location.AirdropParameters)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Base.json", _location.base)
   }
-}; 
+};
 
-End Kings Bullshit */
-
-
-
-exports.cache = () => {
+/* exports.cache = () => {
   if (!serverConfig.rebuildCache) {
     return;
   }
@@ -179,4 +233,4 @@ exports.cache = () => {
     locations[name] = _location;
   }
   fileIO.write("user/cache/locations.json", locations, true, false);
-};
+}; */
