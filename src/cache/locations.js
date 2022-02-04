@@ -156,7 +156,7 @@ exports.cache = () => {
 
   logger.logInfo("Caching: Locations");
   for (let name in db.locations.base) {
-    var _location = { base: {}, waves: {}, exits: {}, SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
+    let _location = { base: {}, waves: [], exits: {}, SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
     let _locationBase = fileIO.readParsed(db.locations.base[name]);
     locationName = _locationBase.Id.toLowerCase();
     locationName = locationName.replace(/\s+/g, "");
@@ -166,26 +166,29 @@ exports.cache = () => {
       else locationName = "factory4_night";
     }
 
-    //_location.waves
-    //console.log(_locationBase.waves, "<<<<<<<<< _locationBase.waves defined????")
+    //_location.waves - Populating location waves
     if (typeof _locationBase.waves != "undefined") {
-      let waves_data = _locationBase.waves;
-      console.log(waves_data, "<<<<<< OG waves_data")
-      for (let wave_data in waves_data) {
-        waves_data = fileIO.stringify(waves_data[wave_data])
-        for (let wave of waves_data[wave_data]) {
-          let wave_struct = Create_WavesStruct(wave);
-          let _locationWaves = _location.waves;
-          console.log(wave_struct, "<<<<<<<< wave_struct")
-          console.log(_locationWaves, "<<<<<<<< _location.waves")
-          console.log(_locationWaves[wave_data], "<<<<<<<< _location.waves[wave_data]")
-          console.log(_locationWaves[wave], "<<<<<<<< _location.waves[wave]")
-          console.log(_locationWaves[waves_data], "<<<<<<<< _location.waves[waves_data]")
-          _location.waves.push(wave_struct);
-          console.log(_location.waves[waves_data], "<<<<<<<<<< _location.waves[waves_data]")
-        }
+      const waves_data = _locationBase.waves;
+      for (let wave of waves_data){
+        let wave_struct = Create_WavesStruct(wave);
+        _location.waves.push(wave_struct);
       }
     }
+    
+      //for (let wave_data in waves_data) {
+      //  for (let wave of waves_data[wave_data]) {
+      //    let wave_struct = Create_WavesStruct(wave);
+      //    let _locationWaves = _location.waves;
+      //    console.log(wave_struct, "<<<<<<<< wave_struct")
+      //    console.log(_locationWaves, "<<<<<<<< _location.waves")
+      //    console.log(_locationWaves[wave_data], "<<<<<<<< _location.waves[wave_data]")
+      //    console.log(_locationWaves[wave], "<<<<<<<< _location.waves[wave]")
+      //    console.log(_locationWaves[waves_data], "<<<<<<<< _location.waves[waves_data]")
+      //    _location.waves.push(wave_struct);
+      //    console.log(_location.waves[waves_data], "<<<<<<<<<< _location.waves[waves_data]")
+      //  }
+      //}
+    //}
 
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
     if (typeof db.locations.loot[name] != "undefined") {
