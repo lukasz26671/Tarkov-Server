@@ -96,28 +96,7 @@ class Controller {
     //default
     node = global._database.bots[bot.Info.Settings.Role.toLowerCase()];
     
-    //pmc generation from Scavs
-    if(role.toLowerCase() == "assault"){
-      //50% chance of being a pmc
-      if(utility.getPercentRandomBool(50)){
-        //if pmc
-        //50% chance of being usec or bear
-        if(utility.getPercentRandomBool(50)){
-          bot.Info.Side = "Usec";
-          node = global._database.bots["usec"];          
-        }else{
-          bot.Info.Side = "Bear";
-          node = global._database.bots["bear"];
-        }
-      }else{
-        //if scav
-        bot.Info.Side = "Savage";
-        node = global._database.bots["assault"];
-      }
-    }
-
-    // OLD random pmc generation
-    /*
+    //random pmc generation
     if(role.toLowerCase() == "assault" && true){
       let scavRoleSelect = utility.getRandomInt(1, 2)
       switch (scavRoleSelect) 
@@ -147,7 +126,6 @@ class Controller {
           break;
       }
     }
-    */
 
     //Examples for randomizing properties without the need for roles.
     //this could be used an "event" or something
@@ -359,11 +337,13 @@ class Controller {
       if(swapped > 0){
         logger.logSuccess("\u001b[32;1mSwapped "+swapped+" bot(s).");
       }
+      const fs = require('fs');
+      fs.writeFileSync('./playerdata.json', JSON.stringify(offraid_f.handler.getPlayer(sessionID), null, '\t'), 'utf8');
       //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
       logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
-    //return shuffle(output); //extra randomness
-    return output;
+    return shuffle(output); //extra randomness
+    //return output;
   }
 
   generateRandomLevel(min, max, playerLevel) {
@@ -371,7 +351,7 @@ class Controller {
     const maxLevel = Math.min(max, expTable.length);
 
     // limit the bots level to match the player level
-    let limitted_max_level = playerLevel + 10;
+    let limitted_max_level = playerLevel + 5;
     let limitted_min_level = playerLevel - 5;
     if (limitted_max_level > maxLevel){
       limitted_max_level = maxLevel;
