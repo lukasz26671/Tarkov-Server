@@ -156,7 +156,7 @@ exports.cache = () => {
 
   logger.logInfo("Caching: Locations");
   for (let name in db.locations.base) {
-    let _location = { base: {}, waves: [], exits: {}, SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
+    let _location = { base: {}, waves: [], exits: [], SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
     let _locationBase = fileIO.readParsed(db.locations.base[name]);
     locationName = _locationBase.Id.toLowerCase();
     locationName = locationName.replace(/\s+/g, "");
@@ -174,22 +174,23 @@ exports.cache = () => {
         _location.waves.push(wave_struct);
       }
     }
+    /*OLD STUFF
+    for (let wave_data in waves_data) {
+      for (let wave of waves_data[wave_data]) {
+        let wave_struct = Create_WavesStruct(wave);
+        let _locationWaves = _location.waves;
+        console.log(wave_struct, "<<<<<<<< wave_struct")
+        console.log(_locationWaves, "<<<<<<<< _location.waves")
+        console.log(_locationWaves[wave_data], "<<<<<<<< _location.waves[wave_data]")
+        console.log(_locationWaves[wave], "<<<<<<<< _location.waves[wave]")
+        console.log(_locationWaves[waves_data], "<<<<<<<< _location.waves[waves_data]")
+        _location.waves.push(wave_struct);
+        console.log(_location.waves[waves_data], "<<<<<<<<<< _location.waves[waves_data]")
+      }
+    }*/
     
-      //for (let wave_data in waves_data) {
-      //  for (let wave of waves_data[wave_data]) {
-      //    let wave_struct = Create_WavesStruct(wave);
-      //    let _locationWaves = _location.waves;
-      //    console.log(wave_struct, "<<<<<<<< wave_struct")
-      //    console.log(_locationWaves, "<<<<<<<< _location.waves")
-      //    console.log(_locationWaves[wave_data], "<<<<<<<< _location.waves[wave_data]")
-      //    console.log(_locationWaves[wave], "<<<<<<<< _location.waves[wave]")
-      //    console.log(_locationWaves[waves_data], "<<<<<<<< _location.waves[waves_data]")
-      //    _location.waves.push(wave_struct);
-      //    console.log(_location.waves[waves_data], "<<<<<<<<<< _location.waves[waves_data]")
-      //  }
-      //}
-    //}
 
+    //_location.loot - Populating loot stuff
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
     if (typeof db.locations.loot[name] != "undefined") {
       let loot_data = fileIO.readParsed(db.locations.loot[name]);
@@ -203,6 +204,14 @@ exports.cache = () => {
         }
       }
     }
+
+    // _location.exits - Populating exits data
+    if (typeof _locationBase.exits != "undefined") {
+      for (let exits_data of _locationBase.exits) {
+        _location.exits.push(exits_data);
+      }
+    }
+
     fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", _location.waves)
     fileIO.write("user/cache/locations/" + locationName + "/" + "Exits.json", _location.exits)
     fileIO.write("user/cache/locations/" + locationName + "/" + "SpawnPointParams.json", _location.SpawnPointParams)
@@ -211,7 +220,7 @@ exports.cache = () => {
   }
 };
 
-/* exports.cache = () => {
+/*exports.cache = () => {
   if (!serverConfig.rebuildCache) {
     return;
   }
@@ -236,4 +245,4 @@ exports.cache = () => {
     locations[name] = _location;
   }
   fileIO.write("user/cache/locations.json", locations, true, false);
-}; */
+};*/
