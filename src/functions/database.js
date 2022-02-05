@@ -205,7 +205,7 @@ function _load_LocationData() {
     let locationLoot = fileIO.readParsed(_locationsPath[_location] + "Loot.json")
 
     _locations[_location] = Object.assign(locationBase, locationWaves);
-    _locations[_location] = Object.assign(_locations[_location], locationLoot);
+    _locations[_location] = {'base': Object.assign(_locations[_location], locationLoot)};
   }
   
   _database.locations = _locations;
