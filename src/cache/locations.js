@@ -135,7 +135,7 @@ exports.cache = () => {
     _location.base = _locationBase;
     delete _location.base.waves;
 
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", _location.waves);
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", {"waves": _location.waves});
     //fileIO.write("user/cache/locations/" + locationName + "/" + "Exits.json", _location.exits)
     //fileIO.write("user/cache/locations/" + locationName + "/" + "SpawnPointParams.json", _location.SpawnPointParams)
     //fileIO.write("user/cache/locations/" + locationName + "/" + "AirdropParameters.json", _location.AirdropParameters)
