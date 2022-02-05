@@ -88,62 +88,7 @@ function Create_StaticMountedStruct(item_data) {
   };
 }
 
-function Create_WavesStruct(wave) {
-  let number = 0; //int
-  let time_min = 0; //int
-  let time_max = 0; //int
-  let slots_min = 0; //int
-  let slots_max = 0; //int
-  let SpawnPoints = ""; //string
-  let BotSide = ""; //string
-  let BotPreset = ""; //string
-  let WildSpawnType = ""; //string
-  let isPlayers = false; //bool
-
-  if (typeof wave.number != "undefined") {
-    number = wave.number;
-  }
-  if (typeof wave.time_min != "undefined") {
-    time_min = wave.time_min;
-  }
-  if (typeof wave.time_max != "undefined") {
-    time_max = wave.time_max;
-  }
-  if (typeof wave.slots_min != "undefined") {
-    slots_min = wave.slots_min;
-  }
-  if (typeof wave.slots_max != "undefined") {
-    slots_max = wave.slots_max;
-  }
-  if (typeof wave.SpawnPoints != "undefined") {
-    SpawnPoints = wave.SpawnPoints;
-  }
-  if (typeof wave.BotSide != "undefined") {
-    BotSide = wave.BotSide;
-  }
-  if (typeof wave.BotPreset != "undefined") {
-    BotPreset = wave.BotPreset;
-  }
-  if (typeof wave.WildSpawnType != "undefined") {
-    WildSpawnType = wave.WildSpawnType;
-  }
-  if (typeof wave.isPlayers != "undefined") {
-    isPlayers = wave.isPlayers;
-  }
-
-  return {
-    number: number,
-    time_min: time_min,
-    time_max: time_max,
-    slots_min: slots_min,
-    slots_max: slots_max,
-    SpawnPoints: SpawnPoints,
-    BotSide: BotSide,
-    BotPreset: BotPreset,
-    WildSpawnType: WildSpawnType,
-    isPlayers: isPlayers,
-  };
-}
+/* Kings Bullshit */
 
 exports.cache = () => {
   if (!serverConfig.rebuildCache) {
@@ -156,7 +101,7 @@ exports.cache = () => {
 
   logger.logInfo("Caching: Locations");
   for (let name in db.locations.base) {
-    let _location = { base: {}, waves: [], exits: [], SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
+    let _location = { base: {}, waves: [], exits: {}, SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
     let _locationBase = fileIO.readParsed(db.locations.base[name]);
     locationName = _locationBase.Id.toLowerCase();
     locationName = locationName.replace(/\s+/g, "");
@@ -168,29 +113,9 @@ exports.cache = () => {
 
     //_location.waves - Populating location waves
     if (typeof _locationBase.waves != "undefined") {
-      const waves_data = _locationBase.waves;
-      for (let wave of waves_data){
-        let wave_struct = Create_WavesStruct(wave);
-        _location.waves.push(wave_struct);
-      }
+      _location.waves = _locationBase.waves;
     }
-    /*OLD STUFF
-    for (let wave_data in waves_data) {
-      for (let wave of waves_data[wave_data]) {
-        let wave_struct = Create_WavesStruct(wave);
-        let _locationWaves = _location.waves;
-        console.log(wave_struct, "<<<<<<<< wave_struct")
-        console.log(_locationWaves, "<<<<<<<< _location.waves")
-        console.log(_locationWaves[wave_data], "<<<<<<<< _location.waves[wave_data]")
-        console.log(_locationWaves[wave], "<<<<<<<< _location.waves[wave]")
-        console.log(_locationWaves[waves_data], "<<<<<<<< _location.waves[waves_data]")
-        _location.waves.push(wave_struct);
-        console.log(_location.waves[waves_data], "<<<<<<<<<< _location.waves[waves_data]")
-      }
-    }*/
-    
 
-    //_location.loot - Populating loot stuff
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
     if (typeof db.locations.loot[name] != "undefined") {
       let loot_data = fileIO.readParsed(db.locations.loot[name]);
@@ -205,18 +130,15 @@ exports.cache = () => {
       }
     }
 
-    // _location.exits - Populating exits data
-    if (typeof _locationBase.exits != "undefined") {
-      for (let exits_data of _locationBase.exits) {
-        _location.exits.push(exits_data);
-      }
-    }
+    _location.base = _locationBase;
+    delete _location.base.waves;
 
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", _location.waves)
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Exits.json", _location.exits)
-    fileIO.write("user/cache/locations/" + locationName + "/" + "SpawnPointParams.json", _location.SpawnPointParams)
-    fileIO.write("user/cache/locations/" + locationName + "/" + "AirdropParameters.json", _location.AirdropParameters)
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Base.json", _location.base)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", {"waves": _location.waves});
+    //fileIO.write("user/cache/locations/" + locationName + "/" + "Exits.json", _location.exits)
+    //fileIO.write("user/cache/locations/" + locationName + "/" + "SpawnPointParams.json", _location.SpawnPointParams)
+    //fileIO.write("user/cache/locations/" + locationName + "/" + "AirdropParameters.json", _location.AirdropParameters)
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Base.json", {"base": _locationBase});
+    fileIO.write("user/cache/locations/" + locationName + "/" + "Loot.json", {"loot": _location.loot});
   }
 };
 
