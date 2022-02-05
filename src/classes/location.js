@@ -783,11 +783,15 @@ class Generator {
         }
       }
     }
-    logger.logWarning(`Skipped ${skipped} items with no loot tables found.`);
-    logger.logSuccess(
-      "Prevented " + overlapped + " overlapped dynamic loot items.",
-    );
-    logger.logSuccess("Generated " + count + " dynamic loot items.");
+    if(skipped > 0){
+      logger.logWarning(`Skipped ${skipped} items with no loot tables found.`);
+    }
+    if(overlapped > 0){
+      logger.logSuccess(
+        "\u001b[32;1mPrevented generation of " + overlapped + " overlapping dynamic loot items.",
+      );
+    }
+    logger.logSuccess("\u001b[32;1mGenerated " + count + " dynamic loot items.");
     return count;
   }
 }

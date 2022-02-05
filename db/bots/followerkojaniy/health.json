@@ -1,44 +1,45 @@
 {
 	"Hydration": {
-		"min": 100,
-		"max": 100
+	  "min": 100,
+	  "max": 100
 	},
 	"Energy": {
-		"min": 100,
-		"max": 100
+	  "min": 100,
+	  "max": 100
 	},
 	"Temperature": {
-		"min": 36.6,
-		"max": 40
+	  "min": 36,
+	  "max": 40
 	},
-	"BodyParts": {
+	"BodyParts": 
+	  {
 		"Head": {
-			"min": 62,
-			"max": 62
+		  "min": 62,
+		  "max": 62
 		},
 		"Chest": {
-			"min": 138,
-			"max": 138
+		  "min": 138,
+		  "max": 138
 		},
 		"Stomach": {
-			"min": 120,
-			"max": 120
+		  "min": 120,
+		  "max": 120
 		},
 		"LeftArm": {
-			"min": 100,
-			"max": 100
+		  "min": 100,
+		  "max": 100
 		},
 		"RightArm": {
-			"min": 100,
-			"max": 100
+		  "min": 100,
+		  "max": 100
 		},
 		"LeftLeg": {
-			"min": 110,
-			"max": 110
+		  "min": 110,
+		  "max": 110
 		},
 		"RightLeg": {
-			"min": 110,
-			"max": 110
+		  "min": 110,
+		  "max": 110
 		}
-	}
+	  }
 }
