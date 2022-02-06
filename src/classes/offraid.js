@@ -345,6 +345,39 @@ function saveProgress(offraidData, sessionID) {
   }
 
   pmcData.Info.Level = offraidData.profile.Info.Level;
+
+  //skill points earned mod
+  if(true){
+    //if mod enabled
+    let multiplier = 1;
+    switch(offraidData.exit.toLowerCase()){
+      //if survived and got enough xp for green state
+      case "survived":
+        multiplier = 4;
+        break;
+
+      //if ran through
+      case "runner":
+        multiplier = 1;
+        break;
+
+      //if death or any other state
+      default:
+        multiplier = 2;
+        break;
+    }
+    //multiply all our earned points by the multiplier on all skills
+    for(let skill in offraidData.profile.Skills.Common){
+      let pointsEarned = offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession * multiplier;
+      offraidData.profile.Skills.Common[skill].Progress += pointsEarned;
+      //in case we go above maximum
+      if(offraidData.profile.Skills.Common[skill].Progress > 5100){
+        offraidData.profile.Skills.Common[skill].Progress = 5100;
+      }
+    }
+  }//skill points mod end
+
+
   //remove skill fatigue before applying skill points to profile
   for(let skill in offraidData.profile.Skills.Common){
     offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession = 0;
