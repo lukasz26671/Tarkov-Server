@@ -455,7 +455,7 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
 
   let output = item_f.handler.getOutput();
   if (body.recipeId === "5d5c205bd582a50d042a3c0e") {
-    return hideout_f.handleBitcoinReproduction(pmcData, sessionID);
+    return handleBitcoinReproduction(pmcData, sessionID);
   }
 
   for (let recipe in _database.hideout.production) {
