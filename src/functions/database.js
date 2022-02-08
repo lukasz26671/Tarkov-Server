@@ -5,8 +5,10 @@ const { logger } = require("../../core/util/logger");
 function _load_Globals() {
   _database.globals = fileIO.readParsed("./" + db.base.globals);
   //allow to use file with {data:{}} as well as {}
-  if (typeof _database.globals.data != "undefined") _database.globals = _database.globals.data;
+  if (typeof _database.globals.data != "undefined")
+    _database.globals = _database.globals.data;
 }
+
 function _load_ClusterConfig() {
   _database.clusterConfig = fileIO.readParsed("./" + db.user.configs.cluster);
 }
@@ -15,9 +17,11 @@ function _load_GameplayConfig() {
   _database.gameplayConfig = fileIO.readParsed("./" + db.user.configs.gameplay);
   _database.gameplay = _database.gameplayConfig;
 }
+
 function _load_BlacklistConfig() {
   _database.blacklist = fileIO.readParsed("./" + db.user.configs.blacklist);
 }
+
 function _load_BotsData() {
   _database.bots = {};
   for (let botType in db.bots) {
@@ -27,10 +31,14 @@ function _load_BotsData() {
     let difficulty_hard = null;
     let difficulty_impossible = null;
     if (typeof db.bots[botType].difficulty != "undefined") {
-      if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
-      if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
-      if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
-      if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
+      if (typeof db.bots[botType].difficulty.easy != "undefined")
+        difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
+      if (typeof db.bots[botType].difficulty.normal != "undefined")
+        difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
+      if (typeof db.bots[botType].difficulty.hard != "undefined")
+        difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
+      if (typeof db.bots[botType].difficulty.impossible != "undefined")
+        difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
     }
     _database.bots[botType].difficulty = {
       easy: difficulty_easy,
@@ -50,6 +58,7 @@ function _load_BotsData() {
     _database.bots[botType].names = fileIO.readParsed("./" + db.bots[botType].names);
   }
 }
+
 function _load_CoreData() {
   _database.core = {};
   _database.core.botBase = fileIO.readParsed("./" + db.base.botBase);
@@ -57,20 +66,23 @@ function _load_CoreData() {
   _database.core.fleaOffer = fileIO.readParsed("./" + db.base.fleaOffer);
   _database.core.matchMetrics = fileIO.readParsed("./" + db.base.matchMetrics);
 }
+
 function _load_ItemsData() {
   _database.items = fileIO.readParsed("./" + db.user.cache.items);
-  if (typeof _database.items.data != "undefined") _database.items = _database.items.data;
+  if (typeof _database.items.data != "undefined")
+    _database.items = _database.items.data;
   _database.templates = fileIO.readParsed("./" + db.user.cache.templates);
-  if (typeof _database.templates.data != "undefined") _database.templates = _database.templates.data;
+  if (typeof _database.templates.data != "undefined")
+    _database.templates = _database.templates.data;
 
   let itemHandbook = _database.templates.items;
   _database.itemPriceTable = {};
-  for(let item in itemHandbook)
-  {
+  for(let item in itemHandbook){
     _database.itemPriceTable[item.Id] = item.Price;
   }
 
 }
+
 function _load_HideoutData() {
   if (!_database.hideout) _database.hideout = {};
 
@@ -113,14 +125,17 @@ function _load_HideoutData() {
     }
   }
 }
+
 function _load_QuestsData() {
   _database.quests = fileIO.readParsed("./" + db.user.cache.quests);
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
 }
+
 function _load_CustomizationData() {
   _database.customization = fileIO.readParsed("./" + db.user.cache.customization);
   if (typeof _database.customization.data != "undefined") _database.customization = _database.customization.data;
 }
+
 function _load_LocaleData() {
   _database.languages = fileIO.readParsed("./" + db.user.cache.languages);
   _database.locales = { menu: {}, global: {} };
@@ -138,18 +153,69 @@ function _load_LocaleData() {
     }
   }
 }
+
+/* KING STUFF
 function _load_LocationData() {
-  var _locations = fileIO.readParsed("./" + db.user.cache.locations);
+  const _locationsPath = db.user.cache.locations;
+  let _locations;
   _database.locations = {};
-  for (let _location in _locations) {
-    _database.locations[_location] = _locations[_location];
+  for (let _location in _locationsPath) {
+    let locationBase = fileIO.read(_locationsPath[_location] + "Base.json");
+    let locationWaves = fileIO.read(_locationsPath[_location] + "Waves.json");
+    let locationExits = fileIO.read(_locationsPath[_location] + "Exits.json");
+    let locationSpawnPointParams = fileIO.read(_locationsPath[_location] + "SpawnPointParams.json");
+    if (typeof _locationsPath[_location].AirdropParameters != "undefined") {
+      let locationAirdropParameters = fileIO.read(_locationsPath[_location] + "AirdropParameters.json");
+    }
+
+    if (typeof locationAirdropParameters != "undefined") {
+      _locations +=
+        locationBase +
+        locationWaves +
+        locationExits +
+        locationSpawnPointParams +
+        locationAirdropParameters;
+    } else {
+      _locations +=
+        locationBase + locationWaves + locationExits + locationSpawnPointParams;
+    }
   }
+  _database.locations = fileIO.parse(_locations);
+  //fileIO.write("./balls.json", _database.locations, true, false)
+
+  
+
+  _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
+  _database.locationConfigs = {};
+  _database.locationConfigs["StaticLootTable"] = fileIO.readParsed(
+    "./" + db.locations.StaticLootTable,
+  );
+  _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed(
+    "./" + db.locations.DynamicLootTable,
+  );
+*/
+
+function _load_LocationData() {
+  const _locationsPath = db.user.cache.locations;
+
+  let _locations = {};
+  for (let _location in _locationsPath){
+    let locationBase = fileIO.readParsed(_locationsPath[_location] + "Base.json");
+    let locationWaves = fileIO.readParsed(_locationsPath[_location] + "Waves.json");
+    let locationLoot = fileIO.readParsed(_locationsPath[_location] + "Loot.json")
+
+    _locations[_location] = Object.assign(locationBase, locationWaves);
+    _locations[_location] = {'base': Object.assign(_locations[_location], locationLoot)};
+  }
+  
+  _database.locations = _locations;
   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
   _database.locationConfigs = {};
   //_database.locationConfigs["dynamicLootAutoSpawnDetector"] = fileIO.readParsed("./" + db.locations.dynamicLootAutoSpawnDetector);
   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
 }
+
 function _load_TradersData() {
   _database.traders = {};
   for (let traderID in db.traders) {
@@ -172,6 +238,7 @@ function _load_TradersData() {
     }
   }
 }
+
 function _load_WeatherData() {
   _database.weather = fileIO.readParsed("./" + db.user.cache.weather);
   let i = 0;
@@ -179,6 +246,7 @@ function _load_WeatherData() {
     logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + weather);
   }
 }
+
 exports.load = () => {
   logger.logDebug("Load: 'Core'");
   _load_CoreData();
