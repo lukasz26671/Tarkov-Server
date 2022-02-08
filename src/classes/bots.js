@@ -364,8 +364,8 @@ class Controller {
       //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
       logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
-    return shuffle(output); //extra randomness
-    //return output;
+    //return shuffle(output); //extra randomness
+    return output;
   }
 
   generateRandomLevel(min, max, playerLevel) {
@@ -373,7 +373,7 @@ class Controller {
     const maxLevel = Math.min(max, expTable.length);
 
     // limit the bots level to match the player level
-    let limitted_max_level = playerLevel + 5;
+    let limitted_max_level = playerLevel + 10;
     let limitted_min_level = playerLevel - 5;
     if (limitted_max_level > maxLevel){
       limitted_max_level = maxLevel;

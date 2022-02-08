@@ -771,12 +771,22 @@ class Generator {
         0,
         100,
       );
-      const itemChance = itemSpawnChance * locationLootChanceModifier;
+      //const itemChance = itemSpawnChance * locationLootChanceModifier;
+      const itemChance = itemSpawnChance;
       if (num >= itemChance) {
-        if (!isThereLootAtLocation(output.Loot, lootData.Position)) {
+        if (!isThereLootAtLocation(output.Loot, lootData.Position)){
           //if loot won't overlap
+          //logger.logWarning("Chance de location: "+locationLootChanceModifier);
+          /*
           count++;
           output.Loot.push(createEndLootData);
+          */
+          //last dice throwing, make locationchance actually useful.
+          if(utility.getPercentRandomBool(locationLootChanceModifier * 100)){
+            count++;
+            output.Loot.push(createEndLootData);
+          }
+          
         } else {
           //overlaps
           overlapped++;

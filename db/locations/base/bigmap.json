@@ -291,7 +291,7 @@
   "MaxBotPerZone": 4,
   "OpenZones": "ZoneBrige,ZoneCrossRoad,ZoneDormitory,ZoneGasStation,ZoneFactoryCenter,ZoneFactorySide,ZoneOldAZS,ZoneSnipeBrige,ZoneSnipeTower,ZoneSnipeFactory,ZoneBlockPost,ZoneBlockPostSniper,ZoneBlockPostSniper3,ZoneBlockPost,ZoneTankSquare,ZoneWade,ZoneCustoms",
   "OcculsionCullingEnabled": false,
-  "GlobalLootChanceModifier": 0.8,
+  "GlobalLootChanceModifier": 0.25,
   "OldSpawn": false,
   "NewSpawn": true,
   "BotMax": 13,

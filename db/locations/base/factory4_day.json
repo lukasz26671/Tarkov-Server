@@ -159,7 +159,7 @@
   "MaxBotPerZone": 4,
   "OpenZones": "BotZone",
   "OcculsionCullingEnabled": true,
-  "GlobalLootChanceModifier": 0.2,
+  "GlobalLootChanceModifier": 0.75,
   "OldSpawn": true,
   "NewSpawn": false,
   "BotMax": 0,
