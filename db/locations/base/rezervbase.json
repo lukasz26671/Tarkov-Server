@@ -219,7 +219,7 @@
   "MaxBotPerZone": 8,
   "OpenZones": "ZoneRailStrorage,ZonePTOR1,ZonePTOR2,ZoneBarrack,ZoneBunkerStorage,ZoneSubStorage",
   "OcculsionCullingEnabled": false,
-  "GlobalLootChanceModifier": 0.25,
+  "GlobalLootChanceModifier": 0.1,
   "OldSpawn": true,
   "NewSpawn": false,
   "BotMax": 0,
