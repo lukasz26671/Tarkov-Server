@@ -139,6 +139,12 @@ exports.getRandomInt = (min = 0, max = 100) => {
     max = Math.floor(max);
     return (max > min) ? Math.floor(Math.random() * (max - min + 1) + min) : min;
 }
+
+// getPercentRandomBool
+exports.getPercentRandomBool = (percentage) => {
+    return ((Math.random() * 100) < percentage);
+}
+
 // getRandomIntEx
 exports.getRandomIntEx = (max) => {
     return (max > 1) ? Math.floor(Math.random() * (max - 2) + 1) : 1;

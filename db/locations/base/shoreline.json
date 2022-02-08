@@ -375,7 +375,7 @@
   "MaxBotPerZone": 4,
   "OpenZones": "ZoneSanatorium1,ZoneSanatorium2,ZoneIsland,ZoneGasStation,ZoneMeteoStation,ZonePowerStation,ZoneBusStation,ZoneRailWays,ZonePort,ZoneBunkeSniper,ZonePowerStationSniper,ZoneForestTruck,ZoneForestSpawn",
   "OcculsionCullingEnabled": true,
-  "GlobalLootChanceModifier": 0.3,
+  "GlobalLootChanceModifier": 0.2,
   "OldSpawn": false,
   "NewSpawn": true,
   "BotMax": 13,

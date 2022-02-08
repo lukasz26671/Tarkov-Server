@@ -232,7 +232,7 @@
   "MaxBotPerZone": 4,
   "OpenZones": "ZoneClearVill,ZoneHouse,ZoneScavBase2,ZoneHouse,ZoneWoodCutter,ZoneBigRocks,ZoneRoad,ZoneHighRocks,ZoneMiniHouse,ZoneBigRocks",
   "OcculsionCullingEnabled": false,
-  "GlobalLootChanceModifier": 0.9,
+  "GlobalLootChanceModifier": 0.25,
   "OldSpawn": false,
   "NewSpawn": true,
   "BotMax": 13,

@@ -1,0 +1,14 @@
+{
+	"name": "MagazineManiac",
+	"author": "Nehax",
+	"version": "1.0.0",
+	"license": "MIT",
+	"settings": {
+		"enable": false,
+		"speed_multiplier": 1
+	},
+	"src": {
+		"src/FastLoading.js": "TamperModLoad"
+	},
+	"required": []
+}
