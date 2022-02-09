@@ -244,7 +244,7 @@
 					"_name": "cartridges",
 					"_id": "60dc519adf4c47305f6d410f",
 					"_parent": "60dc519adf4c47305f6d410d",
-					"_max_count": 0,
+					"_max_count": 5,
 					"_props": {
 						"filters": [
 							{
