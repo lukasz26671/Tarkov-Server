@@ -234,8 +234,8 @@ function _GenerateContainerLoot(_items) {
     ) {
       logger.logWarning(
         "GetLootContainerData is null something goes wrong please check if container template: " +
-          _items[0]._tpl +
-          " exists",
+        _items[0]._tpl +
+        " exists",
       );
       return;
     } else {
@@ -244,7 +244,7 @@ function _GenerateContainerLoot(_items) {
       const GunTempalte = global._database.items[_items[0]._tpl]; // template object
       const MagazineTemplate =
         global._database.items[
-          GunTempalte._props.Slots[0]._props.filters[0].Filter[0]
+        GunTempalte._props.Slots[0]._props.filters[0].Filter[0]
         ]; // template object
       const Magazine_Size = MagazineTemplate._props.Cartridges[0]._max_count; // number
       const AmmoTemplates =
@@ -349,7 +349,7 @@ function _GenerateContainerLoot(_items) {
           .AttemptsToPlaceLoot > 10
           ? 1
           : global._database.gameplayConfig.locationloot.containers
-              .AttemptsToPlaceLoot;
+            .AttemptsToPlaceLoot;
 
       // attempt to add item x times
       while (!result.success && maxAttempts) {
@@ -536,7 +536,7 @@ class Generator {
 
           // item creation
           let createEndLootData = {
-            Id: data.id,
+            Id: data.Id,
             IsStatic: data.IsStatic,
             useGravity: data.useGravity,
             randomRotation: data.randomRotation,
@@ -550,27 +550,42 @@ class Generator {
           createEndLootData.Items.push(createdItem);
 
           let oldBaseItem = PresetData._items[0];
-          PresetData._items = PresetData._items.splice(0, 1);
+
+          const weapon = helper_f.tryGetItem(oldBaseItem._tpl);
+          if (weapon.error) {
+            logger.logWarning(weapon.errorMessage);
+            continue;
+          }
+
+          // Don't mutate PresetData
+          // Clone items and remove first item from array
+          let presetChildItems = [...PresetData._items];
+          presetChildItems.shift();
 
           let idSuffix = 0;
           let OldIds = {};
-          for (var p in PresetData._items) {
-            let currentItem = utility.DeepCopy(PresetData._items[p]);
-            OldIds[currentItem.id] = utility.generateNewItemId();
+          for (var p in presetChildItems) {
+            let currentItem = utility.DeepCopy(presetChildItems[p]);
+            OldIds[currentItem._id] = utility.generateNewItemId();
             if (currentItem.parentId == oldBaseItem._id)
               currentItem.parentId = createEndLootData.Items[0]._id;
             if (typeof OldIds[currentItem.parentId] != "undefined")
               currentItem.parentId = OldIds[currentItem.parentId];
 
-            currentItem.id = OldIds[currentItem.id];
+            currentItem._id = OldIds[currentItem._id];
             createEndLootData.Items.push(currentItem);
 
-            if (PresetData._items[p].slotId === "mod_magazine") {
-              let mag = helper_f.getItem(PresetData._items[p]._tpl)[1];
+            if (presetChildItems[p].slotId === "mod_magazine") {
+              const mag = helper_f.tryGetItem(presetChildItems[p]._tpl);
+              if (mag.error) {
+                logger.logWarning(mag.errorMessage);
+                continue;
+              }
+
               let cartridges = {
-                _id: currentItem.id + "_" + idSuffix,
-                _tpl: item._props.defAmmo,
-                parentId: PresetData._items[p]._id,
+                _id: currentItem._id + "_" + idSuffix,
+                _tpl: weapon._props.defAmmo,
+                parentId: presetChildItems[p]._id,
                 slotId: "cartridges",
                 upd: { StackObjectsCount: mag._props.Cartridges[0]._max_count },
               };
@@ -579,8 +594,8 @@ class Generator {
               idSuffix++;
             }
           }
-/*           output.Loot.push(createEndLootData);
-          count++; */
+          output.Loot.push(createEndLootData);
+          count++;
         }
       }
     }
@@ -656,7 +671,7 @@ class Generator {
       const generatedItemId = utility.generateNewItemId();
       let randomChoosedItem =
         DynamicLootSpawnTable[
-          utility.getRandomInt(0, DynamicLootSpawnTable.length - 1)
+        utility.getRandomInt(0, DynamicLootSpawnTable.length - 1)
         ];
 
       if (typeof randomChoosedItem._id == "undefined")
@@ -774,7 +789,7 @@ class Generator {
       //const itemChance = itemSpawnChance * locationLootChanceModifier;
       const itemChance = itemSpawnChance;
       if (num >= itemChance) {
-        if (!isThereLootAtLocation(output.Loot, lootData.Position)){
+        if (!isThereLootAtLocation(output.Loot, lootData.Position)) {
           //if loot won't overlap
           //logger.logWarning("Chance de location: "+locationLootChanceModifier);
           /*
@@ -782,21 +797,21 @@ class Generator {
           output.Loot.push(createEndLootData);
           */
           //last dice throwing, make locationchance actually useful.
-          if(utility.getPercentRandomBool(locationLootChanceModifier * 100)){
+          if (utility.getPercentRandomBool(locationLootChanceModifier * 100)) {
             count++;
             output.Loot.push(createEndLootData);
           }
-          
+
         } else {
           //overlaps
           overlapped++;
         }
       }
     }
-    if(skipped > 0){
+    if (skipped > 0) {
       logger.logWarning(`Skipped ${skipped} items with no loot tables found.`);
     }
-    if(overlapped > 0){
+    if (overlapped > 0) {
       logger.logSuccess(
         "\u001b[32;1mPrevented generation of " + overlapped + " overlapping dynamic loot items.",
       );

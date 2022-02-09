@@ -261,6 +261,18 @@ function findItemById(items, id) {
   return false;
 }
 
+/* Get item data from items.json
+ * input: Item Template ID
+ * output: item | { error: true, errorMessage: string }
+ */
+function tryGetItem(template) {
+  const item = global._database.items[template];
+
+  if (typeof item == "undefined") return { error: true, errorMessage: `Unable to find item '${template}' in database` }
+
+  return item;
+}
+
 /*
  * Find in the player profile the template of an given id
  * input : character data, item id from inventory
@@ -999,6 +1011,7 @@ module.exports.findMoney = findMoney;
 module.exports.getMoney = getMoney;
 module.exports.getPlayerStash = getPlayerStash;
 module.exports.getItem = getItem;
+module.exports.tryGetItem = tryGetItem;
 module.exports.findAndReturnChildren = findAndReturnChildren;
 module.exports.findAndReturnChildrenByItems = findAndReturnChildrenByItems;
 module.exports.findAndReturnChildrenAsItems = findAndReturnChildrenAsItems;
