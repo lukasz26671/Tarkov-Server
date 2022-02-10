@@ -6,6 +6,7 @@
 
 ## visual studio
 .vscode
+.vscode/sftp.json
 .vs
 .idea
 slnx.sqlite
@@ -19,12 +20,13 @@ user/cache
 # ignore cache backup folder
 ## windows
 desktop.ini
-.vscode/sftp.json
-user/configs/server.json
 user/profiles
 user/logs
 user/events/schedule.json
 user/configs/server.json
+<<<<<<< .merge_file_a00312
 user/configs/mods.json
 .vscode/sftp.json
+=======
+>>>>>>> .merge_file_a12636
 user/configs/mods.json
