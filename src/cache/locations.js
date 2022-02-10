@@ -88,34 +88,25 @@ function Create_StaticMountedStruct(item_data) {
   };
 }
 
-/* Kings Bullshit */
+/* Kings Bullshit
 
-exports.cache = () => {
+  exports.cache = () => {
   if (!serverConfig.rebuildCache) {
     return;
   }
-
-  if (!fileIO.exist("user/cache/locations/")) {
-    fileIO.mkDir("user/cache/locations/");
-  }
+  let cacheLocation;
+  if (!fileIO.exist("locations")) cacheLocation = fileIO.mkDir("locations") ;
+  else cacheLocation = fileIO.readDir("locations");
 
   logger.logInfo("Caching: Locations");
+  //let locations = {};
   for (let name in db.locations.base) {
-    let _location = { base: {}, waves: [], exits: {}, SpawnPointParams: {}, AirdropParameters: {}, loot: {}}
-    let _locationBase = fileIO.readParsed(db.locations.base[name]);
-    locationName = _locationBase.Id.toLowerCase();
-    locationName = locationName.replace(/\s+/g, "");
+    let _location = { base: {}, waves: {}, exits: {}, SpawnPointParams: {}, loot: {} };
+    _location.base = fileIO.readParsed(db.locations.base[name]);
+    locationName = _location.base.Name;
 
-    if (_location.base.Name == "factory") {
-      if (locationName == "factory4_day") locationName = "factory4_day";
-      else locationName = "factory4_night";
-    }
-
-    //_location.waves - Populating location waves
-    if (typeof _locationBase.waves != "undefined") {
-      for (let wave of _locationBase.waves){
-        _location.waves.push(wave);
-      }
+    if (!fileIO.exist("locations/" + locationName + "/")){
+      fileIO.mkDir("locations/" + locationName);
     }
 
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
@@ -131,20 +122,39 @@ exports.cache = () => {
         }
       }
     }
-
-    _location.base = _locationBase;
-    delete _location.base.waves;
-
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Waves.json", {"waves": _location.waves});
-    //fileIO.write("user/cache/locations/" + locationName + "/" + "Exits.json", _location.exits)
-    //fileIO.write("user/cache/locations/" + locationName + "/" + "SpawnPointParams.json", _location.SpawnPointParams)
-    //fileIO.write("user/cache/locations/" + locationName + "/" + "AirdropParameters.json", _location.AirdropParameters)
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Base.json", _locationBase);
-    fileIO.write("user/cache/locations/" + locationName + "/" + "Loot.json", _location.loot);
+    if (typeof _location.base.waves != "undefined"){
+      _location.waves = _location.base.waves;
+      fileIO.write("user/cache/locations/" + locationName + "/Waves.json", _location.waves, true, false)
+      _location.base.waves = []
+    }
+  
+      if (typeof _location.base.exits != "undefined"){
+      _location.exits = _location.base.exits;
+      fileIO.write("user/cache/locations/" + locationName + "/Exits.json", _location.exits, true, false)
+      _location.base.exits = []
+    }
+  
+      if (typeof _location.base.SpawnPointParams != "undefined"){
+      _location.SpawnPointParams = _location.base.SpawnPointParams;
+      fileIO.write("user/cache/locations/" + locationName + "/SpawnPointParams.json", _location.SpawnPointParams, true, false)
+      _location.base.SpawnPointParams = []
+    }
+  
+      if (typeof _location.base.AirdropParameters != "undefined"){
+      _location.AirdropParameters = _location.base.AirdropParameters;
+      fileIO.write("user/cache/locations/" + locationName + "/AirdropParameters.json", _location.AirdropParameters, true, false)
+      _location.base.AirdropParameters = []
+    }
+    
+    fileIO.write("user/cache/locations/" + locationName + "/Base.json", _location.base, true, false)
   }
-};
+}; 
 
-/*exports.cache = () => {
+End Kings Bullshit */
+
+
+
+exports.cache = () => {
   if (!serverConfig.rebuildCache) {
     return;
   }
@@ -169,4 +179,4 @@ exports.cache = () => {
     locations[name] = _location;
   }
   fileIO.write("user/cache/locations.json", locations, true, false);
-};*/
+};
