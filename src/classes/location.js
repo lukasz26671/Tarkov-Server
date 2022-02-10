@@ -655,7 +655,18 @@ class Generator {
     let skipped = 0;
     for (let itemLoot in typeArray) {
       const lootData = typeArray[itemLoot];
-      //loot overlap removed its useless...
+
+      //if next item will overlap an existing one, skip:
+      if(isThereLootAtLocation(output.Loot, lootData.Position)){
+        overlapped++;
+        continue;
+      }
+
+      //if it isn't the item's lucky day, skip:
+      if(!utility.getPercentRandomBool(locationLootChanceModifier * 100)){
+        continue;
+      }
+      
       let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(
         lootData,
         MapName,
@@ -789,23 +800,8 @@ class Generator {
       //const itemChance = itemSpawnChance * locationLootChanceModifier;
       const itemChance = itemSpawnChance;
       if (num >= itemChance) {
-        if (!isThereLootAtLocation(output.Loot, lootData.Position)) {
-          //if loot won't overlap
-          //logger.logWarning("Chance de location: "+locationLootChanceModifier);
-          /*
-          count++;
-          output.Loot.push(createEndLootData);
-          */
-          //last dice throwing, make locationchance actually useful.
-          if (utility.getPercentRandomBool(locationLootChanceModifier * 100)) {
-            count++;
-            output.Loot.push(createEndLootData);
-          }
-
-        } else {
-          //overlaps
-          overlapped++;
-        }
+        count++;
+        output.Loot.push(createEndLootData);
       }
     }
     if (skipped > 0) {
