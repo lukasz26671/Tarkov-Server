@@ -235,7 +235,7 @@
   "GlobalLootChanceModifier": 0.25,
   "OldSpawn": false,
   "NewSpawn": true,
-  "BotMax": 13,
+  "BotMax": 30,
   "BotStart": 20,
   "BotStop": 1900,
   "BotMaxTimePlayer": 1300,

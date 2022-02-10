@@ -105,10 +105,6 @@ function Create_StaticMountedStruct(item_data) {
     _location.base = fileIO.readParsed(db.locations.base[name]);
     locationName = _location.base.Name;
 
-    if (!fileIO.exist("locations/" + locationName + "/")){
-      fileIO.mkDir("locations/" + locationName);
-    }
-
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
     if (typeof db.locations.loot[name] != "undefined") {
       let loot_data = fileIO.readParsed(db.locations.loot[name]);
