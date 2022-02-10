@@ -15,7 +15,7 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
-  const tAssort = _database.traders[body.tid].assort;
+  let tAssort = global._database.traders[body.tid].assort; //fileIO.readParsed(db.traders[body.tid].assort);
   if (
     typeof tAssort[body.item_id] != "undefined" &&
     tAssort[body.item_id].currentStack
@@ -36,13 +36,13 @@ exports.buyItem = (pmcData, body, sessionID) => {
 exports.sellItem = (pmcData, body, sessionID) => {
   let money = 0;
   const prices = trader_f.handler.getPurchasesData(body.tid, sessionID);
-  const output = item_f.handler.getOutput(sessionID);
+  let output = item_f.handler.getOutput(sessionID);
 
   for (const sellItem of body.items) {
     for (let item of pmcData.Inventory.items) {
       // profile inventory, look into it if item exist
       const isThereSpace = sellItem.id.search(" ");
-      const checkID = sellItem.id;
+      let checkID = sellItem.id;
 
       if (isThereSpace !== -1) {
         checkID = checkID.substr(0, isThereSpace);
@@ -90,8 +90,8 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
 
 // Ragfair trading
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
-  const ragfair_offers_traders = fileIO.readParsed(db.user.cache.ragfair_offers);
-  const offers = body.offers;
+  let ragfair_offers_traders = fileIO.readParsed(db.user.cache.ragfair_offers);
+  let offers = body.offers;
 
   for (let offer of offers) {
     pmcData = profile_f.handler.getPmcProfile(sessionID);
