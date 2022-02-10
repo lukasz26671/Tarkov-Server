@@ -1,30 +1,30 @@
 [
 	{
-		"_id": "60098ad7c2240c0fe85c570a",
-		"_name": "item_meds_afak",
+		"_id": "590c678286f77426c9660122",
+		"_name": "item_meds_medkit_ifak",
 		"_parent": "5448f39d4bdc2d0a728b4568",
 		"_type": "Item",
 		"_props": {
 			"Name": "ifak",
 			"ShortName": "ifak",
 			"Description": "ifak",
-			"Weight": 0.8,
+			"Weight": 0.5,
 			"BackgroundColor": "orange",
 			"Width": 1,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "med_medkit",
 			"Prefab": {
-				"path": "assets/content/weapons/usable_items/item_meds_afak/item_meds_afak_loot.bundle",
+				"path": "assets/content/weapons/usable_items/item_ifak/item_ifak_loot.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
-				"path": "assets/content/weapons/usable_items/item_meds_afak/item_meds_afak_container.bundle",
+				"path": "assets/content/weapons/usable_items/item_ifak/item_ifak_container.bundle",
 				"rcid": ""
 			},
 			"StackObjectsCount": 1,
 			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
+			"ExaminedByDefault": true,
 			"ExamineTime": 1,
 			"IsUndiscardable": false,
 			"IsUnsaleable": false,
@@ -55,8 +55,8 @@
 			"IsAlwaysAvailableForInsurance": false,
 			"medUseTime": 3,
 			"medEffectType": "duringUse",
-			"MaxHpResource": 400,
-			"hpResourceRate": 60,
+			"MaxHpResource": 300,
+			"hpResourceRate": 50,
 			"StimulatorBuffs": "",
 			"effects_health": [],
 			"effects_damage": {
@@ -80,7 +80,7 @@
 					"delay": 0,
 					"duration": 0,
 					"fadeOut": 0,
-					"cost": 170,
+					"cost": 210,
 					"healthPenaltyMin": 0,
 					"healthPenaltyMax": 0
 				}
@@ -184,6 +184,171 @@
 		"_proto": "544fb45d4bdc2dee738b4568"
 	},
 	{
+		"_id": "60098ad7c2240c0fe85c570a",
+		"_name": "item_meds_afak",
+		"_parent": "5448f39d4bdc2d0a728b4568",
+		"_type": "Item",
+		"_props": {
+			"Name": "ifak",
+			"ShortName": "ifak",
+			"Description": "ifak",
+			"Weight": 0.8,
+			"BackgroundColor": "orange",
+			"Width": 1,
+			"Height": 1,
+			"StackMaxSize": 1,
+			"ItemSound": "med_medkit",
+			"Prefab": {
+				"path": "assets/content/weapons/usable_items/item_meds_afak/item_meds_afak_loot.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "assets/content/weapons/usable_items/item_meds_afak/item_meds_afak_container.bundle",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 25,
+			"ExamineExperience": 10,
+			"HideEntrails": false,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 2,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"medUseTime": 3,
+			"medEffectType": "duringUse",
+			"MaxHpResource": 400,
+			"hpResourceRate": 60,
+			"StimulatorBuffs": "",
+			"effects_health": [],
+			"effects_damage": {
+				"LightBleeding": {
+					"delay": 0,
+					"duration": 0,
+					"fadeOut": 0,
+					"cost": 30,
+					"healthPenaltyMin": 0,
+					"healthPenaltyMax": 0
+				},
+				"RadExposure": {
+					"delay": 0,
+					"duration": 0,
+					"fadeOut": 0,
+					"cost": 0,
+					"healthPenaltyMin": 0,
+					"healthPenaltyMax": 0
+				},
+				"HeavyBleeding": {
+					"delay": 0,
+					"duration": 0,
+					"fadeOut": 0,
+					"cost": 170,
+					"healthPenaltyMin": 0,
+					"healthPenaltyMax": 0
+				}
+			}
+		},
+		"_proto": "544fb45d4bdc2dee738b4568"
+	},
+	{
+		"_id": "544fb45d4bdc2dee738b4568",
+		"_name": "salewa",
+		"_parent": "5448f39d4bdc2d0a728b4568",
+		"_type": "Item",
+		"_props": {
+			"Name": "Аптечка Salewa FIRST AID KIT",
+			"ShortName": "Salewa",
+			"Description": "",
+			"Weight": 0.6,
+			"BackgroundColor": "orange",
+			"Width": 1,
+			"Height": 2,
+			"StackMaxSize": 1,
+			"ItemSound": "med_medkit",
+			"Prefab": {
+				"path": "assets/content/weapons/usable_items/item_meds_salewa/item_meds_salewa_loot.bundle",
+				"rcid": ""
+			},
+			"UsePrefab": {
+				"path": "assets/content/weapons/usable_items/item_meds_salewa/item_meds_salewa_container.bundle",
+				"rcid": ""
+			},
+			"StackObjectsCount": 1,
+			"NotShownInSlot": false,
+			"ExaminedByDefault": false,
+			"ExamineTime": 1,
+			"IsUndiscardable": false,
+			"IsUnsaleable": false,
+			"IsUnbuyable": false,
+			"IsUngivable": false,
+			"IsLockedafterEquip": false,
+			"QuestItem": false,
+			"LootExperience": 20,
+			"ExamineExperience": 6,
+			"HideEntrails": false,
+			"RepairCost": 0,
+			"RepairSpeed": 0,
+			"ExtraSizeLeft": 0,
+			"ExtraSizeRight": 0,
+			"ExtraSizeUp": 0,
+			"ExtraSizeDown": 0,
+			"ExtraSizeForceAdd": false,
+			"MergesWithChildren": false,
+			"CanSellOnRagfair": true,
+			"CanRequireOnRagfair": true,
+			"ConflictingItems": [],
+			"Unlootable": false,
+			"UnlootableFromSlot": "FirstPrimaryWeapon",
+			"UnlootableFromSide": [],
+			"AnimationVariantsNumber": 2,
+			"DiscardingBlock": false,
+			"RagFairCommissionModifier": 1,
+			"IsAlwaysAvailableForInsurance": false,
+			"medUseTime": 3,
+			"medEffectType": "duringUse",
+			"MaxHpResource": 400,
+			"hpResourceRate": 85,
+			"StimulatorBuffs": "",
+			"effects_health": [],
+			"effects_damage": {
+				"LightBleeding": {
+					"delay": 0,
+					"duration": 0,
+					"fadeOut": 0,
+					"cost": 45
+				},
+				"HeavyBleeding": {
+					"delay": 0,
+					"duration": 0,
+					"fadeOut": 0,
+					"cost": 175
+				}
+			}
+		}
+	},
+	{
 		"_id": "590c661e86f7741e566b646a",
 		"_name": "item_meds_automedkit",
 		"_parent": "5448f39d4bdc2d0a728b4568",
@@ -249,95 +414,6 @@
 					"duration": 0,
 					"fadeOut": 0,
 					"cost": 50
-				}
-			}
-		},
-		"_proto": "544fb45d4bdc2dee738b4568"
-	},
-	{
-		"_id": "590c678286f77426c9660122",
-		"_name": "item_meds_medkit_ifak",
-		"_parent": "5448f39d4bdc2d0a728b4568",
-		"_type": "Item",
-		"_props": {
-			"Name": "ifak",
-			"ShortName": "ifak",
-			"Description": "ifak",
-			"Weight": 0.5,
-			"BackgroundColor": "orange",
-			"Width": 1,
-			"Height": 1,
-			"StackMaxSize": 1,
-			"ItemSound": "med_medkit",
-			"Prefab": {
-				"path": "assets/content/weapons/usable_items/item_ifak/item_ifak_loot.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "assets/content/weapons/usable_items/item_ifak/item_ifak_container.bundle",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": true,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 25,
-			"ExamineExperience": 10,
-			"HideEntrails": false,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 2,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"medUseTime": 3,
-			"medEffectType": "duringUse",
-			"MaxHpResource": 300,
-			"hpResourceRate": 50,
-			"StimulatorBuffs": "",
-			"effects_health": [],
-			"effects_damage": {
-				"LightBleeding": {
-					"delay": 0,
-					"duration": 0,
-					"fadeOut": 0,
-					"cost": 30,
-					"healthPenaltyMin": 0,
-					"healthPenaltyMax": 0
-				},
-				"RadExposure": {
-					"delay": 0,
-					"duration": 0,
-					"fadeOut": 0,
-					"cost": 0,
-					"healthPenaltyMin": 0,
-					"healthPenaltyMax": 0
-				},
-				"HeavyBleeding": {
-					"delay": 0,
-					"duration": 0,
-					"fadeOut": 0,
-					"cost": 210,
-					"healthPenaltyMin": 0,
-					"healthPenaltyMax": 0
 				}
 			}
 		},
@@ -486,81 +562,5 @@
 			}
 		},
 		"_proto": "544fb45d4bdc2dee738b4568"
-	},
-	{
-		"_id": "544fb45d4bdc2dee738b4568",
-		"_name": "salewa",
-		"_parent": "5448f39d4bdc2d0a728b4568",
-		"_type": "Item",
-		"_props": {
-			"Name": "Аптечка Salewa FIRST AID KIT",
-			"ShortName": "Salewa",
-			"Description": "",
-			"Weight": 0.6,
-			"BackgroundColor": "orange",
-			"Width": 1,
-			"Height": 2,
-			"StackMaxSize": 1,
-			"ItemSound": "med_medkit",
-			"Prefab": {
-				"path": "assets/content/weapons/usable_items/item_meds_salewa/item_meds_salewa_loot.bundle",
-				"rcid": ""
-			},
-			"UsePrefab": {
-				"path": "assets/content/weapons/usable_items/item_meds_salewa/item_meds_salewa_container.bundle",
-				"rcid": ""
-			},
-			"StackObjectsCount": 1,
-			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
-			"ExamineTime": 1,
-			"IsUndiscardable": false,
-			"IsUnsaleable": false,
-			"IsUnbuyable": false,
-			"IsUngivable": false,
-			"IsLockedafterEquip": false,
-			"QuestItem": false,
-			"LootExperience": 20,
-			"ExamineExperience": 6,
-			"HideEntrails": false,
-			"RepairCost": 0,
-			"RepairSpeed": 0,
-			"ExtraSizeLeft": 0,
-			"ExtraSizeRight": 0,
-			"ExtraSizeUp": 0,
-			"ExtraSizeDown": 0,
-			"ExtraSizeForceAdd": false,
-			"MergesWithChildren": false,
-			"CanSellOnRagfair": true,
-			"CanRequireOnRagfair": true,
-			"ConflictingItems": [],
-			"Unlootable": false,
-			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
-			"AnimationVariantsNumber": 2,
-			"DiscardingBlock": false,
-			"RagFairCommissionModifier": 1,
-			"IsAlwaysAvailableForInsurance": false,
-			"medUseTime": 3,
-			"medEffectType": "duringUse",
-			"MaxHpResource": 400,
-			"hpResourceRate": 85,
-			"StimulatorBuffs": "",
-			"effects_health": [],
-			"effects_damage": {
-				"LightBleeding": {
-					"delay": 0,
-					"duration": 0,
-					"fadeOut": 0,
-					"cost": 45
-				},
-				"HeavyBleeding": {
-					"delay": 0,
-					"duration": 0,
-					"fadeOut": 0,
-					"cost": 175
-				}
-			}
-		}
 	}
 ]

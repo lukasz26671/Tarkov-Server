@@ -372,7 +372,7 @@
 			"AllowSlide": false,
 			"DurabilityBurnRatio": 1,
 			"HeatFactorGun": 1,
-			"CoolFactorGun": 0.72,
+			"CoolFactorGun": 0.576,
 			"CoolFactorGunMods": 1,
 			"HeatFactorByShot": 1,
 			"AllowOverheat": false,

@@ -56,28 +56,6 @@
 		}
 	},
 	{
-		"_id": "5448eb774bdc2d0a728b4567",
-		"_name": "BarterItem",
-		"_parent": "54009119af1c881c07000029",
-		"_type": "Node",
-		"_props": {
-			"MaxResource": 0,
-			"Resource": 0
-		}
-	},
-	{
-		"_id": "566162e44bdc2d3f298b4573",
-		"_name": "CompoundItem",
-		"_parent": "54009119af1c881c07000029",
-		"_type": "Node",
-		"_props": {
-			"Grids": [],
-			"Slots": [],
-			"CanPutIntoDuringTheRaid": true,
-			"CantRemoveFromSlotsDuringRaid": []
-		}
-	},
-	{
 		"_id": "5447e0e74bdc2d3c308b4567",
 		"_name": "SpecItem",
 		"_parent": "54009119af1c881c07000029",
@@ -185,6 +163,56 @@
 		}
 	},
 	{
+		"_id": "5448eb774bdc2d0a728b4567",
+		"_name": "BarterItem",
+		"_parent": "54009119af1c881c07000029",
+		"_type": "Node",
+		"_props": {
+			"MaxResource": 0,
+			"Resource": 0
+		}
+	},
+	{
+		"_id": "5448ecbe4bdc2d60728b4568",
+		"_name": "Info",
+		"_parent": "54009119af1c881c07000029",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
+		"_id": "566162e44bdc2d3f298b4573",
+		"_name": "CompoundItem",
+		"_parent": "54009119af1c881c07000029",
+		"_type": "Node",
+		"_props": {
+			"Grids": [],
+			"Slots": [],
+			"CanPutIntoDuringTheRaid": true,
+			"CantRemoveFromSlotsDuringRaid": []
+		}
+	},
+	{
+		"_id": "543be6674bdc2df1348b4569",
+		"_name": "FoodDrink",
+		"_parent": "54009119af1c881c07000029",
+		"_type": "Node",
+		"_props": {
+			"foodUseTime": 0,
+			"foodEffectType": "duringUse",
+			"MaxResource": 0,
+			"StimulatorBuffs": ""
+		}
+	},
+	{
+		"_id": "543be5e94bdc2df1348b4568",
+		"_name": "Key",
+		"_parent": "54009119af1c881c07000029",
+		"_type": "Node",
+		"_props": {
+			"MaximumNumberOfUsage": 0
+		}
+	},
+	{
 		"_id": "543be6564bdc2df4348b4568",
 		"_name": "ThrowWeap",
 		"_parent": "54009119af1c881c07000029",
@@ -241,34 +269,6 @@
 		"_props": {
 			"StackMinRandom": 0,
 			"StackMaxRandom": 0
-		}
-	},
-	{
-		"_id": "5448ecbe4bdc2d60728b4568",
-		"_name": "Info",
-		"_parent": "54009119af1c881c07000029",
-		"_type": "Node",
-		"_props": {}
-	},
-	{
-		"_id": "543be5e94bdc2df1348b4568",
-		"_name": "Key",
-		"_parent": "54009119af1c881c07000029",
-		"_type": "Node",
-		"_props": {
-			"MaximumNumberOfUsage": 0
-		}
-	},
-	{
-		"_id": "543be6674bdc2df1348b4569",
-		"_name": "FoodDrink",
-		"_parent": "54009119af1c881c07000029",
-		"_type": "Node",
-		"_props": {
-			"foodUseTime": 0,
-			"foodEffectType": "duringUse",
-			"MaxResource": 0,
-			"StimulatorBuffs": ""
 		}
 	},
 	{
