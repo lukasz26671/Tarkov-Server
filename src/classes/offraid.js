@@ -45,8 +45,7 @@ class InraidServer {
 				}
 
 				if (item.upd.Key.NumberOfUsages >= helper_f.getItem(mapKey)[1]._props.MaximumNumberOfUsage) {
-					//do not send offraidData here, because it will not remove the items
-					move_f.removeItemFromProfile(profile_f.handler.getPmcProfile(sessionID), item._id);
+					move_f.removeItemFromProfile(offraidData.profile, item._id);
 				}
 
 				break;
