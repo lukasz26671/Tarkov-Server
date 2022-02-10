@@ -1,2 +1,42 @@
 {
+	"AdditionalLanguages-1.0.0_TheMaoci": {
+		"isEnabled": true,
+		"folder": "AdditionalLanguages_1.0.0",
+		"order": 1
+	},
+	"AE_Core-1.0.0_AE_Team": {
+		"isEnabled": true,
+		"folder": "AE_Team-AE_Core-1.0.0",
+		"order": 2
+	},
+	"AllItemsExamined-1.0.0_TheMaoci": {
+		"isEnabled": true,
+		"folder": "AllItemsExamined_1.0.0",
+		"order": 3
+	},
+	"LivePrices-1.1.0_AlteredEscape": {
+		"isEnabled": true,
+		"folder": "AlteredEscape-LivePrices-1.1.0",
+		"order": 4
+	},
+	"HideoutQOL-1.0.0_Jizera": {
+		"isEnabled": true,
+		"folder": "Jizera-HideoutQOL-1.0.0",
+		"order": 5
+	},
+	"MagazineManiac-1.0.0_Nehax": {
+		"isEnabled": true,
+		"folder": "Nehax-MagazineManiac-1.0.0",
+		"order": 6
+	},
+	"questupdater-1.0.0_Unreal_Unicorn": {
+		"isEnabled": true,
+		"folder": "Unreal_Unicorn-questupdater-1.0.0",
+		"order": 7
+	},
+	"AmmoStack-1.0.0_Unreal_Unicorn": {
+		"isEnabled": true,
+		"folder": "Unreal_Unicorn_AmmoStack_1.0.0",
+		"order": 8
+	}
 }
