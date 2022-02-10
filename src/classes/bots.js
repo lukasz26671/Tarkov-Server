@@ -359,8 +359,6 @@ class Controller {
       if(swapped > 0){
         logger.logSuccess("\u001b[32;1mSwapped "+swapped+" bot(s).");
       }
-      const fs = require('fs');
-      fs.writeFileSync('./playerdata.json', JSON.stringify(offraid_f.handler.getPlayer(sessionID), null, '\t'), 'utf8');
       //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
       logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
