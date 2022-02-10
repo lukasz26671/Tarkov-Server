@@ -88,8 +88,8 @@
   },
   "locationloot": {
     "containers": {
-      "ChanceForEmpty": 5,
-      "ChanceToSpawnNextItem": 35,
+      "ChanceForEmpty": 25,
+      "ChanceToSpawnNextItem": 45,
       "AttemptsToPlaceLoot": 1
     },
     "RarityMultipliers": {

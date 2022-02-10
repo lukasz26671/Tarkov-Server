@@ -571,6 +571,7 @@ class Responses {
     return response_f.getBody([
       {
         profileid: "scav" + sessionID,
+        profileToken: null,
         status: "Free",
         sid: "",
         ip: "",
@@ -578,6 +579,7 @@ class Responses {
       },
       {
         profileid: "pmc" + sessionID,
+        profileToken: null,
         status: "Free",
         sid: "",
         ip: "",

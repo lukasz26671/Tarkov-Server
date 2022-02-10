@@ -771,23 +771,37 @@ class Generator {
         0,
         100,
       );
-      const itemChance = itemSpawnChance * locationLootChanceModifier;
+      //const itemChance = itemSpawnChance * locationLootChanceModifier;
+      const itemChance = itemSpawnChance;
       if (num >= itemChance) {
-        if (!isThereLootAtLocation(output.Loot, lootData.Position)) {
+        if (!isThereLootAtLocation(output.Loot, lootData.Position)){
           //if loot won't overlap
+          //logger.logWarning("Chance de location: "+locationLootChanceModifier);
+          /*
           count++;
           output.Loot.push(createEndLootData);
+          */
+          //last dice throwing, make locationchance actually useful.
+          if(utility.getPercentRandomBool(locationLootChanceModifier * 100)){
+            count++;
+            output.Loot.push(createEndLootData);
+          }
+          
         } else {
           //overlaps
           overlapped++;
         }
       }
     }
-    logger.logWarning(`Skipped ${skipped} items with no loot tables found.`);
-    logger.logSuccess(
-      "Prevented " + overlapped + " overlapped dynamic loot items.",
-    );
-    logger.logSuccess("Generated " + count + " dynamic loot items.");
+    if(skipped > 0){
+      logger.logWarning(`Skipped ${skipped} items with no loot tables found.`);
+    }
+    if(overlapped > 0){
+      logger.logSuccess(
+        "\u001b[32;1mPrevented generation of " + overlapped + " overlapping dynamic loot items.",
+      );
+    }
+    logger.logSuccess("\u001b[32;1mGenerated " + count + " dynamic loot items.");
     return count;
   }
 }

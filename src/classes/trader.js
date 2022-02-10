@@ -203,8 +203,15 @@ class TraderServer {
   // Bude: Modifed the file to reset traders based on character profile defaults from our profile overhaul.
   resetTrader(sessionID, traderID) {
     logger.logInfo(`Resetting ${traderID}`);
-    let account = account_f.handler.find(sessionID);
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    let account;
+    let pmcData;
+    if (sessionID != "" && typeof sessionID != "undefined") {
+      account = account_f.handler.find(sessionID);
+      pmcData = profile_f.handler.getPmcProfile(sessionID);
+    } else {
+      logger.logError(`[MISSING SESSION ID] resetTrader(sessionID) is blank or undefined;`)
+    }
+
     const character_file = "character_" + pmcData.Info.Side;
     let templateData = fileIO.readParsed(
       db.profile[account.edition][character_file.toLowerCase()]
@@ -286,7 +293,7 @@ class TraderServer {
         if (
           key in questassort.started &&
           quest_f.getQuestStatus(pmcData, questassort.started[key]) !==
-            "Started"
+          "Started"
         ) {
           assorts = removeItemFromAssort(assorts, key);
           continue;
@@ -295,7 +302,7 @@ class TraderServer {
         if (
           key in questassort.success &&
           quest_f.getQuestStatus(pmcData, questassort.success[key]) !==
-            "Success"
+          "Success"
         ) {
           assorts = removeItemFromAssort(assorts, key);
           continue;
