@@ -294,7 +294,7 @@
   "GlobalLootChanceModifier": 0.25,
   "OldSpawn": false,
   "NewSpawn": true,
-  "BotMax": 13,
+  "BotMax": 30,
   "BotStart": 20,
   "BotStop": 1500,
   "BotMaxTimePlayer": 1200,
@@ -468,24 +468,24 @@
   "DisabledForScav": false,
   "BossLocationSpawn": [
     {
-      "BossName": "bossSanitar",
+      "BossName": "sectantPriest",
       "BossChance": 100,
       "BossZone": "ZoneScavBase",
       "BossPlayer": false,
       "BossDifficult": "impossible",
       "BossEscortType": "sectantWarrior",
-      "BossEscortDifficult": "impossible",
+      "BossEscortDifficult": "normal",
       "BossEscortAmount": "3",
       "Time": -1
     },
     {
       "BossName": "bossBully",
       "BossChance": 100,
-      "BossZone": "ZoneDormitory,ZoneGasStation,ZoneScavBase",
+      "BossZone": "ZoneDormitory,ZoneGasStation",
       "BossPlayer": false,
       "BossDifficult": "impossible",
       "BossEscortType": "followerBully",
-      "BossEscortDifficult": "impossible",
+      "BossEscortDifficult": "normal",
       "BossEscortAmount": "3",
       "Time": -1
     }
