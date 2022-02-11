@@ -4,8 +4,8 @@
 	"version": "1.0.0",
 	"license": "MIT",
 	"settings": {
-		"enable": false,
-		"speed_multiplier": 1
+		"enable": true,
+		"speed_multiplier": 20
 	},
 	"src": {
 		"src/FastLoading.js": "TamperModLoad"
