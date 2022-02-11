@@ -32,7 +32,7 @@ class InraidServer {
 			if (item._tpl === mapKey && item.slotId !== "Hideout") {
 				let usages = -1;
 
-				if (!helper_f.getItem(mapKey)[1]._props.MaximumNumberOfUsage) {
+				if (!helper_f.tryGetItem(mapKey)._props.MaximumNumberOfUsage) {
 					usages = 1;
 				} else {
 					usages = "upd" in item && "Key" in item.upd ? item.upd.Key.NumberOfUsages : -1;
@@ -44,7 +44,7 @@ class InraidServer {
 					item.upd.Key.NumberOfUsages += 1;
 				}
 
-				if (item.upd.Key.NumberOfUsages >= helper_f.getItem(mapKey)[1]._props.MaximumNumberOfUsage) {
+				if (item.upd.Key.NumberOfUsages >= helper_f.tryGetItem(mapKey)._props.MaximumNumberOfUsage) {
 					//do not send offraidData here, because it will not remove the items
 					move_f.removeItemFromProfile(profile_f.handler.getPmcProfile(sessionID), item._id);
 				}

@@ -54,7 +54,7 @@ class HealthServer {
         if ("MedKit" in item.upd) {
           item.upd.MedKit.HpResource -= body.count;
         } else {
-          let maxhp = helper_f.getItem(item._tpl)[1]._props.MaxHpResource;
+          let maxhp = helper_f.tryGetItem(item._tpl)._props.MaxHpResource;
           item.upd.MedKit = { HpResource: maxhp - body.count };
         }
 
@@ -74,7 +74,7 @@ class HealthServer {
 
     for (let item of pmcData.Inventory.items) {
       if (item._id === body.item) {
-        let itemProps = helper_f.getItem(item._tpl)[1]._props;
+        let itemProps = helper_f.tryGetItem(item._tpl)._props;
         maxResource = itemProps.MaxResource;
 
         if (maxResource > 1) {

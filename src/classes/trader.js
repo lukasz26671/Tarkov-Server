@@ -408,7 +408,7 @@ class TraderServer {
         "upd" in item && "MedKit" in item.upd ? item.upd.MedKit.HpResource : 0;
 
       if (hpresource > 0) {
-        let maxHp = helper_f.getItem(item._tpl)[1]._props.MaxHpResource;
+        let maxHp = helper_f.tryGetItem(item._tpl)._props.MaxHpResource;
         price *= hpresource / maxHp;
       }
 

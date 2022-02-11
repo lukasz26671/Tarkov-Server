@@ -407,7 +407,7 @@ function _GenerateContainerLoot(_items) {
           _items.push(utility.DeepCopy(preset._items[p]));
 
           if (preset._items[p].slotId === "mod_magazine") {
-            let mag = helper_f.getItem(preset._items[p]._tpl)[1];
+            let mag = helper_f.tryGetItem(preset._items[p]._tpl)[1];
             let cartridges = {
               _id: idPrefix + idSuffix.toString(16),
               _tpl: rolledRandomItemToPlace._props.defAmmo,
@@ -771,7 +771,7 @@ class Generator {
           createEndLootData.Items.push(currentItem);
 
           if (preset._items[p].slotId === "mod_magazine") {
-            let mag = helper_f.getItem(preset._items[p]._tpl)[1];
+            let mag = helper_f.tryGetItem(preset._items[p]._tpl)[1];
             let cartridges = {
               _id: currentItem.id + "_" + idSuffix,
               _tpl: item._props.defAmmo,
@@ -791,7 +791,7 @@ class Generator {
       // spawn change calculation
       const num = utility.getRandomInt(0, 10000);
       const itemSpawnChance = utility.valueBetween(
-        helper_f.getItem(createdItem._tpl)[1]["_props"]["LootExperience"],
+        helper_f.tryGetItem(createdItem._tpl)["_props"]["LootExperience"],
         0,
         250,
         0,

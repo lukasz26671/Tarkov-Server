@@ -11,8 +11,8 @@ function sortOffersByRating(a, b) {
 function sortOffersByName(a, b) {
   // @TODO: Get localized item names
   try {
-    let aa = helper_f.getItem(a._id)[1]._name;
-    let bb = helper_f.getItem(b._id)[1]._name;
+    let aa = helper_f.tryGetItem(a._id)._name;
+    let bb = helper_f.tryGetItem(b._id)._name;
 
     aa = aa.substring(aa.indexOf("_") + 1);
     bb = bb.substring(bb.indexOf("_") + 1);

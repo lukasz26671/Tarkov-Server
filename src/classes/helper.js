@@ -458,7 +458,7 @@ note from Maoci: you can merge and split items from parent-childrens
 */
 module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash) => {
   let toDo = [itemID];
-  let tmpItem = helper_f.getItem(itemtpl)[1];
+  let tmpItem = helper_f.tryGetItem(itemtpl);
   let rootItem = inventoryItemHash.byItemId[itemID];
   if (typeof tmpItem._props == "undefined"){ return; }
   let FoldableWeapon = tmpItem._props.Foldable;
@@ -498,7 +498,7 @@ module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash)
           toDo.push(item._id);
 
           // If the barrel is folded the space in the barrel is not counted
-          let itm = helper_f.getItem(item._tpl)[1];
+          let itm = helper_f.tryGetItem(item._tpl);
           let childFoldable = itm._props.Foldable;
           let childFolded = item.upd && item.upd.Foldable && item.upd.Foldable.Folded === true;
 
@@ -920,7 +920,7 @@ module.exports.getPlayerStashSlotMap = (sessionID, pmcData) => {
 // check if this new one works and remove this one if it does
 module.exports.getSizeByInventoryItemHash_old = (itemtpl, itemID, inventoryItemHash) => {
   let toDo = [itemID];
-  let tmpItem = helper_f.getItem(itemtpl)[1];
+  let tmpItem = helper_f.tryGetItem(itemtpl);
 
   // Prevent traders not working if an template ID does not fetch a real item. -- kiobu
   // Note: This may cause problems when attempting to place an item in the same/relative place as a broken template item.
@@ -964,7 +964,7 @@ module.exports.getSizeByInventoryItemHash_old = (itemtpl, itemID, inventoryItemH
           toDo.push(item._id);
 
           // If the barrel is folded the space in the barrel is not counted
-          let itm = helper_f.getItem(item._tpl)[1];
+          let itm = helper_f.tryGetItem(item._tpl);
           let childFoldable = itm._props.Foldable;
           let childFolded = item.upd && item.upd.Foldable && item.upd.Foldable.Folded === true;
 

@@ -463,7 +463,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
     for (let item of itemLib) {
       if (item._id === baseItem.item_id) {
-        const tmpItem = helper_f.getItem(item._tpl)[1];
+        const tmpItem = helper_f.tryGetItem(item._tpl);
         const itemToAdd = {
           itemRef: item,
           count: baseItem.count,
@@ -588,13 +588,13 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
     // If this is an ammobox, add cartridges to it.
     // Damaged ammo box are not loaded.
-    const itemInfo = helper_f.getItem(itemToAdd.itemRef._tpl)[1];
+    const itemInfo = helper_f.tryGetItem(itemToAdd.itemRef._tpl);
     let ammoBoxInfo = itemInfo._props.StackSlots;
     if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
       // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
       let maxCount = ammoBoxInfo[0]._max_count;
       let ammoTmplId = ammoBoxInfo[0]._props.filters[0].Filter[0];
-      let ammoStackMaxSize = helper_f.getItem(ammoTmplId)[1]._props.StackMaxSize;
+      let ammoStackMaxSize = helper_f.tryGetItem(ammoTmplId)._props.StackMaxSize;
       let ammos = [];
       let location = 0;
 
