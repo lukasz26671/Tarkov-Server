@@ -29,7 +29,8 @@
         "followerTest": 100,
         "bossTest": 100,
         "assault": 35,
-        "pmcBot": 35
+        "pmcBot": 35,
+        "exUsec": 10
       }
     },
     "limits": {

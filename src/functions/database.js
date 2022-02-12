@@ -63,14 +63,22 @@ function _load_ItemsData() {
   _database.templates = fileIO.readParsed("./" + db.user.cache.templates);
   if (typeof _database.templates.data != "undefined") _database.templates = _database.templates.data;
 
-  let itemHandbook = _database.templates.items;
+  let itemHandbook = _database.templates.Items;
   _database.itemPriceTable = {};
-  for(let item in itemHandbook)
-  {
+  for (let item in itemHandbook) {
     _database.itemPriceTable[item.Id] = item.Price;
   }
 
+  let parent = {};
+  let itemNodes = _database.items;
+  for (let items of Object.keys(itemNodes)) {
+    let item = itemNodes[items];
+    if (item._type === "Node") { parent[item._id] = item; };
+  };
+  if (parent) { _database.itemParents = parent; };
+  fileIO.write("./basdjbnasdas.json", _database.itemParents, true, false);
 }
+
 function _load_HideoutData() {
   if (!_database.hideout) _database.hideout = {};
 
