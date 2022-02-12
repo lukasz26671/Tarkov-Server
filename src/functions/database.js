@@ -76,7 +76,6 @@ function _load_ItemsData() {
     if (item._type === "Node") { parent[item._id] = item; };
   };
   if (parent) { _database.itemParents = parent; };
-  fileIO.write("./basdjbnasdas.json", _database.itemParents, true, false);
 }
 
 function _load_HideoutData() {
