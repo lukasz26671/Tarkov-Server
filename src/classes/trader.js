@@ -385,13 +385,15 @@ class TraderServer {
         if (!global._database.items[childItem._tpl]) {
           continue;
         } // Ignore child item if it does not have an entry in the db. -- kiobu
-        let getprice = helper_f.getTemplatePrice(childItem._tpl);
-        let tempPrice = getprice >= 1 ? getprice : 1;
+        let getPrice = helper_f.getTemplatePrice(childItem._tpl);
+        let priceCoef = (trader.loyaltyLevels[profile_f.getLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
+        let tempPrice = getPrice >= 1 ? getPrice : 1;
         let count =
           "upd" in childItem && "StackObjectsCount" in childItem.upd
             ? childItem.upd.StackObjectsCount
             : 1;
-        price = price + tempPrice * count;
+        //logger.logError("tempPrice: "+tempPrice+ " getPrice: "+getPrice+" priceCoef: "+priceCoef+" count: "+count);
+        price = tempPrice * count * priceCoef;
       }
 
       // dogtag calculation

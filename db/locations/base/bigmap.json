@@ -486,7 +486,7 @@
       "BossDifficult": "impossible",
       "BossEscortType": "followerBully",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "3",
+      "BossEscortAmount": "4",
       "Time": -1
     }
   ],
