@@ -382,10 +382,6 @@ function calculateLevel(pmcData) {
  * @returns {number} calculatedLoyalty -> loyalty level
  */
 function getLoyalty(pmcData, traderID) {
-  //if trader is not unlocked, return first loyalty.
-  if (!pmcData.TradersInfo[traderID].unlocked)
-    return 1;
-
   let playerSaleSum;
   let playerStanding;
   let playerLevel;
