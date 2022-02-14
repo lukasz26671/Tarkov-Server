@@ -156,7 +156,9 @@ class HealthServer {
 
   healOverTime(pmcData, info, sessionID) {
     // without hideout how much you regenerate ?
-    const LastUpdate = pmcData.Health.UpdateTime;
+    const pmcHealth = pmcData.Health;
+    const bodyParts = pmcHealth.BodyParts;
+    const LastUpdate = pmcHealth.UpdateTime;
     const NewUpdate = utility.getTimestamp();
     const TimeElapsedFactor = (NewUpdate - LastUpdate) / 60;
     if (TimeElapsedFactor < 1) return;
@@ -165,8 +167,9 @@ class HealthServer {
         */
     function GetNumberOfDamagedBodyParts(pmcData, GetBodyParts) {
       let countBodyPartsToUpdate = 0;
+      //const pmcHealth = pmcData.Health;
       for (const bodyPart in GetBodyParts) {
-        if (pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Current < pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
+        if (bodyParts[GetBodyParts[bodyPart]].Health.Current < bodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
           countBodyPartsToUpdate++;
         }
       }
@@ -193,7 +196,7 @@ class HealthServer {
     });
     hydrationRegen *= TimeElapsedFactor;
 
-    const GetBodyParts = Object.keys(pmcData.Health.BodyParts);
+    const GetBodyParts = Object.keys(pmcHealth.BodyParts);
     const updateBodyPartPer = healthRegen / GetNumberOfDamagedBodyParts(pmcData, GetBodyParts);
 
     logger.logInfo(
@@ -201,38 +204,27 @@ class HealthServer {
     );
 
     for (const bodyPart in GetBodyParts) {
-      if (pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Current < pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
-        pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Current += updateBodyPartPer;
-        if (pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Current > pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
-          pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Current = pmcData.Health.BodyParts[GetBodyParts[bodyPart]].Health.Maximum;
+      if (bodyParts[GetBodyParts[bodyPart]].Health.Current < bodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
+        bodyParts[GetBodyParts[bodyPart]].Health.Current += updateBodyPartPer;
+        if (bodyParts[GetBodyParts[bodyPart]].Health.Current > bodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
+          bodyParts[GetBodyParts[bodyPart]].Health.Current = bodyParts[GetBodyParts[bodyPart]].Health.Maximum;
         }
       }
     }
-    if (pmcData.Health.Energy.Current < pmcData.Health.Energy.Maximum) {
-      pmcData.Health.Energy.Current += energyRegen;
-      if (pmcData.Health.Energy.Current > pmcData.Health.Energy.Maximum) {
-        pmcData.Health.Energy.Current = pmcData.Health.Energy.Maximum;
+    if (pmcHealth.Energy.Current < pmcHealth.Energy.Maximum) {
+      pmcHealth.Energy.Current += energyRegen;
+      if (pmcHealth.Energy.Current > pmcHealth.Energy.Maximum) {
+        pmcHealth.Energy.Current = pmcHealth.Energy.Maximum;
       }
     }
-    if (pmcData.Health.Hydration.Current < pmcData.Health.Hydration.Maximum) {
-      pmcData.Health.Hydration.Current += hydrationRegen;
-      if (pmcData.Health.Hydration.Current > pmcData.Health.Hydration.Maximum) {
-        pmcData.Health.Hydration.Current = pmcData.Health.Hydration.Maximum;
+    if (pmcHealth.Hydration.Current < pmcHealth.Hydration.Maximum) {
+      pmcHealth.Hydration.Current += hydrationRegen;
+      if (pmcHealth.Hydration.Current > pmcHealth.Hydration.Maximum) {
+        pmcHealth.Hydration.Current = pmcHealth.Hydration.Maximum;
       }
     }
-    /*/
-        pmcData.Health.BodyParts.Chest.Health.Current
-        pmcData.Health.BodyParts.Head.Health.Current
-        pmcData.Health.BodyParts.LeftArm.Health.Current
-        pmcData.Health.BodyParts.LeftLeg.Health.Current
-        pmcData.Health.BodyParts.RightArm.Health.Current
-        pmcData.Health.BodyParts.RightLeg.Health.Current
-        pmcData.Health.BodyParts.Stomach.Health.Current
-        pmcData.Health.Energy.Current
-        pmcData.Health.Hydration.Current
-        pmcData.Health.UpdateTime = utility.getTimestamp();
-        /*/
   }
+
   healthTreatment(pmcData, info, sessionID) {
     let body = {
       Action: "RestoreHealth",
@@ -243,26 +235,28 @@ class HealthServer {
 
     let BodyParts = info.difference.BodyParts;
     let BodyPartKeys = Object.keys(BodyParts);
+    const pmcHealth = pmcData.Health;
     let healthInfo = { IsAlive: true, Health: {} };
     for (let key of BodyPartKeys) {
       let bodyPart = info.difference.BodyParts[key];
       healthInfo.Health[key] = {};
-      healthInfo.Health[key].Current = Math.round(pmcData.Health.BodyParts[key].Health.Current + bodyPart.Health);
+      healthInfo.Health[key].Current = Math.round(pmcHealth.BodyParts[key].Health.Current + bodyPart.Health);
 
       if ("Effects" in bodyPart && bodyPart.Effects != undefined && bodyPart.Effects != null) {
         healthInfo.Health[key].Effects = bodyPart.Effects;
       }
     }
 
-    healthInfo.Energy = pmcData.Health.Energy.Current + info.difference.Energy;
-    healthInfo.Hydration = pmcData.Health.Hydration.Current + info.difference.Hydration;
+    healthInfo.Energy = pmcHealth.Energy.Current + info.difference.Energy;
+    healthInfo.Hydration = pmcHealth.Hydration.Current + info.difference.Hydration;
 
     health_f.handler.saveHealth(pmcData, healthInfo, sessionID);
     return item_f.handler.getOutput(sessionID);
   }
 
   addEffect(pmcData, sessionID, info) {
-    let bodyPart = pmcData.Health.BodyParts[info.bodyPart];
+    let pmcHealth = pmcData.Health;
+    let bodyPart = pmcHealth.BodyParts[info.bodyPart];
 
     if (bodyPart.Effects == undefined) {
       bodyPart.Effects = {};
@@ -279,7 +273,8 @@ class HealthServer {
   }
 
   removeEffect(pmcData, sessionID, info) {
-    let bodyPart = pmcData.Health.BodyParts[info.bodyPart];
+    const pmcHealth = pmcData.Health;
+    let bodyPart = pmcHealth.BodyParts[info.bodyPart];
     if (!bodyPart.hasOwnProperty("Effects")) {
       return;
     }
@@ -301,20 +296,22 @@ class HealthServer {
       return;
     }
 
+    const pmcHealth = pmcData.Health;
+    let bodyParts = pmcHealth.BodyParts;
     let nodeHealth = this.healths[sessionID];
     let keys = Object.keys(nodeHealth);
 
     for (let item of keys) {
       if (item !== "Hydration" && item !== "Energy") {
         /* set body part health */
-        pmcData.Health.BodyParts[item].Health.Current =
-          nodeHealth[item] <= 0 ? Math.round(pmcData.Health.BodyParts[item].Health.Maximum * global._database.gameplayConfig.inraid.saveHealthMultiplier) : nodeHealth[item];
+        bodyParts[item].Health.Current =
+          nodeHealth[item] <= 0 ? Math.round(bodyParts[item].Health.Maximum * global._database.gameplayConfig.inraid.saveHealthMultiplier) : nodeHealth[item];
       } else {
         /* set resources */
-        pmcData.Health[item].Current = nodeHealth[item];
+        pmcHealth[item].Current = nodeHealth[item];
 
-        if (pmcData.Health[item].Current > pmcData.Health[item].Maximum) {
-          pmcData.Health[item].Current = pmcData.Health[item].Maximum;
+        if (pmcHealth[item].Current > pmcHealth[item].Maximum) {
+          pmcHealth[item].Current = pmcHealth[item].Maximum;
         }
       }
     }
@@ -322,7 +319,7 @@ class HealthServer {
     let nodeEffects = this.effects[sessionID];
     Object.keys(nodeEffects).forEach((bodyPart) => {
       // clear effects
-      delete pmcData.Health.BodyParts[bodyPart].Effects;
+      delete bodyParts[bodyPart].Effects;
 
       // add new
       Object.keys(nodeEffects[bodyPart]).forEach((effect) => {
@@ -334,7 +331,7 @@ class HealthServer {
       });
     });
 
-    pmcData.Health.UpdateTime = Math.round(Date.now() / 1000);
+    pmcHealth.UpdateTime = Math.round(Date.now() / 1000);
 
     this.initializeHealth(sessionID);
   }
