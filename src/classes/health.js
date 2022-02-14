@@ -167,7 +167,6 @@ class HealthServer {
         */
     function GetNumberOfDamagedBodyParts(pmcData, GetBodyParts) {
       let countBodyPartsToUpdate = 0;
-      //const pmcHealth = pmcData.Health;
       for (const bodyPart in GetBodyParts) {
         if (bodyParts[GetBodyParts[bodyPart]].Health.Current < bodyParts[GetBodyParts[bodyPart]].Health.Maximum) {
           countBodyPartsToUpdate++;
