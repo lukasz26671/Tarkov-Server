@@ -76,7 +76,7 @@ exports.mod = (mod_data) => {
       modifierFlag,
     ) {
       assort.data.barter_scheme[curItem] = curAddTrader.barter_scheme;
-      assort.data.loyal_level_items[curItem] = curAddTrader.loyality;
+      assort.data.loyal_level_items[curItem] = curAddTrader.loyalty;
       switch (modifierFlag) {
         case "edit":
           let foundInAssort = false;

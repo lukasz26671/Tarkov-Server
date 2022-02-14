@@ -4,7 +4,7 @@
     "basedOn": "573474f924597738002c6174",
     "addToTrader": {
       "traderName": [],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -99,7 +99,7 @@
     "basedOn": "573477e124597737dd42e191",
     "addToTrader": {
       "traderName": ["Therapist"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -192,7 +192,7 @@
     "basedOn": "58d39d3d86f77445bb794ae7",
     "addToTrader": {
       "traderName": ["Therapist"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -247,7 +247,7 @@
     "basedOn": "5bd071d786f7747e707b93a3",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {

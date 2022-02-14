@@ -4,7 +4,7 @@
     "basedOn": "5fc3e4a27283c4046c5814ab",
     "addToTrader": {
       "traderName": [],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": { "allCompatible": ["5fc3e4a27283c4046c5814ab"] },

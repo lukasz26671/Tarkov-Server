@@ -55,7 +55,7 @@ exports.mod = (mod_data) => {
       global._database.traders.Nugent.assort.barter_scheme[item] =
         inputNodes[item].barter_scheme;
       global._database.traders.Nugent.assort.loyal_level_items[item] =
-        inputNodes[item].loyality;
+        inputNodes[item].loyalty;
     }
 
     // Adding categories, suits and quests

@@ -4,7 +4,7 @@
     "basedOn": "5ab8e4ed86f7742d8e50c7fa",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -60,7 +60,7 @@
     "basedOn": "5648a7494bdc2d9d488b4583",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -113,7 +113,7 @@
     "basedOn": "5e9dacf986f774054d6b89f4",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -164,7 +164,7 @@
     "basedOn": "5ab8e4ed86f7742d8e50c7fa",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -218,7 +218,7 @@
     "basedOn": "5ab8e4ed86f7742d8e50c7fa",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -272,7 +272,7 @@
     "basedOn": "5648a7494bdc2d9d488b4583",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -327,7 +327,7 @@
     "basedOn": "5b44c6ae86f7742d1627baea",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -508,7 +508,7 @@
     "basedOn": "5b44c6ae86f7742d1627baea",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -637,7 +637,7 @@
     "basedOn": "5d5d940f86f7742797262046",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -846,7 +846,7 @@
     "basedOn": "5ca20d5986f774331e7c9602",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -976,7 +976,7 @@
     "basedOn": "5c0e66e2d174af02a96252f4",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -1099,7 +1099,7 @@
     "basedOn": "5f60c85b58eff926626a60f7",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -1226,7 +1226,7 @@
     "basedOn": "5f60c076f2bcbb675b00dac2",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -1353,7 +1353,7 @@
     "basedOn": "5f60c076f2bcbb675b00dac2",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -1480,7 +1480,7 @@
     "basedOn": "5a16b9fffcdbcb0176308b34",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -1601,7 +1601,7 @@
     "basedOn": "5645bcc04bdc2d363b8b4572",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -1723,7 +1723,7 @@
     "basedOn": "5a7c4850e899ef00150be885",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -1883,7 +1883,7 @@
     "basedOn": "5a7c4850e899ef00150be885",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -2046,7 +2046,7 @@
     "basedOn": "5a7c4850e899ef00150be885",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -2209,7 +2209,7 @@
     "basedOn": "5a7c4850e899ef00150be885",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -2372,7 +2372,7 @@
     "basedOn": "5a7c4850e899ef00150be885",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -2535,7 +2535,7 @@
     "basedOn": "5a7c4850e899ef00150be885",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -2714,7 +2714,7 @@
     "basedOn": "5d5e7d28a4b936645d161203",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -2896,7 +2896,7 @@
     "basedOn": "5a154d5cfcdbcb001a3b00da",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -3115,7 +3115,7 @@
     "basedOn": "5a154d5cfcdbcb001a3b00da",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -3334,7 +3334,7 @@
     "basedOn": "5c17a7ed2e2216152142459c",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -3535,7 +3535,7 @@
     "basedOn": "5c17a7ed2e2216152142459c",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -3736,7 +3736,7 @@
     "basedOn": "5f60c74e3b85f6263c145586",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -3880,7 +3880,7 @@
     "basedOn": "5c06c6a80db834001b735491",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4007,7 +4007,7 @@
     "basedOn": "5c06c6a80db834001b735491",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4134,7 +4134,7 @@
     "basedOn": "5c06c6a80db834001b735491",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4261,7 +4261,7 @@
     "basedOn": "5aa7d193e5b5b000171d063f",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4405,7 +4405,7 @@
     "basedOn": "5aa7d193e5b5b000171d063f",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4550,7 +4550,7 @@
     "basedOn": "5b432be65acfc433000ed01f",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4677,7 +4677,7 @@
     "basedOn": "572b7fa524597762b747ce82",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4804,7 +4804,7 @@
     "basedOn": "5b40e61f5acfc4001a599bec",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -4931,7 +4931,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5083,7 +5083,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5235,7 +5235,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5387,7 +5387,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5539,7 +5539,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5691,7 +5691,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5843,7 +5843,7 @@
     "basedOn": "5b432c305acfc40019478128",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -5996,7 +5996,7 @@
     "basedOn": "5c0558060db834001b735271",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -6140,7 +6140,7 @@
     "basedOn": "5c0558060db834001b735271",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -6283,7 +6283,7 @@
     "basedOn": "5c066e3a0db834001b7353f0",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -6424,7 +6424,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -6734,7 +6734,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -7025,7 +7025,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -7316,7 +7316,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -7607,7 +7607,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -7918,7 +7918,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -8209,7 +8209,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -8500,7 +8500,7 @@
     "basedOn": "5ab8dced86f774646209ec87",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -8791,7 +8791,7 @@
     "basedOn": "5b44cad286f77402a54ae7e5",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -9082,7 +9082,7 @@
     "basedOn": "5b44cad286f77402a54ae7e5",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -9353,7 +9353,7 @@
     "basedOn": "5fd4c60f875c30179f5d04c2",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -9624,7 +9624,7 @@
     "basedOn": "5648a69d4bdc2ded0b8b457b",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -9958,7 +9958,7 @@
     "basedOn": "5e4abfed86f77406a2713cf7",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -10259,7 +10259,7 @@
     "basedOn": "5c0e3eb886f7742015526062",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -10490,7 +10490,7 @@
     "basedOn": "5d5d87f786f77427997cfaef",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": {
@@ -10962,7 +10962,7 @@
     "basedOn": "5645bc214bdc2d363b8b4571",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "addMods": { "allCompatible": ["5645bc214bdc2d363b8b4571"] },
@@ -11038,7 +11038,7 @@
     "basedOn": "545cdb794bdc2d3a198b456a",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -11482,7 +11482,7 @@
     "basedOn": "5b432b2f5acfc4771e1c6622",
     "addToTrader": {
       "traderName": ["Therapist"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {
@@ -11870,7 +11870,7 @@
     "basedOn": "6038b4b292ec1c3103795a0b",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
     "item": {

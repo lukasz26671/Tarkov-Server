@@ -4,7 +4,7 @@
     "basedOn": "5af99e9186f7747c447120b8",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
 
@@ -246,7 +246,7 @@
     "basedOn": "5af99e9186f7747c447120b8",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
 
@@ -432,7 +432,7 @@
     "basedOn": "5af99e9186f7747c447120b8",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
 
@@ -618,7 +618,7 @@
     "basedOn": "5af99e9186f7747c447120b8",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
 
@@ -860,7 +860,7 @@
     "basedOn": "5af99e9186f7747c447120b8",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
 
@@ -1074,7 +1074,7 @@
     "basedOn": "5af99e9186f7747c447120b8",
     "addToTrader": {
       "traderName": ["Ragman"],
-      "loyality": 1,
+      "loyalty": 1,
       "currency": "5449016a4bdc2d6f028b456f"
     },
 
