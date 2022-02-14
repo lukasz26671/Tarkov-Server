@@ -393,7 +393,7 @@ class TraderServer {
             ? childItem.upd.StackObjectsCount
             : 1;
         //logger.logError("tempPrice: "+tempPrice+ " getPrice: "+getPrice+" priceCoef: "+priceCoef+" count: "+count);
-        price = tempPrice * count * priceCoef;
+        price = price + ((tempPrice - (tempPrice * priceCoef)) * count); // I know parentheses aren't needed but I find it more readable -cq
       }
 
       // dogtag calculation
@@ -428,7 +428,6 @@ class TraderServer {
       }
       price = helper_f.fromRUB(price, currency);
       price = price > 0 && price !== "NaN" ? price : 1;
-
       output[item._id] = [[{ _tpl: currency, count: price.toFixed(0) }]];
     }
 
