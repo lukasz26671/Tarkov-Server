@@ -84,8 +84,13 @@
         "z": -6.0510006
       },
       "Rotation": 45.0000038,
-      "Sides": ["Usec"],
-      "Categories": ["Player", "Bot"],
+      "Sides": [
+        "Usec"
+      ],
+      "Categories": [
+        "Player",
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 0.5,
       "ColliderParams": {
@@ -109,8 +114,12 @@
         "z": -6.0510006
       },
       "Rotation": 45.0000038,
-      "Sides": ["All"],
-      "Categories": ["Player"],
+      "Sides": [
+        "All"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Hideout",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -134,8 +143,13 @@
         "z": -6.0510006
       },
       "Rotation": 45.0000038,
-      "Sides": ["Bear"],
-      "Categories": ["Player", "Bot"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player",
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 0.5,
       "ColliderParams": {

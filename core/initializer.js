@@ -54,7 +54,7 @@ class Initializer {
     global.router = require("./server/router.js").router;
     global.events = require("./server/events.js");
     global.server = require("./server/server.js").server;
-    
+
   }
 
   initializeCacheCallbacks() {

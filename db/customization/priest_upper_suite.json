@@ -7,7 +7,11 @@
     "Name": "KillaUpperSuite",
     "ShortName": "KillaUpperSuite",
     "Description": "KillaUpperSuite",
-    "Side": ["Bear", "Usec", "Savage"],
+    "Side": [
+      "Bear",
+      "Usec",
+      "Savage"
+    ],
     "AvailableAsDefault": false,
     "Body": "5fb53cc97b5d1342ee24bd63",
     "Hands": "5cc2e68f14c02e28b47de290"

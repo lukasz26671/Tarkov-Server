@@ -421,7 +421,7 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
       }
       const rolledItem =
         filteredByRarity[
-          utility.getRandomIntEx(Object.keys(filteredByRarity).length)
+        utility.getRandomIntEx(Object.keys(filteredByRarity).length)
         ];
       if (!rolledItem) {
         // fallback

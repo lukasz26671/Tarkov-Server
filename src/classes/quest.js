@@ -280,10 +280,10 @@ function handoverQuest(pmcData, body, sessionID) {
   // Set the counter to the backend counter if it exists.
   for (let k in pmcData.BackendCounters) {
     if (pmcData.BackendCounters[k].qid === body.qid) {
-      if (pmcData.BackendCounters[k].id === body.conditionId){
+      if (pmcData.BackendCounters[k].id === body.conditionId) {
         try {
           counter = pmcData.BackendCounters[k].value > 0 ? pmcData.BackendCounters[k].value : 0;
-        } catch (_) {}
+        } catch (_) { }
       }
     }
   }

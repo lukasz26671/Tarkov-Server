@@ -1,11 +1,11 @@
 {
 	"level": {
-	  "min": 0,
-	  "max": 1
+		"min": 0,
+		"max": 1
 	},
 	"reward": {
-	  "min": 500,
-	  "max": 500
+		"min": 500,
+		"max": 500
 	},
 	"standingForKill": 0,
 	"aggressorBonus": 0

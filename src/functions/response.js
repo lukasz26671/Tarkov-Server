@@ -131,7 +131,7 @@ class Responses {
     };
   }
   //dynamic
-  dynSingleplayerSettingsBotMaxCap(url, info, sessionID){
+  dynSingleplayerSettingsBotMaxCap(url, info, sessionID) {
     return "20"; //random response, needs to be handled
   }
 
@@ -226,7 +226,7 @@ class Responses {
     // TODO 2: require whole new system to generate the data for repeatable quests, which, where and when 
     return response_f.getBody([]);
   }
-  
+
   clientAccountCustomization(url, info, sessionID) {
     return response_f.getBody(customization_f.getAccountCustomization());
   }
@@ -402,10 +402,10 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGameStart(url, info, sessionID) {
-    if(account_f.handler.clientHasProfile(sessionID)) {
-      return response_f.getBody({utc_time: Date.now() / 1000}, 0, null);
+    if (account_f.handler.clientHasProfile(sessionID)) {
+      return response_f.getBody({ utc_time: Date.now() / 1000 }, 0, null);
     } else {
-        return response_f.getBody({utc_time: Date.now() / 1000}, 999, "Profile Not Found!!");
+      return response_f.getBody({ utc_time: Date.now() / 1000 }, 999, "Profile Not Found!!");
     }
   }
   clientGameVersionValidate(url, info, sessionID) {
@@ -528,23 +528,23 @@ class Responses {
   }
   clientMatchOfflineStart(url, info, sessionID) {
     /*
-			{
-			  locationName: 'Factory',
-			  entryPoint: 'Factory',
-			  startTime: 1626554822,
-			  dateTime: 'CURR',
-			  gameSettings: {
-				timeAndWeatherSettings: { isRandomTime: false, isRandomWeather: false },
-				botsSettings: { isEnabled: false, isScavWars: false, botAmount: 'AsOnline' },
-				wavesSettings: {
-				  botDifficulty: 'AsOnline',
-				  isBosses: true,
-				  isTaggedAndCursed: false,
-				  wavesBotAmount: 'AsOnline'
-				}
-			  }
-			}
-		*/
+      {
+        locationName: 'Factory',
+        entryPoint: 'Factory',
+        startTime: 1626554822,
+        dateTime: 'CURR',
+        gameSettings: {
+        timeAndWeatherSettings: { isRandomTime: false, isRandomWeather: false },
+        botsSettings: { isEnabled: false, isScavWars: false, botAmount: 'AsOnline' },
+        wavesSettings: {
+          botDifficulty: 'AsOnline',
+          isBosses: true,
+          isTaggedAndCursed: false,
+          wavesBotAmount: 'AsOnline'
+        }
+        }
+      }
+    */
     offraid_f.handler.addPlayer(sessionID, {
       Location: info.locationName,
       Time: info.dateTime,

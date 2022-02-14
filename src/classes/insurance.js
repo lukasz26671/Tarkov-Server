@@ -229,10 +229,10 @@ function getItemPrice(_tpl) {
 }
 
 function getPremium(pmcData, inventoryItem, traderId) {
-/*     let premium = getItemPrice(inventoryItem._tpl) * (global._database.gameplayConfig.trading.insureMultiplier * 3);
-	if(typeof pmcData.TradersInfo[traderId] != "undefined")
-		premium -= premium * (pmcData.TradersInfo[traderId].standing > 0.5 ? 0.5 : pmcData.TradersInfo[traderId].standing);
-    return Math.round(premium); */
+    /*     let premium = getItemPrice(inventoryItem._tpl) * (global._database.gameplayConfig.trading.insureMultiplier * 3);
+        if(typeof pmcData.TradersInfo[traderId] != "undefined")
+            premium -= premium * (pmcData.TradersInfo[traderId].standing > 0.5 ? 0.5 : pmcData.TradersInfo[traderId].standing);
+        return Math.round(premium); */
     //fileIO.write("./pmcData.json", JSON.stringify(pmcData, null, 2));
     let loyaltyLevel = profile_f.getLoyalty(pmcData, traderId) - 1
     let trader = trader_f.handler.getTrader(traderId, pmcData.aid);
@@ -242,8 +242,7 @@ function getPremium(pmcData, inventoryItem, traderId) {
     //22/100
 
     //console.log(insuranceMultiplier, "<<<<<<<< new insuranceMultiplier")
-    if (!insuranceMultiplier)
-    {
+    if (!insuranceMultiplier) {
         insuranceMultiplier = 0.3;
         Logger.warning(`No multiplier found for trader ${traderId}, check it exists in InsuranceConfig.js, falling back to a default value of 0.3`);
     }
@@ -251,8 +250,7 @@ function getPremium(pmcData, inventoryItem, traderId) {
     let premium = helper_f.getTemplatePrice(inventoryItem._tpl) * insuranceMultiplier;
     const coef = trader.loyaltyLevels[loyaltyLevel].insurance_price_coef;
 
-    if (coef > 0)
-    {
+    if (coef > 0) {
         premium *= (1 - trader.loyaltyLevels[loyaltyLevel].insurance_price_coef / 100);
     }
 
@@ -279,7 +277,7 @@ function cost(info, sessionID) {
                 logger.logError("InventoryItemId:" + key);
                 logger.logError("ItemId:" + inventoryItemsHash[key]._tpl);
                 logger.logError(e);
-				logger.logError("-------");
+                logger.logError("-------");
             }
         }
 

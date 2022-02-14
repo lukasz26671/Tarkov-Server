@@ -60,8 +60,8 @@
     "ragfairMultiplier": 3.5,
     "repairMultiplier": 1,
     "insureMultiplier": 0.1,
-    "insurerMultiplier":{
-      "5a7c2eca46aef81a7ca2145d":{
+    "insurerMultiplier": {
+      "5a7c2eca46aef81a7ca2145d": {
         "0": 0.3,
         "1": 0.25,
         "2": 0.19,
@@ -99,7 +99,7 @@
       "Rare": 0.85,
       "Superrare": 0.4
     },
-	"noDuplicatesTill": 2,
+    "noDuplicatesTill": 2,
     "useDynamicLootFromItemsArray": false,
     "useDynamicLootMultiplier": true
   },

@@ -182,7 +182,7 @@ function payMoney(pmcData, body, sessionID) {
   }
 
   // if no money in inventory or amount is not enough we return false
-  if (amountMoney != 0){
+  if (amountMoney != 0) {
     if (moneyItems.length <= 0 || amountMoney < barterPrice) {
       return false;
     }
@@ -460,9 +460,9 @@ module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash)
   let toDo = [itemID];
   let tmpItem = helper_f.tryGetItem(itemtpl);
   let rootItem = inventoryItemHash.byItemId[itemID];
-  if (typeof tmpItem._props == "undefined"){ return; }
+  if (typeof tmpItem._props == "undefined") { return; }
   let FoldableWeapon = tmpItem._props.Foldable;
-  let FoldedSlot = tmpItem._props.FoldedSlot; 
+  let FoldedSlot = tmpItem._props.FoldedSlot;
 
   let SizeUp = 0,
     SizeDown = 0,
@@ -725,12 +725,12 @@ function getPreset(id) {
   let itmPreset = global._database.globals.ItemPresets[id];
   if (typeof itmPreset == "undefined") {
     /* this was causing an error where preset id couldnt be found on the client and caused client stop loading map...
-		for(let itemP in global._database.globals.ItemPresets){
-			if(global._database.globals.ItemPresets[itemP]._items[0]._tpl == id){
-				itmPreset = global._database.globals.ItemPresets[itemP];
-				break;
-			}
-		}*/
+    for(let itemP in global._database.globals.ItemPresets){
+      if(global._database.globals.ItemPresets[itemP]._items[0]._tpl == id){
+        itmPreset = global._database.globals.ItemPresets[itemP];
+        break;
+      }
+    }*/
     if (typeof itmPreset == "undefined") {
       logger.logWarning("Preset of id: " + id + " not found on a list (this warning is not important)");
       return null;

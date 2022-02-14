@@ -657,16 +657,16 @@ class Generator {
       const lootData = typeArray[itemLoot];
 
       //if next item will overlap an existing one, skip:
-      if(isThereLootAtLocation(output.Loot, lootData.Position)){
+      if (isThereLootAtLocation(output.Loot, lootData.Position)) {
         overlapped++;
         continue;
       }
 
       //if it isn't the item's lucky day, skip:
-      if(!utility.getPercentRandomBool(locationLootChanceModifier * 100)){
+      if (!utility.getPercentRandomBool(locationLootChanceModifier * 100)) {
         continue;
       }
-      
+
       let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(
         lootData,
         MapName,

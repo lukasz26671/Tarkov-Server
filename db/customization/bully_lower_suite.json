@@ -7,7 +7,10 @@
     "Name": "DefaultBearLowerSuite",
     "ShortName": "DefaultBearLowerSuite",
     "Description": "DefaultBearLowerSuite",
-    "Side": ["Usec", "Bear"],
+    "Side": [
+      "Usec",
+      "Bear"
+    ],
     "AvailableAsDefault": false,
     "Feet": "5d28b3a186f7747f7e69ab8c"
   },

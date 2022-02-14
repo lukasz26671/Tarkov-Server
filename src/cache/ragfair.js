@@ -7,7 +7,7 @@ exports.cache = () => {
 
     logger.logInfo("Caching: ragfair_offers.json");
 
-    let response = {"categories": {}, "offers": [], "offersCount": 100, "selectedCategory": "5b5f78dc86f77409407a7f8e"};
+    let response = { "categories": {}, "offers": [], "offersCount": 100, "selectedCategory": "5b5f78dc86f77409407a7f8e" };
     let offers = [];
     let counter = 0;
 
@@ -17,7 +17,7 @@ exports.cache = () => {
         }
         let allAssort = fileIO.readParsed("./user/cache/assort_" + trader + ".json");
         allAssort = allAssort.data;
-    
+
         for (let itemAssort of allAssort.items) {
             if (itemAssort.slotId === "hideout") {
                 let barter_scheme = null;
@@ -41,10 +41,10 @@ exports.cache = () => {
                     }
                 }
 
-                offers = offers.concat(loadCache(itemsToSell, barter_scheme, loyal_level, trader, counter)); 
+                offers = offers.concat(loadCache(itemsToSell, barter_scheme, loyal_level, trader, counter));
                 counter += 1;
             }
-        } 
+        }
     }
 
     response.offers = offers;
@@ -78,9 +78,9 @@ function loadCache(itemsToSell, barter_scheme, loyal_level, trader, counter = 91
 //find childs of the item in a given assort (weapons pars for example, need recursive loop function)
 function findChildren(itemIdToFind, assort) {
     let Array = [];
-    
+
     for (let itemFromAssort of assort) {
-        if (itemFromAssort.parentId == itemIdToFind) {   
+        if (itemFromAssort.parentId == itemIdToFind) {
             Array.push(itemFromAssort)
             Array = Array.concat(findChildren(itemFromAssort._id, assort));
         }

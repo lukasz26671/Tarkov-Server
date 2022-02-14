@@ -215,8 +215,12 @@
         "z": -6.39318848
       },
       "Rotation": 87.10709,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "House",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -244,8 +248,12 @@
         "z": 5.14703369
       },
       "Rotation": 269.253418,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Houseb",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -273,8 +281,12 @@
         "z": -1.40075684
       },
       "Rotation": 87.10709,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "House",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -302,8 +314,12 @@
         "z": 5.14001465
       },
       "Rotation": 87.10709,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "House",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -331,8 +347,12 @@
         "z": -2.34625244
       },
       "Rotation": 87.10709,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "House",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -360,8 +380,12 @@
         "z": 3.856079
       },
       "Rotation": 87.10709,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "House",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -389,8 +413,12 @@
         "z": 1.34918213
       },
       "Rotation": 269.253418,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Houseb",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -418,8 +446,12 @@
         "z": -6.334656
       },
       "Rotation": 269.253418,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Houseb",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -447,8 +479,12 @@
         "z": 5.55
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 10,
       "ColliderParams": {
@@ -472,8 +508,12 @@
         "z": -4.838135
       },
       "Rotation": 269.253418,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Houseb",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -501,8 +541,12 @@
         "z": 0.16998291
       },
       "Rotation": 269.253418,
-      "Sides": ["Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Houseb",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {

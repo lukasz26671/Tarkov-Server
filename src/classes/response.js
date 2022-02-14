@@ -5,11 +5,11 @@ module.exports.noBody = (data) => {
 }
 // getBody
 module.exports.getBody = (data, err = 0, errmsg = null) => {
-    return fileIO.stringify({"err": err, "errmsg": errmsg, "data": data}, true);
+    return fileIO.stringify({ "err": err, "errmsg": errmsg, "data": data }, true);
 }
 // getUnclearedBody
 module.exports.getUnclearedBody = (data, err = 0, errmsg = null) => {
-    return fileIO.stringify({"err": err, "errmsg": errmsg, "data": data});
+    return fileIO.stringify({ "err": err, "errmsg": errmsg, "data": data });
 }
 // nullResponse
 module.exports.nullResponse = () => {

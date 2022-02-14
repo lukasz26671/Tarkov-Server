@@ -140,8 +140,7 @@ class AccountServer {
           // Check if the memory content differs from the content on disk.
           let currentAccount = this.accounts[id];
           let savedAccount = fileIO.readParsed(`./user/profiles/${id}/account.json`);
-          if(JSON.stringify(currentAccount) !== JSON.stringify(savedAccount))
-          {
+          if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
             // Save memory content to disk.
             fileIO.write(`./user/profiles/${id}/account.json`, this.accounts[id]);
 
@@ -162,7 +161,7 @@ class AccountServer {
       }
     } else {
       // Does the account file exist? (Required for new accounts)
-      if(!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
+      if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
         // Save memory content to disk
         fileIO.write(`./user/profiles/${sessionID}/account.json`, this.accounts[sessionID]);
 
@@ -178,11 +177,10 @@ class AccountServer {
           // Check if the memory content differs from the content on disk.
           let currentAccount = this.accounts[sessionID];
           let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-          if(JSON.stringify(currentAccount) !== JSON.stringify(savedAccount))
-          {
+          if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
             // Save memory content to disk
             fileIO.write(`./user/profiles/${sessionID}/account.json`, this.accounts[sessionID]);
-            
+
             // Update file age to prevent another reload by this server.
             let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
             this.accountFileAge[sessionID] = stats.mtimeMs;

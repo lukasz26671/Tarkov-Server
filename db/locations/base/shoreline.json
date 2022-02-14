@@ -539,8 +539,13 @@
         "z": 254.24
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -564,8 +569,12 @@
         "z": 368.7158
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -589,8 +598,13 @@
         "z": 156.55
       },
       "Rotation": 28.5099983,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -614,8 +628,12 @@
         "z": 477.2958
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -639,8 +657,12 @@
         "z": 284.63
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -664,8 +686,12 @@
         "z": 248.040009
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -689,8 +715,13 @@
         "z": 190.86
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -714,8 +745,13 @@
         "z": 90.91002
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -739,8 +775,13 @@
         "z": 333.19
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -764,8 +805,13 @@
         "z": 153.660019
       },
       "Rotation": 230.53,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -789,8 +835,13 @@
         "z": -390.2
       },
       "Rotation": 328.7,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -814,8 +865,13 @@
         "z": -272.38
       },
       "Rotation": 349.17,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -839,8 +895,12 @@
         "z": 259.87
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -864,8 +924,13 @@
         "z": -269.62
       },
       "Rotation": 349.17,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -889,8 +954,13 @@
         "z": -1.01997375
       },
       "Rotation": 319.98,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -914,8 +984,13 @@
         "z": 490.1558
       },
       "Rotation": 197.8742,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -939,8 +1014,13 @@
         "z": 505.5958
       },
       "Rotation": 197.8742,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -964,8 +1044,13 @@
         "z": 279.81
       },
       "Rotation": 316.25,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -989,8 +1074,13 @@
         "z": 334.900024
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1014,8 +1104,13 @@
         "z": 373.52002
       },
       "Rotation": 212.59,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1039,8 +1134,12 @@
         "z": -174.900009
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1064,8 +1163,13 @@
         "z": -1.04997253
       },
       "Rotation": 305.82,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1089,8 +1193,13 @@
         "z": 103.070023
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1114,8 +1223,13 @@
         "z": 458.040039
       },
       "Rotation": 198.48,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1139,8 +1253,12 @@
         "z": 158.86
       },
       "Rotation": 200.5934,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1164,8 +1282,13 @@
         "z": -43.2799835
       },
       "Rotation": 12.65,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1189,8 +1312,12 @@
         "z": 181.860016
       },
       "Rotation": 91.269104,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1214,8 +1341,13 @@
         "z": -82.83
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1239,8 +1371,12 @@
         "z": -156.3
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1264,8 +1400,13 @@
         "z": 188.090012
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1289,8 +1430,13 @@
         "z": 70.2500153
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1314,8 +1460,13 @@
         "z": 67.82002
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1339,8 +1490,13 @@
         "z": -256.349976
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1364,8 +1520,12 @@
         "z": 286.029572
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1389,8 +1549,12 @@
         "z": 192.980011
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 1700,
       "ColliderParams": {
@@ -1414,8 +1578,12 @@
         "z": -343.349976
       },
       "Rotation": 27.9957886,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1439,8 +1607,12 @@
         "z": 115.429367
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1464,8 +1636,13 @@
         "z": 116.64003
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1489,8 +1666,12 @@
         "z": 140.44
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1514,8 +1695,12 @@
         "z": -173.12999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1539,8 +1724,13 @@
         "z": 252.64003
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1564,8 +1754,13 @@
         "z": 335.49
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1589,8 +1784,13 @@
         "z": -268.557648
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1614,8 +1814,13 @@
         "z": 145.64003
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1639,8 +1844,13 @@
         "z": 156.42
       },
       "Rotation": 30.89,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1664,8 +1874,12 @@
         "z": 243.749985
       },
       "Rotation": 195.719528,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1689,8 +1903,13 @@
         "z": 164.780014
       },
       "Rotation": 88.89,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1714,8 +1933,13 @@
         "z": -131.569992
       },
       "Rotation": 307.1,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1739,8 +1963,13 @@
         "z": 188.720016
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1764,8 +1993,13 @@
         "z": 157.960037
       },
       "Rotation": 33.26,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1789,8 +2023,12 @@
         "z": -4.80999756
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1814,8 +2052,12 @@
         "z": -211.800018
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1839,8 +2081,13 @@
         "z": 122.720016
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1864,8 +2111,12 @@
         "z": 91.57999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1889,8 +2140,13 @@
         "z": -273.149963
       },
       "Rotation": 349.17,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1914,8 +2170,13 @@
         "z": 172.330032
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1939,8 +2200,12 @@
         "z": 325.69
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1964,8 +2229,13 @@
         "z": 166.950027
       },
       "Rotation": 108.770004,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -1989,8 +2259,12 @@
         "z": 443.370026
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2014,8 +2288,13 @@
         "z": 103.970016
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2039,8 +2318,13 @@
         "z": 129.720016
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2064,8 +2348,13 @@
         "z": -44.7499847
       },
       "Rotation": 17.1399956,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2089,8 +2378,12 @@
         "z": 487.7708
       },
       "Rotation": 55.15233,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2114,8 +2407,13 @@
         "z": 244.969986
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2139,8 +2437,13 @@
         "z": 2.33000183
       },
       "Rotation": 3.259948,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2164,8 +2467,13 @@
         "z": 497.599976
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2189,8 +2497,13 @@
         "z": 106.030014
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2214,8 +2527,13 @@
         "z": -82.48799
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2239,8 +2557,13 @@
         "z": 457.39
       },
       "Rotation": 199.92,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2264,8 +2587,13 @@
         "z": 168.61
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2289,8 +2617,12 @@
         "z": -21.1499939
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2314,8 +2646,12 @@
         "z": 138.139984
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2339,8 +2675,12 @@
         "z": 189.53
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 1700,
       "ColliderParams": {
@@ -2364,8 +2704,13 @@
         "z": 76.78
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2389,8 +2734,13 @@
         "z": 324.839966
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2414,8 +2764,13 @@
         "z": 373.459961
       },
       "Rotation": 218.2,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2439,8 +2794,12 @@
         "z": 420.347137
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2464,8 +2823,13 @@
         "z": 276.69
       },
       "Rotation": 123.109993,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2489,8 +2853,13 @@
         "z": 188.680008
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2514,8 +2883,13 @@
         "z": -42.1799774
       },
       "Rotation": 9.06,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2539,8 +2913,12 @@
         "z": -113.69
       },
       "Rotation": 19.4150581,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2564,8 +2942,13 @@
         "z": 191.99
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2589,8 +2972,13 @@
         "z": 281.51
       },
       "Rotation": 22.96,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2614,8 +3002,12 @@
         "z": 555.8658
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2639,8 +3031,13 @@
         "z": 104.86
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2664,8 +3061,13 @@
         "z": 497.410034
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2689,8 +3091,12 @@
         "z": 496.840027
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2714,8 +3120,13 @@
         "z": 275.040039
       },
       "Rotation": 199.74,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2739,8 +3150,13 @@
         "z": 326.3
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2764,8 +3180,13 @@
         "z": 260.719971
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2789,8 +3210,13 @@
         "z": 258.969971
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2814,8 +3240,13 @@
         "z": 497.68
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2839,8 +3270,12 @@
         "z": -151.41
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2864,8 +3299,13 @@
         "z": 163.520035
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2889,8 +3329,13 @@
         "z": -390.38
       },
       "Rotation": 358.53,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2914,8 +3359,13 @@
         "z": -390.24
       },
       "Rotation": 336.94,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2939,8 +3389,13 @@
         "z": 3.97001648
       },
       "Rotation": 340.76,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2964,8 +3419,13 @@
         "z": 265.2
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -2989,8 +3449,13 @@
         "z": 498.4858
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3014,8 +3479,12 @@
         "z": 407.585815
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3039,8 +3508,13 @@
         "z": 131.48
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3064,8 +3538,13 @@
         "z": 497.57
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3089,8 +3568,13 @@
         "z": -144.009979
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3114,8 +3598,12 @@
         "z": 87.8
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3139,8 +3627,13 @@
         "z": -74.739975
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3164,8 +3657,12 @@
         "z": 10.4600067
       },
       "Rotation": 233.659576,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3189,8 +3686,13 @@
         "z": 139.42
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3214,8 +3716,13 @@
         "z": -71.33998
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3239,8 +3746,13 @@
         "z": -2.9099884
       },
       "Rotation": 305.88,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3264,8 +3776,13 @@
         "z": 163.23
       },
       "Rotation": 94.42,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3289,8 +3806,13 @@
         "z": 65.31001
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3314,8 +3836,12 @@
         "z": 237.01
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3339,8 +3865,12 @@
         "z": 159.47
       },
       "Rotation": 89.74151,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3364,8 +3894,13 @@
         "z": 458.469971
       },
       "Rotation": 162.78,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3389,8 +3924,13 @@
         "z": 373.37
       },
       "Rotation": 209.65,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3414,8 +3954,13 @@
         "z": 66.68001
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3439,8 +3984,13 @@
         "z": 130.820023
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3464,8 +4014,13 @@
         "z": 114.560013
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3489,8 +4044,13 @@
         "z": 2.36000061
       },
       "Rotation": 341.800049,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3514,8 +4074,12 @@
         "z": -351.499146
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3539,8 +4103,12 @@
         "z": 496.900024
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3564,8 +4132,12 @@
         "z": 436.79
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3589,8 +4161,12 @@
         "z": 367.8458
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3614,8 +4190,12 @@
         "z": 36.2400055
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3639,8 +4219,13 @@
         "z": -1.01997375
       },
       "Rotation": 328.44,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3664,8 +4249,12 @@
         "z": 497.7
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3689,8 +4278,13 @@
         "z": 265.14
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3714,8 +4308,13 @@
         "z": 83.58003
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3739,8 +4338,13 @@
         "z": -288.24
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3764,8 +4368,13 @@
         "z": 2.33000183
       },
       "Rotation": 42.29,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3789,8 +4398,13 @@
         "z": 115.700027
       },
       "Rotation": 26.4700012,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3814,8 +4428,13 @@
         "z": -83.31999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3839,8 +4458,12 @@
         "z": 5.12001038
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3864,8 +4487,13 @@
         "z": -130.719986
       },
       "Rotation": 309.41,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3889,8 +4517,13 @@
         "z": -129.089981
       },
       "Rotation": 342.3,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3914,8 +4547,12 @@
         "z": 195.3
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3939,8 +4576,13 @@
         "z": 373.12
       },
       "Rotation": 208.52,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3964,8 +4606,13 @@
         "z": 174.13002
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -3989,8 +4636,13 @@
         "z": 457.170044
       },
       "Rotation": 189.35,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4014,8 +4666,13 @@
         "z": -271.269958
       },
       "Rotation": 349.17,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4039,8 +4696,13 @@
         "z": 133.270035
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4064,8 +4726,13 @@
         "z": 326.170044
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4089,8 +4756,12 @@
         "z": 441.370026
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4114,8 +4785,12 @@
         "z": 155.210022
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4139,8 +4814,12 @@
         "z": -175.090012
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4164,8 +4843,13 @@
         "z": 143.48
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4189,8 +4873,13 @@
         "z": -72.3899841
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4214,8 +4903,13 @@
         "z": 255.88002
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4239,8 +4933,13 @@
         "z": -67.969986
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4264,8 +4963,13 @@
         "z": 323.56
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4289,8 +4993,13 @@
         "z": 371.86
       },
       "Rotation": 181.54,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4314,8 +5023,13 @@
         "z": 118.64003
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4339,8 +5053,13 @@
         "z": -296.289978
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4364,8 +5083,12 @@
         "z": 261.849976
       },
       "Rotation": 200.381073,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4389,8 +5112,13 @@
         "z": 331.36
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4414,8 +5142,13 @@
         "z": 458.43
       },
       "Rotation": 192.16,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4439,8 +5172,13 @@
         "z": 138.100021
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4464,8 +5202,12 @@
         "z": 66.78999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4489,8 +5231,12 @@
         "z": 443.23
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4514,8 +5260,13 @@
         "z": 115.070023
       },
       "Rotation": 10.1100016,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4539,8 +5290,13 @@
         "z": 497.469971
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4564,8 +5320,12 @@
         "z": -103.83
       },
       "Rotation": 301.760071,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4589,8 +5349,13 @@
         "z": 112.410019
       },
       "Rotation": 79.99,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4614,8 +5379,12 @@
         "z": -113.72
       },
       "Rotation": 19.4150581,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4639,8 +5408,13 @@
         "z": 125.530014
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4664,8 +5438,12 @@
         "z": 328.87
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4689,8 +5467,12 @@
         "z": 136.44
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4714,8 +5496,12 @@
         "z": 423.48
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4739,8 +5525,12 @@
         "z": 55.7920074
       },
       "Rotation": 266.625641,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4764,8 +5554,13 @@
         "z": 324.74
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4789,8 +5584,13 @@
         "z": 188.780014
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4814,8 +5614,13 @@
         "z": 113.990005
       },
       "Rotation": 39.11,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4839,8 +5644,13 @@
         "z": 62.7100067
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4864,8 +5674,13 @@
         "z": 143.450027
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4889,8 +5704,13 @@
         "z": 211.62999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4914,8 +5734,12 @@
         "z": 55.3199921
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4939,8 +5763,13 @@
         "z": 154.73
       },
       "Rotation": 248.009979,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4964,8 +5793,12 @@
         "z": 62.09999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -4989,8 +5822,13 @@
         "z": 90.04002
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5014,8 +5852,12 @@
         "z": -260.01
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 1700,
       "ColliderParams": {
@@ -5039,8 +5881,12 @@
         "z": -356.685
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5064,8 +5910,13 @@
         "z": 159.88002
       },
       "Rotation": 33.75,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5089,8 +5940,13 @@
         "z": 257.420044
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5114,8 +5970,12 @@
         "z": 447.6358
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5139,8 +5999,13 @@
         "z": 261.22998
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5164,8 +6029,13 @@
         "z": 154.680008
       },
       "Rotation": 220.55,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5189,8 +6059,13 @@
         "z": 114.12001
       },
       "Rotation": 32.49001,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5214,8 +6089,12 @@
         "z": 379.015839
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5239,8 +6118,13 @@
         "z": -4.76997375
       },
       "Rotation": 319.63,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5264,8 +6148,12 @@
         "z": 500.8758
       },
       "Rotation": 55.15233,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5289,8 +6177,13 @@
         "z": 158.070023
       },
       "Rotation": 30.3,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5314,8 +6207,13 @@
         "z": -138.359985
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5339,8 +6237,12 @@
         "z": 425.740021
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5364,8 +6266,12 @@
         "z": -129.347992
       },
       "Rotation": 359.157959,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5389,8 +6295,12 @@
         "z": 41.5399933
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5414,8 +6324,13 @@
         "z": 92.81999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5439,8 +6354,13 @@
         "z": 168.36
       },
       "Rotation": 96.22,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5464,8 +6384,12 @@
         "z": 442.58
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5489,8 +6413,13 @@
         "z": -129.639984
       },
       "Rotation": 339.76,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5514,8 +6443,12 @@
         "z": 315.8
       },
       "Rotation": 277.5449,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5539,8 +6472,12 @@
         "z": 499.800018
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5564,8 +6501,12 @@
         "z": 136.388
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5589,8 +6530,12 @@
         "z": 523.105835
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5614,8 +6559,12 @@
         "z": -264.2645
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 1700,
       "ColliderParams": {
@@ -5639,8 +6588,12 @@
         "z": 394.2658
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5664,8 +6617,12 @@
         "z": -6.08999634
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5689,8 +6646,13 @@
         "z": 332.75
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5714,8 +6676,12 @@
         "z": 10.7100067
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5739,8 +6705,12 @@
         "z": -360.64
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5764,8 +6734,13 @@
         "z": -75.58998
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5789,8 +6764,13 @@
         "z": -142.139984
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5814,8 +6794,12 @@
         "z": -169.939987
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5839,8 +6823,13 @@
         "z": 3.92002869
       },
       "Rotation": 1.4,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5864,8 +6853,13 @@
         "z": 95.87999
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5889,8 +6883,13 @@
         "z": -82.6199951
       },
       "Rotation": 19.4150581,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5914,8 +6913,13 @@
         "z": 101.810013
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5939,8 +6943,13 @@
         "z": 187.12001
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5964,8 +6973,13 @@
         "z": -44.12999
       },
       "Rotation": 6.340001,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -5989,8 +7003,12 @@
         "z": 166.4
       },
       "Rotation": 276.228271,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6014,8 +7032,13 @@
         "z": 175.250015
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6039,8 +7062,12 @@
         "z": 493.6858
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6064,8 +7091,13 @@
         "z": 272.28
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6089,8 +7121,12 @@
         "z": -127.259995
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6114,8 +7150,12 @@
         "z": 92.4900055
       },
       "Rotation": 277.9801,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6139,8 +7179,13 @@
         "z": 85.5200043
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6164,8 +7209,13 @@
         "z": 278.280029
       },
       "Rotation": 302.84,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6189,8 +7239,12 @@
         "z": -343.31
       },
       "Rotation": 44.298996,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6214,8 +7268,13 @@
         "z": -83.987
       },
       "Rotation": 19.4150581,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6239,8 +7298,12 @@
         "z": -163.839981
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6264,8 +7327,13 @@
         "z": -82.5099945
       },
       "Rotation": 19.4150581,
-      "Sides": ["Savage"],
-      "Categories": ["Bot", "Boss"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6289,8 +7357,13 @@
         "z": -267.94
       },
       "Rotation": 349.17,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6314,8 +7387,13 @@
         "z": 256.68
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6339,8 +7417,13 @@
         "z": 90.13002
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6364,8 +7447,13 @@
         "z": 161.310013
       },
       "Rotation": 111.609993,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6389,8 +7477,13 @@
         "z": -133.069992
       },
       "Rotation": 312.9,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6414,8 +7507,13 @@
         "z": -42.64998
       },
       "Rotation": 15.250001,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6439,8 +7537,13 @@
         "z": -390.279968
       },
       "Rotation": 7.29,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6464,8 +7567,12 @@
         "z": 119.560013
       },
       "Rotation": 195.821518,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6489,8 +7596,12 @@
         "z": 195.32
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6514,8 +7625,13 @@
         "z": -144.089981
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6539,8 +7655,13 @@
         "z": -140.279984
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6564,8 +7685,13 @@
         "z": 120.560013
       },
       "Rotation": 271.08,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Village",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6589,8 +7715,13 @@
         "z": -390.26
       },
       "Rotation": 41.13,
-      "Sides": ["Usec", "Bear"],
-      "Categories": ["Player"],
+      "Sides": [
+        "Usec",
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
       "Infiltration": "Riverside",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {
@@ -6614,8 +7745,12 @@
         "z": 3.08000183
       },
       "Rotation": 0,
-      "Sides": ["Savage"],
-      "Categories": ["Bot"],
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
       "ColliderParams": {

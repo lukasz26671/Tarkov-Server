@@ -63,7 +63,7 @@ class Server {
     let output = "";
 
     //check if page is static html page or requests like 
-    if(this.tarkovSend.sendStaticFile(req, resp))
+    if (this.tarkovSend.sendStaticFile(req, resp))
       return;
 
     // get response
@@ -94,7 +94,7 @@ class Server {
     }
   }
 
-  handleAsyncRequest(req, resp){
+  handleAsyncRequest(req, resp) {
     return new Promise(resolve => {
       resolve(this.handleRequest(req, resp));
     });
@@ -126,60 +126,60 @@ class Server {
 
     this.requestLog(req, sessionID);
 
-    switch(req.method) {
-      case "GET": 
-      {
-        server.sendResponse(sessionID, req, resp, "");
-        return true;
-      }
-      case "POST": 
-      {
-        req.on("data", function (data) {
-          if (req.url == "/" || req.url.includes("/server/config")) {
-            let _Data = data.toString();
-            _Data = _Data.split("&");
-            let _newData = {};
-            for (let item in _Data) {
-              let datas = _Data[item].split("=");
-              _newData[datas[0]] = datas[1];
+    switch (req.method) {
+      case "GET":
+        {
+          server.sendResponse(sessionID, req, resp, "");
+          return true;
+        }
+      case "POST":
+        {
+          req.on("data", function (data) {
+            if (req.url == "/" || req.url.includes("/server/config")) {
+              let _Data = data.toString();
+              _Data = _Data.split("&");
+              let _newData = {};
+              for (let item in _Data) {
+                let datas = _Data[item].split("=");
+                _newData[datas[0]] = datas[1];
+              }
+              server.sendResponse(sessionID, req, resp, _newData);
+              return;
             }
-            server.sendResponse(sessionID, req, resp, _newData);
-            return;
-          }
-          internal.zlib.inflate(data, function (err, body) {
-            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-            server.sendResponse(sessionID, req, resp, jsonData);
+            internal.zlib.inflate(data, function (err, body) {
+              let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+              server.sendResponse(sessionID, req, resp, jsonData);
+            });
           });
-        });
-        return true;
-      }
-      case "PUT": 
-      {
-        req.on("data", function (data) {
-          // receive data
-          if ("expect" in req.headers) {
-            const requestLength = parseInt(req.headers["content-length"]);
+          return true;
+        }
+      case "PUT":
+        {
+          req.on("data", function (data) {
+            // receive data
+            if ("expect" in req.headers) {
+              const requestLength = parseInt(req.headers["content-length"]);
 
-            if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
-              resp.writeContinue();
+              if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+                resp.writeContinue();
+              }
             }
-          }
-        })
-        .on("end", function () {
-          let data = server.getFromBuffer(sessionID);
-          server.resetBuffer(sessionID);
+          })
+            .on("end", function () {
+              let data = server.getFromBuffer(sessionID);
+              server.resetBuffer(sessionID);
 
-          internal.zlib.inflate(data, function (err, body) {
-            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-            server.sendResponse(sessionID, req, resp, jsonData);
-          });
-        });
-        return true;
-      }
-      default: 
-      {
-        return true;
-      }
+              internal.zlib.inflate(data, function (err, body) {
+                let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+                server.sendResponse(sessionID, req, resp, jsonData);
+              });
+            });
+          return true;
+        }
+      default:
+        {
+          return true;
+        }
     }
   }
 

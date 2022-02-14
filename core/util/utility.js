@@ -3,105 +3,105 @@
 /* START NEW DEEPCOPY CODE */
 
 function cloneOtherType(target) {
-  const constrFun = target.constructor;
-  switch (toRawType(target)) {
-      case "Boolean":
-      case "Number":
-      case "String":
-      case "Error":
-      case "Date":
-          return new constrFun(target);
-      case "RegExp":
-          return cloneReg(target);
-      case "Symbol":
-          return cloneSymbol(target);
-      case "Function":
-          return target;
-      default:
-          return null;
-  }
+    const constrFun = target.constructor;
+    switch (toRawType(target)) {
+        case "Boolean":
+        case "Number":
+        case "String":
+        case "Error":
+        case "Date":
+            return new constrFun(target);
+        case "RegExp":
+            return cloneReg(target);
+        case "Symbol":
+            return cloneSymbol(target);
+        case "Function":
+            return target;
+        default:
+            return null;
+    }
 }
 
-function toRawType (value) {
-let _toString = Object.prototype.toString;
-let str = _toString.call(value)
-return str.slice(8, -1)
+function toRawType(value) {
+    let _toString = Object.prototype.toString;
+    let str = _toString.call(value)
+    return str.slice(8, -1)
 }
 
 function cloneSymbol(targe) {
-  return Object(Symbol.prototype.valueOf.call(targe));
+    return Object(Symbol.prototype.valueOf.call(targe));
 }
 
 function cloneReg(targe) {
-  const reFlags = /\w*$/;
-  const result = new targe.constructor(targe.source, reFlags.exec(targe));
-  result.lastIndex = targe.lastIndex;
-  return result;
+    const reFlags = /\w*$/;
+    const result = new targe.constructor(targe.source, reFlags.exec(targe));
+    result.lastIndex = targe.lastIndex;
+    return result;
 }
 
 function forEach(array, iteratee) {
-  let index = -1;
-  const length = array.length;
-  while (++index < length) {
-      iteratee(array[index], index);
-  }
-  return array;
+    let index = -1;
+    const length = array.length;
+    while (++index < length) {
+        iteratee(array[index], index);
+    }
+    return array;
 }
 
 // core function
 exports.DeepCopy = (target, map = new WeakMap()) => {
-  // clone primitive types
-  if (typeof target != "object" || target == null) {
-      return target;
-  }
+    // clone primitive types
+    if (typeof target != "object" || target == null) {
+        return target;
+    }
 
-  const type = toRawType(target);
-  let cloneTarget = null;
+    const type = toRawType(target);
+    let cloneTarget = null;
 
-  if (map.get(target)) {
-      return map.get(target);
-  }
-  map.set(target, cloneTarget);
+    if (map.get(target)) {
+        return map.get(target);
+    }
+    map.set(target, cloneTarget);
 
-  if (type != "Set" && type != "Map" && type != "Array" && type != "Object") {
-      return cloneOtherType(target)
-  }
+    if (type != "Set" && type != "Map" && type != "Array" && type != "Object") {
+        return cloneOtherType(target)
+    }
 
-  // clone Set
-  if (type == "Set") {
-      cloneTarget = new Set();
-      target.forEach(value => {
-          cloneTarget.add(utility.DeepCopy(value, map));
-      });
-      return cloneTarget;
-  }
+    // clone Set
+    if (type == "Set") {
+        cloneTarget = new Set();
+        target.forEach(value => {
+            cloneTarget.add(utility.DeepCopy(value, map));
+        });
+        return cloneTarget;
+    }
 
-  // clone Map
-  if (type == "Map") {
-      cloneTarget = new Map();
-      target.forEach((value, key) => {
-          cloneTarget.set(key, utility.DeepCopy(value, map));
-      });
-      return cloneTarget;
-  }
+    // clone Map
+    if (type == "Map") {
+        cloneTarget = new Map();
+        target.forEach((value, key) => {
+            cloneTarget.set(key, utility.DeepCopy(value, map));
+        });
+        return cloneTarget;
+    }
 
-  // clone Array
-  if (type == "Array") {
-      cloneTarget = new Array();
-      forEach(target, (value, index) => {
-        cloneTarget[index] = utility.DeepCopy(value, map);
-      })
-  }
+    // clone Array
+    if (type == "Array") {
+        cloneTarget = new Array();
+        forEach(target, (value, index) => {
+            cloneTarget[index] = utility.DeepCopy(value, map);
+        })
+    }
 
-  // clone normal Object
-  if (type == "Object") {
-      cloneTarget = new Object();
-      forEach(Object.keys(target), (key, index) => {
-        cloneTarget[key] = utility.DeepCopy(target[key], map);
-      })
-  }
+    // clone normal Object
+    if (type == "Object") {
+        cloneTarget = new Object();
+        forEach(Object.keys(target), (key, index) => {
+            cloneTarget[key] = utility.DeepCopy(target[key], map);
+        })
+    }
 
-  return cloneTarget;
+    return cloneTarget;
 }
 
 /* END NEW DEEPCOPY CODE */
@@ -109,7 +109,7 @@ exports.DeepCopy = (target, map = new WeakMap()) => {
 
 
 exports.valueBetween = (value, minInput, maxInput, minOutput, maxOutput) => {
-	return (maxOutput - minOutput) * ((value - minInput) / (maxInput - minInput)) + minOutput
+    return (maxOutput - minOutput) * ((value - minInput) / (maxInput - minInput)) + minOutput
 }
 // getCookies
 exports.getCookies = (req) => {
@@ -126,12 +126,12 @@ exports.getCookies = (req) => {
 }
 // clearString
 exports.clearString = (s) => {
-	return s.replace(/[\b]/g, '')
-            .replace(/[\f]/g, '')
-            .replace(/[\n]/g, '')
-            .replace(/[\r]/g, '')
-            .replace(/[\t]/g, '')
-            .replace(/[\\]/g, '');
+    return s.replace(/[\b]/g, '')
+        .replace(/[\f]/g, '')
+        .replace(/[\n]/g, '')
+        .replace(/[\r]/g, '')
+        .replace(/[\t]/g, '')
+        .replace(/[\\]/g, '');
 }
 // getRandomInt
 exports.getRandomInt = (min = 0, max = 100) => {
@@ -151,7 +151,7 @@ exports.getRandomIntEx = (max) => {
 }
 // getDirList TODO: OBSOLETE
 exports.getDirList = (path) => {
-    return fileIO.readDir(path).filter(function(file) {
+    return fileIO.readDir(path).filter(function (file) {
         return fileIO.statSync(path + '/' + file).isDirectory();
     });
 }
@@ -204,11 +204,11 @@ exports.makeSign = (Length) => {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let charactersLength = characters.length;
-    
-    for (let i = 0; i < Length; i++ ) {
+
+    for (let i = 0; i < Length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    
+
     return result;
 }
 // generateNewAccountId
@@ -229,37 +229,37 @@ const { v4: uuidv4 } = require('uuid')
 // generateNewId
 exports.generateNewId = (prefix = "", useOld = false) => {
     let getTime = new Date();
-	let retVal = ""
-	if(useOld){
-		retVal = prefix
-		retVal += getTime.getMonth().toString();
-		retVal += getTime.getDate().toString();
-		retVal += getTime.getHours().toString();
-		retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
-		retVal += this.getRandomInt(1000000, 9999999).toString();
-		retVal += this.makeSign(24 - retVal.length).toString();
-	} else {
-		retVal = `${prefix}-${uuidv4()}`
-	}
+    let retVal = ""
+    if (useOld) {
+        retVal = prefix
+        retVal += getTime.getMonth().toString();
+        retVal += getTime.getDate().toString();
+        retVal += getTime.getHours().toString();
+        retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
+        retVal += this.getRandomInt(1000000, 9999999).toString();
+        retVal += this.makeSign(24 - retVal.length).toString();
+    } else {
+        retVal = `${prefix}-${uuidv4()}`
+    }
     return retVal;
 }
 // secondsToTime
-exports.secondsToTime = (timestamp) =>{
+exports.secondsToTime = (timestamp) => {
     timestamp = Math.round(timestamp);
     let hours = Math.floor(timestamp / 60 / 60);
     let minutes = Math.floor(timestamp / 60) - (hours * 60);
     let seconds = timestamp % 60;
 
-    if( minutes < 10 ){ minutes = "0" + minutes}
-    if( seconds < 10 ){ seconds = "0" + seconds}
+    if (minutes < 10) { minutes = "0" + minutes }
+    if (seconds < 10) { seconds = "0" + seconds }
     return hours + 'h' + minutes + ':' + seconds;
 }
 // isUndefined
 exports.isUndefined = (dataToCheck) => {
-	return typeof dataToCheck == "undefined";
+    return typeof dataToCheck == "undefined";
 }
 exports.getArrayValue = (arr) => {
-	return arr[utility.getRandomInt(0, arr.length - 1)];
+    return arr[utility.getRandomInt(0, arr.length - 1)];
 }
 
 /*
@@ -268,80 +268,70 @@ exports.getArrayValue = (arr) => {
 */
 
 exports.generateInventoryID = (profile) => {
-	let itemsByParentHash = {};
-	let inventoryItemHash = {};
-	let inventoryId = "";
+    let itemsByParentHash = {};
+    let inventoryItemHash = {};
+    let inventoryId = "";
 
-	// Generate inventoryItem list
-	for (let item of profile.Inventory.items)
-	{
-		inventoryItemHash[item._id] = item;
+    // Generate inventoryItem list
+    for (let item of profile.Inventory.items) {
+        inventoryItemHash[item._id] = item;
 
-		if (item._tpl === "55d7217a4bdc2d86028b456d")
-		{
-			inventoryId = item._id;
-			continue;
-		}
+        if (item._tpl === "55d7217a4bdc2d86028b456d") {
+            inventoryId = item._id;
+            continue;
+        }
 
-		if (!("parentId" in item))
-		{
-			continue;
-		}
+        if (!("parentId" in item)) {
+            continue;
+        }
 
-		if (!(item.parentId in itemsByParentHash))
-		{
-			itemsByParentHash[item.parentId] = [];
-		}
+        if (!(item.parentId in itemsByParentHash)) {
+            itemsByParentHash[item.parentId] = [];
+        }
 
-		itemsByParentHash[item.parentId].push(item);
-	}
+        itemsByParentHash[item.parentId].push(item);
+    }
 
-	// update inventoryId
-	const newInventoryId = utility.generateNewItemId();
-	inventoryItemHash[inventoryId]._id = newInventoryId;
-	profile.Inventory.equipment = newInventoryId;
+    // update inventoryId
+    const newInventoryId = utility.generateNewItemId();
+    inventoryItemHash[inventoryId]._id = newInventoryId;
+    profile.Inventory.equipment = newInventoryId;
 
-	// update inventoryItem id
-	if (inventoryId in itemsByParentHash)
-	{
-		for (let item of itemsByParentHash[inventoryId])
-		{
-			item.parentId = newInventoryId;
-		}
-	}
+    // update inventoryItem id
+    if (inventoryId in itemsByParentHash) {
+        for (let item of itemsByParentHash[inventoryId]) {
+            item.parentId = newInventoryId;
+        }
+    }
 
-	return profile;
+    return profile;
 }
 
-exports.splitStack = (item) => 
-{
-	if (!("upd" in item) || !("StackObjectsCount" in item.upd))
-	{
-		return [item];
-	}
+exports.splitStack = (item) => {
+    if (!("upd" in item) || !("StackObjectsCount" in item.upd)) {
+        return [item];
+    }
 
-	let maxStack = global._database.items[item._tpl]._props.StackMaxSize;
-	let count = item.upd.StackObjectsCount;
-	let stacks = [];
+    let maxStack = global._database.items[item._tpl]._props.StackMaxSize;
+    let count = item.upd.StackObjectsCount;
+    let stacks = [];
 
-	// If the current count is already equal or less than the max
-	// then just return the item as is.
-	if (count <= maxStack)
-	{
-		stacks.push(utility.DeepCopy(item));
-		return stacks;
-	}
+    // If the current count is already equal or less than the max
+    // then just return the item as is.
+    if (count <= maxStack) {
+        stacks.push(utility.DeepCopy(item));
+        return stacks;
+    }
 
-	while (count)
-	{
-		let amount = Math.min(count, maxStack);
-		let newStack = utility.DeepCopy(item);
+    while (count) {
+        let amount = Math.min(count, maxStack);
+        let newStack = utility.DeepCopy(item);
 
-		newStack._id = utility.generateNewItemId();
-		newStack.upd.StackObjectsCount = amount;
-		count -= amount;
-		stacks.push(newStack);
-	}
+        newStack._id = utility.generateNewItemId();
+        newStack.upd.StackObjectsCount = amount;
+        count -= amount;
+        stacks.push(newStack);
+    }
 
-	return stacks;
+    return stacks;
 }

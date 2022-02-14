@@ -6,23 +6,23 @@ class MatchServer {
         this.locations = {};
     }
 
-/*
-    addServer(info) {
-        for (let server in this.servers) {
-            if (this.servers[server].id === info.id) {
-                return "OK";
+    /*
+        addServer(info) {
+            for (let server in this.servers) {
+                if (this.servers[server].id === info.id) {
+                    return "OK";
+                }
             }
+    
+            this.servers[info.id] = {"ip": info.ip, "port": info.port, "location": info.location};
+            return "FAILED";
         }
-
-        this.servers[info.id] = {"ip": info.ip, "port": info.port, "location": info.location};
-        return "FAILED";
-    }
-
-    removeServer(info) {
-        delete this.servers[info.id];
-        return "OK";
-    }
-*/
+    
+        removeServer(info) {
+            delete this.servers[info.id];
+            return "OK";
+        }
+    */
 
     getEnabled() {
         return global._database.gameplayConfig.match.enabled;
@@ -41,39 +41,39 @@ class MatchServer {
     }
 
     getMatch(location) {
-        return {"id": "TEST", "ip": "127.0.0.1", "port": 5000};
+        return { "id": "TEST", "ip": "127.0.0.1", "port": 5000 };
     }
 
     joinMatch(info, sessionID) {
         let match = this.getMatch(info.location);
         let output = [];
-        
+
         // --- LOOP (DO THIS FOR EVERY PLAYER IN GROUP)
         // get player profile
         let account = account_f.handler.find(sessionID);
         let profileID = "";
-        
+
         if (info.savage === true) {
             profileID = "scav" + account.id;
         } else {
             profileID = "pmc" + account.id;
         }
-//match.port
+        //match.port
         // get list of players joining into the match
-        output.push({"profileid": profileID, "status": "busy", "sid": "", "ip": match.ip, "port": 5000, "version": "live", "location": info.location, "gamemode": "deathmatch", "shortid": match.id});
+        output.push({ "profileid": profileID, "status": "busy", "sid": "", "ip": match.ip, "port": 5000, "version": "live", "location": info.location, "gamemode": "deathmatch", "shortid": match.id });
         // ---
 
         return output;
     }
 
     getGroupStatus(info) {
-        return {"players": [], "invite": [], "group": []};
+        return { "players": [], "invite": [], "group": [] };
     }
 
     createGroup(sessionID, info) {
         let groupID = "test";
 
-        this.locations[info.location].groups[groupID] = {"_id": groupID, "owner": "pmc" + sessionID, "location": info.location, "gameVersion": "live", "region": "EUR", "status": "wait", "isSavage": false, "timeShift": "CURR", "dt": utility.getTimestamp(), "players": [{"_id": "pmc" + sessionID, "region": "EUR", "ip": "127.0.0.1", "savageId": "scav" + sessionID, "accessKeyId": ""}], "customDataCenter": []};
+        this.locations[info.location].groups[groupID] = { "_id": groupID, "owner": "pmc" + sessionID, "location": info.location, "gameVersion": "live", "region": "EUR", "status": "wait", "isSavage": false, "timeShift": "CURR", "dt": utility.getTimestamp(), "players": [{ "_id": "pmc" + sessionID, "region": "EUR", "ip": "127.0.0.1", "savageId": "scav" + sessionID, "accessKeyId": "" }], "customDataCenter": [] };
         return this.locations[info.location].groups[groupID];
     }
 

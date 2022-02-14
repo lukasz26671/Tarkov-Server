@@ -54,38 +54,38 @@ class NotifierService {
 	async notificationWaitAsync(resp, sessionID) {
 		await new Promise(resolve => {
 			// Timeout after 15 seconds even if no messages have been received to keep the poll requests going.
-			setTimeout(function() {
+			setTimeout(function () {
 				resolve();
 			}, 15000);
 
-			setInterval(function() {
+			setInterval(function () {
 				if (notifier_f.handler.hasMessagesInQueue(sessionID)) {
 					resolve();
 				}
 			}, 300);
 		});
-	
+
 		let data = [];
-		
+
 		while (this.hasMessagesInQueue(sessionID)) {
 			let message = this.popMessageFromQueue(sessionID);
 			// Purposefully using default JSON stringify function here to avoid newline insertion
 			// since the client expects different messages to be split by the newline character.
 			data.push(fileIO.stringify(message, true));
 		}
-	
+
 		// If we timed out and don't have anything to send, just send a ping notification.
 		if (data.length == 0) {
 			data.push('{"type": "ping", "eventId": "ping"}');
 		}
-	
+
 		server.sendTextJson(resp, data.join('\n'));
 	}
 }
 
 /* Creates a new notification of type "new_message" with the specified dialogueMessage object. */
 function createNewMessageNotification(dialogueMessage) {
-	return {type: "new_message", eventId: dialogueMessage._id, data : {"dialogId": dialogueMessage.uid, "message": dialogueMessage}};
+	return { type: "new_message", eventId: dialogueMessage._id, data: { "dialogId": dialogueMessage.uid, "message": dialogueMessage } };
 }
 
 module.exports.handler = new NotifierService();

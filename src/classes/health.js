@@ -9,7 +9,7 @@ class HealthServer {
 
   freeFromMemory(sessionID) {
     delete this.healths[sessionID];
-  }  
+  }
 
   /* resets the healh response */
   initializeHealth(sessionID) {

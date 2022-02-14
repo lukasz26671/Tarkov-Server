@@ -226,7 +226,9 @@
   },
   "578f879c24597735401e6bc6": {
     "Name": "Cash register",
-    "SpawnList": ["5449016a4bdc2d6f028b456f"]
+    "SpawnList": [
+      "5449016a4bdc2d6f028b456f"
+    ]
   },
   "578f87a3245977356274f2cb": {
     "Name": "Duffle bag",
@@ -7658,7 +7660,9 @@
   },
   "5937ef2b86f77408a47244b3": {
     "Name": "Jacket",
-    "SpawnList": ["5937ee6486f77408994ba448"]
+    "SpawnList": [
+      "5937ee6486f77408994ba448"
+    ]
   },
   "59387ac686f77401442ddd61": {
     "Name": "Jacket",
@@ -7674,7 +7678,9 @@
   },
   "5ad74cf586f774391278f6f0": {
     "Name": "Cash register TAR2-2",
-    "SpawnList": ["5449016a4bdc2d6f028b456f"]
+    "SpawnList": [
+      "5449016a4bdc2d6f028b456f"
+    ]
   },
   "5c052cea86f7746b2101e8d8": {
     "Name": "Plastic suitcase",
@@ -9414,14 +9420,20 @@
   },
   "61a89e5445a2672acf66c877": {
     "Name": "box_preset1",
-    "SpawnList": ["5449016a4bdc2d6f028b456f"]
+    "SpawnList": [
+      "5449016a4bdc2d6f028b456f"
+    ]
   },
   "61aa1e9a32a4743c3453d2cf": {
     "Name": "SportBag_adv",
-    "SpawnList": ["5449016a4bdc2d6f028b456f"]
+    "SpawnList": [
+      "5449016a4bdc2d6f028b456f"
+    ]
   },
   "61aa1ead84ea0800645777fd": {
     "Name": "MedBag_adv",
-    "SpawnList": ["5449016a4bdc2d6f028b456f"]
+    "SpawnList": [
+      "5449016a4bdc2d6f028b456f"
+    ]
   }
 }

@@ -1,17 +1,15 @@
 
 
 class Callbacks {
-	cosntructor(){
+	cosntructor() {
 	}
-	getReceiveCallbacks()
-	{
+	getReceiveCallbacks() {
 		return {
 			"insurance": this.receiveInsurance,
 			"SAVE": this.receiveSave
 		};
 	}
-	getRespondCallbacks()
-	{
+	getRespondCallbacks() {
 		return {
 			"BUNDLE": this.respondBundle,
 			"IMAGE": this.respondImage,
@@ -19,31 +17,27 @@ class Callbacks {
 			"DONE": this.respondKillResponse
 		};
 	}
-	receiveInsurance(sessionID, req, resp, body, output)
-	{
+	receiveInsurance(sessionID, req, resp, body, output) {
 		if (req.url === "/client/notifier/channel/create") {
 			insurance_f.handler.checkExpiredInsurance();
 		}
 	}
-	receiveSave(sessionID, req, resp, body, output)
-	{
+	receiveSave(sessionID, req, resp, body, output) {
 		if (global._database.clusterConfig.saveOnReceive) {
 			savehandler_f.saveOpenSessions();
 		}
 	}
-	
-	respondBundle(sessionID, req, resp, body)
-	{
+
+	respondBundle(sessionID, req, resp, body) {
 		let bundleKey = req.url.split('/bundle/')[1];
-		    bundleKey = decodeURI(bundleKey);
+		bundleKey = decodeURI(bundleKey);
 		logger.logInfo(`[BUNDLE]: ${req.url}`);
 		let bundle = bundles_f.handler.getBundleByKey(bundleKey, true);
 		let path = bundle.path;
 		// send bundle
 		server.tarkovSend.file(resp, path);
 	}
-	respondImage(sessionID, req, resp, body)
-	{
+	respondImage(sessionID, req, resp, body) {
 		let splittedUrl = req.url.split('/');
 		let fileName = splittedUrl[splittedUrl.length - 1].split('.').slice(0, -1).join('.');
 		let baseNode = {};
@@ -67,14 +61,12 @@ class Callbacks {
 		// send image
 		server.tarkovSend.file(resp, baseNode[fileName]);
 	}
-	respondNotify(sessionID, req, resp, data)
-	{
+	respondNotify(sessionID, req, resp, data) {
 		let splittedUrl = req.url.split('/');
 		sessionID = splittedUrl[splittedUrl.length - 1].split("?last_id")[0];
 		notifier_f.handler.notificationWaitAsync(resp, sessionID);
 	}
-	respondKillResponse() 
-	{
+	respondKillResponse() {
 		return;
 	}
 }

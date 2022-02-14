@@ -156,8 +156,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -1912,8 +1916,12 @@
         },
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -2537,8 +2545,12 @@
         },
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3083,8 +3095,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3255,8 +3271,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3334,8 +3354,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3395,8 +3419,12 @@
         "slotId": "mod_sight_front",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3435,8 +3463,12 @@
         "slotId": "mod_mount",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3490,8 +3522,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3557,8 +3593,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }
@@ -3570,8 +3610,12 @@
         "slotId": "mod_sight_rear",
         "upd": {
           "Sight": {
-            "ScopesCurrentCalibPointIndexes": [0],
-            "ScopesSelectedModes": [0],
+            "ScopesCurrentCalibPointIndexes": [
+              0
+            ],
+            "ScopesSelectedModes": [
+              0
+            ],
             "SelectedScope": 0
           }
         }

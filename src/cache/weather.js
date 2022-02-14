@@ -5,7 +5,7 @@ exports.cache = () => {
 
     logger.logInfo("Caching: weather.json");
 
-    let base = {"err": 0, "errmsg": null, "data": []};
+    let base = { "err": 0, "errmsg": null, "data": [] };
     let inputFiles = db.weather;
 
     for (let file in inputFiles) {

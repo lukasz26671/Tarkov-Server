@@ -168,10 +168,13 @@
 	"data": {
 		"Completion": {
 			"itemsBlacklist": [
-				{"minPlayerLevel": 1, "itemIds": [
-					"5485a8684bdc2da71d8b4567",
-					"543be5e94bdc2df1348b4568"
-				]}
+				{
+					"minPlayerLevel": 1,
+					"itemIds": [
+						"5485a8684bdc2da71d8b4567",
+						"543be5e94bdc2df1348b4568"
+					]
+				}
 			],
 			"itemsWhitelist": [
 				{

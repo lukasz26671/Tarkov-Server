@@ -10,7 +10,14 @@
   "discount": 0,
   "discount_end": 0,
   "gridHeight": 160,
-  "insurance": { "availability": false, "excluded_category": [], "max_return_hour": 0, "max_storage_time": 999, "min_payment": 0, "min_return_hour": 999 },
+  "insurance": {
+    "availability": false,
+    "excluded_category": [],
+    "max_return_hour": 0,
+    "max_storage_time": 999,
+    "min_payment": 0,
+    "min_return_hour": 999
+  },
   "location": "unknown",
   "loyaltyLevels": [
     {

@@ -11,14 +11,14 @@ module.exports.getCustomization = () => {
 }
 module.exports.getAccountCustomization = () => {
 	let t = []
-    for (let k in customization_f.getCustomization()) {
-        let i = customization_f.getCustomization()[k]
-        if (!i._props.Side || JSON.stringify(i._props.Side) == "[]") {
-            continue;
-        } else {
-            t.push(i._id)
-        }
-    }
+	for (let k in customization_f.getCustomization()) {
+		let i = customization_f.getCustomization()[k]
+		if (!i._props.Side || JSON.stringify(i._props.Side) == "[]") {
+			continue;
+		} else {
+			t.push(i._id)
+		}
+	}
 	return t;
 }
 module.exports.wearClothing = (pmcData, body, sessionID) => {
@@ -58,23 +58,23 @@ module.exports.buyClothing = (pmcData, body, sessionID) => {
 				if (pmcData.Inventory.items[item].upd.StackObjectsCount > sellItem.count) {
 					pmcData.Inventory.items[item].upd.StackObjectsCount -= sellItem.count;
 
-					if(typeof output.profileChanges[pmcData._id].items.change == "undefined")
+					if (typeof output.profileChanges[pmcData._id].items.change == "undefined")
 						output.profileChanges[pmcData._id].items.change = [];
 					output.profileChanges[pmcData._id].items.change.push({
-                        "_id": pmcData.Inventory.items[item]._id,
-                        "_tpl": pmcData.Inventory.items[item]._tpl,
-                        "parentId": pmcData.Inventory.items[item].parentId,
-                        "slotId": pmcData.Inventory.items[item].slotId,
-                        "location": pmcData.Inventory.items[item].location,
-                        "upd": {"StackObjectsCount": pmcData.Inventory.items[item].upd.StackObjectsCount}
+						"_id": pmcData.Inventory.items[item]._id,
+						"_tpl": pmcData.Inventory.items[item]._tpl,
+						"parentId": pmcData.Inventory.items[item].parentId,
+						"slotId": pmcData.Inventory.items[item].slotId,
+						"location": pmcData.Inventory.items[item].location,
+						"upd": { "StackObjectsCount": pmcData.Inventory.items[item].upd.StackObjectsCount }
 					});
 					break;
 				} else if (pmcData.Inventory.items[item].upd.StackObjectsCount === sellItem.count && sellItem.del === true) {
-					if(typeof output.profileChanges[pmcData._id].items.del == "undefined")
+					if (typeof output.profileChanges[pmcData._id].items.del == "undefined")
 						output.profileChanges[pmcData._id].items.del = [];
 
-					output.profileChanges[pmcData._id].items.del.push({"_id": sellItem.id});
-                    pmcData.Inventory.items.splice(item, 1);					
+					output.profileChanges[pmcData._id].items.del.push({ "_id": sellItem.id });
+					pmcData.Inventory.items.splice(item, 1);
 				}
 			}
 		}

@@ -247,7 +247,7 @@ function discardItem(pmcData, body, sessionID) {
  * @param {string} sessionID
  * @returns
  */
- function splitItem(pmcData, body, sessionID) {
+function splitItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);
   let location = body.container.location;
 
@@ -306,7 +306,7 @@ function discardItem(pmcData, body, sessionID) {
  * @param {string} sessionID    - Session ID
  * @returns response
  */
- function mergeItem(pmcData, body, sessionID) {
+function mergeItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);
   const items = getOwnerInventoryItems(body, sessionID);
 

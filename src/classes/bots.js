@@ -3,7 +3,7 @@
 //use bot names in lowercase as it matches folders
 const botSwaps = {
   "Customs": {
-    "bosssanitar" : "sectantpriest"
+    "bosssanitar": "sectantpriest"
   },
   "Factory": { //no way to distinguish between day and night using name so be careful
     //"bosssanitar" : "sectantpriest"
@@ -24,13 +24,13 @@ const botSwaps = {
 
   },
   "Woods": {
-    "bosskilla" : "sectantpriest"
+    "bosskilla": "sectantpriest"
   }
 }
 
 
 function shuffle(array) {
-  let currentIndex = array.length,  randomIndex;
+  let currentIndex = array.length, randomIndex;
 
   // While there remain elements to shuffle...
   while (currentIndex != 0) {
@@ -48,7 +48,7 @@ function shuffle(array) {
 }
 
 class Controller {
-  constructor(){
+  constructor() {
 
   }
 
@@ -88,28 +88,28 @@ class Controller {
     bot.aid = botId;
     return bot;
   }
-  
-//START -----
+
+  //START -----
   generateBot(bot, role, pmcData) {
-    
+
     let node = [];
     //default
     node = global._database.bots[bot.Info.Settings.Role.toLowerCase()];
-    
+
     //pmc generation from Scavs
-    if(role.toLowerCase() == "assault"){
+    if (role.toLowerCase() == "assault") {
       //50% chance of being a pmc
-      if(utility.getPercentRandomBool(50)){
+      if (utility.getPercentRandomBool(50)) {
         //if pmc
         //50% chance of being usec or bear
-        if(utility.getPercentRandomBool(50)){
+        if (utility.getPercentRandomBool(50)) {
           bot.Info.Side = "Usec";
-          node = global._database.bots["usec"];          
-        }else{
+          node = global._database.bots["usec"];
+        } else {
           bot.Info.Side = "Bear";
           node = global._database.bots["bear"];
         }
-      }else{
+      } else {
         //if scav
         bot.Info.Side = "Savage";
         node = global._database.bots["assault"];
@@ -152,27 +152,26 @@ class Controller {
     //Examples for randomizing properties without the need for roles.
     //this could be used an "event" or something
     //just change false to true if wanting to test
-    if(role.toLowerCase() == "assault" && false){
+    if (role.toLowerCase() == "assault" && false) {
       let scavRoleSelect = utility.getRandomInt(1, 6)
-      switch (scavRoleSelect) 
-      {
-          case 1:
-              node = global._database.bots["followersanitar"];
+      switch (scavRoleSelect) {
+        case 1:
+          node = global._database.bots["followersanitar"];
           break;
-          case 2:
-              node = global._database.bots["followergluharscout"];
+        case 2:
+          node = global._database.bots["followergluharscout"];
           break;
-          case 3:
-              node = global._database.bots["followergluharassault"];
+        case 3:
+          node = global._database.bots["followergluharassault"];
           break;
-          case 4:
-              node = global._database.bots["followergluharsecurity"];
+        case 4:
+          node = global._database.bots["followergluharsecurity"];
           break;
-          case 5:
-              node = global._database.bots["followerbully"];
+        case 5:
+          node = global._database.bots["followerbully"];
           break;
-          case 6:
-              node = global._database.bots["sectantwarrior"];
+        case 6:
+          node = global._database.bots["sectantwarrior"];
           break;
       }
     }
@@ -210,8 +209,8 @@ class Controller {
     if (role === "followergluharsnipe") {
       bot.Info.Settings.Role = "bossTagilla";
     }    
-    */    
-   
+    */
+
     bot.Inventory = bots_f.generator.generateInventory(
       inventoryData,
       node.chances,
@@ -226,9 +225,9 @@ class Controller {
     bot.Info.Experience = levelResult.exp;
     bot.Info.Level = levelResult.level;
 
-    if(bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear"){
+    if (bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear") {
       bot = bots_f.botHandler.generateDogtag(bot);
-    }    
+    }
 
     // generate new bot ID
     bot = bots_f.botHandler.generateId(bot);
@@ -240,7 +239,7 @@ class Controller {
   }
 
   //extended generateBot function for custom types of bot as defined in isCustomBot
-  generateCustomBot(bot, role, pmcData, map){
+  generateCustomBot(bot, role, pmcData, map) {
 
     let node = [];
     let newRole = "";
@@ -249,7 +248,7 @@ class Controller {
 
     //default
     node = global._database.bots[newRole];
-    
+
     bot.Info.Nickname = utility.getArrayValue(node.names);
     bot.Info.Settings.Experience = utility.getRandomInt(
       node.experience.reward.min,
@@ -277,7 +276,7 @@ class Controller {
       // inventory is empty using fallback
       inventoryData = node.inventory[Object.keys(node.inventory)[0]];
     }
-   
+
     bot.Inventory = bots_f.generator.generateInventory(
       inventoryData,
       node.chances,
@@ -292,9 +291,9 @@ class Controller {
     bot.Info.Experience = levelResult.exp;
     bot.Info.Level = levelResult.level;
 
-    if(bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear"){
+    if (bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear") {
       bot = bots_f.botHandler.generateDogtag(bot);
-    }    
+    }
 
     // generate new bot ID
     bot = bots_f.botHandler.generateId(bot);
@@ -303,12 +302,12 @@ class Controller {
     bot = utility.generateInventoryID(bot);
 
     return bot;
-  
+
   }
 
   //bot is a complete bot object, map is a string with the location Name (not id)
-  isCustomBot(bot, map){
-    if(bot.Info.Settings.Role.toLowerCase() in botSwaps[map]){
+  isCustomBot(bot, map) {
+    if (bot.Info.Settings.Role.toLowerCase() in botSwaps[map]) {
       //logger.logError("CUSTOM BOT: "+bot.Info.Settings.Role+" in "+map);
       return true;
     }
@@ -318,46 +317,46 @@ class Controller {
   //if bots generated correctly, then this method should only be called once per raid.
   //IF IT GETS CALLED MORE THAN ONCE PER RAID, IT MEANS SOMETHING IS WRONG EITHER IN
   //THE MAP JSON OR IN THE BOT GENERATION. DO NOT HANDLE BOT CUSTOMIZATION/MODDING IN BOT GENERATION CODE!!!!
-  generate(info, sessionID) {        
+  generate(info, sessionID) {
     let count = 0;
     let swapped = 0;
     let output = [];
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
-    
+
     for (const condition of info.conditions) {
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
         let bot = utility.DeepCopy(global._database.core.botBase);
         bot.Info.Side = "Savage";
-        bot.Info.Settings.Role = condition.Role;    
+        bot.Info.Settings.Role = condition.Role;
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
-        
+
         //custom bot part
         //if we in raid
-        if(offraid_f.handler.getPlayer(sessionID) && bots_f.botHandler.isCustomBot(bot, offraid_f.handler.getPlayer(sessionID).Location)){
+        if (offraid_f.handler.getPlayer(sessionID) && bots_f.botHandler.isCustomBot(bot, offraid_f.handler.getPlayer(sessionID).Location)) {
           //we in raid and bot is a bot that wants to be swapped
           bot = bots_f.botHandler.generateCustomBot(bot, role, pmcData, offraid_f.handler.getPlayer(sessionID).Location);
           swapped++;
-        }else{
+        } else {
           //regular generation
           bot = bots_f.botHandler.generateBot(bot, role, pmcData);
         }
-        
+
         //any looped log = bad for performance
         //logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
-        
+
         output.unshift(bot);
         count++;
       }
     }
     //debugging purposes
     //if we generated bots and are in raid
-    if(count > 0 && offraid_f.handler.getPlayer(sessionID)){
+    if (count > 0 && offraid_f.handler.getPlayer(sessionID)) {
       logger.logSuccess(
-        "\u001b[32;1mGenerated: "+count+" bots for "+offraid_f.handler.getPlayer(sessionID).Location+" map."
+        "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map."
       );
-      if(swapped > 0){
-        logger.logSuccess("\u001b[32;1mSwapped "+swapped+" bot(s).");
+      if (swapped > 0) {
+        logger.logSuccess("\u001b[32;1mSwapped " + swapped + " bot(s).");
       }
       //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
       logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
@@ -373,10 +372,10 @@ class Controller {
     // limit the bots level to match the player level
     let limitted_max_level = playerLevel + 10;
     let limitted_min_level = playerLevel - 5;
-    if (limitted_max_level > maxLevel){
+    if (limitted_max_level > maxLevel) {
       limitted_max_level = maxLevel;
     }
-    if (playerLevel <= 5){
+    if (playerLevel <= 5) {
       limitted_min_level = 1;
     };
 
@@ -1230,7 +1229,7 @@ class Generator {
     }
     const spawnChanceA = utility.valueBetween(a._props.LootExperience, 0, 250, 0, 100)
     const spawnChanceB = utility.valueBetween(b._props.LootExperience, 0, 250, 0, 100)
-    
+
     const worthA = priceA / spawnChanceA;
     const worthB = priceB / spawnChanceB;
 

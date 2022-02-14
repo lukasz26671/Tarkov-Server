@@ -44,27 +44,27 @@ module.exports.RenderHomePage = () => {
   return html;
 };
 module.exports.RenderGameplayConfigPage = (url_return) => {
-  
+
 };
 module.exports.RenderAccountsConfigPage = (url_return) => {
-  
+
 };
 module.exports.RenderServerConfigPage = (url_return) => {
   return fileIO.stringify(server);
 };
 module.exports.RenderModsConfigPage = (url_return) => {
-  
+
 };
 module.exports.renderPage = () => {
-  
+
 }
 
 module.exports.processSaveServerData = (data, fileName) => {
-  
+
 };
 module.exports.processSaveData = (data, fileName) => {
-  
+
 };
 module.exports.processSaveAccountsData = (data, fileName) => {
-  
+
 };

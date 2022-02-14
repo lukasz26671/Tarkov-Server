@@ -23,8 +23,7 @@ function addToWishList(pmcData, body, sessionID) {
 * */
 function removeFromWishList(pmcData, body, sessionID) {
 
-    for (let i = 0; i < pmcData.WishList.length; i++) 
-    {
+    for (let i = 0; i < pmcData.WishList.length; i++) {
         if (pmcData.WishList[i] === body['templateId']) { pmcData.WishList.splice(i, 1); }
     }
 

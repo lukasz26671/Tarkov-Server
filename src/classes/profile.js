@@ -153,11 +153,11 @@ class ProfileServer {
         } else {
           // As the file on disk was changed, reload the file from disk instead of overwriting it.
           this.profiles[sessionID]['pmc'] = fileIO.readParsed(getPmcPath(sessionID));
-          
+
           // Check if we ware over the skipped save treshhold.
           if (_database.clusterConfig.autoSaveAllowedSkips >= this.skippedSaves[sessionID]) {
             // Add a skippedSave.
-            if(this.skippedSaves == 1) {
+            if (this.skippedSaves == 1) {
               logger.logWarning(`[CLUSTER] Tried saving profile for AID ${sessionID} but it was modified elsewhere. Profile reloaded from disk.`);
             }
 
@@ -243,10 +243,10 @@ class ProfileServer {
 
     // Get the faction the player has chosen as UpperCase String //
     const ChosenSideCapital = ChosenSide.charAt(0).toUpperCase() + ChosenSide.slice(1);
-    
+
     // Get the profile template for the chosen faction //
     let pmcData = fileIO.readParsed(db.profile[account.edition]["character_" + ChosenSide]);
-    
+
     // Initialize the clothing object //
     let storage = { _id: "", suites: [] };
 
@@ -381,21 +381,21 @@ function calculateLevel(pmcData) {
  * @param {string} traderID -> current trader ID,
  * @returns {number} calculatedLoyalty -> loyalty level
  */
-function getLoyalty(pmcData, traderID){
+function getLoyalty(pmcData, traderID) {
   //if trader is not unlocked, return first loyalty.
-  if(!pmcData.TradersInfo[traderID].unlocked)
-      return 1;
+  if (!pmcData.TradersInfo[traderID].unlocked)
+    return 1;
 
   let playerSaleSum;
   let playerStanding;
   let playerLevel;
 
-  if(pmcData.TradersInfo[traderID]) {
+  if (pmcData.TradersInfo[traderID]) {
     // we fetch player's trader related data
     playerSaleSum = pmcData.TradersInfo[traderID].salesSum;
     playerStanding = pmcData.TradersInfo[traderID].standing;
     playerLevel = pmcData.Info.Level;
-  }else{
+  } else {
     // default traders value
     playerSaleSum = 0;
     playerStanding = 0;
@@ -405,20 +405,20 @@ function getLoyalty(pmcData, traderID){
   const traderInfo = global._database.traders[traderID].base;
 
   let calculatedLoyalty = 0;
-  if (traderID !== "ragfair"){
+  if (traderID !== "ragfair") {
     // we check if player meet loyalty requirements
-    for (let loyaltyLevel of traderInfo.loyaltyLevels){
+    for (let loyaltyLevel of traderInfo.loyaltyLevels) {
       if (playerSaleSum >= loyaltyLevel.minSalesSum &&
         playerStanding >= loyaltyLevel.minStanding &&
-        playerLevel >= loyaltyLevel.minLevel){
-            calculatedLoyalty++;
-        }
-      else{
-        if (calculatedLoyalty == 0){calculatedLoyalty = 1;}
+        playerLevel >= loyaltyLevel.minLevel) {
+        calculatedLoyalty++;
+      }
+      else {
+        if (calculatedLoyalty == 0) { calculatedLoyalty = 1; }
         break;
       }
     }
-  }else{return "ragfair"}
+  } else { return "ragfair" }
 
   return calculatedLoyalty;
 }

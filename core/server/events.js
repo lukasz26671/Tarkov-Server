@@ -14,7 +14,7 @@ class ScheduledEventHandler {
 		this.eventCallbacks = {};
 
 		this.loadSchedule();
-		
+
 		setInterval(() => {
 			this.processSchedule();
 		}, scheduleIntervalMillis * 1000);
@@ -47,7 +47,7 @@ class ScheduledEventHandler {
 				this.processEvent(event);
 				continue;
 			}
-			
+
 			// The schedule is assumed to be sorted based on scheduledTime, so once we
 			// see an event that should not yet be processed, we can exit the loop.
 			this.scheduledEvents.unshift(event);

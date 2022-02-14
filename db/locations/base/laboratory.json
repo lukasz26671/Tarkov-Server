@@ -24,7 +24,7 @@
 	"IconY": 611,
 	"filter_ex": [],
 	"waves": [
-    {
+		{
 			"number": 0,
 			"time_min": 0,
 			"time_max": 35,
@@ -72,8 +72,6 @@
 			"WildSpawnType": "assault",
 			"isPlayers": false
 		}
-    
-
 	],
 	"limits": [],
 	"AveragePlayTime": 30,
