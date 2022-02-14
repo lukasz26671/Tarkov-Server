@@ -375,13 +375,17 @@ function calculateLevel(pmcData) {
 }
 
 /**
- * Get player loyalty for current trader...
- *
+ * Get player loyalty LEVEL for current trader...
+ * when used to get the index of a trader loyaltyLevels, must use -1
  * @param {Object} pmcData -> player infos,
  * @param {string} traderID -> current trader ID,
  * @returns {number} calculatedLoyalty -> loyalty level
  */
 function getLoyalty(pmcData, traderID){
+  //if trader is not unlocked, return first loyalty.
+  if(!pmcData.TradersInfo[traderID].unlocked)
+      return 1;
+
   let playerSaleSum;
   let playerStanding;
   let playerLevel;
