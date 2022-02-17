@@ -339,7 +339,7 @@
   "MaxBotPerZone": 2,
   "OpenZones": "ZoneCenter,ZoneCenterBot,ZoneOLI,ZoneIDEA,ZoneRoad,ZoneIDEAPark,ZoneGoshan,ZonePowerStation,ZoneTrucks,ZoneOLIPark",
   "OcculsionCullingEnabled": true,
-  "GlobalLootChanceModifier": 0.1,
+  "GlobalLootChanceModifier": 0.15,
   "OldSpawn": false,
   "NewSpawn": true,
   "BotMax": 25,

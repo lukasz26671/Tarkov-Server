@@ -155,7 +155,7 @@
   "DisabledForScav": false,
   "DisabledScavExits": "",
   "Enabled": true,
-  "GlobalLootChanceModifier": 0.17,
+  "GlobalLootChanceModifier": 0.15,
   "IconX": 137,
   "IconY": 173,
   "Id": "Lighthouse",

@@ -100,7 +100,7 @@ class InsuranceServer {
         offraidData.profile.Inventory.items.forEach(i => offRaidGearHash[i._id] = i);
 
         let gears = [];
-
+        
         for (let insuredItem of pmcData.InsuredItems) {
             if (preRaidGearHash[insuredItem.itemId]) {
                 // This item exists in preRaidGear, meaning we brought it into the raid...
@@ -115,17 +115,15 @@ class InsuranceServer {
         for (let gear of gears) {
             this.addGearToSend(gear.pmcData, gear.insuredItem, gear.item, gear.sessionID);
         }
+        //let fs = require('fs');
+        //fs.writeFileSync("./LostGear.json", JSON.stringify(gears, null, 2));
     }
 
     /* store insured items on pmc death */
-    storeDeadGear(pmcData, offraidData, preRaidGear, sessionID) {
+    storeDeadGear(pmcData, offraidData, preRaidGear, sessionID) {        
         let gears = [];
-        let parentItems = {};
 
         let securedContainerItems = offraid_f.getSecuredContainer(offraidData.profile.Inventory.items);
-        let offraidGearItems = offraid_f.getPlayerGear(offraidData.profile.Inventory.items);
-
-        let notInSecuredContainerHash = {};
 
         const preRaidGearHash = {};
         preRaidGear.forEach(i => preRaidGearHash[i._id] = i);
@@ -136,19 +134,8 @@ class InsuranceServer {
         const pmcItemsHash = {};
         pmcData.Inventory.items.forEach(i => pmcItemsHash[i._id] = i);
 
-        let parentIds = [];
         for (let insuredItem of pmcData.InsuredItems) {
             if (preRaidGearHash[insuredItem.itemId] && !(securedContainerItemHash[insuredItem.itemId]) && !(typeof pmcItemsHash[insuredItem.itemId] === "undefined") && !(pmcItemsHash[insuredItem.itemId].slotId === "SecuredContainer")) {
-                /*if (utility.getRandomInt(0, 99) >= global._database.gameplayConfig.trading.insureReturnChance) {
-                    parentIds.push(insuredItem.itemId);
-                    continue;
-                }*/
-
-                /*if(parentIds(insuredItem.itemId) > -1) {
-                    
-                }*/
-
-                let item = pmcItemsHash[insuredItem.itemId];
                 gears.push({ "pmcData": pmcData, "insuredItem": insuredItem, "item": pmcItemsHash[insuredItem.itemId], "sessionID": sessionID });
             }
         }
@@ -156,6 +143,8 @@ class InsuranceServer {
         for (let gear of gears) {
             this.addGearToSend(gear.pmcData, gear.insuredItem, gear.item, gear.sessionID);
         }
+        //let fs = require('fs');
+        //fs.writeFileSync("./DeadGear.json", JSON.stringify(gears, null, 2));
     }
 
     /* sends stored insured items as message */
@@ -208,54 +197,25 @@ class InsuranceServer {
     }
 }
 
-// TODO: Move to helper functions
-function getItemPrice(_tpl) {
-    let price = 0;
-
-    if (typeof (global.templatesById) === "undefined") {
-        global.templatesById = {};
-        global._database.templates.Items.forEach(i => templatesById[i.Id] = i);
-    }
-
-    if (_tpl in templatesById) {
-        let template = templatesById[_tpl];
-        price = template.Price;
-    } else {
-        let item = global._database.items[_tpl];
-        price = helper_f.getTemplatePrice(item);
-    }
-
-    return price;
-}
-
-function getPremium(pmcData, inventoryItem, traderId) {
-    /*     let premium = getItemPrice(inventoryItem._tpl) * (global._database.gameplayConfig.trading.insureMultiplier * 3);
-        if(typeof pmcData.TradersInfo[traderId] != "undefined")
-            premium -= premium * (pmcData.TradersInfo[traderId].standing > 0.5 ? 0.5 : pmcData.TradersInfo[traderId].standing);
-        return Math.round(premium); */
-    //fileIO.write("./pmcData.json", JSON.stringify(pmcData, null, 2));
-    let loyaltyLevel = profile_f.getLoyalty(pmcData, traderId) - 1
+function getPremium(pmcData, inventoryItem, traderId) {    
+    let loyaltyLevelIndex = profile_f.getLoyalty(pmcData, traderId) - 1;
     let trader = trader_f.handler.getTrader(traderId, pmcData.aid);
     let insuranceMultiplier;
-    insuranceMultiplier = trader.loyaltyLevels[loyaltyLevel].insurance_price_coef / 100
+    insuranceMultiplier = trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef / 100
 
-    //22/100
-
-    //console.log(insuranceMultiplier, "<<<<<<<< new insuranceMultiplier")
     if (!insuranceMultiplier) {
         insuranceMultiplier = 0.3;
         Logger.warning(`No multiplier found for trader ${traderId}, check it exists in InsuranceConfig.js, falling back to a default value of 0.3`);
     }
 
     let premium = helper_f.getTemplatePrice(inventoryItem._tpl) * insuranceMultiplier;
-    const coef = trader.loyaltyLevels[loyaltyLevel].insurance_price_coef;
+    const coef = trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef;
 
     if (coef > 0) {
-        premium *= (1 - trader.loyaltyLevels[loyaltyLevel].insurance_price_coef / 100);
+        premium *= (1 - trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef / 100);
     }
 
     return Math.round(premium);
-
 }
 
 /* calculates insurance cost */

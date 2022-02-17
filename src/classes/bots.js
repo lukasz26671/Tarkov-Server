@@ -3,7 +3,7 @@
 //use bot names in lowercase as it matches folders
 const botSwaps = {
   "Customs": {
-    "bosssanitar": "sectantpriest"
+    //"bosssanitar": "sectantpriest"
   },
   "Factory": { //no way to distinguish between day and night using name so be careful
     //"bosssanitar" : "sectantpriest"
@@ -24,27 +24,8 @@ const botSwaps = {
 
   },
   "Woods": {
-    "bosskilla": "sectantpriest"
+    //"bosskilla": "sectantpriest"
   }
-}
-
-
-function shuffle(array) {
-  let currentIndex = array.length, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
-
-  return array;
 }
 
 class Controller {
@@ -318,6 +299,7 @@ class Controller {
   //IF IT GETS CALLED MORE THAN ONCE PER RAID, IT MEANS SOMETHING IS WRONG EITHER IN
   //THE MAP JSON OR IN THE BOT GENERATION. DO NOT HANDLE BOT CUSTOMIZATION/MODDING IN BOT GENERATION CODE!!!!
   generate(info, sessionID) {
+    let dateNow = Date.now();
     let count = 0;
     let swapped = 0;
     let output = [];
@@ -353,7 +335,7 @@ class Controller {
     //if we generated bots and are in raid
     if (count > 0 && offraid_f.handler.getPlayer(sessionID)) {
       logger.logSuccess(
-        "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map."
+        "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map. ("+(Date.now() - dateNow)+"ms)"
       );
       if (swapped > 0) {
         logger.logSuccess("\u001b[32;1mSwapped " + swapped + " bot(s).");
@@ -361,7 +343,6 @@ class Controller {
       //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
       logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
-    //return shuffle(output); //extra randomness
     return output;
   }
 

@@ -397,17 +397,13 @@ function saveProgress(offraidData, sessionID) {
 	pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
 	pmcData.Stats.TotalSessionExperience = 0;
 
-	// Remove the Lab card
-
-	pmcData = setInventory(pmcData, offraidData.profile);
-	health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
-
 	// remove inventory if player died and send insurance items
 	//TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
 	const systemMapName = MapNameConversion(sessionID);
 	const insuranceEnabled = global._database.locations[systemMapName].base.Insurance;
 	const preRaidGear = getPlayerGear(pmcData.Inventory.items);
 
+	//store for insurance, gear that was insured and was lost
 	if (insuranceEnabled) {
 		insurance_f.handler.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
 	}
@@ -416,6 +412,12 @@ function saveProgress(offraidData, sessionID) {
 		exfils[systemMapName] = exfils[systemMapName] + 1;
 		profile_f.handler.setProfileExfilsById(sessionID, exfils);
 	}
+	//changed position of this block, because it was fucking up insurance.
+	//setting inventory before sending lostgear (gear that was insured but dropped without dying)
+	//would cause preraid and offraid inventories to be the same.
+	pmcData = setInventory(pmcData, offraidData.profile);
+	health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
+
 	if (offraidData.exit !== "survived" && offraidData.exit !== "runner") {
 		if (insuranceEnabled) {
 			insurance_f.handler.storeDeadGear(pmcData, offraidData, preRaidGear, sessionID);
@@ -488,3 +490,4 @@ module.exports.handler = new InraidServer();
 module.exports.saveProgress = saveProgress;
 module.exports.getSecuredContainer = getSecuredContainer;
 module.exports.getPlayerGear = getPlayerGear;
+module.exports.MapNameConversion = MapNameConversion;

@@ -497,9 +497,10 @@ function _GenerateContainerLoot(_items) {
 
 //========> LOOT CREATION START !!!!!
 class Generator {
-  lootMounted(typeArray, output) {
+  lootMounted(typeArray, output, locName) {
+    let _location = global._database.locations[locName];
     let count = 0;
-    for (let i in typeArray) {
+    for (let i in typeArray) {      
       // detect if its a stationary weapon
       if (
         typeArray[i].Id.toLowerCase().indexOf("utes") != -1 ||
@@ -520,6 +521,14 @@ class Generator {
         output.Loot.push(data);
         count++;
       } else {
+        //if unlucky, don't spawn :D
+        if (!utility.getPercentRandomBool(_location.base.GlobalLootChanceModifier * 100)) {
+          continue;
+        }
+        //if overlap, skip
+        if (isThereLootAtLocation(output.Loot, typeArray[i].Position)) {
+          continue;
+        }
         // its not stationary then its default preset of weapon
         let data = utility.DeepCopy(typeArray[i]);
         let RolledTemplate =
@@ -601,7 +610,8 @@ class Generator {
     }
     return count;
   }
-  lootForced(typeArray, output) {
+  lootForced(typeArray, output, locName) {
+    let _location = global._database.locations[locName];
     let count = 0;
     for (let i in typeArray) {
       let data = utility.DeepCopy(typeArray[i]);
@@ -632,10 +642,11 @@ class Generator {
     }
     return count;
   }
-  lootStatics(typeArray, output) {
+  lootStatics(typeArray, output, locName) {   
+    let _location = global._database.locations[locName];
     let count = 0;
     let dateNow = Date.now();
-    for (let i in typeArray) {
+    for (let i in typeArray) {      
       let data = typeArray[i];
       dateNow = Date.now();
       _GenerateContainerLoot(data.Items);
@@ -653,9 +664,10 @@ class Generator {
     let overlapped = 0;
     let count = 0;
     let skipped = 0;
+
     for (let itemLoot in typeArray) {
       const lootData = typeArray[itemLoot];
-
+      
       //if next item will overlap an existing one, skip:
       if (isThereLootAtLocation(output.Loot, lootData.Position)) {
         overlapped++;
@@ -665,7 +677,7 @@ class Generator {
       //if it isn't the item's lucky day, skip:
       if (!utility.getPercentRandomBool(locationLootChanceModifier * 100)) {
         continue;
-      }
+      } 
 
       let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(
         lootData,
@@ -714,7 +726,29 @@ class Generator {
       createEndLootData.Items.push(createdItem);
       // now add other things like cartriges etc.
 
-      // AMMO BOXES !!!
+      // FLASH DRIVE CODE BLOCK
+      // if potential PC Case
+      if(lootData.Id.includes("LootGarbage (36)(Clone)")){
+        // check if contains a flash drive
+        if(lootData.Items.includes("590c621186f774138d11ea29")){
+          // set only the flash drive as possible spawn
+          //lootData.Items = ["590c621186f774138d11ea29"];
+          
+          //set correct orientation
+          createEndLootData.randomRotation = false;
+          createEndLootData.Rotation.y += 90;
+
+          // set only the flash drive as possible spawn
+          createEndLootData.Items = [];
+          createEndLootData.Items.push({
+            _id: generatedItemId,
+            _tpl: "590c621186f774138d11ea29"
+          });
+          //logger.logError(JSON.stringify(lootData, null, 2));
+        }        
+      }
+
+      // if ammo box, handle in unique way
       if (
         global._database.items[createEndLootData.Items[0]._tpl]._parent ==
         "543be5cb4bdc2deb348b4568"
@@ -747,6 +781,38 @@ class Generator {
             },
           });
           locationCount++;
+        }
+      }else{
+        // if items with stacks bigger than 1, then we spawn a random amount based on
+        // its StackMinRandom and StackMaxRandom. If the item doesn't have those fields,
+        // then we create a randomized amount based on StackMaxSize.
+        let tempItem = global._database.items[createEndLootData.Items[0]._tpl];
+        if(tempItem._props.StackMaxSize > 1){
+          if(tempItem._props.StackMinRandom && tempItem._props.StackMaxRandom){
+            //item contains properties (which is most of the time when StackMaxSize > 1)
+            let minR = tempItem._props.StackMinRandom;
+            let maxR = tempItem._props.StackMaxRandom;
+            createEndLootData.Items[0]= {
+              _id: generatedItemId,
+              _tpl: tempItem._id,
+              upd: {
+                StackObjectsCount: utility.getRandomInt(minR, maxR),
+              }
+            };
+            
+          }else{
+            //item does not contain required properties, default to StackMaxSize
+            //this is just a failsafe
+            let minR = 1;
+            let maxR = tempItem._props.StackMaxSize;
+            createEndLootData.Items[0]= {
+              _id: generatedItemId,
+              _tpl: tempItem._id,
+              upd: {
+                StackObjectsCount: utility.getRandomInt(minR, maxR),
+              }
+            };
+          }
         }
       }
 
@@ -784,8 +850,6 @@ class Generator {
             idSuffix++;
           }
         }
-        //output.Loot.push(data);
-        //count++;
       }
 
       // spawn change calculation
@@ -896,19 +960,19 @@ class LocationServer {
     let count = 0;
     let counters = [];
 
-    count = lootGenerator.lootMounted(mounted, output);
+    count = lootGenerator.lootMounted(mounted, output, name);
     logger.logInfo(`State Mounted, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
     counters.push(count);
     count = 0;
-    count = lootGenerator.lootForced(forced, output);
+    count = lootGenerator.lootForced(forced, output, name);
     logger.logInfo(`State Forced, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
     counters.push(count);
     count = 0;
-    count = lootGenerator.lootStatics(statics, output);
+    count = lootGenerator.lootStatics(statics, output, name);
     logger.logInfo(`State Containers, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 

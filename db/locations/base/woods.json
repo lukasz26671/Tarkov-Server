@@ -389,13 +389,13 @@
   "DisabledForScav": false,
   "BossLocationSpawn": [
     {
-      "BossName": "bossKilla",
+      "BossName": "sectantPriest",
       "BossChance": 100,
       "BossZone": "ZoneMiniHouse,ZoneBrokenVill",
       "BossPlayer": false,
-      "BossDifficult": "impossible",
+      "BossDifficult": "normal",
       "BossEscortType": "sectantWarrior",
-      "BossEscortDifficult": "impossible",
+      "BossEscortDifficult": "normal",
       "BossEscortAmount": "3",
       "Time": 50
     },
@@ -407,7 +407,7 @@
       "BossDifficult": "normal",
       "BossEscortType": "followerKojaniy",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
+      "BossEscortAmount": "3",
       "Time": -1
     }
   ],
