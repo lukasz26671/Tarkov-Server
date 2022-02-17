@@ -14,34 +14,29 @@
 		"folder": "AllItemsExamined_1.0.0",
 		"order": 3
 	},
-	"LivePrices-1.1.0_AlteredEscape": {
-		"isEnabled": true,
-		"folder": "AlteredEscape-LivePrices-1.1.0",
-		"order": 4
-	},
 	"AmmoStats-1.1.1_Antiqque": {
 		"isEnabled": true,
 		"folder": "Antiqque-AmmoStats-1.1.1",
-		"order": 5
+		"order": 4
 	},
 	"HideoutQOL-1.0.0_Jizera": {
 		"isEnabled": true,
 		"folder": "Jizera-HideoutQOL-1.0.0",
-		"order": 6
+		"order": 5
 	},
 	"MagazineManiac-1.0.0_Nehax": {
 		"isEnabled": true,
 		"folder": "Nehax-MagazineManiac-1.0.0",
-		"order": 7
+		"order": 6
 	},
 	"questupdater-1.0.0_Unreal_Unicorn": {
 		"isEnabled": true,
 		"folder": "Unreal_Unicorn-questupdater-1.0.0",
-		"order": 8
+		"order": 7
 	},
 	"AmmoStack-1.0.0_Unreal_Unicorn": {
 		"isEnabled": true,
 		"folder": "Unreal_Unicorn_AmmoStack_1.0.0",
-		"order": 9
+		"order": 8
 	}
 }
