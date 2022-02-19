@@ -1,0 +1,13 @@
+{
+    "name": "ProfileCleaner",
+    "author": "Nevermind",
+    "description": "Automatically clean profiles when your server starts",
+    "license": "MIT",
+    "version": "1.0.0",
+    "src": {
+        "src/tamper.js": "TamperModLoad"
+    },
+    "folders": [],
+    "filenames": [],
+    "required": []
+}
