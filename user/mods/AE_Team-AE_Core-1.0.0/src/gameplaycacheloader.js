@@ -93,76 +93,77 @@ exports.mod = (mod_data) => {
 
     //START ------- Recoil Tweaks
     if (config.recoilConfig.toggle == true) {
+      let recoilConfig = config.recoilConfig;
       if (items.data[id]._props.weapClass === "pistol") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.pistolRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.pistolRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.pistolRecoil.verticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.pistolRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.pistolRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.pistolRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.pistolRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.pistolRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.pistolRecoil.verticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.pistolRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.pistolRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.pistolRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "smg") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.smgRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.smgRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.smgRecoil.SverticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.smgRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.smgRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.smgRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.smgRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.smgRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.smgRecoil.SverticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.smgRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.smgRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.smgRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "shotgun") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.shotgunRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.shotgunRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.shotgunRecoil.verticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.shotgunRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.shotgunRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.shotgunRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.shotgunRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.shotgunRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.shotgunRecoil.verticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.shotgunRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.shotgunRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.shotgunRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "assaultRifle") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.assaultRifleRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.assaultRifleRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.assaultRifleRecoil.verticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.assaultRifleRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.assaultRifleRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.assaultRifleRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.assaultRifleRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.assaultRifleRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.assaultRifleRecoil.verticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.assaultRifleRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.assaultRifleRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.assaultRifleRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "assaultCarbine") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.assaultCarbineRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.assaultCarbineRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.assaultCarbineRecoil.verticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.assaultCarbineRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.assaultCarbineRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.assaultCarbineRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.assaultCarbineRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.assaultCarbineRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.assaultCarbineRecoil.verticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.assaultCarbineRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.assaultCarbineRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.assaultCarbineRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "machinegun") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.machinegunRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.machinegunRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.machinegunRecoil.MGVertRec).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.machinegunRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.machinegunRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.machinegunRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.machinegunRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.machinegunRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.machinegunRecoil.MGVertRec).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.machinegunRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.machinegunRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.machinegunRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "marksmanRifle") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.marksmanRifleRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.marksmanRifleRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.marksmanRifleRecoil.verticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.marksmanRifleRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.marksmanRifleRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.marksmanRifleRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.marksmanRifleRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.marksmanRifleRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.marksmanRifleRecoil.verticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.marksmanRifleRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.marksmanRifleRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.marksmanRifleRecoil.dispersion).toFixed(0);
 
       }
       if (items.data[id]._props.weapClass === "sniperRifle") {
-        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * config.sniperRifleRecoil.cameraRecoil).toFixed(3);
-        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * config.sniperRifleRecoil.cameraSnap).toFixed(3);
-        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * config.sniperRifleRecoil.verticalRecoil).toFixed(3);
-        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * config.sniperRifleRecoil.horizontalRecoil).toFixed(3);
-        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * config.sniperRifleRecoil.convergence).toFixed(2);
-        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * config.sniperRifleRecoil.dispersion).toFixed(0);
+        items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.sniperRifleRecoil.cameraRecoil).toFixed(3);
+        items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.sniperRifleRecoil.cameraSnap).toFixed(3);
+        items.data[id]._props.RecoilForceUp = (items.data[id]._props.RecoilForceUp * recoilConfig.sniperRifleRecoil.verticalRecoil).toFixed(3);
+        items.data[id]._props.RecoilForceBack = (items.data[id]._props.RecoilForceBack * recoilConfig.sniperRifleRecoil.horizontalRecoil).toFixed(3);
+        items.data[id]._props.Convergence = (items.data[id]._props.Convergence * recoilConfig.sniperRifleRecoil.convergence).toFixed(2);
+        items.data[id]._props.RecolDispersion = (items.data[id]._props.RecolDispersion * recoilConfig.sniperRifleRecoil.dispersion).toFixed(0);
 
       }
     } //END ------- Recoil Tweaks

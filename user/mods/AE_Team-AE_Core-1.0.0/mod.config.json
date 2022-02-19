@@ -132,7 +132,7 @@
     "": "Weapon Recoil modifiers",
     "recoilConfig": {
       "": "Weapon Recoil Adjustment toggle",
-      "toggle": false,
+      "toggle": true,
 
       "pistolRecoil": { 
         "cameraRecoil": 0.4,
