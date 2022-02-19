@@ -46,19 +46,9 @@ function getOwnerInventoryItems(body, sessionID) {
  * otherwise, move is contained within the same profile_f.
  * */
 function moveItem(pmcData, body, sessionID) {
-  let output = item_f.handler.getOutput(sessionID);
-  let inventoryItems = getOwnerInventoryItems(body, sessionID);
-  /*  if (inventoryItems.isMail) {
-        let idsToMove = dialogue_f.findAndReturnChildren(inventoryItems.from, body.item);
-        for (let itemId of idsToMove) {
-            for (let messageItem of inventoryItems.from) {
-                if (messageItem._id === itemId) {
-                    inventoryItems.to.push(messageItem);
-                }
-            }
-        }
-        moveItemInternal(inventoryItems.to, body);
-    } else */
+  const output = item_f.handler.getOutput(sessionID);
+  const inventoryItems = getOwnerInventoryItems(body, sessionID);
+
   if (inventoryItems.sameInventory) {
     moveItemInternal(inventoryItems.from, body);
   } else {
@@ -78,25 +68,12 @@ module.exports.applyInventoryChanges = (pmcData, body, sessionID) => {
           pmcData.Inventory.items[key].parentId = changed_item.parentId;
           pmcData.Inventory.items[key].slotId = changed_item.slotId;
           pmcData.Inventory.items[key].location = changed_item.location;
-          //if (typeof output.profileChanges[pmcData._id].items.change == "undefined") output.profileChanges[pmcData._id].items.change = [];
-          //output.profileChanges[pmcData._id].items.change.push(changed_item);
           break;
         }
       }
     }
   }
-  // if (Symbol.iterator in Object(body.deletedItems) && body.deletedItems !== null) {
-  //   for (const deleted_item of body.deletedItems) {
-  //     for (const [key, item] of Object.entries(pmcData.Inventory.items)) {
-  //       if (item._id === deleted_item._id) {
-  //         pmcData.Inventory.items.splice(key);
-  //         //if (typeof output.profileChanges[pmcData._id].items.del == "undefined") output.profileChanges[pmcData._id].items.del = [];
-  //         //output.profileChanges[pmcData._id].items.del.push(deleted_item);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
+
 };
 
 /* Internal helper function to transfer an item from one profile to another.
@@ -107,10 +84,10 @@ module.exports.applyInventoryChanges = (pmcData, body, sessionID) => {
 function moveItemToProfile(fromItems, toItems, body) {
   handleCartridges(fromItems, body);
 
-  let idsToMove = helper_f.findAndReturnChildrenByItems(fromItems, body.item);
+  const idsToMove = helper_f.findAndReturnChildrenByItems(fromItems, body.item);
 
-  for (let itemId of idsToMove) {
-    for (let itemIndex in fromItems) {
+  for (const itemId of idsToMove) {
+    for (const itemIndex in fromItems) {
       if (fromItems[itemIndex]._id && fromItems[itemIndex]._id === itemId) {
         if (itemId === body.item) {
           fromItems[itemIndex].parentId = body.to.id;
@@ -139,7 +116,7 @@ function moveItemToProfile(fromItems, toItems, body) {
 function moveItemInternal(items, body) {
   handleCartridges(items, body);
 
-  for (let item of items) {
+  for (const item of items) {
     if (item._id && item._id === body.item) {
       item.parentId = body.to.id;
       item.slotId = body.to.container;
@@ -166,7 +143,7 @@ function handleCartridges(items, body) {
   if (body.to.container === "cartridges") {
     let tmp_counter = 0;
 
-    for (let item_ammo in items) {
+    for (const item_ammo in items) {
       if (body.to.id === items[item_ammo].parentId) {
         tmp_counter++;
       }
@@ -354,18 +331,20 @@ function mergeItem(pmcData, body, sessionID) {
  * Used to take items from scav inventory into stash or to insert ammo into mags (shotgun ones) and reloading weapon by clicking "Reload"
  * */
 function transferItem(pmcData, body, sessionID) {
-  let output = item_f.handler.getOutput(sessionID);
+  const output = item_f.handler.getOutput(sessionID);
 
-  let itemFrom = null,
-    itemTo = null;
+  let itemFrom = null;
+  let itemTo = null;
 
-  for (let iterItem of pmcData.Inventory.items) {
+  for (const iterItem of pmcData.Inventory.items) {
     if (iterItem._id === body.item) {
       itemFrom = iterItem;
     } else if (iterItem._id === body.with) {
       itemTo = iterItem;
     }
-    if (itemFrom !== null && itemTo !== null) break;
+    if (itemFrom !== null && itemTo !== null) {
+      break;
+    }
   }
 
   if (itemFrom !== null && itemTo !== null) {
