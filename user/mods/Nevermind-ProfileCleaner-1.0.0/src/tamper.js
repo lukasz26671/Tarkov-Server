@@ -14,25 +14,98 @@ exports.mod = (mod_data) => {
             let profilesChecked = 0;
             let profileChanges = 0;
 
+            let traderID = '579dc571d53a0658a154fbec'; // Send messages from fence
+            global._database.locales.global['en'].mail.profileCleaner = "(ProfileCleaner returned items)\nHey. You lost this stuff. One of my boys found it and brought it back for you. It's in the crate against the wall, nice and safe. Try to be more careful next time.";
+
             for (const thisAID of profileDirList) {
                 if (fs.lstatSync(`${profileDir}/${thisAID}`).isDirectory()) { // If this item in profileDirList a directory
                     if (fs.existsSync(`${profileDir}/${thisAID}/character.json`)) { // And if the directory contains a character.json file
                         let thisProfile = fileIO.readParsed(`${profileDir}/${thisAID}/character.json`);
+                        let returnItemsArray = {}; // Define array that will store returned items
 
                         const removeNonExistResult = removeNonExist(thisProfile); // Remove items that don't exist in the db
 
-                        const removeOrphansResult = removeOrphans(thisProfile); // Remove items that have invalid orphans
+                        const removeOrphansResult = removeOrphans(thisProfile, returnItemsArray); // Remove items that have invalid orphans
 
-                        const removeDuplicateStacksResult = removeDuplicateStacks(thisProfile); // Remove broken ammo stacks
+                        const removeDuplicateStacksResult = removeDuplicateStacks(thisProfile, returnItemsArray); // Remove broken ammo stacks
 
-                        const checkStackSizesResult = checkStackSizes(thisProfile); // Check item stack sizes
-                        
+                        const checkStackSizesResult = checkStackSizes(thisProfile, returnItemsArray); // Check item stack sizes
+
                         profilesChecked++;
 
                         if (removeNonExistResult || removeOrphansResult || removeDuplicateStacksResult || checkStackSizesResult) { // If changes were made to the profile
-                            fs.renameSync(`${profileDir}/${thisAID}/character.json`,`${profileDir}/${thisAID}/character.json.${Date.now()}`); // Backup profile
+                            fs.renameSync(`${profileDir}/${thisAID}/character.json`, `${profileDir}/${thisAID}/character.json.${Date.now()}`); // Backup profile
                             fs.writeFileSync(`${profileDir}/${thisAID}/character.json`, JSON.stringify(thisProfile, null, '\t'), 'utf8'); // Write changes
                             profileChanges++;
+
+                            if (Object.keys(returnItemsArray).length > 0 && fs.existsSync(`${profileDir}/${thisAID}/dialogue.json`)) { // If there are items to be returned and the dialogue file exists
+                                let returnItemsMessage = { // Generate new message to send to the player
+                                    _id: utility.generateNewDialogueId(),
+                                    uid: traderID,
+                                    type: 8,
+                                    dt: Date.now() / 1000,
+                                    templateId: 'profileCleaner',
+                                    hasRewards: true,
+                                    rewardCollected: false,
+                                    items: {
+                                        stash: utility.generateNewItemId(),
+                                        data: []
+                                    },
+                                    maxStorageTime: 31536000,
+                                }
+
+                                for (const thisTPL in returnItemsArray) {
+                                    const maxStackSize = global._database.items[thisTPL]._props.StackMaxSize;
+
+                                    const numberOfFullStacks = Math.floor(returnItemsArray[thisTPL] / maxStackSize); // Get the number of full stacks to return to the user
+                                    for (let i = 0; i < numberOfFullStacks; i++) { // Won't execute if numberOfFullStacks == 0
+                                        returnItemsMessage.items.data.push({
+                                            _id: utility.generateNewItemId(),
+                                            _tpl: thisTPL,
+                                            upd: { StackObjectsCount: maxStackSize }, // Add a full stack of this item
+                                            parentId: returnItemsMessage.items.stash,
+                                            slotId: 'main'
+                                        })
+                                    }
+
+                                    if (numberOfFullStacks > 0) {
+                                        const remainingCount = returnItemsArray[thisTPL] % maxStackSize; // Get the remaining partial stack count
+                                        if (remainingCount > 0) {
+                                            returnItemsMessage.items.data.push({
+                                                _id: utility.generateNewItemId(),
+                                                _tpl: thisTPL,
+                                                upd: { StackObjectsCount: remainingCount }, // Add the remainder after the full stacks were added
+                                                parentId: returnItemsMessage.items.stash,
+                                                slotId: 'main'
+                                            })
+                                        }
+                                    } else { // This stack is below one full stack
+                                        returnItemsMessage.items.data.push({
+                                            _id: utility.generateNewItemId(),
+                                            _tpl: thisTPL,
+                                            upd: { StackObjectsCount: returnItemsArray[thisTPL] }, // Add the entire stack
+                                            parentId: returnItemsMessage.items.stash,
+                                            slotId: 'main'
+                                        })
+                                    }
+                                }
+
+                                let thisDialogue = fileIO.readParsed(`${profileDir}/${thisAID}/dialogue.json`);
+                                if (!isDefined(thisDialogue, traderID)) { // If trader isn't initalized
+                                    thisDialogue[traderID] = {
+                                        _id: traderID,
+                                        messages: [],
+                                        pinned: false,
+                                        new: 0,
+                                        attachmentsNew: 0
+                                    }
+                                }
+
+                                thisDialogue[traderID].messages.push(returnItemsMessage);
+                                thisDialogue[traderID].new++;
+
+                                fs.writeFileSync(`${profileDir}/${thisAID}/dialogue.json`, JSON.stringify(thisDialogue, null, '\t'), 'utf8'); // Write changes
+                            }
                         }
                     }
                 }
@@ -127,7 +200,7 @@ exports.mod = (mod_data) => {
         return removedItems;
     }
 
-    function removeOrphans(profileObj) {
+    function removeOrphans(profileObj, returnItemsArray) {
         let itemsNode = profileObj.Inventory.items;
         let removedItems = false;
 
@@ -151,6 +224,17 @@ exports.mod = (mod_data) => {
                     if (isDefined(itemsNode[i], 'parentId')) {
                         if (!parentArray.includes(itemsNode[i].parentId)) {
                             consoleOutput(`Fixed orphaned item \x1b[31m${itemsNode[i]._id}\x1b[0m`, 'warning', profileObj.aid);
+
+                            let itemCount = 1;
+                            if (isDefined(returnItemsArray, `${itemsNode[i]}.upd.StackObjectsCount`)) { // If this item is a stack
+                                itemCount = itemsNode[i].upd.StackObjectsCount;
+                            }
+                            if (isDefined(returnItemsArray, itemsNode[i]._tpl)) { // If there's already at least one of these items being returned
+                                returnItemsArray[itemsNode[i]._tpl] += itemCount;
+                            } else {
+                                returnItemsArray[itemsNode[i]._tpl] = itemCount;
+                            }
+
                             itemsNode.splice(i, 1); // Remove the index with the invalid item
                             removedItems = true;
                             removedThisIteration = true;
@@ -169,7 +253,7 @@ exports.mod = (mod_data) => {
         return removedItems;
     }
 
-    function removeDuplicateStacks(profileObj) {
+    function removeDuplicateStacks(profileObj, returnItemsArray) {
         let itemsNode = profileObj.Inventory.items;
         let removedItems = false;
 
@@ -180,6 +264,17 @@ exports.mod = (mod_data) => {
                 if (isDefined(itemsNode[i], 'slotId') && itemsNode[i].slotId == 'cartridges') { // If this is an ammo stack
                     if (parentArray.includes(itemsNode[i].parentId)) { // If this item's parentId is already in the list then it's a duplicate                                             
                         consoleOutput(`Fixed duplicate ammo stack \x1b[31m${itemsNode[i]._id}\x1b[0m`, 'warning', profileObj.aid);
+
+                        let itemCount = 1;
+                        if (isDefined(returnItemsArray, `${itemsNode[i]}.upd.StackObjectsCount`)) { // If this item is a stack
+                            itemCount = itemsNode[i].upd.StackObjectsCount;
+                        }
+                        if (isDefined(returnItemsArray, itemsNode[i]._tpl)) { // If there's already at least one of these items being returned
+                            returnItemsArray[itemsNode[i]._tpl] += itemCount;
+                        } else {
+                            returnItemsArray[itemsNode[i]._tpl] = itemCount;
+                        }
+
                         itemsNode.splice(i, 1); // Remove the index with the duplicate stack
                         removedItems = true;
                     } else {
@@ -192,7 +287,7 @@ exports.mod = (mod_data) => {
         return removedItems;
     }
 
-    function checkStackSizes(profileObj) {
+    function checkStackSizes(profileObj, returnItemsArray) {
         let itemsNode = profileObj.Inventory.items;
         let alteredStacks = false;
 
@@ -216,6 +311,13 @@ exports.mod = (mod_data) => {
                                     const maxStackSize = global._database.items[magazineTPL]._props.Cartridges[0]._max_count;
                                     if (thisStackSize > maxStackSize) {
                                         consoleOutput(`Fixed mag too full: ${thisItem._id} \x1b[31m${thisStackSize}\x1b[0m -> \x1b[32m${maxStackSize}\x1b[0m`, 'warning', profileObj.aid);
+
+                                        if (isDefined(returnItemsArray, thisItem._tpl)) { // If there's already at least one of these items being returned
+                                            returnItemsArray[thisItem._tpl] += (thisStackSize - maxStackSize); // Add the difference to the return array
+                                        } else {
+                                            returnItemsArray[thisItem._tpl] = (thisStackSize - maxStackSize);
+                                        }
+
                                         thisItem.upd.StackObjectsCount = maxStackSize;
                                         alteredStacks = true;
                                     }
@@ -226,7 +328,14 @@ exports.mod = (mod_data) => {
                                 if (isDefined(global._database.items[magazineTPL]._props.StackSlots[0], '_max_count')) {
                                     const maxStackSize = global._database.items[magazineTPL]._props.StackSlots[0]._max_count;
                                     if (thisStackSize > maxStackSize) {
-                                        consoleOutput(`Fixed mag too full: ${thisItem._id} \x1b[31m${thisStackSize}\x1b[0m -> \x1b[32m${maxStackSize}\x1b[0m`, 'warning', profileObj.aid);
+                                        consoleOutput(`Fixed ammo box too full: ${thisItem._id} \x1b[31m${thisStackSize}\x1b[0m -> \x1b[32m${maxStackSize}\x1b[0m`, 'warning', profileObj.aid);
+
+                                        if (isDefined(returnItemsArray, thisItem._tpl)) { // If there's already at least one of these items being returned
+                                            returnItemsArray[thisItem._tpl] += (thisStackSize - maxStackSize); // Add the difference to the return array
+                                        } else {
+                                            returnItemsArray[thisItem._tpl] = (thisStackSize - maxStackSize);
+                                        }
+
                                         thisItem.upd.StackObjectsCount = maxStackSize;
                                         alteredStacks = true;
                                     }
@@ -242,6 +351,13 @@ exports.mod = (mod_data) => {
                             const maxStackSize = global._database.items[thisItem._tpl]._props.StackMaxSize;
                             if (thisStackSize > maxStackSize) {
                                 consoleOutput(`Fixed stack size: ${thisItem._id} \x1b[31m${thisStackSize}\x1b[0m -> \x1b[32m${maxStackSize}\x1b[0m`, 'warning', profileObj.aid);
+
+                                if (isDefined(returnItemsArray, thisItem._tpl)) { // If there's already at least one of these items being returned
+                                    returnItemsArray[thisItem._tpl] += (thisStackSize - maxStackSize); // Add the difference to the return array
+                                } else {
+                                    returnItemsArray[thisItem._tpl] = (thisStackSize - maxStackSize);
+                                }
+
                                 thisItem.upd.StackObjectsCount = maxStackSize;
                                 alteredStacks = true;
                             }
