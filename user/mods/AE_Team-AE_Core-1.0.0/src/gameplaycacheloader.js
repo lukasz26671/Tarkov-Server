@@ -1,21 +1,82 @@
 exports.mod = (mod_data) => {
-    // Getting data from mod.config.json
-    //let ModFolderName = `${mod_data.author}-${mod_data.name}-${mod_data.version}`;
-    //let ModFileNames = mod_data.filenames;
-    let config = mod_data.settings;
-    let PathResolver = global.internal.path.resolve;
+  let config = mod_data.settings;
+  let PathResolver = global.internal.path.resolve;
+
+  const cacheLoad = function (filepath) {
+    return global.fileIO.readParsed(PathResolver(filepath));
+  };
+  logger.logInfo(`—————————————————————————————————————————`);
+  logger.logInfo(`\x1b[91m[GAMEPLAY CACHE CORE] ${mod_data.name} Started\x1b[40m`);
+  logger.logInfo(`—————————————————————————————————————————`);
+
+  //START ------- BIG VARIABLE LOAD
+  const items = cacheLoad("user/cache/items.json");
+  const locations = cacheLoad("user/cache/locations.json");
+  //END ------- BIG VARIABLE LOAD
+
+
+
+  //START ------- Raid Time Modifier
+  if (config.raidTimeToggle == true) {
+    const mapModifier = config.raidTimeConfig.modifiers.mapModifier;
+    const timeModifier = config.raidTimeConfig.modifiers.timeModifier;
+
+
+    for (const name in config.raidTimeConfig.locations.base) {
+      let base = locations[name].base;
+      let timelimit = base.escape_time_limit;
+      let temp;
+      let mapTimeConfig;
+
+      console.log(timelimit, "<<<<<<<<<<<< original time limit")
+      if (mapModifier == "all"){
+        mapTimeConfig = config.raidTimeConfig.locations.allMaps;
+        if (timeModifier == "minutes") {
+          if (typeof mapTimeConfig != "undefined") {
+            if (mapTimeConfig.minutes <= 0) {
+              logger.logWarning(`You absolute retard, why would you set your raid timer to 0? If you send me this error we will ban you.`);
+            }
+            if (timelimit != mapTimeConfig.minutes) {
+              temp = mapTimeConfig.minutes;
+            }
+          }
+        } else if (timeModifier == "multiplier") {
+          let multiplier = mapTimeConfig.multiplier;
   
-    const cacheLoad = function (filepath) {
-      return global.fileIO.readParsed(PathResolver(filepath));
-    };
-    logger.logInfo(`—————————————————————————————————————————`);
-    logger.logInfo(`\x1b[91m[GAMEPLAY CACHE CORE] ${mod_data.name} Started\x1b[40m`);
-    logger.logInfo(`—————————————————————————————————————————`);
+          if (multiplier <= 0) {
+            logger.logWarning(`You absolute retard, why would you set your raid timer multiplier to 0? If you send me this error we will ban you.`);
+          } else if (multiplier !== 1) {
+            temp = timelimit * multiplier;
+          }
+        }
+      } else if (mapModifier == "each"){
+        mapTimeConfig = config.raidTimeConfig.locations.base;
+        if (timeModifier == "minutes") {
+          if (typeof mapTimeConfig[name] != "undefined") {
+            if (mapTimeConfig[name].minutes <= 0) {
+              logger.logWarning(`You absolute retard, why would you set your raid timer to 0? If you send me this error we will ban you.`);
+            }
+            if (timelimit != mapTimeConfig[name].minutes) {
+              temp = mapTimeConfig[name].minutes;
+            }
+          }
+        } else if (timeModifier == "multiplier") {
+          let multiplier = mapTimeConfig[name].multiplier;
   
-    //START ------- BIG VARIABLE LOAD
-    let items = cacheLoad("user/cache/items.json");  
-  
-  
+          if (multiplier <= 0) {
+            logger.logWarning(`You absolute retard, why would you set your raid timer multiplier to 0? If you send me this error we will ban you.`);
+          } else if (!multiplier == 1) {
+            temp = (timelimit * multiplier);
+          }
+        }
+      }
+      timelimit = temp;
+      console.log(timelimit, "<<<<<<<<<<<< new time limit")
+    }
+  }
+  //END ------- Raid Time Modifier
+
+
   //START ------- Based Item Loop
   for (let id in items.data) {
     //START ------- RaidModdable & ToolModdable set to true

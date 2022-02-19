@@ -7,6 +7,7 @@
   "checkUpdateUrl": "",
   "autoUpdate": false,
   "settings": {
+    
     "": "Enables Altered Escape databases for item customization",
     "databasesEnabled": false,
 
@@ -15,6 +16,74 @@
 
     "": "Nugent Toggle",
     "nugentEnabled": false,
+
+    
+    "raidTimeToggle": true,
+    "": "Modify amount of time for each raid by minutes or a multiplier",
+    "raidTimeConfig": {
+      "modifiers": {
+
+        "": "`all` (maps) or `each` (map)",
+        "mapModifier": "all",
+
+
+        "": "`minutes` or `multiplier`",
+        "timeModifier": "multiplier"
+      },
+      "locations": {
+        "allMaps": {
+          "minutes": 120,
+          "multiplier": 2
+        },
+        "base": {
+          "bigmap": {
+            "": " default - 35 // change only one",
+            "minutes": 35,
+            "multiplier": 1
+          },
+          "factory4_day": {
+            "": " default - 20 // change only one",
+            "minutes": 20,
+            "multiplier": 1
+          },
+          "factory4_night": {
+            "": " default - 20 // change only one",
+            "minutes": 20,
+            "multiplier": 1
+          },
+          "interchange": {
+            "": " default - 45 // change only one",
+            "minutes": 45,
+            "multiplier": 1
+          },
+          "rezervbase": {
+            "": " default - 40 // change only one",
+            "minutes": 40,
+            "multiplier": 1
+          },
+          "shoreline": {
+            "": " default - 50 // change only one",
+            "minutes": 50,
+            "multiplier": 1
+          },
+          "woods": {
+            "": " default - 40 // change only one",
+            "minutes": 40,
+            "multiplier": 1
+          },
+          "lighthouse": {
+            "": " default - 40 // change only one",
+            "minutes": 40,
+            "multiplier": 1
+          },
+          "laboratory": {
+            "": " default - 40 // change only one",
+            "minutes": 40,
+            "multiplier": 1
+          }
+        }
+      }
+    },
 
     "": "Trader Overhaul settings",
     "traderOverhaul": {
