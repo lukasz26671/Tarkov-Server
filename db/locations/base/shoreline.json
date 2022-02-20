@@ -409,8 +409,8 @@
     "GainSight": 1.1,
     "MarksmanAccuratyCoef": 1,
     "VisibleDistance": 1.2,
-    "DistToSleep": 120,
-    "DistToActivate": 100,
+    "DistToSleep": 200,
+    "DistToActivate": 160,
     "MagnetPower": 40,
     "DistToPersueAxemanCoef": 1.1,
     "KhorovodChance": 0

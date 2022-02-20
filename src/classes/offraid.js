@@ -541,9 +541,9 @@ function repairInventoryDuplicates(pInv, AID){
 			}
 		}
 	}
-
-	logger.logWarning("Repaired IDs for "+AID+":\n"+JSON.stringify(repairedIDs, null, 2));
-
+	if(repairedIDs.length > 0){
+		logger.logWarning("Repaired IDs for "+AID+":\n"+JSON.stringify(repairedIDs, null, 2));
+	}
 	return pInv;
 }
 

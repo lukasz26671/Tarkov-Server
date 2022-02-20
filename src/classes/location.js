@@ -603,6 +603,8 @@ class Generator {
               idSuffix++;
             }
           }
+          //if loot's mounted, why would it need gravity?
+          createEndLootData.useGravity = false;
           output.Loot.push(createEndLootData);
           count++;
         }
@@ -737,6 +739,7 @@ class Generator {
           //set correct orientation
           createEndLootData.randomRotation = false;
           createEndLootData.Rotation.y += 90;
+          createEndLootData.useGravity = false;
 
           // set only the flash drive as possible spawn
           createEndLootData.Items = [];
