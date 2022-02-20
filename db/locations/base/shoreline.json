@@ -32,7 +32,7 @@
       "slots_max": 4,
       "SpawnPoints": "",
       "BotSide": "Savage",
-      "BotPreset": "easy",
+      "BotPreset": "normal",
       "isPlayers": false,
       "WildSpawnType": "assault"
     },
@@ -56,7 +56,7 @@
       "slots_max": 4,
       "SpawnPoints": "ZoneGasStation",
       "BotSide": "Savage",
-      "BotPreset": "normal",
+      "BotPreset": "hard",
       "isPlayers": true,
       "WildSpawnType": "assault"
     },
@@ -68,7 +68,7 @@
       "slots_max": 2,
       "SpawnPoints": "ZoneMeteoStation",
       "BotSide": "Savage",
-      "BotPreset": "normal",
+      "BotPreset": "hard",
       "isPlayers": true,
       "WildSpawnType": "assault"
     },
@@ -92,7 +92,7 @@
       "slots_max": 2,
       "SpawnPoints": "ZoneBusStation",
       "BotSide": "Savage",
-      "BotPreset": "normal",
+      "BotPreset": "impossible",
       "isPlayers": false,
       "WildSpawnType": "assault"
     },
@@ -224,7 +224,7 @@
       "slots_max": 4,
       "SpawnPoints": "",
       "BotSide": "Savage",
-      "BotPreset": "hard",
+      "BotPreset": "easy",
       "isPlayers": false,
       "WildSpawnType": "assault"
     },
@@ -260,7 +260,7 @@
       "slots_max": 4,
       "SpawnPoints": "",
       "BotSide": "Savage",
-      "BotPreset": "hard",
+      "BotPreset": "easy",
       "isPlayers": false,
       "WildSpawnType": "assault"
     },
@@ -387,7 +387,7 @@
   "BotSpawnTimeOffMin": 30,
   "BotSpawnTimeOffMax": 50,
   "BotMaxPlayer": 7,
-  "BotEasy": 10,
+  "BotEasy": 30,
   "BotNormal": 50,
   "BotHard": 40,
   "BotImpossible": 0,
@@ -409,8 +409,8 @@
     "GainSight": 1.1,
     "MarksmanAccuratyCoef": 1,
     "VisibleDistance": 1.2,
-    "DistToSleep": 300,
-    "DistToActivate": 260,
+    "DistToSleep": 120,
+    "DistToActivate": 100,
     "MagnetPower": 40,
     "DistToPersueAxemanCoef": 1.1,
     "KhorovodChance": 0
@@ -498,7 +498,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "sectantPriest",
-      "BossChance": 75,
+      "BossChance": 100,
       "BossZone": "ZoneForestGasStation,ZoneForestSpawn",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -520,7 +520,7 @@
     },
     {
       "BossName": "sectantPriest",
-      "BossChance": 75,
+      "BossChance": 100,
       "BossZone": "ZoneSanatorium1,ZoneSanatorium2",
       "BossPlayer": false,
       "BossDifficult": "normal",

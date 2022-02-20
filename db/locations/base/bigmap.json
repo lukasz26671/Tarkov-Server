@@ -472,10 +472,10 @@
       "BossChance": 100,
       "BossZone": "ZoneScavBase",
       "BossPlayer": false,
-      "BossDifficult": "impossible",
+      "BossDifficult": "normal",
       "BossEscortType": "sectantWarrior",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "3",
+      "BossEscortAmount": "4",
       "Time": -1
     },
     {
@@ -483,7 +483,7 @@
       "BossChance": 100,
       "BossZone": "ZoneDormitory,ZoneGasStation",
       "BossPlayer": false,
-      "BossDifficult": "impossible",
+      "BossDifficult": "normal",
       "BossEscortType": "followerBully",
       "BossEscortDifficult": "normal",
       "BossEscortAmount": "4",

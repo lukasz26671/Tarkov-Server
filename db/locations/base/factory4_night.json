@@ -2552,7 +2552,7 @@
       "BossDifficult": "normal",
       "BossEscortType": "sectantWarrior",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
+      "BossEscortAmount": "2",
       "Time": -1
     }
   ],

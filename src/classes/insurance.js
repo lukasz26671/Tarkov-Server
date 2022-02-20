@@ -186,8 +186,8 @@ class InsuranceServer {
     }
 
     processReturn(event) {
-        // Inject a little bit of a surprise by failing the insurance from time to time ;)
-        if (utility.getRandomInt(0, 99) >= global._database.gameplayConfig.trading.insureReturnChance) {
+        // chance to fail insurance
+        if (!utility.getPercentRandomBool(global._database.gameplayConfig.trading.insureReturnChance)) {
             let insuranceFailedTemplates = fileIO.readParsed(db.dialogues[event.data.traderId]).insuranceFailed;
             event.data.messageContent.templateId = insuranceFailedTemplates[utility.getRandomInt(0, insuranceFailedTemplates.length - 1)];
             event.data.items = [];

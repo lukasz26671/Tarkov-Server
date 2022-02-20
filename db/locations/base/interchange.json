@@ -478,8 +478,19 @@
       "BossDifficult": "normal",
       "BossEscortType": "followerBully",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
+      "BossEscortAmount": "0",
       "Time": -1
+    },
+    {
+      "BossName": "bossTagilla",
+      "BossChance": 100,
+      "BossZone": "ZoneCenterBot,ZoneCenter,ZoneOLI,ZoneIDEA,ZoneGoshan,ZoneIDEAPark,ZoneOLIPark",
+      "BossPlayer": false,
+      "BossDifficult": "normal",
+      "BossEscortType": "followerBully",
+      "BossEscortDifficult": "normal",
+      "BossEscortAmount": "0",
+      "Time": 50
     }
   ],
   "SpawnPointParams": [
