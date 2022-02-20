@@ -141,6 +141,7 @@ exports.getRandomInt = (min = 0, max = 100) => {
 }
 
 // getPercentRandomBool
+// true if lucky, false if unlucky
 exports.getPercentRandomBool = (percentage) => {
     return ((Math.random() * 100) < percentage);
 }
