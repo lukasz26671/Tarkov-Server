@@ -20,7 +20,7 @@ user/cache
 # ignore cache backup folder
 ## windows
 desktop.ini
-db/profile
+db/profile/Developer
 user/profiles
 user/logs
 user/events/schedule.json
