@@ -4,6 +4,7 @@
     "description": "Automatically clean profiles when your server starts",
     "license": "MIT",
     "version": "1.0.0",
+    "enabled": false,
     "src": {
         "src/tamper.js": "TamperModLoad"
     },

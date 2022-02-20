@@ -1,6 +1,7 @@
 'use strict';
 
 exports.mod = (mod_data) => {
+    if(mod_data.enabled){
     const fs = require('fs');
     const serverDir = global.internal.path.resolve;
     const profileDir = serverDir('user/profiles');
@@ -370,5 +371,6 @@ exports.mod = (mod_data) => {
         }
 
         return alteredStacks;
+    }
     }
 }
