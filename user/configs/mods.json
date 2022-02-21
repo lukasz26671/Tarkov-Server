@@ -29,14 +29,19 @@
 		"folder": "Nehax-MagazineManiac-1.0.0",
 		"order": 6
 	},
+	"ProfileCleaner-1.0.0_Nevermind": {
+		"isEnabled": true,
+		"folder": "Nevermind-ProfileCleaner-1.0.0",
+		"order": 7
+	},
 	"questupdater-1.0.0_Unreal_Unicorn": {
 		"isEnabled": true,
 		"folder": "Unreal_Unicorn-questupdater-1.0.0",
-		"order": 7
+		"order": 8
 	},
 	"AmmoStack-1.0.0_Unreal_Unicorn": {
 		"isEnabled": true,
 		"folder": "Unreal_Unicorn_AmmoStack_1.0.0",
-		"order": 8
+		"order": 9
 	}
 }
