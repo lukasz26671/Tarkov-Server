@@ -105,7 +105,7 @@ class Responses {
       "/singleplayer/bundles": this.singleplayerBundles,
       "/singleplayer/settings/raid/endstate": this.singleplayerSettingsRaidEndstate,
       "/singleplayer/settings/raid/menu": this.singleplayerSettingsRaidMenu,
-      "/singleplayer/settings/bot/difficulty": this.singleplayerSettingsBotDifficulty,
+      //"/singleplayer/settings/bot/difficulty": this.singleplayerSettingsBotDifficulty,
     };
     this.dynamicResponses = {
       "/client/locale": this.dynClientLocale,

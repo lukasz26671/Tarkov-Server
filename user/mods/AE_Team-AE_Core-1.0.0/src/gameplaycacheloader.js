@@ -73,9 +73,7 @@ exports.mod = (mod_data) => {
           }
         }
       }
-    console.log(timelimit, "original time limit")
     locations[name].base.escape_time_limit = temp;
-    console.log(locations[name].base.escape_time_limit, "modified time limit")
     }
   }
   //END ------- Raid Time Modifier
