@@ -527,24 +527,6 @@ class Responses {
     return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
   }
   clientMatchOfflineStart(url, info, sessionID) {
-    /*
-      {
-        locationName: 'Factory',
-        entryPoint: 'Factory',
-        startTime: 1626554822,
-        dateTime: 'CURR',
-        gameSettings: {
-        timeAndWeatherSettings: { isRandomTime: false, isRandomWeather: false },
-        botsSettings: { isEnabled: false, isScavWars: false, botAmount: 'AsOnline' },
-        wavesSettings: {
-          botDifficulty: 'AsOnline',
-          isBosses: true,
-          isTaggedAndCursed: false,
-          wavesBotAmount: 'AsOnline'
-        }
-        }
-      }
-    */
     offraid_f.handler.addPlayer(sessionID, {
       Location: info.locationName,
       Time: info.dateTime,
@@ -720,8 +702,8 @@ class Responses {
   singleplayerSettingsRaidMenu(url, info, sessionID) {
     return response_f.noBody(global._database.gameplayConfig.defaultRaidSettings);
   }
-  singleplayerSettingsBotDifficulty(url, info, sessionID) {
-    let data = [];
+/*   singleplayerSettingsBotDifficulty(url, info, sessionID) {
+     let data = [];
     for (const botType in global._database.bots) {
       for (const difficulty in global._database.bots[botType].difficulty) {
         const key = `${difficulty}.${botType}`;
@@ -731,8 +713,8 @@ class Responses {
         });
       }
     }
-    return response_f.noBody(data);
-    //bots_f.getBotDifficulty(type, difficulty)
-  }
+    return response_f.noBody(data); 
+    bots_f.getBotDifficulty(type, difficulty)
+  } */
 }
 module.exports.responses = new Responses();
