@@ -178,6 +178,7 @@ function _load_TradersData() {
       _database.traders[traderID].base.repair.price_rate = -100;
     }
   }
+  _database.ragfair_offers = fileIO.readParsed("./" + db.user.cache.ragfair_offers);
 }
 function _load_WeatherData() {
   _database.weather = fileIO.readParsed("./" + db.user.cache.weather);
