@@ -153,7 +153,6 @@ function _load_LocationData() {
   }
   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
   _database.locationConfigs = {};
-  //_database.locationConfigs["dynamicLootAutoSpawnDetector"] = fileIO.readParsed("./" + db.locations.dynamicLootAutoSpawnDetector);
   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
 }

@@ -319,10 +319,7 @@ class TraderServer {
   getCustomization(traderID, sessionID) {
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
-    //let suitArray = _database.traders(traderID)
-    let suitArray = fileIO.readParsed(
-      `./user/cache/customization_${traderID}.json`
-    );
+    let suitArray = _database.traders[traderID].suits;
     let suitList = [];
 
     for (let suit of suitArray) {
