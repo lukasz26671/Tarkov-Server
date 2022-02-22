@@ -1014,7 +1014,7 @@ class LocationServer {
   /* get all locations without loot data */
   generateAll() {
     // lets try to read from cache
-    if (!utility.isUndefined(db.user.cache.locations)) {
+    if (!utility.isUndefined("./" + db.user.cache.locations)) {
       let base = global._database.core.location_base;
       let newData = {};
       for (let location in global._database.locations) {
@@ -1025,7 +1025,7 @@ class LocationServer {
       base.locations = newData;
       return base;
     }
-    throw "Missing file db/cacheBase/locations.json";
+    throw "Missing file db/user/cache/locations.json";
   }
 }
 

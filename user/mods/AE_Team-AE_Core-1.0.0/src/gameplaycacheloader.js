@@ -10,8 +10,8 @@ exports.mod = (mod_data) => {
   logger.logInfo(`—————————————————————————————————————————`);
 
   //START ------- BIG VARIABLE LOAD
-  const items = cacheLoad("user/cache/items.json");
-  const locations = cacheLoad("user/cache/locations.json");
+  let items = cacheLoad("user/cache/items.json");
+  let locations = cacheLoad("user/cache/locations.json");
   //END ------- BIG VARIABLE LOAD
 
 
@@ -23,8 +23,7 @@ exports.mod = (mod_data) => {
 
 
     for (const name in config.raidTimeConfig.locations.base) {
-      let base = locations[name].base;
-      let timelimit = base.escape_time_limit;
+      let timelimit = locations[name].base.escape_time_limit;
       let temp;
       let mapTimeConfig;
 
@@ -50,7 +49,7 @@ exports.mod = (mod_data) => {
         }
       } else if (mapModifier === "each"){
         mapTimeConfig = config.raidTimeConfig.locations.base;
-        if (timeModifier == "minutes") {
+        if (timeModifier === "minutes") {
           if (typeof mapTimeConfig[name] != "undefined") {
             if (mapTimeConfig[name].minutes <= 0) {
               logger.logWarning(`You absolute retard, why would you set your raid timer to 0? If you send me this error we will ban you.`);
@@ -69,7 +68,9 @@ exports.mod = (mod_data) => {
           }
         }
       }
-      timelimit = temp;
+    console.log(timelimit, "original time limit")
+    locations[name].base.escape_time_limit = temp;
+    console.log(locations[name].base.escape_time_limit, "modified time limit")
     }
   }
   //END ------- Raid Time Modifier
@@ -200,6 +201,10 @@ exports.mod = (mod_data) => {
   }
   //END ------- Based Item Loop
 
+    // Writing to file
+    fileIO.write(PathResolver("user/cache/items.json"), items, true, false);
+    
+    fileIO.write(PathResolver("user/cache/locations.json"), locations, true, false)
 
   // Logging success on modload
   logger.logInfo(`—————————————————————————————————————————`);
