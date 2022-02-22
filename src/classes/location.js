@@ -620,24 +620,59 @@ class Generator {
       let newItemsData = [];
       // forced loot should be only contain 1 item... (there shouldnt be any weapon in there...)
       const newId = utility.generateNewItemId();
+      let createEndLootData
+      //logger.logError(JSON.stringify(typeArray[i], null, 2));
+      //temporary fix until I figure out a global way to do it. Seems like the only loot container this way.
+      if(data.Id == "custom_multiScene_00058"){        
+        createEndLootData = {
+          Id: data.Id,
+          IsStatic: data.IsStatic,
+          useGravity: data.useGravity,
+          randomRotation: data.randomRotation,
+          Position: data.Position,
+          Rotation: data.Rotation,
+          IsGroupPosition: data.IsGroupPosition,
+          GroupPositions: data.GroupPositions,
+          Root: newId,
+          Items: [
+            {
+              _id: newId,
+              _tpl: "5909e4b686f7747f5b744fa4"
+            },
+            {
+              _id: "unknownKey_Spawn_blabla",
+              _tpl: "593962ca86f774068014d9af",
+              parentId: newId,
+              slotId: "main",
+              location: {
+                x: 0,
+                y: 0,
+                r: 0
+              }
+            }
+          ],
+        };
+      }else{
+        createEndLootData = {
+          Id: data.Id,
+          IsStatic: data.IsStatic,
+          useGravity: data.useGravity,
+          randomRotation: data.randomRotation,
+          Position: data.Position,
+          Rotation: data.Rotation,
+          IsGroupPosition: data.IsGroupPosition,
+          GroupPositions: data.GroupPositions,
+          Root: newId,
+          Items: [
+            {
+              _id: newId,
+              _tpl: data.Items[0],
+            },
+          ],
+        };
+      }
 
-      let createEndLootData = {
-        Id: data.Id,
-        IsStatic: data.IsStatic,
-        useGravity: data.useGravity,
-        randomRotation: data.randomRotation,
-        Position: data.Position,
-        Rotation: data.Rotation,
-        IsGroupPosition: data.IsGroupPosition,
-        GroupPositions: data.GroupPositions,
-        Root: newId,
-        Items: [
-          {
-            _id: newId,
-            _tpl: data.Items[0],
-          },
-        ],
-      };
+      
 
       output.Loot.push(createEndLootData);
       count++;
