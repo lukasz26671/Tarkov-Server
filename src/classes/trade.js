@@ -90,7 +90,7 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
 
 // Ragfair trading
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
-  let ragfair_offers_traders = fileIO.readParsed(db.user.cache.ragfair_offers);
+  let ragfair_offers_traders = _database.ragfair_offers;
   let offers = body.offers;
 
   for (let offer of offers) {

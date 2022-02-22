@@ -195,7 +195,7 @@ module.exports.upgrade = (pmcData, body, sessionID) => {
       }
     } else {
       //StackObjectsCount property missing, deleting item
-      logger.logWarning(`StackObjectsCount property missing, deleting item`);
+      logger.logWarning(`StackObjectsCount property missing for ${itemFromInventory._id}, deleting item`);
       move_f.removeItem(pmcData, itemFromInventory._id, sessionID);
     }
   }

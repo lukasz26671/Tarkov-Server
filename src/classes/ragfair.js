@@ -181,7 +181,8 @@ function getOffers(sessionID, request) {
 }
 
 function getOffersFromTraders(sessionID, request) {
-  let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers);
+  let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
+  //let jsonToReturn = _database.ragfair_offers;
   let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
@@ -338,7 +339,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
     return [];
   }
 
-  let offerBase = fileIO.readParsed(db.base.fleaOffer);
+  let offerBase = _database.core.fleaOffer;
   let offers = [];
 
   // Preset

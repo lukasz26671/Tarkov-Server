@@ -10,8 +10,8 @@ exports.mod = (mod_data) => {
   logger.logInfo(`—————————————————————————————————————————`);
 
   //START ------- BIG VARIABLE LOAD
-  const items = cacheLoad("user/cache/items.json");
-  const locations = cacheLoad("user/cache/locations.json");
+  let items = cacheLoad("user/cache/items.json");
+  let locations = cacheLoad("user/cache/locations.json");
   //END ------- BIG VARIABLE LOAD
 
 
@@ -23,53 +23,57 @@ exports.mod = (mod_data) => {
 
 
     for (const name in config.raidTimeConfig.locations.base) {
-      let base = locations[name].base;
-      let timelimit = base.escape_time_limit;
-      let temp;
-      let mapTimeConfig;
+      let timelimit = locations[name].base.escape_time_limit;
+      let temp; // will hold modified time based on mapModifier and timeModifier
+      let mapTimeConfig; // will hold mapTimeModifier based on mapModifier
+      let minutes; // will hold minutes based on mapModifier and timeModifier
+      let multiplier; // will hold multiplier based on mapModifier and timeModifier
 
       if (mapModifier === "all"){
         mapTimeConfig = config.raidTimeConfig.locations.allMaps;
         if (timeModifier === "minutes") {
           if (typeof mapTimeConfig != "undefined") {
-            if (mapTimeConfig.minutes <= 0) {
-              logger.logWarning(`You absolute retard, why would you set your raid timer to 0? If you send me this error we will ban you.`);
+            minutes = mapTimeConfig.minutes;
+            if (minutes <= 0) {
+              logger.logWarning(`You absolute retard, why would you set your raid timer to 0? It has been reset to 1. If you send me this error we will ban you.`);
+              minutes = 1;
             }
-            if (timelimit != mapTimeConfig.minutes) {
-              temp = mapTimeConfig.minutes;
+            if (timelimit >= minutes) {
+              temp = minutes;
             }
           }
         } else if (timeModifier === "multiplier") {
-          let multiplier = mapTimeConfig.multiplier;
+          multiplier = mapTimeConfig.multiplier;
   
           if (multiplier <= 0) {
-            logger.logWarning(`You absolute retard, why would you set your raid timer multiplier to 0? If you send me this error we will ban you.`);
-          } else if (multiplier !== 1) {
+            logger.logWarning(`You absolute retard, why would you set your raid timer multiplier to 0? It has been reset to 1. If you send me this error we will ban you.`);
+            multiplier = 1;
+          } else if (multiplier > 1) {
             temp = timelimit * multiplier;
           }
         }
       } else if (mapModifier === "each"){
         mapTimeConfig = config.raidTimeConfig.locations.base;
-        if (timeModifier == "minutes") {
-          if (typeof mapTimeConfig[name] != "undefined") {
-            if (mapTimeConfig[name].minutes <= 0) {
-              logger.logWarning(`You absolute retard, why would you set your raid timer to 0? If you send me this error we will ban you.`);
+        if (timeModifier === "minutes") {
+          minutes = mapTimeConfig[name].minutes;
+            if (minutes <= 0) {
+              logger.logWarning(`You absolute retard, why would you set your raid timer to 0? It has been reset to 1. If you send me this error we will ban you.`);
+              minutes = 1;
             }
-            if (timelimit != mapTimeConfig[name].minutes) {
-              temp = mapTimeConfig[name].minutes;
+            if (timelimit >= minutes) {
+              temp = minutes;
             }
-          }
         } else if (timeModifier === "multiplier") {
-          let multiplier = mapTimeConfig[name].multiplier;
+          multiplier = mapTimeConfig[name].multiplier;
   
           if (multiplier <= 0) {
-            logger.logWarning(`You absolute retard, why would you set your raid timer multiplier to 0? If you send me this error we will ban you.`);
-          } else if (!multiplier == 1) {
+            logger.logWarning(`You absolute retard, why would you set your raid timer multiplier to 0? It has been reset to 1. If you send me this error we will ban you.`);
+          } else if (multiplier > 1) {
             temp = (timelimit * multiplier);
           }
         }
       }
-      timelimit = temp;
+    locations[name].base.escape_time_limit = temp;
     }
   }
   //END ------- Raid Time Modifier
@@ -200,6 +204,10 @@ exports.mod = (mod_data) => {
   }
   //END ------- Based Item Loop
 
+    // Writing to file
+    fileIO.write(PathResolver("user/cache/items.json"), items, true, false);
+    
+    fileIO.write(PathResolver("user/cache/locations.json"), locations, true, false)
 
   // Logging success on modload
   logger.logInfo(`—————————————————————————————————————————`);

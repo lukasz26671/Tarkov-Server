@@ -278,7 +278,7 @@ class ProfileServer {
     fileIO.write(`${folder}storage.json`, storage);
     fileIO.write(`${folder}userbuilds.json`, {});
     fileIO.write(`${folder}dialogue.json`, {});
-    fileIO.write(`${folder}exfiltrations.json`, { bigmap: 0, factory4_day: 0, factory4_night: 0, interchange: 0, laboratory: 0, rezervbase: 0, shoreline: 0, woods: 0 });
+    fileIO.write(`${folder}exfiltrations.json`, { bigmap: 0, develop: 0, factory4_day: 0, factory4_night: 0, interchange: 0, laboratory: 0, lighthouse: 0, rezervbase: 0, shoreline: 0, suburbs: 0, tarkovstreets: 0, terminal: 0, town: 0, woods: 0 });
 
     // don't wipe profile again //
     account_f.handler.setWipe(account.id, false);

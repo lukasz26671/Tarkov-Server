@@ -38,13 +38,9 @@ function generateFenceAssort() {
   const fenceId = "579dc571d53a0658a154fbec";
   let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
 
-  let fence_base_assort = fileIO.readParsed(
-    db.user.cache.assort_579dc571d53a0658a154fbec
-  ).data.items;
+  let fence_base_assort = global._database.traders[fenceId].assort.items;
 
-  let fence_base_assort_root_items = fence_base_assort.filter(
-    (item) => item.parentId === "hideout"
-  );
+  let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
 
   const fence_assort = [];
   const barter_scheme = {};
@@ -323,10 +319,7 @@ class TraderServer {
   getCustomization(traderID, sessionID) {
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
-    //let suitArray = _database.traders(traderID)
-    let suitArray = fileIO.readParsed(
-      `./user/cache/customization_${traderID}.json`
-    );
+    let suitArray = _database.traders[traderID].suits;
     let suitList = [];
 
     for (let suit of suitArray) {

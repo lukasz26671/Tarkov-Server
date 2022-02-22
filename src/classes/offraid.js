@@ -119,7 +119,7 @@ function setInventory(pmcData, profile) {
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems);
 	
 	//fix for duplicate ids in items by creating new ids for item ids created in-raid
-	profile.Inventory = repairInventoryDuplicates(profile.Inventory, pmcData.aid);
+	profile.Inventory = repairInventoryIDs(profile.Inventory, pmcData.aid);
 
 	// Bandaid fix to duplicate IDs being saved to profile after raid. May cause inconsistent item data. (~Kiobu)
 	// no more duplicates should exist but I'll leave this here untouched bc it's working (CQ)
@@ -504,7 +504,7 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
  * @param {pmcData.aid} AID The account ID for which the items are being repaired. Used for logging and debugging.
  * @author CQInmanis
  */
-function repairInventoryDuplicates(pInv, AID){
+function repairInventoryIDs(pInv, AID){
 
 	// Don't count important IDs as errors.
 	const ignoreIDs = [

@@ -105,7 +105,7 @@ class Responses {
       "/singleplayer/bundles": this.singleplayerBundles,
       "/singleplayer/settings/raid/endstate": this.singleplayerSettingsRaidEndstate,
       "/singleplayer/settings/raid/menu": this.singleplayerSettingsRaidMenu,
-      "/singleplayer/settings/bot/difficulty": this.singleplayerSettingsBotDifficulty,
+      //"/singleplayer/settings/bot/difficulty": this.singleplayerSettingsBotDifficulty,
     };
     this.dynamicResponses = {
       "/client/locale": this.dynClientLocale,
@@ -413,7 +413,7 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGetMetricsConfig(url, info, sessionID) {
-    return response_f.getBody(fileIO.readParsed(db.base.matchMetrics));
+    return response_f.getBody(fileIO.readParsed(_database.core.matchMetrics));
   }
   clientGlobals(url, info, sessionID) {
     global._database.globals.time = Date.now() / 1000;
@@ -527,24 +527,6 @@ class Responses {
     return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
   }
   clientMatchOfflineStart(url, info, sessionID) {
-    /*
-      {
-        locationName: 'Factory',
-        entryPoint: 'Factory',
-        startTime: 1626554822,
-        dateTime: 'CURR',
-        gameSettings: {
-        timeAndWeatherSettings: { isRandomTime: false, isRandomWeather: false },
-        botsSettings: { isEnabled: false, isScavWars: false, botAmount: 'AsOnline' },
-        wavesSettings: {
-          botDifficulty: 'AsOnline',
-          isBosses: true,
-          isTaggedAndCursed: false,
-          wavesBotAmount: 'AsOnline'
-        }
-        }
-      }
-    */
     offraid_f.handler.addPlayer(sessionID, {
       Location: info.locationName,
       Time: info.dateTime,
@@ -692,7 +674,7 @@ class Responses {
   }
   serverConfigGameplay(url, body, sessionID) {
     //execute data save here with info cause info should be $_GET transfered to json type with info[variableName]
-    home_f.processSaveData(body, db.user.configs.gameplay);
+    home_f.processSaveData(body, _database.gameplay);
     return home_f.RenderGameplayConfigPage("/server/config/gameplay");
   }
   serverConfigMods(url, body, sessionID) {
@@ -701,11 +683,6 @@ class Responses {
   }
   serverConfigProfiles(url, body, sessionID) {
     return home_f.renderPage();
-
-    //Load Profiles from profile folder and allow user for few changes for them
-
-    //home_f.processSaveData(body, db.user.configs.gameplay);
-    //return home_f.RenderGameplayConfigPage("/server/config/gameplay");
   }
   serverConfigServer(url, body, sessionID) {
     home_f.processSaveServerData(body, db.user.configs.server);
@@ -725,8 +702,8 @@ class Responses {
   singleplayerSettingsRaidMenu(url, info, sessionID) {
     return response_f.noBody(global._database.gameplayConfig.defaultRaidSettings);
   }
-  singleplayerSettingsBotDifficulty(url, info, sessionID) {
-    let data = [];
+/*   singleplayerSettingsBotDifficulty(url, info, sessionID) {
+     let data = [];
     for (const botType in global._database.bots) {
       for (const difficulty in global._database.bots[botType].difficulty) {
         const key = `${difficulty}.${botType}`;
@@ -736,8 +713,8 @@ class Responses {
         });
       }
     }
-    return response_f.noBody(data);
-    //bots_f.getBotDifficulty(type, difficulty)
-  }
+    return response_f.noBody(data); 
+    bots_f.getBotDifficulty(type, difficulty)
+  } */
 }
 module.exports.responses = new Responses();

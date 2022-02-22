@@ -153,7 +153,6 @@ function _load_LocationData() {
   }
   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
   _database.locationConfigs = {};
-  //_database.locationConfigs["dynamicLootAutoSpawnDetector"] = fileIO.readParsed("./" + db.locations.dynamicLootAutoSpawnDetector);
   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
 }
@@ -178,6 +177,7 @@ function _load_TradersData() {
       _database.traders[traderID].base.repair.price_rate = -100;
     }
   }
+  _database.ragfair_offers = fileIO.readParsed("./" + db.user.cache.ragfair_offers);
 }
 function _load_WeatherData() {
   _database.weather = fileIO.readParsed("./" + db.user.cache.weather);
