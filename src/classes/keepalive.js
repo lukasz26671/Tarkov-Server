@@ -46,7 +46,7 @@ function updateTraders(sessionID) {
 
 function updatePlayerHideout(sessionID) {
   let pmcData = profile_f.handler.getPmcProfile(sessionID);
-  let recipes = fileIO.readParsed(db.user.cache.hideout_production);
+  let recipes = _database.hideout.production;
   let solarPowerLevel = 0;
   let btcFarmCGs = 0;
   let isGeneratorOn;
@@ -266,7 +266,7 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
     }
   }
 
-  let production = fileIO.readParsed(db.user.cache.hideout_production).data.find((prodArea) => prodArea.areaType == 20);
+  let production = _database.hideout.production.data.find((prodArea) => prodArea.areaType == 20);
   let time_elapsed = Math.floor(Date.now() / 1000) - btcProd.StartTimestamp;
 
   if (isGeneratorOn == true) {

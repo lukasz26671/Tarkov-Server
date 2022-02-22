@@ -413,7 +413,7 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGetMetricsConfig(url, info, sessionID) {
-    return response_f.getBody(fileIO.readParsed(db.base.matchMetrics));
+    return response_f.getBody(fileIO.readParsed(_database.core.matchMetrics));
   }
   clientGlobals(url, info, sessionID) {
     global._database.globals.time = Date.now() / 1000;
@@ -692,7 +692,7 @@ class Responses {
   }
   serverConfigGameplay(url, body, sessionID) {
     //execute data save here with info cause info should be $_GET transfered to json type with info[variableName]
-    home_f.processSaveData(body, db.user.configs.gameplay);
+    home_f.processSaveData(body, _database.gameplay);
     return home_f.RenderGameplayConfigPage("/server/config/gameplay");
   }
   serverConfigMods(url, body, sessionID) {
@@ -701,11 +701,6 @@ class Responses {
   }
   serverConfigProfiles(url, body, sessionID) {
     return home_f.renderPage();
-
-    //Load Profiles from profile folder and allow user for few changes for them
-
-    //home_f.processSaveData(body, db.user.configs.gameplay);
-    //return home_f.RenderGameplayConfigPage("/server/config/gameplay");
   }
   serverConfigServer(url, body, sessionID) {
     home_f.processSaveServerData(body, db.user.configs.server);

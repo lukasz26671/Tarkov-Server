@@ -398,7 +398,7 @@ function createOffer(template, onlyFunc, usePresets = true, sessionID) {
         logger.logWarning(`Item ${template} does not exist in ragfair assort`);
         return [];
     }
-    let offerBase = fileIO.readParsed(db.base.fleaOffer);
+    let offerBase = _database.core.fleaOffer;
     let offers = [];
     if (fleaConfig.fleaLock) {
         let itemlist = fileIO.readParsed(db.templates.items);
