@@ -194,21 +194,21 @@ function getOffersFromTraders(sessionID, request) {
   if (request.buildCount) {
     // Case: weapon builds
     offersFilters = Object.keys(request.buildItems);
-    jsonToReturn = fillCatagories(jsonToReturn, offersFilters);
+    jsonToReturn = fillCategories(jsonToReturn, offersFilters);
   } else {
     // Case: search
     if (request.linkedSearchId) {
       //offersFilters.concat( getLinkedSearchList(request.linkedSearchId) );
       offersFilters = [...offersFilters, ...getLinkedSearchList(request.linkedSearchId)];
-      jsonToReturn = fillCatagories(jsonToReturn, offersFilters);
+      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
     } else if (request.neededSearchId) {
       offersFilters = [...offersFilters, ...getNeededSearchList(request.neededSearchId)];
-      jsonToReturn = fillCatagories(jsonToReturn, offersFilters);
+      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
     }
 
     if (request.removeBartering == true) {
       jsonToReturn = removeBarterOffers(jsonToReturn);
-      jsonToReturn = fillCatagories(jsonToReturn, offersFilters);
+      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
     }
 
     // Case: category
@@ -249,7 +249,7 @@ function getOffersFromTraders(sessionID, request) {
   return jsonToReturn;
 }
 
-function fillCatagories(response, filters) {
+function fillCategories(response, filters) {
   response.categories = {};
   for (let filter of filters) {
     response.categories[filter] = 1;
