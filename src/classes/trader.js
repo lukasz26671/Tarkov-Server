@@ -38,7 +38,10 @@ function generateFenceAssort() {
   const fenceId = "579dc571d53a0658a154fbec";
   let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
 
-  let fence_base_assort = global._database.traders[fenceId].assort.items;
+  let fence_base_assort = fileIO.readParsed(
+    db.user.cache.assort_579dc571d53a0658a154fbec
+  ).data.items;
+  //let fence_base_assort = global._database.traders[fenceId].assort.items;
 
   let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
 
