@@ -339,7 +339,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
     return [];
   }
 
-  let offerBase = _database.core.fleaOffer;
+  //let offerBase = _database.core.fleaOffer;
+  let offerBase = fileIO.readParsed(db.user.cache.ragfair_offers);
   let offers = [];
 
   // Preset

@@ -98,7 +98,7 @@ exports.mod = (mod_data) => {
     //START ------- Recoil Tweaks
     if (config.recoilConfig.toggle == true) {
       let recoilConfig = config.recoilConfig;
-      if (items.data[id]._type !== "Node") {
+      if (items.data[id]._type != "Node") {
         if (items.data[id]._props.weapClass == "pistol") {
           items.data[id]._props.CameraRecoil = (items.data[id]._props.CameraRecoil * recoilConfig.pistolRecoil.cameraRecoil).toFixed(3);
           items.data[id]._props.CameraSnap = (items.data[id]._props.CameraSnap * recoilConfig.pistolRecoil.cameraSnap).toFixed(1);
