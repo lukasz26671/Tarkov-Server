@@ -27,9 +27,9 @@ function sortOffersByPrice(a, b) {
   return a.requirements[0].count - b.requirements[0].count;
 }
 
-function sortOffersByPriceSummaryCost(a, b) {
+/* function sortOffersByPriceSummaryCost(a, b) {
   return a.summaryCost - b.summaryCost;
-}
+} */
 
 function sortOffersByExpiry(a, b) {
   return a.endTime - b.endTime;
@@ -51,12 +51,13 @@ function sortOffers(request, offers) {
       break;
 
     case 5: // Price
-      if (request.offerOwnerType == 1) {
+/*       if (request.offerOwnerType == 1) {
         offers.sort(sortOffersByPriceSummaryCost);
       } else {
         offers.sort(sortOffersByPrice);
-      }
+      } */
 
+      offers.sort(sortOffersByPrice);
       break;
 
     case 6: // Expires in
@@ -181,8 +182,8 @@ function getOffers(sessionID, request) {
 }
 
 function getOffersFromTraders(sessionID, request) {
-  let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
-  //let jsonToReturn = _database.ragfair_offers;
+  //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
+  let jsonToReturn = helper_f.clone(_database.ragfair_offers);
   let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
@@ -327,6 +328,7 @@ function getCategoryList(handbookId) {
 }
 
 function createOffer(template, onlyFunc, usePresets = true) {
+  //console.log("createOffer is called")
   // Some slot filters reference bad items
   if (!(template in global._database.items)) {
     logger.logWarning(`Item ${template} does not exist`);
@@ -339,8 +341,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
     return [];
   }
 
-  //let offerBase = _database.core.fleaOffer;
-  let offerBase = fileIO.readParsed(db.user.cache.ragfair_offers);
+  const offerBase = _database.core.fleaOffer;
+  //let offerBase = fileIO.readParsed(db.user.cache.ragfair_offers);
   let offers = [];
 
   // Preset
@@ -357,26 +359,29 @@ function createOffer(template, onlyFunc, usePresets = true) {
       }
 
       mods[0].upd = mods[0].upd || {}; // append the stack count
-      mods[0].upd.StackObjectsCount = offerBase.items[0].upd.StackObjectsCount;
+      mods[0].upd.StackObjectsCount = offer.items[0].upd.StackObjectsCount;
 
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
       offer.requirements[0].count = Math.round(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
       offers.push(offer);
+      //console.log("offer:", offer)
     }
   }
 
   // Single item
   if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
+    let offer = helper_f.clone(offerBase);
+
     let rubPrice = Math.round(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
-    offerBase._id = template;
-    offerBase.items[0]._tpl = template;
-    offerBase.requirements[0].count = rubPrice;
-    offerBase.itemsCost = rubPrice;
-    offerBase.requirementsCost = rubPrice;
-    offerBase.summaryCost = rubPrice;
-    offers.push(offerBase);
+    offer._id = template;
+    offer.items[0]._tpl = template;
+    offer.requirements[0].count = rubPrice;
+    offer.itemsCost = rubPrice;
+    offer.requirementsCost = rubPrice;
+    offer.summaryCost = rubPrice;
+    offers.push(offer);
   }
 
   return offers;
