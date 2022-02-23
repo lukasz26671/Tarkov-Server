@@ -1,5 +1,5 @@
-[
-  {
+{
+  "5a27b9de86f77464e5044585": {
     "QuestName": "The Cult Part 1",
     "_id": "5a27b9de86f77464e5044585",
     "canShowNotificationsInGame": true,
@@ -207,7 +207,7 @@
       "Fail": []
     }
   },
-  {
+  "59c512ad86f7741f0d09de9b": {
     "QuestName": "The Punisher Part 3",
     "_id": "59c512ad86f7741f0d09de9b",
     "canShowNotificationsInGame": true,
@@ -413,7 +413,7 @@
       "Fail": []
     }
   },
-  {
+  "59675d6c86f7740a842fc482": {
     "QuestName": "Ice cream cones",
     "_id": "59675d6c86f7740a842fc482",
     "canShowNotificationsInGame": true,
@@ -712,7 +712,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bc1586f7741f6d40fa2f": {
     "QuestName": "Wet Job Part 3",
     "_id": "5a27bc1586f7741f6d40fa2f",
     "canShowNotificationsInGame": true,
@@ -977,7 +977,7 @@
       "Fail": []
     }
   },
-  {
+  "5a0449d586f77474e66227b7": {
     "QuestName": "Spa Tour Part 5",
     "_id": "5a0449d586f77474e66227b7",
     "canShowNotificationsInGame": true,
@@ -1128,7 +1128,7 @@
       "Fail": []
     }
   },
-  {
+  "5a03153686f77442d90e2171": {
     "QuestName": "Spa Tour Part 1",
     "_id": "5a03153686f77442d90e2171",
     "canShowNotificationsInGame": true,
@@ -1400,7 +1400,7 @@
       "Fail": []
     }
   },
-  {
+  "59674cd986f7744ab26e32f2": {
     "QuestName": "Shootout picnic",
     "_id": "59674cd986f7744ab26e32f2",
     "canShowNotificationsInGame": true,
@@ -1607,7 +1607,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27d2af86f7744e1115b323": {
     "QuestName": "Friend from the West Part 2",
     "_id": "5a27d2af86f7744e1115b323",
     "canShowNotificationsInGame": true,
@@ -1699,7 +1699,7 @@
       "Fail": []
     }
   },
-  {
+  "5979f8bb86f7743ec214c7a6": {
     "QuestName": "Polikhim hobo",
     "_id": "5979f8bb86f7743ec214c7a6",
     "canShowNotificationsInGame": true,
@@ -1862,7 +1862,7 @@
       "Fail": []
     }
   },
-  {
+  "5936da9e86f7742d65037edf": {
     "QuestName": "Checking",
     "_id": "5936da9e86f7742d65037edf",
     "canShowNotificationsInGame": true,
@@ -2072,7 +2072,7 @@
       "Fail": []
     }
   },
-  {
+  "59c50c8886f7745fed3193bf": {
     "QuestName": "The Punisher Part 2",
     "_id": "59c50c8886f7745fed3193bf",
     "canShowNotificationsInGame": true,
@@ -2607,7 +2607,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bb1e86f7741f27621b7e": {
     "QuestName": "Cargo X Part 1",
     "_id": "5a27bb1e86f7741f27621b7e",
     "canShowNotificationsInGame": true,
@@ -2847,7 +2847,7 @@
       "Fail": []
     }
   },
-  {
+  "59ca1a6286f774509a270942": {
     "QuestName": "No offence",
     "_id": "59ca1a6286f774509a270942",
     "canShowNotificationsInGame": true,
@@ -2939,7 +2939,7 @@
       "Fail": []
     }
   },
-  {
+  "5a0327ba86f77456b9154236": {
     "QuestName": "Spa Tour Part 3",
     "_id": "5a0327ba86f77456b9154236",
     "canShowNotificationsInGame": true,
@@ -3313,7 +3313,7 @@
       "Fail": []
     }
   },
-  {
+  "597a0f5686f774273b74f676": {
     "QuestName": "Chemical Part 4",
     "_id": "597a0f5686f774273b74f676",
     "canShowNotificationsInGame": true,
@@ -3575,7 +3575,7 @@
       "Fail": []
     }
   },
-  {
+  "596b43fb86f77457ca186186": {
     "QuestName": "The Extortionist",
     "_id": "596b43fb86f77457ca186186",
     "canShowNotificationsInGame": true,
@@ -3862,7 +3862,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27ba1c86f77461ea5a3c56": {
     "QuestName": "The Cult Part 2",
     "_id": "5a27ba1c86f77461ea5a3c56",
     "canShowNotificationsInGame": true,
@@ -4110,7 +4110,7 @@
       "Fail": []
     }
   },
-  {
+  "59675ea386f77414b32bded2": {
     "QuestName": "Postman Pat Part 1",
     "_id": "59675ea386f77414b32bded2",
     "canShowNotificationsInGame": true,
@@ -4323,7 +4323,7 @@
       "Fail": []
     }
   },
-  {
+  "596a204686f774576d4c95de": {
     "QuestName": "Sanitary Standards Part 2",
     "_id": "596a204686f774576d4c95de",
     "canShowNotificationsInGame": true,
@@ -4466,7 +4466,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27c99a86f7747d2c6bdd8e": {
     "QuestName": "Friend from the West Part 1",
     "_id": "5a27c99a86f7747d2c6bdd8e",
     "canShowNotificationsInGame": true,
@@ -4729,7 +4729,7 @@
       "Fail": []
     }
   },
-  {
+  "59689fbd86f7740d137ebfc4": {
     "QuestName": "Operation Aquarius Part 1",
     "_id": "59689fbd86f7740d137ebfc4",
     "canShowNotificationsInGame": true,
@@ -4932,7 +4932,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27b80086f774429a5d7e20": {
     "QuestName": "Eagle Eye",
     "_id": "5a27b80086f774429a5d7e20",
     "canShowNotificationsInGame": true,
@@ -5201,7 +5201,7 @@
       "Fail": []
     }
   },
-  {
+  "5969f90786f77420d2328015": {
     "QuestName": "Painkiller",
     "_id": "5969f90786f77420d2328015",
     "canShowNotificationsInGame": true,
@@ -5392,7 +5392,7 @@
       "Fail": []
     }
   },
-  {
+  "597a0e5786f77426d66c0636": {
     "QuestName": "Chemical Part 3",
     "_id": "597a0e5786f77426d66c0636",
     "canShowNotificationsInGame": true,
@@ -5566,7 +5566,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bb3d86f77411ea361a21": {
     "QuestName": "Cargo X Part 2",
     "_id": "5a27bb3d86f77411ea361a21",
     "canShowNotificationsInGame": true,
@@ -5847,7 +5847,7 @@
       "Fail": []
     }
   },
-  {
+  "5a03173786f77451cb427172": {
     "QuestName": "Spa Tour Part 2",
     "_id": "5a03173786f77451cb427172",
     "canShowNotificationsInGame": true,
@@ -6047,7 +6047,7 @@
       "Fail": []
     }
   },
-  {
+  "596a0e1686f7741ddf17dbee": {
     "QuestName": "Supply plans",
     "_id": "596a0e1686f7741ddf17dbee",
     "canShowNotificationsInGame": true,
@@ -6262,7 +6262,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bb8386f7741c770d2d0a": {
     "QuestName": "Wet Job Part 1",
     "_id": "5a27bb8386f7741c770d2d0a",
     "canShowNotificationsInGame": true,
@@ -6450,7 +6450,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bb5986f7741dfb660900": {
     "QuestName": "Cargo X Part 3",
     "_id": "5a27bb5986f7741dfb660900",
     "canShowNotificationsInGame": true,
@@ -6660,7 +6660,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27b7a786f774579c3eb376": {
     "QuestName": "Tigr Safari",
     "_id": "5a27b7a786f774579c3eb376",
     "canShowNotificationsInGame": true,
@@ -6893,7 +6893,7 @@
       "Fail": []
     }
   },
-  {
+  "596b455186f77457cb50eccb": {
     "QuestName": "Stirrup",
     "_id": "596b455186f77457cb50eccb",
     "canShowNotificationsInGame": true,
@@ -7124,7 +7124,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac242ab86f77412464f68b4": {
     "QuestName": "Gunsmith Part 5",
     "_id": "5ac242ab86f77412464f68b4",
     "canShowNotificationsInGame": true,
@@ -7324,7 +7324,7 @@
       "Fail": []
     }
   },
-  {
+  "5979eee086f774311955e614": {
     "QuestName": "Golden swag",
     "_id": "5979eee086f774311955e614",
     "canShowNotificationsInGame": true,
@@ -7595,7 +7595,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27ba9586f7741b543d8e85": {
     "QuestName": "Spa Tour Part 6",
     "_id": "5a27ba9586f7741b543d8e85",
     "canShowNotificationsInGame": true,
@@ -7701,7 +7701,7 @@
       "Fail": []
     }
   },
-  {
+  "59689ee586f7740d1570bbd5": {
     "QuestName": "Sanitary Standards Part 1",
     "_id": "59689ee586f7740d1570bbd5",
     "canShowNotificationsInGame": true,
@@ -7886,7 +7886,7 @@
       "Fail": []
     }
   },
-  {
+  "5969f9e986f7741dde183a50": {
     "QuestName": "Pharmacist",
     "_id": "5969f9e986f7741dde183a50",
     "canShowNotificationsInGame": true,
@@ -8123,7 +8123,7 @@
       "Fail": []
     }
   },
-  {
+  "59c124d686f774189b3c843f": {
     "QuestName": "BP depot",
     "_id": "59c124d686f774189b3c843f",
     "canShowNotificationsInGame": true,
@@ -8404,7 +8404,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bc3686f7741c73584026": {
     "QuestName": "Wet Job Part 4",
     "_id": "5a27bc3686f7741c73584026",
     "canShowNotificationsInGame": true,
@@ -8604,7 +8604,7 @@
       "Fail": []
     }
   },
-  {
+  "596a101f86f7741ddb481582": {
     "QuestName": "Kind of sabotage",
     "_id": "596a101f86f7741ddb481582",
     "canShowNotificationsInGame": true,
@@ -8730,7 +8730,7 @@
       "Fail": []
     }
   },
-  {
+  "59ca264786f77445a80ed044": {
     "QuestName": "The Punisher Part 4",
     "_id": "59ca264786f77445a80ed044",
     "canShowNotificationsInGame": true,
@@ -9131,7 +9131,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bc6986f7741c7358402b": {
     "QuestName": "Wet Job Part 5",
     "_id": "5a27bc6986f7741c7358402b",
     "canShowNotificationsInGame": true,
@@ -9367,7 +9367,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bc8586f7741b543d8ea4": {
     "QuestName": "Wet Job Part 6",
     "_id": "5a27bc8586f7741b543d8ea4",
     "canShowNotificationsInGame": true,
@@ -9580,7 +9580,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27b7d686f77460d847e6a6": {
     "QuestName": "Scrap Metal",
     "_id": "5a27b7d686f77460d847e6a6",
     "canShowNotificationsInGame": true,
@@ -9923,7 +9923,7 @@
       "Fail": []
     }
   },
-  {
+  "5967733e86f774602332fc84": {
     "QuestName": "Shortage",
     "_id": "5967733e86f774602332fc84",
     "canShowNotificationsInGame": true,
@@ -10070,7 +10070,7 @@
       "Fail": []
     }
   },
-  {
+  "597a171586f77405ba6887d3": {
     "QuestName": "Big customer",
     "_id": "597a171586f77405ba6887d3",
     "canShowNotificationsInGame": true,
@@ -10320,7 +10320,7 @@
       "Fail": []
     }
   },
-  {
+  "5967725e86f774601a446662": {
     "QuestName": "Shaking up teller",
     "_id": "5967725e86f774601a446662",
     "canShowNotificationsInGame": true,
@@ -10528,7 +10528,7 @@
       "Fail": []
     }
   },
-  {
+  "5979ed3886f77431307dc512": {
     "QuestName": "Whats on the flash drive",
     "_id": "5979ed3886f77431307dc512",
     "canShowNotificationsInGame": true,
@@ -10745,7 +10745,7 @@
       "Fail": []
     }
   },
-  {
+  "59c50a9e86f7745fef66f4ff": {
     "QuestName": "The Punisher Part 1",
     "_id": "59c50a9e86f7745fef66f4ff",
     "canShowNotificationsInGame": true,
@@ -10938,7 +10938,7 @@
       "Fail": []
     }
   },
-  {
+  "59ca29fb86f77445ab465c87": {
     "QuestName": "The Punisher Part 5",
     "_id": "59ca29fb86f77445ab465c87",
     "canShowNotificationsInGame": true,
@@ -11235,7 +11235,7 @@
       "Fail": []
     }
   },
-  {
+  "596760e186f7741e11214d58": {
     "QuestName": "Postman Pat Part 2",
     "_id": "596760e186f7741e11214d58",
     "canShowNotificationsInGame": false,
@@ -11344,7 +11344,7 @@
       "Fail": []
     }
   },
-  {
+  "5979f9ba86f7740f6c3fe9f2": {
     "QuestName": "Chemical Part 1",
     "_id": "5979f9ba86f7740f6c3fe9f2",
     "canShowNotificationsInGame": true,
@@ -11569,7 +11569,7 @@
       "Fail": []
     }
   },
-  {
+  "597a0b2986f77426d66c0633": {
     "QuestName": "Chemical Part 2",
     "_id": "597a0b2986f77426d66c0633",
     "canShowNotificationsInGame": true,
@@ -11813,7 +11813,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27b87686f77460de0252a8": {
     "QuestName": "Humanitarian Supplies",
     "_id": "5a27b87686f77460de0252a8",
     "canShowNotificationsInGame": true,
@@ -12162,7 +12162,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bbf886f774333a418eeb": {
     "QuestName": "Wet Job Part 2",
     "_id": "5a27bbf886f774333a418eeb",
     "canShowNotificationsInGame": true,
@@ -12405,7 +12405,7 @@
       "Fail": []
     }
   },
-  {
+  "596a1e6c86f7741ddc2d3206": {
     "QuestName": "General wares",
     "_id": "596a1e6c86f7741ddc2d3206",
     "canShowNotificationsInGame": true,
@@ -12568,7 +12568,7 @@
       "Fail": []
     }
   },
-  {
+  "59c93e8e86f7742a406989c4": {
     "QuestName": "Loyalty buyout",
     "_id": "59c93e8e86f7742a406989c4",
     "canShowNotificationsInGame": true,
@@ -12655,7 +12655,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27bafb86f7741c73584017": {
     "QuestName": "Spa Tour Part 7",
     "_id": "5a27bafb86f7741c73584017",
     "canShowNotificationsInGame": true,
@@ -12903,7 +12903,7 @@
       "Fail": []
     }
   },
-  {
+  "596a218586f77420d232807c": {
     "QuestName": "Car repair",
     "_id": "596a218586f77420d232807c",
     "canShowNotificationsInGame": true,
@@ -13105,7 +13105,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae449b386f77446d8741719": {
     "QuestName": "Gratitude",
     "_id": "5ae449b386f77446d8741719",
     "canShowNotificationsInGame": true,
@@ -13375,7 +13375,7 @@
       "Fail": []
     }
   },
-  {
+  "5b477b6f86f7747290681823": {
     "QuestName": "Gunsmith Part 14",
     "_id": "5b477b6f86f7747290681823",
     "canShowNotificationsInGame": true,
@@ -13562,7 +13562,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3460c86f7742880308185": {
     "QuestName": "Farming Part 2",
     "_id": "5ac3460c86f7742880308185",
     "canShowNotificationsInGame": true,
@@ -13838,7 +13838,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae327c886f7745c7b3f2f3f": {
     "QuestName": "Gunsmith Part 10",
     "_id": "5ae327c886f7745c7b3f2f3f",
     "canShowNotificationsInGame": true,
@@ -14084,7 +14084,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0bdb5286f774166e38eed4": {
     "QuestName": "Flint",
     "_id": "5c0bdb5286f774166e38eed4",
     "canShowNotificationsInGame": true,
@@ -14217,7 +14217,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac2426c86f774138762edfe": {
     "QuestName": "Gunsmith Part 2",
     "_id": "5ac2426c86f774138762edfe",
     "canShowNotificationsInGame": true,
@@ -14466,7 +14466,7 @@
       "Fail": []
     }
   },
-  {
+  "5a68667486f7742607157d28": {
     "QuestName": "Health Care Privacy Part 4",
     "_id": "5a68667486f7742607157d28",
     "canShowNotificationsInGame": true,
@@ -14588,7 +14588,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae3270f86f77445ba41d4dd": {
     "QuestName": "Gunsmith Part 8",
     "_id": "5ae3270f86f77445ba41d4dd",
     "canShowNotificationsInGame": true,
@@ -14759,7 +14759,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3462b86f7741d6118b983": {
     "QuestName": "Farming Part 3",
     "_id": "5ac3462b86f7741d6118b983",
     "canShowNotificationsInGame": true,
@@ -14938,7 +14938,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4495c86f7744e87761355": {
     "QuestName": "Sew it good Part 2",
     "_id": "5ae4495c86f7744e87761355",
     "canShowNotificationsInGame": true,
@@ -15138,7 +15138,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e44f86f77443e625e385": {
     "QuestName": "Huntsman path Eraser Part 1",
     "_id": "5d25e44f86f77443e625e385",
     "canShowNotificationsInGame": true,
@@ -15280,7 +15280,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae3267986f7742a413592fe": {
     "QuestName": "Gunsmith Part 7",
     "_id": "5ae3267986f7742a413592fe",
     "canShowNotificationsInGame": true,
@@ -15499,7 +15499,7 @@
       "Fail": []
     }
   },
-  {
+  "5c10f94386f774227172c572": {
     "QuestName": "The Blood of War Part 3",
     "_id": "5c10f94386f774227172c572",
     "canShowNotificationsInGame": true,
@@ -15723,7 +15723,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae448f286f77448d73c0131": {
     "QuestName": "The Blood of War",
     "_id": "5ae448f286f77448d73c0131",
     "canShowNotificationsInGame": true,
@@ -15927,7 +15927,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e4ad86f77443e625e387": {
     "QuestName": "Nostalgia",
     "_id": "5d25e4ad86f77443e625e387",
     "canShowNotificationsInGame": true,
@@ -16124,7 +16124,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e4d586f77443e625e388": {
     "QuestName": "Reserv",
     "_id": "5d25e4d586f77443e625e388",
     "canShowNotificationsInGame": true,
@@ -16305,7 +16305,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2a986f77409dd5cdf2a": {
     "QuestName": "The survivalist path Combat medic",
     "_id": "5d25e2a986f77409dd5cdf2a",
     "canShowNotificationsInGame": true,
@@ -16404,7 +16404,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae3277186f7745973054106": {
     "QuestName": "Gunsmith Part 9",
     "_id": "5ae3277186f7745973054106",
     "canShowNotificationsInGame": true,
@@ -16683,7 +16683,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0bd94186f7747a727f09b2": {
     "QuestName": "Test drive Part 1",
     "_id": "5c0bd94186f7747a727f09b2",
     "canShowNotificationsInGame": true,
@@ -17019,7 +17019,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4495086f77443c122bc40": {
     "QuestName": "Sew it good Part 1",
     "_id": "5ae4495086f77443c122bc40",
     "canShowNotificationsInGame": true,
@@ -17217,7 +17217,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3479086f7742880308199": {
     "QuestName": "Insider",
     "_id": "5ac3479086f7742880308199",
     "canShowNotificationsInGame": true,
@@ -17350,7 +17350,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2b486f77409de05bba0": {
     "QuestName": "Huntsman path Secured perimeter",
     "_id": "5d25e2b486f77409de05bba0",
     "canShowNotificationsInGame": true,
@@ -17540,7 +17540,7 @@
       "Fail": []
     }
   },
-  {
+  "5c1141f386f77430ff393792": {
     "QuestName": "Living high is not a crime Part 2",
     "_id": "5c1141f386f77430ff393792",
     "canShowNotificationsInGame": true,
@@ -17772,7 +17772,7 @@
       "Fail": []
     }
   },
-  {
+  "5b478ff486f7744d184ecbbf": {
     "QuestName": "Vitamins Part 2",
     "_id": "5b478ff486f7744d184ecbbf",
     "canShowNotificationsInGame": true,
@@ -18032,7 +18032,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac346e886f7741d6118b99b": {
     "QuestName": "Signal Part 4",
     "_id": "5ac346e886f7741d6118b99b",
     "canShowNotificationsInGame": true,
@@ -18151,7 +18151,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac346cf86f7741d63233a02": {
     "QuestName": "Signal Part 3",
     "_id": "5ac346cf86f7741d63233a02",
     "canShowNotificationsInGame": true,
@@ -18439,7 +18439,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0d4c12d09282029f539173": {
     "QuestName": "Peacekeeping mission",
     "_id": "5c0d4c12d09282029f539173",
     "canShowNotificationsInGame": true,
@@ -18957,7 +18957,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3475486f7741d6224abd3": {
     "QuestName": "Bad habit",
     "_id": "5ac3475486f7741d6224abd3",
     "canShowNotificationsInGame": true,
@@ -19223,7 +19223,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc4826c86f774106d22d88b": {
     "QuestName": "The Tarkov shooter Part 5",
     "_id": "5bc4826c86f774106d22d88b",
     "canShowNotificationsInGame": true,
@@ -19396,7 +19396,7 @@
       "Fail": []
     }
   },
-  {
+  "5936d90786f7742b1420ba5b": {
     "QuestName": "Debut",
     "_id": "5936d90786f7742b1420ba5b",
     "canShowNotificationsInGame": true,
@@ -19636,7 +19636,7 @@
       "Fail": []
     }
   },
-  {
+  "5a03296886f774569778596a": {
     "QuestName": "Spa Tour Part 4",
     "_id": "5a03296886f774569778596a",
     "canShowNotificationsInGame": true,
@@ -19851,7 +19851,7 @@
       "Fail": []
     }
   },
-  {
+  "5a68663e86f774501078f78a": {
     "QuestName": "Health Care Privacy Part 2",
     "_id": "5a68663e86f774501078f78a",
     "canShowNotificationsInGame": true,
@@ -20036,7 +20036,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac345dc86f774288030817f": {
     "QuestName": "Farming Part 1",
     "_id": "5ac345dc86f774288030817f",
     "canShowNotificationsInGame": true,
@@ -20256,7 +20256,7 @@
       "Fail": []
     }
   },
-  {
+  "5a68665c86f774255929b4c7": {
     "QuestName": "Health Care Privacy Part 3",
     "_id": "5a68665c86f774255929b4c7",
     "canShowNotificationsInGame": true,
@@ -20499,7 +20499,7 @@
       "Fail": []
     }
   },
-  {
+  "5b4795fb86f7745876267770": {
     "QuestName": "Chumming",
     "_id": "5b4795fb86f7745876267770",
     "canShowNotificationsInGame": true,
@@ -20742,7 +20742,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e4ca86f77409dd5cdf2c": {
     "QuestName": "Hunting trip",
     "_id": "5d25e4ca86f77409dd5cdf2c",
     "canShowNotificationsInGame": true,
@@ -21187,7 +21187,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0bd01e86f7747cdd799e56": {
     "QuestName": "Insomnia",
     "_id": "5c0bd01e86f7747cdd799e56",
     "canShowNotificationsInGame": true,
@@ -21323,7 +21323,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0d190cd09282029f5390d8": {
     "QuestName": "Grenadier",
     "_id": "5c0d190cd09282029f5390d8",
     "canShowNotificationsInGame": true,
@@ -21521,7 +21521,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4493486f7744efa289417": {
     "QuestName": "Database Part 1",
     "_id": "5ae4493486f7744efa289417",
     "canShowNotificationsInGame": true,
@@ -21831,7 +21831,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2c386f77443e7549029": {
     "QuestName": "Huntsman path The trophy",
     "_id": "5d25e2c386f77443e7549029",
     "canShowNotificationsInGame": true,
@@ -22035,7 +22035,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae449c386f7744bde357697": {
     "QuestName": "Sales Night",
     "_id": "5ae449c386f7744bde357697",
     "canShowNotificationsInGame": true,
@@ -22192,7 +22192,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac2428686f77412450b42bf": {
     "QuestName": "Gunsmith Part 3",
     "_id": "5ac2428686f77412450b42bf",
     "canShowNotificationsInGame": true,
@@ -22439,7 +22439,7 @@
       "Fail": []
     }
   },
-  {
+  "59674eb386f774539f14813a": {
     "QuestName": "Delivery from the past",
     "_id": "59674eb386f774539f14813a",
     "canShowNotificationsInGame": true,
@@ -22720,7 +22720,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3477486f7741d651d6885": {
     "QuestName": "Scout",
     "_id": "5ac3477486f7741d651d6885",
     "canShowNotificationsInGame": true,
@@ -22971,7 +22971,7 @@
       "Fail": []
     }
   },
-  {
+  "5b47926a86f7747ccc057c15": {
     "QuestName": "Informed means armed",
     "_id": "5b47926a86f7747ccc057c15",
     "canShowNotificationsInGame": true,
@@ -23186,7 +23186,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4493d86f7744b8e15aa8f": {
     "QuestName": "Database Part 2",
     "_id": "5ae4493d86f7744b8e15aa8f",
     "canShowNotificationsInGame": true,
@@ -23324,7 +23324,7 @@
       "Fail": []
     }
   },
-  {
+  "5b478eca86f7744642012254": {
     "QuestName": "Vitamins Part 1",
     "_id": "5b478eca86f7744642012254",
     "canShowNotificationsInGame": true,
@@ -23567,7 +23567,7 @@
       "Fail": []
     }
   },
-  {
+  "59ca2eb686f77445a80ed049": {
     "QuestName": "The Punisher Part 6",
     "_id": "59ca2eb686f77445a80ed049",
     "canShowNotificationsInGame": true,
@@ -23811,7 +23811,7 @@
       "Fail": []
     }
   },
-  {
+  "5a68669a86f774255929b4d4": {
     "QuestName": "Health Care Privacy Part 5",
     "_id": "5a68669a86f774255929b4d4",
     "canShowNotificationsInGame": true,
@@ -23961,7 +23961,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac244eb86f7741356335af1": {
     "QuestName": "Gunsmith Part 4",
     "_id": "5ac244eb86f7741356335af1",
     "canShowNotificationsInGame": true,
@@ -24129,7 +24129,7 @@
       "Fail": []
     }
   },
-  {
+  "5b4794cb86f774598100d5d4": {
     "QuestName": "Lend lease pt 1",
     "_id": "5b4794cb86f774598100d5d4",
     "canShowNotificationsInGame": true,
@@ -24526,7 +24526,7 @@
       "Fail": []
     }
   },
-  {
+  "5b478d0f86f7744d190d91b5": {
     "QuestName": "Minibus",
     "_id": "5b478d0f86f7744d190d91b5",
     "canShowNotificationsInGame": true,
@@ -24743,7 +24743,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0bde0986f77479cf22c2f8": {
     "QuestName": "A Shooter Born in Heaven",
     "_id": "5c0bde0986f77479cf22c2f8",
     "canShowNotificationsInGame": true,
@@ -25121,7 +25121,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae448a386f7744d3730fff0": {
     "QuestName": "Only business",
     "_id": "5ae448a386f7744d3730fff0",
     "canShowNotificationsInGame": true,
@@ -25226,7 +25226,7 @@
       "Fail": []
     }
   },
-  {
+  "5a27b75b86f7742e97191958": {
     "QuestName": "Fishing Gear",
     "_id": "5a27b75b86f7742e97191958",
     "canShowNotificationsInGame": true,
@@ -25504,7 +25504,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac346a886f7744e1b083d67": {
     "QuestName": "Signal Part 2",
     "_id": "5ac346a886f7744e1b083d67",
     "canShowNotificationsInGame": true,
@@ -25745,7 +25745,7 @@
       "Fail": []
     }
   },
-  {
+  "5967530a86f77462ba22226b": {
     "QuestName": "Bad rep evidence",
     "_id": "5967530a86f77462ba22226b",
     "canShowNotificationsInGame": true,
@@ -26060,7 +26060,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3464c86f7741d651d6877": {
     "QuestName": "Farming Part 4",
     "_id": "5ac3464c86f7741d651d6877",
     "canShowNotificationsInGame": true,
@@ -26300,7 +26300,7 @@
       "Fail": []
     }
   },
-  {
+  "5b477f7686f7744d1b23c4d2": {
     "QuestName": "Gunsmith Part 15",
     "_id": "5b477f7686f7744d1b23c4d2",
     "canShowNotificationsInGame": true,
@@ -26513,7 +26513,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0be13186f7746f016734aa": {
     "QuestName": "Psycho Sniper",
     "_id": "5c0be13186f7746f016734aa",
     "canShowNotificationsInGame": true,
@@ -26749,7 +26749,7 @@
       "Fail": []
     }
   },
-  {
+  "5b47825886f77468074618d3": {
     "QuestName": "Gunsmith Part 16",
     "_id": "5b47825886f77468074618d3",
     "canShowNotificationsInGame": true,
@@ -27041,7 +27041,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae3280386f7742a41359364": {
     "QuestName": "Gunsmith Part 11",
     "_id": "5ae3280386f7742a41359364",
     "canShowNotificationsInGame": true,
@@ -27211,7 +27211,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4498786f7744bde357695": {
     "QuestName": "The key to success",
     "_id": "5ae4498786f7744bde357695",
     "canShowNotificationsInGame": true,
@@ -27422,7 +27422,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0d1c4cd0928202a02a6f5c": {
     "QuestName": "Decontamination service",
     "_id": "5c0d1c4cd0928202a02a6f5c",
     "canShowNotificationsInGame": true,
@@ -27621,7 +27621,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e46e86f77409453bce7c": {
     "QuestName": "Ambulance",
     "_id": "5d25e46e86f77409453bce7c",
     "canShowNotificationsInGame": true,
@@ -27842,7 +27842,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4496986f774459e77beb6": {
     "QuestName": "Sew it good Part 3",
     "_id": "5ae4496986f774459e77beb6",
     "canShowNotificationsInGame": true,
@@ -28026,7 +28026,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0bc91486f7746ab41857a2": {
     "QuestName": "Silent caliber",
     "_id": "5c0bc91486f7746ab41857a2",
     "canShowNotificationsInGame": true,
@@ -28260,7 +28260,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc4836986f7740c0152911c": {
     "QuestName": "The Tarkov shooter Part 6",
     "_id": "5bc4836986f7740c0152911c",
     "canShowNotificationsInGame": true,
@@ -28423,7 +28423,7 @@
       "Fail": []
     }
   },
-  {
+  "5a68661a86f774500f48afb0": {
     "QuestName": "Health Care Privacy Part 1",
     "_id": "5a68661a86f774500f48afb0",
     "canShowNotificationsInGame": true,
@@ -28641,7 +28641,7 @@
       "Fail": []
     }
   },
-  {
+  "596b36c586f77450d6045ad2": {
     "QuestName": "Supplier",
     "_id": "596b36c586f77450d6045ad2",
     "canShowNotificationsInGame": true,
@@ -28880,7 +28880,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac23c6186f7741247042bad": {
     "QuestName": "Gunsmith Part 1",
     "_id": "5ac23c6186f7741247042bad",
     "canShowNotificationsInGame": true,
@@ -29083,7 +29083,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac3467986f7741d6224abc2": {
     "QuestName": "Signal Part 1",
     "_id": "5ac3467986f7741d6224abc2",
     "canShowNotificationsInGame": true,
@@ -29298,7 +29298,7 @@
       "Fail": []
     }
   },
-  {
+  "5b478b1886f7744d1b23c57d": {
     "QuestName": "Hot delivery",
     "_id": "5b478b1886f7744d1b23c57d",
     "canShowNotificationsInGame": true,
@@ -29480,7 +29480,7 @@
       "Fail": []
     }
   },
-  {
+  "5ac244c486f77413e12cf945": {
     "QuestName": "Gunsmith Part 6",
     "_id": "5ac244c486f77413e12cf945",
     "canShowNotificationsInGame": true,
@@ -29648,7 +29648,7 @@
       "Fail": []
     }
   },
-  {
+  "5c12452c86f7744b83469073": {
     "QuestName": "Perfect mediator",
     "_id": "5c12452c86f7744b83469073",
     "canShowNotificationsInGame": true,
@@ -29837,7 +29837,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0d0d5086f774363760aef2": {
     "QuestName": "Athlete",
     "_id": "5c0d0d5086f774363760aef2",
     "canShowNotificationsInGame": true,
@@ -30002,7 +30002,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4490786f7744ca822adcc": {
     "QuestName": "Dressed to kill",
     "_id": "5ae4490786f7744ca822adcc",
     "canShowNotificationsInGame": true,
@@ -30186,7 +30186,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0be5fc86f774467a116593": {
     "QuestName": "Private clinic",
     "_id": "5c0be5fc86f774467a116593",
     "canShowNotificationsInGame": true,
@@ -30383,7 +30383,7 @@
       "Fail": []
     }
   },
-  {
+  "5c139eb686f7747878361a6f": {
     "QuestName": "Import",
     "_id": "5c139eb686f7747878361a6f",
     "canShowNotificationsInGame": true,
@@ -30619,7 +30619,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0d0f1886f77457b8210226": {
     "QuestName": "Lend lease Part 2",
     "_id": "5c0d0f1886f77457b8210226",
     "canShowNotificationsInGame": true,
@@ -30932,7 +30932,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae449d986f774453a54a7e1": {
     "QuestName": "Supervisor",
     "_id": "5ae449d986f774453a54a7e1",
     "canShowNotificationsInGame": true,
@@ -31125,7 +31125,7 @@
       "Fail": []
     }
   },
-  {
+  "5b47799d86f7746c5d6a5fd8": {
     "QuestName": "Gunsmith Part 13",
     "_id": "5b47799d86f7746c5d6a5fd8",
     "canShowNotificationsInGame": true,
@@ -31341,7 +31341,7 @@
       "Fail": []
     }
   },
-  {
+  "5c112d7e86f7740d6f647486": {
     "QuestName": "Scavenger",
     "_id": "5c112d7e86f7740d6f647486",
     "canShowNotificationsInGame": true,
@@ -31458,7 +31458,7 @@
       "Fail": []
     }
   },
-  {
+  "5b47749f86f7746c5d6a5fd4": {
     "QuestName": "Gunsmith Part 12",
     "_id": "5b47749f86f7746c5d6a5fd4",
     "canShowNotificationsInGame": true,
@@ -31732,7 +31732,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc4856986f77454c317bea7": {
     "QuestName": "The Tarkov shooter Part 7",
     "_id": "5bc4856986f77454c317bea7",
     "canShowNotificationsInGame": true,
@@ -31952,7 +31952,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae449a586f7744bde357696": {
     "QuestName": "No fuss needed",
     "_id": "5ae449a586f7744bde357696",
     "canShowNotificationsInGame": true,
@@ -32072,7 +32072,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e29d86f7740a22516326": {
     "QuestName": "The survivalist path Eagle-owl",
     "_id": "5d25e29d86f7740a22516326",
     "canShowNotificationsInGame": true,
@@ -32241,7 +32241,7 @@
       "Fail": []
     }
   },
-  {
+  "5c1128e386f7746565181106": {
     "QuestName": "Fertilizers",
     "_id": "5c1128e386f7746565181106",
     "canShowNotificationsInGame": true,
@@ -32422,7 +32422,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc4776586f774512d07cf05": {
     "QuestName": "The Tarkov shooter Part 1",
     "_id": "5bc4776586f774512d07cf05",
     "canShowNotificationsInGame": true,
@@ -32770,7 +32770,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4497b86f7744cf402ed00": {
     "QuestName": "Sew it good Part 4",
     "_id": "5ae4497b86f7744cf402ed00",
     "canShowNotificationsInGame": true,
@@ -32955,7 +32955,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc480a686f7741af0342e29": {
     "QuestName": "The Tarkov shooter Part 4",
     "_id": "5bc480a686f7741af0342e29",
     "canShowNotificationsInGame": true,
@@ -33105,7 +33105,7 @@
       "Fail": []
     }
   },
-  {
+  "5dc53acb86f77469c740c893": {
     "QuestName": "The stylish one",
     "_id": "5dc53acb86f77469c740c893",
     "canShowNotificationsInGame": true,
@@ -33202,7 +33202,7 @@
       "Fail": []
     }
   },
-  {
+  "5edac020218d181e29451446": {
     "QuestName": "Samples",
     "_id": "5edac020218d181e29451446",
     "canShowNotificationsInGame": true,
@@ -33664,7 +33664,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e48d86f77408251c4bfb": {
     "QuestName": "Shady business",
     "_id": "5d25e48d86f77408251c4bfb",
     "canShowNotificationsInGame": true,
@@ -33808,7 +33808,7 @@
       "Fail": []
     }
   },
-  {
+  "5f04886a3937dc337a6b8238": {
     "QuestName": "The chemistry closet",
     "_id": "5f04886a3937dc337a6b8238",
     "canShowNotificationsInGame": true,
@@ -34010,7 +34010,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae448e586f7744dcf0c2a67": {
     "QuestName": "Big sale",
     "_id": "5ae448e586f7744dcf0c2a67",
     "canShowNotificationsInGame": true,
@@ -34317,7 +34317,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e43786f7740a212217fa": {
     "QuestName": "Huntsman path Justice",
     "_id": "5d25e43786f7740a212217fa",
     "canShowNotificationsInGame": true,
@@ -34475,7 +34475,7 @@
       "Fail": []
     }
   },
-  {
+  "5d2495a886f77425cd51e403": {
     "QuestName": "Introduction",
     "_id": "5d2495a886f77425cd51e403",
     "canShowNotificationsInGame": true,
@@ -34623,7 +34623,7 @@
       "Fail": []
     }
   },
-  {
+  "5d6fbc2886f77449d825f9d3": {
     "QuestName": "Mentor",
     "_id": "5d6fbc2886f77449d825f9d3",
     "canShowNotificationsInGame": true,
@@ -34696,7 +34696,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae4499a86f77449783815db": {
     "QuestName": "Charisma brings success",
     "_id": "5ae4499a86f77449783815db",
     "canShowNotificationsInGame": true,
@@ -34802,7 +34802,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25cf2686f77443e75488d4": {
     "QuestName": "The survivalist path Tough guy",
     "_id": "5d25cf2686f77443e75488d4",
     "canShowNotificationsInGame": true,
@@ -35024,7 +35024,7 @@
       "Fail": []
     }
   },
-  {
+  "5e4d515e86f77438b2195244": {
     "QuestName": "Textile Part 2 - Bear",
     "_id": "5e4d515e86f77438b2195244",
     "canShowNotificationsInGame": true,
@@ -35233,7 +35233,7 @@
       "Fail": []
     }
   },
-  {
+  "5d4bec3486f7743cac246665": {
     "QuestName": "Regulated materials",
     "_id": "5d4bec3486f7743cac246665",
     "canShowNotificationsInGame": true,
@@ -35455,7 +35455,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e48186f77443e625e386": {
     "QuestName": "Courtesy visit",
     "_id": "5d25e48186f77443e625e386",
     "canShowNotificationsInGame": true,
@@ -35662,7 +35662,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc4893c86f774626f5ebf3e": {
     "QuestName": "The Tarkov shooter Part 8",
     "_id": "5bc4893c86f774626f5ebf3e",
     "canShowNotificationsInGame": true,
@@ -35917,7 +35917,7 @@
       "Fail": []
     }
   },
-  {
+  "5b47876e86f7744d1c353205": {
     "QuestName": "The Blood of War Part 2",
     "_id": "5b47876e86f7744d1c353205",
     "canShowNotificationsInGame": true,
@@ -36076,7 +36076,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2ee86f77443e35162ea": {
     "QuestName": "Huntsman path Woods keeper",
     "_id": "5d25e2ee86f77443e35162ea",
     "canShowNotificationsInGame": true,
@@ -36280,7 +36280,7 @@
       "Fail": []
     }
   },
-  {
+  "5eaaaa7c93afa0558f3b5a1c": {
     "QuestName": "The survivalist path Junkie",
     "_id": "5eaaaa7c93afa0558f3b5a1c",
     "canShowNotificationsInGame": true,
@@ -36467,7 +36467,7 @@
       "Fail": []
     }
   },
-  {
+  "5ede55112c95834b583f052a": {
     "QuestName": "Bunker Part 1",
     "_id": "5ede55112c95834b583f052a",
     "canShowNotificationsInGame": true,
@@ -36748,7 +36748,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc47dbf86f7741ee74e93b9": {
     "QuestName": "The Tarkov shooter Part 3",
     "_id": "5bc47dbf86f7741ee74e93b9",
     "canShowNotificationsInGame": true,
@@ -36958,7 +36958,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0bbaa886f7746941031d82": {
     "QuestName": "Bullshit",
     "_id": "5c0bbaa886f7746941031d82",
     "canShowNotificationsInGame": true,
@@ -37279,7 +37279,7 @@
       "Fail": []
     }
   },
-  {
+  "5d24b81486f77439c92d6ba8": {
     "QuestName": "Acquaintance",
     "_id": "5d24b81486f77439c92d6ba8",
     "canShowNotificationsInGame": true,
@@ -37430,7 +37430,7 @@
       "Fail": []
     }
   },
-  {
+  "5ae448bf86f7744d733e55ee": {
     "QuestName": "Make ULTRA Great Again",
     "_id": "5ae448bf86f7744d733e55ee",
     "canShowNotificationsInGame": true,
@@ -37560,7 +37560,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25d2c186f77443e35162e5": {
     "QuestName": "The survivalist path Cold blooded",
     "_id": "5d25d2c186f77443e35162e5",
     "canShowNotificationsInGame": true,
@@ -37699,7 +37699,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e45e86f77408251c4bfa": {
     "QuestName": "Huntsman path Eraser Part 2",
     "_id": "5d25e45e86f77408251c4bfa",
     "canShowNotificationsInGame": true,
@@ -37866,7 +37866,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e44386f77409453bce7b": {
     "QuestName": "Huntsman path Evil watchman",
     "_id": "5d25e44386f77409453bce7b",
     "canShowNotificationsInGame": true,
@@ -38023,7 +38023,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2cc86f77443e47ae019": {
     "QuestName": "Huntsman path Woods cleaning",
     "_id": "5d25e2cc86f77443e47ae019",
     "canShowNotificationsInGame": true,
@@ -38173,7 +38173,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25bfd086f77442734d3007": {
     "QuestName": "The survivalist path Zhivchik",
     "_id": "5d25bfd086f77442734d3007",
     "canShowNotificationsInGame": true,
@@ -38361,7 +38361,7 @@
       "Fail": []
     }
   },
-  {
+  "5d6fb2c086f77449da599c24": {
     "QuestName": "An apple a day - keeps the doctor away",
     "_id": "5d6fb2c086f77449da599c24",
     "canShowNotificationsInGame": true,
@@ -38434,7 +38434,7 @@
       "Fail": []
     }
   },
-  {
+  "5edabd13218d181e29451442": {
     "QuestName": "Rigged game",
     "_id": "5edabd13218d181e29451442",
     "canShowNotificationsInGame": true,
@@ -38762,7 +38762,7 @@
       "Fail": []
     }
   },
-  {
+  "5eda19f0edce541157209cee": {
     "QuestName": "Anesthesia",
     "_id": "5eda19f0edce541157209cee",
     "canShowNotificationsInGame": true,
@@ -39048,7 +39048,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2e286f77444001e2e48": {
     "QuestName": "Huntsman path Sell-out",
     "_id": "5d25e2e286f77444001e2e48",
     "canShowNotificationsInGame": true,
@@ -39284,7 +39284,7 @@
       "Fail": []
     }
   },
-  {
+  "5e383a6386f77465910ce1f3": {
     "QuestName": "Textile Part 1 - Bear",
     "_id": "5e383a6386f77465910ce1f3",
     "canShowNotificationsInGame": true,
@@ -39477,7 +39477,7 @@
       "Fail": []
     }
   },
-  {
+  "5c0d4e61d09282029f53920e": {
     "QuestName": "The guide",
     "_id": "5c0d4e61d09282029f53920e",
     "canShowNotificationsInGame": true,
@@ -39971,7 +39971,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25b6be86f77444001e1b89": {
     "QuestName": "The survivalist path Thrifty",
     "_id": "5d25b6be86f77444001e1b89",
     "canShowNotificationsInGame": true,
@@ -40166,7 +40166,7 @@
       "Fail": []
     }
   },
-  {
+  "5bc479e586f7747f376c7da3": {
     "QuestName": "The Tarkov shooter Part 2",
     "_id": "5bc479e586f7747f376c7da3",
     "canShowNotificationsInGame": true,
@@ -40379,7 +40379,7 @@
       "Fail": []
     }
   },
-  {
+  "5c1234c286f77406fa13baeb": {
     "QuestName": "Setup",
     "_id": "5c1234c286f77406fa13baeb",
     "canShowNotificationsInGame": true,
@@ -40632,7 +40632,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25aed386f77442734d25d2": {
     "QuestName": "The survivalist path Unprotected but dangerous",
     "_id": "5d25aed386f77442734d25d2",
     "canShowNotificationsInGame": true,
@@ -40959,7 +40959,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25c81b86f77443e625dd71": {
     "QuestName": "The survivalist path Wounded beast",
     "_id": "5d25c81b86f77443e625dd71",
     "canShowNotificationsInGame": true,
@@ -41095,7 +41095,7 @@
       "Fail": []
     }
   },
-  {
+  "5b47891f86f7744d1b23c571": {
     "QuestName": "Living high is not a crime",
     "_id": "5b47891f86f7744d1b23c571",
     "canShowNotificationsInGame": true,
@@ -41353,7 +41353,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e4b786f77408251c4bfc": {
     "QuestName": "Fishing place",
     "_id": "5d25e4b786f77408251c4bfc",
     "canShowNotificationsInGame": true,
@@ -41561,7 +41561,7 @@
       "Fail": []
     }
   },
-  {
+  "5d25e2d886f77442734d335e": {
     "QuestName": "Huntsman path Controller",
     "_id": "5d25e2d886f77442734d335e",
     "canShowNotificationsInGame": true,
@@ -41700,7 +41700,7 @@
       "Fail": []
     }
   },
-  {
+  "5edab4b1218d181e29451435": {
     "QuestName": "Huntsman path Sadist",
     "_id": "5edab4b1218d181e29451435",
     "canShowNotificationsInGame": true,
@@ -41901,7 +41901,7 @@
       "Fail": []
     }
   },
-  {
+  "5edac63b930f5454f51e128b": {
     "QuestName": "TerraGroup employee",
     "_id": "5edac63b930f5454f51e128b",
     "canShowNotificationsInGame": true,
@@ -42187,7 +42187,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71c9ad54b755a3b53eb66": {
     "QuestName": "Mutual Interest",
     "_id": "60e71c9ad54b755a3b53eb66",
     "canShowNotificationsInGame": true,
@@ -42326,7 +42326,7 @@
       "Fail": []
     }
   },
-  {
+  "6179ac7511973d018217d0b9": {
     "QuestName": "Easy Job Part 1",
     "_id": "6179ac7511973d018217d0b9",
     "canShowNotificationsInGame": true,
@@ -42494,7 +42494,7 @@
       "Fail": []
     }
   },
-  {
+  "6179b3bdc7560e13d23eeb8d": {
     "QuestName": "Corporate Secrets",
     "_id": "6179b3bdc7560e13d23eeb8d",
     "canShowNotificationsInGame": true,
@@ -42746,7 +42746,7 @@
       "Fail": []
     }
   },
-  {
+  "60896e28e4a85c72ef3fa301": {
     "QuestName": "Disease history",
     "_id": "60896e28e4a85c72ef3fa301",
     "canShowNotificationsInGame": true,
@@ -42975,7 +42975,7 @@
       "Fail": []
     }
   },
-  {
+  "6179ad56c760af5ad2053587": {
     "QuestName": "Seaside Vacation",
     "_id": "6179ad56c760af5ad2053587",
     "canShowNotificationsInGame": true,
@@ -43128,7 +43128,7 @@
       "Fail": []
     }
   },
-  {
+  "60896b7bfa70fc097863b8f5": {
     "QuestName": "Documents",
     "_id": "60896b7bfa70fc097863b8f5",
     "canShowNotificationsInGame": true,
@@ -43403,7 +43403,7 @@
       "Fail": []
     }
   },
-  {
+  "5edac34d0bb72a50635c2bfa": {
     "QuestName": "Colleagues Part 3",
     "_id": "5edac34d0bb72a50635c2bfa",
     "canShowNotificationsInGame": true,
@@ -43851,7 +43851,7 @@
       "Fail": []
     }
   },
-  {
+  "6179b4d1bca27a099552e04e": {
     "QuestName": "Revision Part 2",
     "_id": "6179b4d1bca27a099552e04e",
     "canShowNotificationsInGame": true,
@@ -44061,7 +44061,7 @@
       "Fail": []
     }
   },
-  {
+  "61904daa7d0d857927447b9c": {
     "QuestName": "The Hermit",
     "_id": "61904daa7d0d857927447b9c",
     "canShowNotificationsInGame": true,
@@ -44235,7 +44235,7 @@
       "Fail": []
     }
   },
-  {
+  "6179b5eabca27a099552e052": {
     "QuestName": "Counteraction",
     "_id": "6179b5eabca27a099552e052",
     "canShowNotificationsInGame": true,
@@ -44402,7 +44402,7 @@
       "Fail": []
     }
   },
-  {
+  "6086c852c945025d41566124": {
     "QuestName": "Revision",
     "_id": "6086c852c945025d41566124",
     "canShowNotificationsInGame": true,
@@ -44828,7 +44828,7 @@
       "Fail": []
     }
   },
-  {
+  "6089736efa70fc097863b8f6": {
     "QuestName": "Back door",
     "_id": "6089736efa70fc097863b8f6",
     "canShowNotificationsInGame": true,
@@ -45038,7 +45038,7 @@
       "Fail": []
     }
   },
-  {
+  "6179acbdc760af5ad2053585": {
     "QuestName": "Easy Job Part 2",
     "_id": "6179acbdc760af5ad2053585",
     "canShowNotificationsInGame": true,
@@ -45167,7 +45167,7 @@
       "Fail": []
     }
   },
-  {
+  "60c0c018f7afb4354815096a": {
     "QuestName": "Huntsman Path- Factory Chief",
     "_id": "60c0c018f7afb4354815096a",
     "canShowNotificationsInGame": true,
@@ -45343,7 +45343,7 @@
       "Fail": []
     }
   },
-  {
+  "6179ad0a6e9dd54ac275e3f2": {
     "QuestName": "Huntsman Path Outcasts",
     "_id": "6179ad0a6e9dd54ac275e3f2",
     "canShowNotificationsInGame": true,
@@ -45465,7 +45465,7 @@
       "Fail": []
     }
   },
-  {
+  "5fd9fad9c1ce6b1a3b486d00": {
     "QuestName": "Search Mission",
     "_id": "5fd9fad9c1ce6b1a3b486d00",
     "canShowNotificationsInGame": true,
@@ -45696,7 +45696,7 @@
       "Fail": []
     }
   },
-  {
+  "6179b3a12153c15e937d52bc": {
     "QuestName": "Energy Crisis",
     "_id": "6179b3a12153c15e937d52bc",
     "canShowNotificationsInGame": true,
@@ -45987,7 +45987,7 @@
       "Fail": []
     }
   },
-  {
+  "6193850f60b34236ee0483de": {
     "QuestName": "Long Road",
     "_id": "6193850f60b34236ee0483de",
     "canShowNotificationsInGame": true,
@@ -46153,7 +46153,7 @@
       "Fail": []
     }
   },
-  {
+  "6089732b59b92115597ad789": {
     "QuestName": "Surplus goods",
     "_id": "6089732b59b92115597ad789",
     "canShowNotificationsInGame": true,
@@ -46320,7 +46320,7 @@
       "Fail": []
     }
   },
-  {
+  "60896bca6ee58f38c417d4f2": {
     "QuestName": "No place for renegades",
     "_id": "60896bca6ee58f38c417d4f2",
     "canShowNotificationsInGame": true,
@@ -46570,7 +46570,7 @@
       "Fail": []
     }
   },
-  {
+  "6179ad74bca27a099552e03a": {
     "QuestName": "Communication Difficulties",
     "_id": "6179ad74bca27a099552e03a",
     "canShowNotificationsInGame": true,
@@ -46735,7 +46735,7 @@
       "Fail": []
     }
   },
-  {
+  "60896888e4a85c72ef3fa300": {
     "QuestName": "Experience exchange",
     "_id": "60896888e4a85c72ef3fa300",
     "canShowNotificationsInGame": true,
@@ -46886,7 +46886,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71b9bbd90872cb85440f3": {
     "QuestName": "Capturing Outposts",
     "_id": "60e71b9bbd90872cb85440f3",
     "canShowNotificationsInGame": true,
@@ -47140,7 +47140,7 @@
       "Fail": []
     }
   },
-  {
+  "6179aff8f57fb279792c60a1": {
     "QuestName": "Overpopulation",
     "_id": "6179aff8f57fb279792c60a1",
     "canShowNotificationsInGame": true,
@@ -47318,7 +47318,7 @@
       "Fail": []
     }
   },
-  {
+  "5edab736cc183c769d778bc2": {
     "QuestName": "Colleagues Part 1",
     "_id": "5edab736cc183c769d778bc2",
     "canShowNotificationsInGame": true,
@@ -47563,7 +47563,7 @@
       "Fail": []
     }
   },
-  {
+  "600302d73b897b11364cd161": {
     "QuestName": "Hunter",
     "_id": "600302d73b897b11364cd161",
     "canShowNotificationsInGame": true,
@@ -47776,7 +47776,7 @@
       "Fail": []
     }
   },
-  {
+  "608974d01a66564e74191fc0": {
     "QuestName": "Fuel matter",
     "_id": "608974d01a66564e74191fc0",
     "canShowNotificationsInGame": true,
@@ -47969,7 +47969,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71c11d54b755a3b53eb65": {
     "QuestName": "Night Sweep",
     "_id": "60e71c11d54b755a3b53eb65",
     "canShowNotificationsInGame": true,
@@ -48097,7 +48097,7 @@
       "Fail": []
     }
   },
-  {
+  "5edaba7c0c502106f869bc02": {
     "QuestName": "Colleagues Part 2",
     "_id": "5edaba7c0c502106f869bc02",
     "canShowNotificationsInGame": true,
@@ -48281,7 +48281,7 @@
       "Fail": []
     }
   },
-  {
+  "608a768d82e40b3c727fd17d": {
     "QuestName": "Pest control",
     "_id": "608a768d82e40b3c727fd17d",
     "canShowNotificationsInGame": true,
@@ -48473,7 +48473,7 @@
       "Fail": []
     }
   },
-  {
+  "6179b4f16e9dd54ac275e407": {
     "QuestName": "MissingCargo",
     "_id": "6179b4f16e9dd54ac275e407",
     "canShowNotificationsInGame": true,
@@ -48638,7 +48638,7 @@
       "Fail": []
     }
   },
-  {
+  "61958c366726521dd96828ec": {
     "QuestName": "Cargo X Part 4",
     "_id": "61958c366726521dd96828ec",
     "canShowNotificationsInGame": true,
@@ -48794,7 +48794,7 @@
       "Fail": []
     }
   },
-  {
+  "5ede567cfa6dc072ce15d6e3": {
     "QuestName": "Bunker Part 2",
     "_id": "5ede567cfa6dc072ce15d6e3",
     "canShowNotificationsInGame": true,
@@ -49177,7 +49177,7 @@
       "Fail": []
     }
   },
-  {
+  "6179afd0bca27a099552e040": {
     "QuestName": "Lost Contact",
     "_id": "6179afd0bca27a099552e040",
     "canShowNotificationsInGame": true,
@@ -49331,7 +49331,7 @@
       "Fail": []
     }
   },
-  {
+  "608974af4b05530f55550c21": {
     "QuestName": "Inventory check",
     "_id": "608974af4b05530f55550c21",
     "canShowNotificationsInGame": true,
@@ -49651,7 +49651,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71bb4e456d449cd47ca75": {
     "QuestName": "Intimidator",
     "_id": "60e71bb4e456d449cd47ca75",
     "canShowNotificationsInGame": true,
@@ -49764,7 +49764,7 @@
       "Fail": []
     }
   },
-  {
+  "5968eb3186f7741dde183a4d": {
     "QuestName": "Operation Aquarius Part 2",
     "_id": "5968eb3186f7741dde183a4d",
     "canShowNotificationsInGame": true,
@@ -49937,7 +49937,7 @@
       "Fail": []
     }
   },
-  {
+  "61e6e5e0f5b9633f6719ed95": {
     "QuestName": "Compensation For Damage - Trust",
     "_id": "61e6e5e0f5b9633f6719ed95",
     "canShowNotificationsInGame": true,
@@ -50014,7 +50014,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71dc0a94be721b065bbfc": {
     "QuestName": "Long Line",
     "_id": "60e71dc0a94be721b065bbfc",
     "canShowNotificationsInGame": true,
@@ -50173,7 +50173,7 @@
       "Fail": []
     }
   },
-  {
+  "597a160786f77477531d39d2": {
     "QuestName": "Out of curiosity",
     "_id": "597a160786f77477531d39d2",
     "canShowNotificationsInGame": true,
@@ -50391,7 +50391,7 @@
       "Fail": []
     }
   },
-  {
+  "59c9392986f7742f6923add2": {
     "QuestName": "Trust regain",
     "_id": "59c9392986f7742f6923add2",
     "canShowNotificationsInGame": true,
@@ -50615,7 +50615,7 @@
       "Fail": []
     }
   },
-  {
+  "5a5642ce86f77445c63c3419": {
     "QuestName": "Hippocratic Vow",
     "_id": "5a5642ce86f77445c63c3419",
     "canShowNotificationsInGame": false,
@@ -50699,7 +50699,7 @@
       "Fail": []
     }
   },
-  {
+  "5c51aac186f77432ea65c552": {
     "QuestName": "Collector",
     "_id": "5c51aac186f77432ea65c552",
     "canShowNotificationsInGame": false,
@@ -52283,7 +52283,7 @@
       "Fail": []
     }
   },
-  {
+  "5e381b0286f77420e3417a74": {
     "QuestName": "Textile Part 1 - Usec",
     "_id": "5e381b0286f77420e3417a74",
     "canShowNotificationsInGame": true,
@@ -52480,7 +52480,7 @@
       "Fail": []
     }
   },
-  {
+  "5e4d4ac186f774264f758336": {
     "QuestName": "Textile Part 2 - Usec",
     "_id": "5e4d4ac186f774264f758336",
     "canShowNotificationsInGame": true,
@@ -52694,7 +52694,7 @@
       "Fail": []
     }
   },
-  {
+  "6089743983426423753cd58a": {
     "QuestName": "Safe corridor",
     "_id": "6089743983426423753cd58a",
     "canShowNotificationsInGame": true,
@@ -52861,7 +52861,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71b62a0beca400d69efc4": {
     "QuestName": "Escort",
     "_id": "60e71b62a0beca400d69efc4",
     "canShowNotificationsInGame": true,
@@ -53254,7 +53254,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71c48c1bfa3050473b8e5": {
     "QuestName": "Crisis",
     "_id": "60e71c48c1bfa3050473b8e5",
     "canShowNotificationsInGame": true,
@@ -53519,7 +53519,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71d23c1bfa3050473b8e6": {
     "QuestName": "Calibration",
     "_id": "60e71d23c1bfa3050473b8e6",
     "canShowNotificationsInGame": true,
@@ -53643,7 +53643,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71dc67fcf9c556f325056": {
     "QuestName": "Booze",
     "_id": "60e71dc67fcf9c556f325056",
     "canShowNotificationsInGame": true,
@@ -53879,7 +53879,7 @@
       "Fail": []
     }
   },
-  {
+  "60e71e8ed54b755a3b53eb67": {
     "QuestName": "Huntsman Path - Relentless",
     "_id": "60e71e8ed54b755a3b53eb67",
     "canShowNotificationsInGame": true,
@@ -54212,7 +54212,7 @@
       "Fail": []
     }
   },
-  {
+  "60e729cf5698ee7b05057439": {
     "QuestName": "Swift One",
     "_id": "60e729cf5698ee7b05057439",
     "canShowNotificationsInGame": true,
@@ -54595,7 +54595,7 @@
       "Fail": []
     }
   },
-  {
+  "60effd818b669d08a35bfad5": {
     "QuestName": "The Choice",
     "_id": "60effd818b669d08a35bfad5",
     "canShowNotificationsInGame": true,
@@ -54710,4 +54710,4 @@
       "Fail": []
     }
   }
-]
+}

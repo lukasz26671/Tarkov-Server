@@ -1,4 +1,5 @@
 exports.mod = (mod_data) => {
+if(false){
     logger.logInfo(`[MOD] ${mod_data.name}`);
 
 	//let cachequests = global.fileIO.readParsed('db/quests/quests.json');
@@ -539,4 +540,5 @@ exports.mod = (mod_data) => {
 	fileIO.write('user/cache/quests.json', cachequestdata, true, false);
 
 	logger.logSuccess(`All Quests Have Been Updated`);
+}
 }
