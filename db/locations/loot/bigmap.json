@@ -46290,6 +46290,22 @@
       "Rotation": 0,
       "id": "custom_multiScene_00058",
       "useGravity": true
+    },
+    {
+      "Items": [
+        "5780cfa52459777dfb276eb1"
+      ],
+      "Position": {
+        "x": 487.488,
+        "y": 5.583,
+        "z": -139.14
+      },
+      "Rotation": {
+        "x": 90,
+        "y": 330.3775,
+        "z": 0
+      },
+      "id": "loot_key220_bomj802896"
     }
   ],
   "mounted": [
