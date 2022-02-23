@@ -137,8 +137,8 @@
       "pistolRecoil": { 
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
-        "verticalRecoil": 0.5,
-        "horizontalRecoil": 0.5,
+        "verticalRecoil": 0.4,
+        "horizontalRecoil": 0.2,
         "convergence": 0.575,
         "dispersion": 0.35
       },
@@ -147,7 +147,7 @@
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.15,
+        "horizontalRecoil": 0.25,
         "convergence": 3.5,
         "dispersion": 0.25
       },
@@ -156,7 +156,7 @@
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.15,
+        "horizontalRecoil": 0.35,
         "convergence": 2.5,
         "dispersion": 0.25
       },
@@ -165,7 +165,7 @@
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.15,
+        "horizontalRecoil": 0.25,
         "convergence": 3.5,
         "dispersion": 0.25
       },
@@ -174,7 +174,7 @@
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.15,
+        "horizontalRecoil": 0.25,
         "convergence": 3.5,
         "dispersion": 0.25
       },
@@ -183,7 +183,7 @@
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.15,
+        "horizontalRecoil": 0.25,
         "convergence": 3.5,
         "dispersion": 0.25
       },
@@ -192,7 +192,7 @@
         "cameraRecoil": 0.4,
         "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.15,
+        "horizontalRecoil": 0.35,
         "convergence": 3.0,
         "dispersion": 0.25
       },
