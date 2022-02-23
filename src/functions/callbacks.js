@@ -1,3 +1,4 @@
+const { logger } = require("../../core/util/logger");
 
 
 class Callbacks {
@@ -41,25 +42,40 @@ class Callbacks {
 		let splittedUrl = req.url.split('/');
 		let fileName = splittedUrl[splittedUrl.length - 1].split('.').slice(0, -1).join('.');
 		let baseNode = {};
+		let imgCategory = "none";
+
 		// get images to look through
 		if (req.url.includes("/quest")) {
 			logger.logInfo(`[IMG.quests]: ${req.url}`);
 			baseNode = res.quest;
+			imgCategory = "quest";
 		} else if (req.url.includes("/handbook")) {
 			logger.logInfo(`[IMG.handbook]: ${req.url}`);
 			baseNode = res.handbook;
+			imgCategory = "handbook";
 		} else if (req.url.includes("/avatar")) {
 			logger.logInfo(`[IMG.trader]: ${req.url}`);
 			baseNode = res.trader;
+			imgCategory = "avatar";
 		} else if (req.url.includes("/banners")) {
 			logger.logInfo(`[IMG.banners]: ${req.url}`);
 			baseNode = res.banners;
+			imgCategory = "banners";
 		} else {
 			logger.logInfo(`[IMG.hideout]: ${req.url}`);
 			baseNode = res.hideout;
+			imgCategory = "hideout";
 		}
-		// send image
-		server.tarkovSend.file(resp, baseNode[fileName]);
+
+		// if file does not exist
+		if(!baseNode[fileName]){
+			logger.logError("Image not found! Sending backup image.");
+			baseNode[fileName] = "res/noimage/"+imgCategory+".png";
+			server.tarkovSend.file(resp, baseNode[fileName]);
+		}else{
+			// send image
+			server.tarkovSend.file(resp, baseNode[fileName]);
+		}		
 	}
 	respondNotify(sessionID, req, resp, data) {
 		let splittedUrl = req.url.split('/');
