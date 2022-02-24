@@ -27,8 +27,8 @@ for(let quest in questDump){
 
 if(missingQuests.length > 0){
 	console.log("\u001b[31;1m \nMissing these quests according to TarkovTracker: \u001b[0m");
-	console.log(JSON.stringify(missingQuests, null, 2));
+	console.log(JSON.stringify(missingQuests, null, 2)+"\n");
 }else{
-	console.log("\u001b[32;1m \nNo quests are missing. \u001b[0m");
+	console.log("\u001b[32;1m \nNo quests are missing. \u001b[0m \n");
 }
 
