@@ -1,0 +1,2 @@
+node questAdapter.js
+pause

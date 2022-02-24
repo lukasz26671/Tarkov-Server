@@ -1,2 +1,0 @@
-node questUpdater.js
-pause
