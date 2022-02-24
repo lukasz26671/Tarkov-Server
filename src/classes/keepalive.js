@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 function main(sessionID) {
   if (!account_f.handler.isWiped(sessionID)) {
     updateTraders(sessionID);
@@ -46,6 +48,7 @@ function updateTraders(sessionID) {
 
 function updatePlayerHideout(sessionID) {
   let pmcData = profile_f.handler.getPmcProfile(sessionID);
+  //let recipes = fileIO.readParsed(db.user.cache.hideout_production);
   let recipes = _database.hideout.production;
   let solarPowerLevel = 0;
   let btcFarmCGs = 0;
@@ -104,14 +107,15 @@ function updatePlayerHideout(sessionID) {
       pmcData.Hideout.Production[prod].Progress += time_elapsed;
     }
 
-    for (let recipe of recipes.data) {
-      if (recipe._id == pmcData.Hideout.Production[prod].RecipeId) {
-        if (recipe.continuous == true) {
+    for (let recipe in recipes) {
+      logger.logError(JSON.stringify(recipes[recipe]));
+      if (recipes[recipe]._id == pmcData.Hideout.Production[prod].RecipeId) {
+        if (recipes[recipe].continuous == true) {
           needGenerator = true;
         }
         // Bitcoin Farm
         if (pmcData.Hideout.Production[prod].RecipeId == "5d5c205bd582a50d042a3c0e") {
-          pmcData.Hideout.Production[prod] = updateBitcoinFarm(pmcData.Hideout.Production[prod], recipe, btcFarmCGs, isGeneratorOn, pmcData);
+          pmcData.Hideout.Production[prod] = updateBitcoinFarm(pmcData.Hideout.Production[prod], recipes[recipe], btcFarmCGs, isGeneratorOn, pmcData);
         } else {
           let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
           if (needGenerator == true && isGeneratorOn == false) {
@@ -255,18 +259,22 @@ function updateAirFilters(pmcData, area) {
 }
 
 function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcData) {
-  let MAX_BTC = 3;
-
+  let production = _database.hideout.production.find((prodArea) => prodArea.areaType == 20);
+  //let MAX_BTC = 3;
+  let MAX_BTC = production.productionLimitCount;
   // Elite level HideoutManagement lets you create 5 BTC max, not 3.
   for (let k in pmcData.Skills.Common) {
     if (pmcData.Skills.Common[k].Id === "HideoutManagement") {
       if (pmcData.Skills.Common[k].Progress == 5100) {
-        MAX_BTC = 5;
+        //MAX_BTC = 5;
+        MAX_BTC = MAX_BTC + 2;
       }
     }
   }
 
-  let production = _database.hideout.production.data.find((prodArea) => prodArea.areaType == 20);
+  //let production = fileIO.readParsed(db.user.cache.hideout_production).data.find((prodArea) => prodArea.areaType == 20);
+  //logger.logError("PROD: \n"+JSON.stringify(_database.hideout.production, null, 2));
+  //let production = _database.hideout.production.find((prodArea) => prodArea.areaType == 20);
   let time_elapsed = Math.floor(Date.now() / 1000) - btcProd.StartTimestamp;
 
   if (isGeneratorOn == true) {
@@ -291,7 +299,7 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
       btcProd.Progress = 0;
     }
   }
-
+  btcProd.ProductionTime = production.productionTime;
   btcProd.StartTimestamp = Math.floor(Date.now() / 1000);
   return btcProd;
 }

@@ -110,13 +110,33 @@ function _load_HideoutData() {
     }
   }
   for (let id in _database.hideout.production) {
-    if (_database.hideout.production[id].productionTime != 0 && _database.hideout.production[id].productionTime > _database.gameplay.hideout.productionTimeDivide_Production) {
-      _database.hideout.production[id].productionTime = _database.hideout.production[id].productionTime / _database.gameplay.hideout.productionTimeDivide_Production;
+    //handle bitcoin differently
+    if(_database.hideout.production[id]._id == "5d5c205bd582a50d042a3c0e"){
+      //if bitcoin
+      /*
+      if (_database.hideout.production[id].productionTime != 0 && _database.hideout.production[id].productionTime > _database.gameplay.hideout.productionTimeDivide_Bitcoin) {
+        _database.hideout.production[id].productionTime = _database.hideout.production[id].productionTime / _database.gameplay.hideout.productionTimeDivide_Bitcoin;
+      }
+      */
+      if (_database.hideout.production[id].productionTime > 0){
+        _database.hideout.production[id].productionTime = _database.hideout.production[id].productionTime / _database.gameplay.hideout.productionTimeDivide_Bitcoin;
+      }
+    }else{
+      //not bitcoin     
+      if (_database.hideout.production[id].productionTime != 0 && _database.hideout.production[id].productionTime > _database.gameplay.hideout.productionTimeDivide_Production) {
+        _database.hideout.production[id].productionTime = _database.hideout.production[id].productionTime / _database.gameplay.hideout.productionTimeDivide_Production;
+      }
     }
+    
   }
   for (let id in _database.hideout.scavcase) {
+    /*
     if (_database.hideout.production[id].ProductionTime != 0 && _database.hideout.production[id].ProductionTime > _database.gameplay.hideout.productionTimeDivide_ScavCase) {
       _database.hideout.production[id].ProductionTime = _database.hideout.production[id].ProductionTime / _database.gameplay.hideout.productionTimeDivide_ScavCase;
+    }
+    */
+    if(_database.gameplay.hideout.productionTimeDivide_ScavCase > 0){
+      _database.hideout.scavcase[id].ProductionTime = _database.hideout.scavcase[id].ProductionTime / _database.gameplay.hideout.productionTimeDivide_ScavCase;
     }
   }
 }
