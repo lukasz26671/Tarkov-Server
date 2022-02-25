@@ -136,7 +136,7 @@
 
       "pistolRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.4,
         "horizontalRecoil": 0.2,
         "convergence": 0.575,
@@ -145,7 +145,7 @@
   
       "smgRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.75,
         "horizontalRecoil": 0.25,
         "convergence": 2.5,
@@ -154,7 +154,7 @@
   
       "shotgunRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.75,
         "horizontalRecoil": 0.35,
         "convergence": 2.0,
@@ -163,7 +163,7 @@
   
       "assaultRifleRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.75,
         "horizontalRecoil": 0.25,
         "convergence": 2.75,
@@ -172,7 +172,7 @@
   
       "assaultCarbineRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.75,
         "horizontalRecoil": 0.25,
         "convergence": 2.75,
@@ -181,7 +181,7 @@
   
       "machinegunRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.75,
         "horizontalRecoil": 0.25,
         "convergence": 2.5,
@@ -190,7 +190,7 @@
   
       "marksmanRifleRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 0.75,
         "horizontalRecoil": 0.35,
         "convergence": 2.0,
@@ -199,7 +199,7 @@
   
       "sniperRifleRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.4,
+        "cameraSnap": 0.2,
         "verticalRecoil": 1.0,
         "horizontalRecoil": 0.5,
         "convergence": 1.5,
