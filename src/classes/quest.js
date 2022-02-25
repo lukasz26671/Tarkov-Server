@@ -20,14 +20,27 @@ function getQuestsCache() {
 function getQuestsForPlayer(url, info, sessionID) {
   let _profile = profile_f.handler.getPmcProfile(sessionID);
   let quests = utility.DeepCopy(global._database.quests);
-
-  for (let quest of quests) {
-    if (getQuestStatus(_profile, quest._id) == "Success") {
-      quest.conditions.AvailableForStart = [];
-      quest.conditions.AvailableForFinish = [];
-      quest.conditions.Fail = [];
+  let side = _profile.Info.Side;
+  let count = 0;
+  for (let quest in quests) {
+    //clear completed quests
+    if (getQuestStatus(_profile, quests[quest]._id) == "Success") {
+      quests[quest].conditions.AvailableForStart = [];
+      quests[quest].conditions.AvailableForFinish = [];
+      quests[quest].conditions.Fail = [];
     }
+
+    //check if quest has a side field
+    if(quests[quest].Side){
+      //if profile side is not the same side as the quest requires, delete from array
+      if(quests[quest].Side != side){
+        //logger.logError("ID: "+quests[quest]._id);
+        quests.splice(count, 1);
+      }
+    }
+   count++;
   }
+  //console.log(quests);
   return quests;
 }
 
