@@ -421,7 +421,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
   for (let baseItem of body.items) {
     if (baseItem.item_id in global._database.globals.ItemPresets) {
-      const presetItems = helper_f.clone(global._database.globals.ItemPresets[baseItem.item_id]._items);
+      const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
       itemLib.push(...presetItems);
       baseItem.isPreset = true;
       baseItem.item_id = presetItems[0]._id;
@@ -459,7 +459,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
           for (let sv = 0; sv < MaxStacks; sv++) {
             if (count > 0) {
-              let newItemToAdd = helper_f.clone(itemToAdd);
+              let newItemToAdd = utility.DeepCopy(itemToAdd);
               if (count > tmpItem._props.StackMaxSize) {
                 count = count - tmpItem._props.StackMaxSize;
                 newItemToAdd.count = tmpItem._props.StackMaxSize;

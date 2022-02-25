@@ -322,7 +322,7 @@ class TraderServer {
   getCustomization(traderID, sessionID) {
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
-    let suitArray = _database.traders[traderID].suits;
+    let suitArray = utility.DeepCopy(_database.traders[traderID].suits);
     let suitList = [];
 
     for (let suit of suitArray) {

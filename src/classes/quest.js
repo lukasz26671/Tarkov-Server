@@ -60,7 +60,7 @@ function processReward(reward) {
     let questItems = [target];
 
     for (let mod of mods) {
-      questItems.push(helper_f.clone(mod));
+      questItems.push(utility.DeepCopy(mod));
     }
 
     rewardItems = rewardItems.concat(helper_f.replaceIDs(null, questItems));

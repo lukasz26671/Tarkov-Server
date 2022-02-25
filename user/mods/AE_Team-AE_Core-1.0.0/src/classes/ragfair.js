@@ -426,10 +426,10 @@ function createOffer(template, onlyFunc, usePresets = true, sessionID) {
 
     // Preset
     if (usePresets && preset_f.handler.hasPreset(template)) {
-        let presets = helper_f.clone(preset_f.handler.getPresets(template));
+        let presets = utility.DeepCopy(preset_f.handler.getPresets(template));
 
         for (let p of presets) {
-            let offer = helper_f.clone(offerBase);
+            let offer = utility.DeepCopy(offerBase);
             let mods = p._items;
             let rub = 0;
 
