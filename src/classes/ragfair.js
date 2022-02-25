@@ -183,7 +183,7 @@ function getOffers(sessionID, request) {
 
 function getOffersFromTraders(sessionID, request) {
   //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
-  let jsonToReturn = helper_f.clone(_database.ragfair_offers);
+  let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
   let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
@@ -347,10 +347,10 @@ function createOffer(template, onlyFunc, usePresets = true) {
 
   // Preset
   if (usePresets && preset_f.handler.hasPreset(template)) {
-    let presets = helper_f.clone(preset_f.handler.getPresets(template));
+    let presets = utility.DeepCopy(preset_f.handler.getPresets(template));
 
     for (let p of presets) {
-      let offer = helper_f.clone(offerBase);
+      let offer = utility.DeepCopy(offerBase);
       let mods = p._items;
       let rub = 0;
 
@@ -372,7 +372,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
 
   // Single item
   if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
-    let offer = helper_f.clone(offerBase);
+    let offer = utility.DeepCopy(offerBase);
 
     let rubPrice = Math.round(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
     offer._id = template;
