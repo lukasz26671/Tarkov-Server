@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 // used only in this file
 function iter_item_children(item, item_list) {
   // Iterates through children of `item` present in `item_list`
@@ -322,16 +324,20 @@ class TraderServer {
   getCustomization(traderID, sessionID) {
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
-    let suitArray = utility.DeepCopy(_database.traders[traderID].suits);
+    //let suitArray = utility.DeepCopy(_database.customization);
+    //had to bring this back until we have some time to edit the whole tree
+    //of things to make it work in memory (database.js, cache creation and more)
+    let suitArray = fileIO.readParsed(
+      `./user/cache/customization_${traderID}.json`
+    );
     let suitList = [];
 
-    for (let suit of suitArray) {
-      if (suit.suiteId in allSuits) {
-        for (var i = 0; i < allSuits[suit.suiteId]._props.Side.length; i++) {
-          let side = allSuits[suit.suiteId]._props.Side[i];
-
+    for (let suit in suitArray) {
+      if (suitArray[suit].suiteId in allSuits) {
+        for (var i = 0; i < allSuits[suitArray[suit].suiteId]._props.Side.length; i++) {
+          let side = allSuits[suitArray[suit].suiteId]._props.Side[i];
           if (side === pmcData.Info.Side) {
-            suitList.push(suit);
+            suitList.push(suitArray[suit]);
           }
         }
       }
@@ -341,13 +347,12 @@ class TraderServer {
   }
   getAllCustomization(sessionID) {
     let output = [];
-
     for (let traderID in global._database.traders) {
-      if (global._database.traders[traderID].suits !== undefined) {
+      ///if customization_seller
+      if(global._database.traders[traderID].base.customization_seller == true){
         output = output.concat(this.getCustomization(traderID, sessionID));
       }
     }
-
     return output;
   }
   getPurchasesData(traderID, sessionID) {
