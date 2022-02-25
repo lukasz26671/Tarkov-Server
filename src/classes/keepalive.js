@@ -108,7 +108,6 @@ function updatePlayerHideout(sessionID) {
     }
 
     for (let recipe in recipes) {
-      logger.logError(JSON.stringify(recipes[recipe]));
       if (recipes[recipe]._id == pmcData.Hideout.Production[prod].RecipeId) {
         if (recipes[recipe].continuous == true) {
           needGenerator = true;
