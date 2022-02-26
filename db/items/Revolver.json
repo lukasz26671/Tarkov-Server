@@ -159,7 +159,7 @@
 			"isChamberLoad": true,
 			"chamberAmmoCount": 1,
 			"isBoltCatch": false,
-			"defMagType": "55d484b44bdc2d1d4e8b456d",
+			"defMagType": "60dc519adf4c47305f6d410d",
 			"defAmmo": "560d5e524bdc2d25448b4571",
 			"AdjustCollimatorsToTrajectory": false,
 			"shotgunDispersion": 20,
