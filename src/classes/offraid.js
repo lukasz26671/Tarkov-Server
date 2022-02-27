@@ -453,20 +453,31 @@ function saveProgress(offraidData, sessionID) {
 //example: Extortionist's Folder.
 //returns cleaned quests section.
 function removeLooseQuestItemsConditions(profile) {
+	let dateNow = Date.now();
 	//let curQuests = profile_f.handler.getPmcProfile(sessionID).Quests;
-	let curQuests = profile.Quests;
+	let curQuests = utility.DeepCopy(profile.Quests);
 	for (let i = 0; i < curQuests.length; i++) {
 		//if active quest
 		if (curQuests[i].status === "Started") {
 			for (let k = 0; k < curQuests[i].completedConditions.length; k++) {
 				if (isConditionRelatedToQuestItem(curQuests[i].completedConditions[k], curQuests[i].qid)) {
 					//if true : remove completed condition
-					logger.logWarning("condition related to quest item found in profile. Removing.");
-					curQuests[i].completedConditions[k] = "";
+					//curQuests[i].completedConditions[k] = "";
+					/*
+					logger.logWarning(
+						"Condition ("+curQuests[i].completedConditions[k]+") related to quest ("+curQuests[i].qid+") item found in profile."
+					);
+					*/
+					logger.logWarning(
+						`\nQuest (${curQuests[i].qid}) item related condition (${curQuests[i].completedConditions[k]}) \nFound in profile (${profile.aid}). Removing.`
+					);
+					curQuests[i].completedConditions.splice(k, 1);
 				}
 			}
 		}
 	}
+
+	logger.logSuccess(`Quest conditions cleaned (${Date.now() - dateNow}ms).`);
 	return curQuests;
 }
 
@@ -478,21 +489,26 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 	//iterate quests to find the desired quest by questId and save it locally
 	for (let quest of global._database.quests) {
 		if (quest._id === questId) {
-			cachedQuest = quest;
+			cachedQuest = utility.DeepCopy(quest);
 		}
 	}
-	//iterate quest conditions that are relevant
-	for (let condAFF of cachedQuest.conditions.AvailableForFinish) {
-		if (condAFF._props.id === conditionId) {
-			//if quest condition is of "FindItem" nature, then it's related to an item found in raid.
-			if (condAFF._parent === "FindItem") {
-				//if that item is an item with QuestItem = true
-				if (global._database.items[condAFF._props.target[0]]._props.QuestItem === true) {
-					return true;
+	if(cachedQuest){
+		//iterate quest conditions that are relevant
+		for (let condAFF of cachedQuest.conditions.AvailableForFinish) {
+			if (condAFF._props.id === conditionId) {
+				//if quest condition is of "FindItem" nature, then it's related to an item found in raid.
+				if (condAFF._parent === "FindItem") {
+					//if that item is an item with QuestItem = true
+					if (global._database.items[condAFF._props.target[0]]._props.QuestItem === true) {
+						return true;
+					}
 				}
 			}
 		}
+	}else{
+		logger.logWarning("isConditionRelatedToQuestItem: No matching quest was found.");
 	}
+	
 	return false;
 }
 /**
