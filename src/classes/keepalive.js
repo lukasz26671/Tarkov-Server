@@ -104,7 +104,7 @@ function updatePlayerHideout(sessionID) {
       prod == "5e074e5e2108b14e1c62f2a7"
     ) {
       let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTime - pmcData.Hideout.Production[prod].Progress;
-      pmcData.Hideout.Production[prod].Progress += time_elapsed;
+      pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
     }
 
     for (let recipe in recipes) {
@@ -120,7 +120,7 @@ function updatePlayerHideout(sessionID) {
           if (needGenerator == true && isGeneratorOn == false) {
             time_elapsed = time_elapsed * 0.2;
           }
-          pmcData.Hideout.Production[prod].Progress += time_elapsed;
+          pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
           // scavcase
           //if (prod == "14") {
           //  logger.logSuccess("I can see 14. will change progress.");
@@ -277,7 +277,7 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
   let time_elapsed = Math.floor(Date.now() / 1000) - btcProd.StartTimestamp;
 
   if (isGeneratorOn == true) {
-    btcProd.Progress += time_elapsed;
+    btcProd.Progress = Math.floor(btcProd.Progress + time_elapsed);
   }
 
   let t2 = Math.pow(0.05 + ((btcFarmCGs - 1) / 49) * 0.15, -1); //THE FUNCTION TO REDUCE TIME OF PRODUCTION DEPENDING OF CGS
@@ -292,13 +292,13 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
           StackObjectsCount: 1,
         },
       });
-      btcProd.Progress -= final_prodtime;
+      btcProd.Progress = Math.floor(btcProd.Progress - final_prodtime);
       logger.logSuccess("Bitcoin produced on server.");
     } else {
       btcProd.Progress = 0;
     }
   }
-  btcProd.ProductionTime = production.productionTime;
+  btcProd.ProductionTime = Math.floor(production.productionTime);
   btcProd.StartTimestamp = Math.floor(Date.now() / 1000);
   return btcProd;
 }
