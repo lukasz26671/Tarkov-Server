@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 class InraidServer {
 	constructor() {
 		// this needs to be saved on drive so if player closes server it can keep it going after restart
@@ -398,6 +400,12 @@ function saveProgress(offraidData, sessionID) {
 	pmcData.Encyclopedia = offraidData.profile.Encyclopedia;
 	pmcData.ConditionCounters = offraidData.profile.ConditionCounters;
 	pmcData.Quests = offraidData.profile.Quests;
+	//pmcData.Hideout = offraidData.profile.Hideout;
+
+	//logger.logError("BEFORE UPDATE: \n"+JSON.stringify(pmcData.Hideout.Production, null, 2));
+	//correctly update hideout production after raid.
+	keepalive_f.updatePlayerHideout(sessionID);
+	//logger.logError("AFTER UPDATE: \n"+JSON.stringify(pmcData.Hideout.Production, null, 2));
 
 	// For some reason, offraidData seems to drop the latest insured items.
 	// It makes more sense to use pmcData's insured items as the source of truth.

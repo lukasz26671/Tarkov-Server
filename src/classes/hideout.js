@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 function handleBitcoinReproduction(pmcData, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
   keepalive_f.main(sessionID); // Force keepalive call to prevent client/server desync.
@@ -33,7 +35,7 @@ function registerProduction(pmcData, body, sessionID) {
       RecipeId: body.recipeId,
       Products: [],
       SkipTime: 0,
-      ProductionTime: parseInt(databaseHideoutProduction.productionTime),
+      ProductionTime: parseInt(databaseHideoutProduction.ProductionTime),
       StartTimestamp: utility.getTimestamp(),
     };
   } catch (e) {
@@ -362,6 +364,8 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
     (scavcase) => scavcase._id == body.recipeId,
   );
 
+  //logger.logError(JSON.stringify(databaseHideoutScavcase, null, 2));
+
   if (!databaseHideoutScavcase) {
     logger.logWarning(
       `Unable to find hideout scavcase ${body.recipeId} in database`,
@@ -434,16 +438,18 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
       });
     }
   }
+  /*
   pmcData.Hideout.Production["141"] = {
     Products: products,
   };
+  */
   pmcData.Hideout.Production[body.recipeId] = {
     Progress: 0,
     inProgress: true,
     RecipeId: body.recipeId,
-    Products: [],
+    Products: products,
     SkipTime: 0,
-    ProductionTime: parseInt(databaseHideoutScavcase.productionTime),
+    ProductionTime: parseInt(databaseHideoutScavcase.ProductionTime),
     StartTimestamp: utility.getTimestamp(),
   };
 
@@ -500,8 +506,7 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
       if (pmcData.Hideout.Production[prod].RecipeId !== body.recipeId) {
         continue;
       }
-      pmcData.Hideout.Production[prod].Products =
-        pmcData.Hideout.Production["141"].Products;
+      //pmcData.Hideout.Production[prod].Products = pmcData.Hideout.Production["141"].Products;
       // give items BEFORE deleting the production
       for (let itemProd of pmcData.Hideout.Production[prod].Products) {
         pmcData = profile_f.handler.getPmcProfile(sessionID);
@@ -531,7 +536,7 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
       }
 
       delete pmcData.Hideout.Production[prod];
-      delete pmcData.Hideout.Production["141"];
+      //delete pmcData.Hideout.Production["141"];
 
       return output;
     }

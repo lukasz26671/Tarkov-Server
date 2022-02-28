@@ -103,8 +103,9 @@ function updatePlayerHideout(sessionID) {
       prod == "5dd129295a9ae32efe41a367" ||
       prod == "5e074e5e2108b14e1c62f2a7"
     ) {
-      let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTime - pmcData.Hideout.Production[prod].Progress;
-      pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
+      //let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
+      //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
+      pmcData.Hideout.Production[prod].Progress = Math.floor((Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp);
     }
 
     for (let recipe in recipes) {
@@ -116,15 +117,21 @@ function updatePlayerHideout(sessionID) {
         if (pmcData.Hideout.Production[prod].RecipeId == "5d5c205bd582a50d042a3c0e") {
           pmcData.Hideout.Production[prod] = updateBitcoinFarm(pmcData.Hideout.Production[prod], recipes[recipe], btcFarmCGs, isGeneratorOn, pmcData);
         } else {
-          let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
-          if (needGenerator == true && isGeneratorOn == false) {
-            time_elapsed = time_elapsed * 0.2;
+          //let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
+          if (needGenerator == true) {
+            //time_elapsed = time_elapsed * 0.2;
+            if(isGeneratorOn){
+              pmcData.Hideout.Production[prod].inProgress = true;
+            }else{
+              pmcData.Hideout.Production[prod].inProgress = false;
+            }
           }
-          pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
-          // scavcase
-          //if (prod == "14") {
-          //  logger.logSuccess("I can see 14. will change progress.");
-          //}
+          //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
+          pmcData.Hideout.Production[prod].Progress = Math.floor((Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp);
+          
+          /*TODO: TIMING IS BAD, we haven't handled turning on/off generator and the progress in between. 
+          Time elapsed didn't do shit and the calculations were wrong. CQ.*/
+          
         }
         break;
       }
@@ -305,3 +312,4 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
 
 module.exports.main = main;
 module.exports.updateTraders = updateTraders;
+module.exports.updatePlayerHideout = updatePlayerHideout;
