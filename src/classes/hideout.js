@@ -432,17 +432,15 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
         i--;
         continue;
       }
+      
       products.push({
         _id: utility.generateNewItemId(),
         _tpl: rolledItem._id,
       });
+      
     }
   }
-  /*
-  pmcData.Hideout.Production["141"] = {
-    Products: products,
-  };
-  */
+
   pmcData.Hideout.Production[body.recipeId] = {
     Progress: 0,
     inProgress: true,
@@ -510,9 +508,14 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
       // give items BEFORE deleting the production
       for (let itemProd of pmcData.Hideout.Production[prod].Products) {
         pmcData = profile_f.handler.getPmcProfile(sessionID);
-
+        let id = itemProd._tpl;
+        //if item is a weapon preset, get a random one
+        if (preset_f.handler.hasPreset(id)) {
+          //id = preset_f.handler.getStandardPreset(id)._id;
+          id = preset_f.handler.getRandomPresetIdFromWeaponId(itemProd._tpl);
+        }
         let newReq = {
-          item_id: itemProd._tpl,
+          item_id: id,
           count: 1,
           tid: "ragfair",
         };
@@ -532,12 +535,11 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
             }
           }
         }
-        output = move_f.addItem(pmcData, newReq, sessionID, true);
+
+        output = move_f.addItem(pmcData, newReq, sessionID, true);        
       }
 
       delete pmcData.Hideout.Production[prod];
-      //delete pmcData.Hideout.Production["141"];
-
       return output;
     }
   }
