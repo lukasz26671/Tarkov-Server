@@ -175,7 +175,7 @@ module.exports.upgrade = (pmcData, body, sessionID) => {
   if (ctime > 0) {
     const timestamp = Math.floor(Date.now() / 1000);
 
-    foundHideoutArea.completeTime = timestamp + ctime;
+    foundHideoutArea.completeTime = Math.floor(timestamp + ctime);
     foundHideoutArea.constructing = true;
   }
 
