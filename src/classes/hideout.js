@@ -28,6 +28,12 @@ function handleBitcoinReproduction(pmcData, sessionID) {
 
 function registerProduction(pmcData, body, sessionID) {
   const databaseHideoutProduction = _database.hideout.production.find((production) => production._id === body.recipeId);
+  let prodTime = undefined;
+  if(databaseHideoutProduction.ProductionTime){
+    prodTime = databaseHideoutProduction.ProductionTime;
+  }else{
+    prodTime = databaseHideoutProduction.productionTime;
+  }
   try {
     pmcData.Hideout.Production[databaseHideoutProduction._id] = {
       Progress: 0,
@@ -35,7 +41,7 @@ function registerProduction(pmcData, body, sessionID) {
       RecipeId: body.recipeId,
       Products: [],
       SkipTime: 0,
-      ProductionTime: parseInt(databaseHideoutProduction.ProductionTime),
+      ProductionTime: parseInt(prodTime),
       StartTimestamp: utility.getTimestamp(),
     };
   } catch (e) {
