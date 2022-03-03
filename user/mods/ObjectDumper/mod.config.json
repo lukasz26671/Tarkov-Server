@@ -1,0 +1,13 @@
+{
+	"name": "ObjectDumper",
+	"author": "",
+	"version": "",
+	"license": "MIT",
+	"settings": {
+		"enable": false
+	},
+	"src": {
+		"src/odump.js": "TamperModLoad"
+	},
+	"required": []
+}
