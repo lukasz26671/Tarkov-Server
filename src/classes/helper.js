@@ -996,6 +996,23 @@ module.exports.getSizeByInventoryItemHash_old = (itemtpl, itemID, inventoryItemH
   return [outX + SizeLeft + SizeRight + ForcedLeft + ForcedRight, outY + SizeUp + SizeDown + ForcedUp + ForcedDown];
 };
 
+/**
+ * Tries to place a given item template inside the given container object.
+ * Container object must be an array of items with a container table as the first
+ * item (index 0).
+ * Created specifically for forced loot containers, but may work in other containers.
+ * @param {string} itemTpl the item template (generally item._tpl)
+ * @param {Array} containerObject Array of items containing at least a table item at index 0
+ * @returns containerObject with the given item if it was possible, else, returns original array.
+ * @author CQInmanis
+ */
+function tryPlaceItemInContainer(itemTpl, containerObject){
+  //future use | in development...
+
+  return containerObject;
+}
+
+module.exports.tryPlaceItemInContainer = tryPlaceItemInContainer;
 module.exports.getPreset = getPreset;
 module.exports.getTemplatePrice = getTemplatePrice;
 module.exports.templatesWithParent = templatesWithParent;

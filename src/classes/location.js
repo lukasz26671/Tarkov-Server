@@ -1,5 +1,7 @@
 "use strict";
 
+//const helper_f = require("./helper");
+
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
   "543be5cb4bdc2deb348b4568",
@@ -612,73 +614,66 @@ class Generator {
     }
     return count;
   }
+
   lootForced(typeArray, output, locName) {
     let _location = global._database.locations[locName];
     let count = 0;
     for (let i in typeArray) {
       let data = utility.DeepCopy(typeArray[i]);
-      let newItemsData = [];
       // forced loot should be only contain 1 item... (there shouldnt be any weapon in there...)
-      const newId = utility.generateNewItemId();
-      let createEndLootData
-      //logger.logError(JSON.stringify(typeArray[i], null, 2));
-      //temporary fix until I figure out a global way to do it. Seems like the only loot container this way.
-      if(data.Id == "custom_multiScene_00058"){        
-        createEndLootData = {
-          Id: data.Id,
-          IsStatic: data.IsStatic,
-          useGravity: data.useGravity,
-          randomRotation: data.randomRotation,
-          Position: data.Position,
-          Rotation: data.Rotation,
-          IsGroupPosition: data.IsGroupPosition,
-          GroupPositions: data.GroupPositions,
-          Root: newId,
-          Items: [
-            {
-              _id: newId,
-              _tpl: "5909e4b686f7747f5b744fa4"
-            },
-            {
-              _id: "unknownKey_Spawn_blabla",
-              _tpl: "593962ca86f774068014d9af",
-              parentId: newId,
-              slotId: "main",
-              location: {
-                x: 0,
-                y: 0,
-                r: 0
-              }
-            }
-          ],
-        };
-      }else{
-        createEndLootData = {
-          Id: data.Id,
-          IsStatic: data.IsStatic,
-          useGravity: data.useGravity,
-          randomRotation: data.randomRotation,
-          Position: data.Position,
-          Rotation: data.Rotation,
-          IsGroupPosition: data.IsGroupPosition,
-          GroupPositions: data.GroupPositions,
-          Root: newId,
-          Items: [
-            {
-              _id: newId,
-              _tpl: data.Items[0],
-            },
-          ],
-        };
+      let createEndLootData;
+      let itemList = [];
+      let rootId = utility.generateNewItemId();
+      
+      for(let iData in data.Items){
+        // if it's the first index, handle uniquely (works for containers too)
+        if(iData == 0){
+          itemList.push({
+            _id:  rootId,
+            _tpl: data.Items[iData]
+          });
+          continue;
+        }
+
+        //itemList = helper_f.tryPlaceItemInContainer(data.Items[iData], itemList);
+
+        // has children
+        itemList.push({
+          _id:  utility.generateNewItemId(),
+          _tpl: data.Items[iData],
+          parentId: itemList[0]._id, //because 0 is parent in containers
+          slotId: "main",
+          //TODO: handle item/container size
+          location: {
+            x: iData-1,
+            y: 0,
+            r: 0
+          }
+        });
       }
 
-      
+      // world item creation
+      createEndLootData = {
+        Id: data.Id,
+        IsStatic: data.IsStatic,
+        useGravity: data.useGravity,
+        randomRotation: data.randomRotation,
+        Position: data.Position,
+        Rotation: data.Rotation,
+        IsGroupPosition: data.IsGroupPosition,
+        GroupPositions: data.GroupPositions,
+        Root: rootId,
+        Items: utility.DeepCopy(itemList),
+      };
+
+      logger.logError("endloot: \n"+JSON.stringify(createEndLootData, null, 2));
 
       output.Loot.push(createEndLootData);
       count++;
     }
     return count;
   }
+
   lootStatics(typeArray, output, locName) {   
     let _location = global._database.locations[locName];
     let count = 0;
