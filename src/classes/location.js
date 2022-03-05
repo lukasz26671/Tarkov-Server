@@ -666,7 +666,7 @@ class Generator {
         Items: utility.DeepCopy(itemList),
       };
 
-      logger.logError("endloot: \n"+JSON.stringify(createEndLootData, null, 2));
+      //logger.logError("endloot: \n"+JSON.stringify(createEndLootData, null, 2));
 
       output.Loot.push(createEndLootData);
       count++;
