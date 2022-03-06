@@ -6,7 +6,7 @@
   "autoUpdate": false,
   "checkUpdateUrl": "",
   "src":{
-    "src/modloader.js": "CacheModLoad"
+    "src/modloader.js": "TamperModLoad"
   },
   "required": []
 }
