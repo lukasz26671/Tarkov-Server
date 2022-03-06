@@ -104,9 +104,12 @@ function _load_HideoutData() {
   for (let id in _database.hideout.areas) {
     for (let id_stage in _database.hideout.areas[id].stages) {
       let stage = _database.hideout.areas[id].stages[id_stage];
+      /*
       if (stage.constructionTime != 0 && stage.constructionTime > _database.gameplay.hideout.productionTimeDivide_Areas) {
         stage.constructionTime = stage.constructionTime / _database.gameplay.hideout.productionTimeDivide_Areas;
       }
+      */
+      stage.constructionTime = _database.gameplay.hideout.hideoutConstructionUpgradeFixedTime;
     }
   }
   for (let id in _database.hideout.production) {
