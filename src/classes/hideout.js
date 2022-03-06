@@ -446,6 +446,12 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
       
     }
   }
+  let prodTime = undefined;
+  if(databaseHideoutScavcase.ProductionTime){
+    prodTime = databaseHideoutScavcase.ProductionTime;
+  }else{
+    prodTime = databaseHideoutScavcase.productionTime;
+  }
 
   pmcData.Hideout.Production[body.recipeId] = {
     Progress: 0,
@@ -453,7 +459,7 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
     RecipeId: body.recipeId,
     Products: products,
     SkipTime: 0,
-    ProductionTime: parseInt(databaseHideoutScavcase.ProductionTime),
+    ProductionTime: parseInt(prodTime),
     StartTimestamp: utility.getTimestamp(),
   };
 
