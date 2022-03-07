@@ -1061,6 +1061,33 @@ class Generator {
     range = itemCounts.grenades.max - itemCounts.grenades.min;
     const grenadeCount = bots_f.generator.getBiasedRandomNumber(itemCounts.grenades.min, itemCounts.grenades.max, range, 4);
 
+    // handle specialItems uniquely because of bandaid and bc JET didn't bother implementing...
+    let specialLoot = [];
+    if(lootPool.SpecialLoot && lootPool.SpecialLoot.length > 0){
+      // if bot has SpecialLoot
+      if(itemCounts.specialItems && itemCounts.specialItems.max > 0){
+        //if specialItems exists
+        let randomAmount = utility.getRandomInt(itemCounts.specialItems.min, itemCounts.specialItems.max);
+        for(let i = 0; i < randomAmount; i++){
+          //pull a random item from the array
+          let randomIndex = utility.getRandomInt(0, lootPool.SpecialLoot.length); //this can generate duplicates but w/e
+          let itemID = lootPool.SpecialLoot[randomIndex];
+          let item = utility.DeepCopy(global._database.items[itemID]);
+
+          //in case the ID doesn't exist, which would cause the item to be null
+          if(item){
+            specialLoot.push(item);
+            //logger.logError(`Pushed. RAm: ${randomAmount}, RIn: ${randomIndex}, iID: ${itemID}`);
+          }          
+        }
+      }
+      //logger.logError(JSON.stringify(specialLoot, null, 2));
+      if(specialLoot.length > 0){
+        //only add loot if any was generated.
+        bots_f.generator.addLootFromPool(specialLoot, [EquipmentSlots.Pockets], specialLoot.length); //we handled amount earlier, so no need to count
+      }      
+    }
+    
     bots_f.generator.addLootFromPool(healingItems, [EquipmentSlots.TacticalVest, EquipmentSlots.Pockets], healingItemCount);
     bots_f.generator.addLootFromPool(lootItems, [EquipmentSlots.Backpack, EquipmentSlots.Pockets, EquipmentSlots.TacticalVest], lootItemCount);
     bots_f.generator.addLootFromPool(grenadeItems, [EquipmentSlots.TacticalVest, EquipmentSlots.Pockets], grenadeCount);
