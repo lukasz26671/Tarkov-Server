@@ -416,8 +416,7 @@ class Responses {
     return response_f.getBody(fileIO.readParsed(_database.core.matchMetrics));
   }
   clientGlobals(url, info, sessionID) {
-    global._database.globals.time = Date.now() / 1000;
-    return response_f.getBody(global._database.globals);
+    return response_f.getBody(globals_f.getGlobals(url, info, sessionID));
   }
   clientHandbookBuildsMyList(url, info, sessionID) {
     return response_f.getBody(weaponbuilds_f.getUserBuilds(sessionID));
