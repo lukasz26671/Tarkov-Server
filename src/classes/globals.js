@@ -74,6 +74,7 @@ const SKILLS = {
 function getGlobals(url, info, sessionID){
 	let playerGlobals = utility.DeepCopy(global._database.globals);
 	//logger.logError(`url: \n${JSON.stringify(url, null, 2)} \ninfo: \n\n${JSON.stringify(info, null, 2)} \nsessionID: \n${JSON.stringify(sessionID, null, 2)}`);
+	/*
 	let profile = utility.DeepCopy(profile_f.handler.getPmcProfile(sessionID));
 	
 	//testing example code for future use:
@@ -92,6 +93,7 @@ function getGlobals(url, info, sessionID){
 	//return global._database.globals;
 
 	//same old code but without modifying base globals and instead sending it for the player who requested it
+	*/
 	playerGlobals.time = utility.getTimestamp();
 	return playerGlobals;
 }
