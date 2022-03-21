@@ -26,6 +26,12 @@ class ProfileServer {
   loadProfileFromDisk(sessionID) {
     if (typeof sessionID == "undefined") logger.throwErr("[CLUSTER]Session ID is undefined", "~/src/classes/profile.js | 19");
     try {
+      // Check if the profile file exists
+      if (!global.internal.fs.existsSync(getPmcPath(sessionID))) {
+        logger.logError(`[CLUSTER] Profile file for session ID ${sessionID} not found.`);
+        return false;
+      }
+
       //Load the PMC profile from disk.
       this.profiles[sessionID]["pmc"] = fileIO.readParsed(getPmcPath(sessionID));
 

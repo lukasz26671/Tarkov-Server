@@ -11,6 +11,12 @@ class DialogueServer {
    * @param {*} sessionID 
    */
   initializeDialogue(sessionID) {
+    // Check if the profile file exists
+    if (!global.internal.fs.existsSync(getPath(sessionID))) {
+      logger.logError(`[CLUSTER] Dialogue file for session ID ${sessionID} not found.`);
+      return false;
+    }
+
     // Load saved dialogues from disk
     this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
 
