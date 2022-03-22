@@ -185,8 +185,8 @@ class TraderServer {
   }
   setTraderBase(base) {
     global._database.traders[base._id].base = base;
-    if (typeof db.traders[base._id] != "undefined")
-      fileIO.write(db.traders[base._id].base, base, true, false);
+/*     if (typeof db.traders[base._id] != "undefined")
+      fileIO.write(db.traders[base._id].base, base, true, false); */
   }
 
   getAllTraders(sessionID, keepalive = false) {

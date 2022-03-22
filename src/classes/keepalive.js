@@ -11,7 +11,7 @@ function main(sessionID) {
 
 function updateTraders(sessionID) {
   let update_per = 3600;
-  let timeNow = Math.floor(Date.now() / 1000);
+  let timeNow = utility.getTimestamp();
   dialogue_f.handler.removeExpiredItems(sessionID);
 
   // update each hour
@@ -29,7 +29,7 @@ function updateTraders(sessionID) {
     if (tradersToUpdateList[i]._id === "579dc571d53a0658a154fbec") continue;
 
     if (typeof db.traders[tradersToUpdateList[i]._id] == "undefined") return;
-    let assort = fileIO.readParsed(db.traders[tradersToUpdateList[i]._id].assort);
+    let assort = global._database.traders[tradersToUpdateList[i]._id].assort;
 
     for (let assortItem in assort) {
       if (typeof assort[assortItem].default == "undefined") {
@@ -40,7 +40,7 @@ function updateTraders(sessionID) {
       assort[assortItem].currentStack = assort[assortItem].default.stack;
     }
 
-    fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
+    global._database.traders[tradersToUpdateList[i]._id].assort = assort
 
     trader_f.handler.saveTrader(tradersToUpdateList[i]._id);
   }
@@ -105,7 +105,7 @@ function updatePlayerHideout(sessionID) {
     ) {
       //let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
       //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
-      pmcData.Hideout.Production[prod].Progress = Math.floor((Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp);
+      pmcData.Hideout.Production[prod].Progress = Math.floor(utility.getTimestamp() - pmcData.Hideout.Production[prod].StartTimestamp);
     }
 
     for (let recipe in recipes) {
@@ -127,7 +127,7 @@ function updatePlayerHideout(sessionID) {
             }
           }
           //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
-          pmcData.Hideout.Production[prod].Progress = Math.floor((Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp);
+          pmcData.Hideout.Production[prod].Progress = Math.floor(utility.getTimestamp() - pmcData.Hideout.Production[prod].StartTimestamp);
 
           // if progress exceeds 100%, make it 100%
           if (pmcData.Hideout.Production[prod].Progress > pmcData.Hideout.Production[prod].ProductionTime) {
@@ -285,7 +285,7 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
   //let production = fileIO.readParsed(db.user.cache.hideout_production).data.find((prodArea) => prodArea.areaType == 20);
   //logger.logError("PROD: \n"+JSON.stringify(_database.hideout.production, null, 2));
   //let production = _database.hideout.production.find((prodArea) => prodArea.areaType == 20);
-  let time_elapsed = Math.floor(Date.now() / 1000) - btcProd.StartTimestamp;
+  let time_elapsed = utility.getTimestamp() - btcProd.StartTimestamp;
 
   if (isGeneratorOn == true) {
     btcProd.Progress = Math.floor(btcProd.Progress + time_elapsed);
