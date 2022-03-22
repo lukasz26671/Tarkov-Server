@@ -29,7 +29,8 @@ function updateTraders(sessionID) {
     if (tradersToUpdateList[i]._id === "579dc571d53a0658a154fbec") continue;
 
     if (typeof db.traders[tradersToUpdateList[i]._id] == "undefined") return;
-    let assort = global._database.traders[tradersToUpdateList[i]._id].assort;
+    let assort = fileIO.readParsed(db.traders[tradersToUpdateList[i]._id].assort);
+    //let assort = global._database.traders[tradersToUpdateList[i]._id].assort;
 
     for (let assortItem in assort) {
       if (typeof assort[assortItem].default == "undefined") {
@@ -40,7 +41,8 @@ function updateTraders(sessionID) {
       assort[assortItem].currentStack = assort[assortItem].default.stack;
     }
 
-    global._database.traders[tradersToUpdateList[i]._id].assort = assort
+    fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
+    //global._database.traders[tradersToUpdateList[i]._id].assort = assort
 
     trader_f.handler.saveTrader(tradersToUpdateList[i]._id);
   }
