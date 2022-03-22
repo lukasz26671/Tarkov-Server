@@ -41,8 +41,8 @@ function updateTraders(sessionID) {
       assort[assortItem].currentStack = assort[assortItem].default.stack;
     }
 
-    fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
-    //global._database.traders[tradersToUpdateList[i]._id].assort = assort
+    //fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
+    global._database.traders[tradersToUpdateList[i]._id].assort = assort
 
     trader_f.handler.saveTrader(tradersToUpdateList[i]._id);
   }
