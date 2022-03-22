@@ -502,7 +502,7 @@ class Generator {
   lootMounted(typeArray, output, locName) {
     let _location = global._database.locations[locName];
     let count = 0;
-    for (let i in typeArray) {      
+    for (let i in typeArray) {
       // detect if its a stationary weapon
       if (
         typeArray[i].Id.toLowerCase().indexOf("utes") != -1 ||
@@ -624,12 +624,12 @@ class Generator {
       let createEndLootData;
       let itemList = [];
       let rootId = utility.generateNewItemId();
-      
-      for(let iData in data.Items){
+
+      for (let iData in data.Items) {
         // if it's the first index, handle uniquely (works for containers too)
-        if(iData == 0){
+        if (iData == 0) {
           itemList.push({
-            _id:  rootId,
+            _id: rootId,
             _tpl: data.Items[iData]
           });
           continue;
@@ -639,13 +639,13 @@ class Generator {
 
         // has children
         itemList.push({
-          _id:  utility.generateNewItemId(),
+          _id: utility.generateNewItemId(),
           _tpl: data.Items[iData],
           parentId: itemList[0]._id, //because 0 is parent in containers
           slotId: "main",
           //TODO: handle item/container size
           location: {
-            x: iData-1,
+            x: iData - 1,
             y: 0,
             r: 0
           }
@@ -674,11 +674,11 @@ class Generator {
     return count;
   }
 
-  lootStatics(typeArray, output, locName) {   
+  lootStatics(typeArray, output, locName) {
     let _location = global._database.locations[locName];
     let count = 0;
     let dateNow = Date.now();
-    for (let i in typeArray) {      
+    for (let i in typeArray) {
       let data = typeArray[i];
       dateNow = Date.now();
       _GenerateContainerLoot(data.Items);
@@ -699,7 +699,7 @@ class Generator {
 
     for (let itemLoot in typeArray) {
       const lootData = typeArray[itemLoot];
-      
+
       //if next item will overlap an existing one, skip:
       if (isThereLootAtLocation(output.Loot, lootData.Position)) {
         overlapped++;
@@ -709,7 +709,7 @@ class Generator {
       //if it isn't the item's lucky day, skip:
       if (!utility.getPercentRandomBool(locationLootChanceModifier * 100)) {
         continue;
-      } 
+      }
 
       let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(
         lootData,
@@ -760,12 +760,12 @@ class Generator {
 
       // FLASH DRIVE CODE BLOCK
       // if potential PC Case
-      if(lootData.Id.includes("LootGarbage (36)(Clone)")){
+      if (lootData.Id.includes("LootGarbage (36)(Clone)")) {
         // check if contains a flash drive
-        if(lootData.Items.includes("590c621186f774138d11ea29")){
+        if (lootData.Items.includes("590c621186f774138d11ea29")) {
           // set only the flash drive as possible spawn
           //lootData.Items = ["590c621186f774138d11ea29"];
-          
+
           //set correct orientation
           createEndLootData.randomRotation = false;
           createEndLootData.Rotation.y += 90;
@@ -778,7 +778,7 @@ class Generator {
             _tpl: "590c621186f774138d11ea29"
           });
           //logger.logError(JSON.stringify(lootData, null, 2));
-        }        
+        }
       }
 
       // if ammo box, handle in unique way
@@ -815,30 +815,30 @@ class Generator {
           });
           locationCount++;
         }
-      }else{
+      } else {
         // if items with stacks bigger than 1, then we spawn a random amount based on
         // its StackMinRandom and StackMaxRandom. If the item doesn't have those fields,
         // then we create a randomized amount based on StackMaxSize.
         let tempItem = global._database.items[createEndLootData.Items[0]._tpl];
-        if(tempItem._props.StackMaxSize > 1){
-          if(tempItem._props.StackMinRandom && tempItem._props.StackMaxRandom){
+        if (tempItem._props.StackMaxSize > 1) {
+          if (tempItem._props.StackMinRandom && tempItem._props.StackMaxRandom) {
             //item contains properties (which is most of the time when StackMaxSize > 1)
             let minR = tempItem._props.StackMinRandom;
             let maxR = tempItem._props.StackMaxRandom;
-            createEndLootData.Items[0]= {
+            createEndLootData.Items[0] = {
               _id: generatedItemId,
               _tpl: tempItem._id,
               upd: {
                 StackObjectsCount: utility.getRandomInt(minR, maxR),
               }
             };
-            
-          }else{
+
+          } else {
             //item does not contain required properties, default to StackMaxSize
             //this is just a failsafe
             let minR = 1;
             let maxR = tempItem._props.StackMaxSize;
-            createEndLootData.Items[0]= {
+            createEndLootData.Items[0] = {
               _id: generatedItemId,
               _tpl: tempItem._id,
               upd: {

@@ -42,23 +42,23 @@ class ItemPresets {
     }
 
     //returns items array corresponding to the preset.
-    getBuiltWeaponPreset(presetID){
-        if(!this.isPreset(presetID)){
-            logger.logError("not a preset: "+presetID);
-            return []; 
+    getBuiltWeaponPreset(presetID) {
+        if (!this.isPreset(presetID)) {
+            logger.logError("not a preset: " + presetID);
+            return [];
         }
         let foundP = utility.DeepCopy(global._database.globals.ItemPresets[presetID]);
-        logger.logError(`Found preset for ID ${presetID}: \n`+JSON.stringify(foundP, null, 2));
+        logger.logError(`Found preset for ID ${presetID}: \n` + JSON.stringify(foundP, null, 2));
 
-        for(let item of foundP._items){
+        for (let item of foundP._items) {
             let ogID = item._id;
             //repair ID
             item._id = utility.generateNewItemId();
 
             // check for children whose parentId was the item's original ID
             // and replace it with the new id
-            for(let iitem of foundP._items){
-                if(iitem.parentId == ogID){
+            for (let iitem of foundP._items) {
+                if (iitem.parentId == ogID) {
                     iitem.parentId = item._id;
                 }
             }
@@ -67,17 +67,17 @@ class ItemPresets {
     }
 
     //gets a random preset from a given receiver id
-    getRandomPresetIdFromWeaponId(WepId){
+    getRandomPresetIdFromWeaponId(WepId) {
         if (!this.hasPreset(WepId)) {
             return "";
         }
         let wepPresets = [];
         wepPresets = this.getPresets(WepId);
 
-        if(wepPresets.length > 0){
+        if (wepPresets.length > 0) {
             //logger.logSuccess("Found following presets: "+JSON.stringify(wepPresets, null, 2));
             return wepPresets[utility.getRandomInt(0, wepPresets.length - 1)]._id;
-        }else{
+        } else {
             logger.logError(`No presets found for ${WepId}.`); //should never enter here but, just in case.
             return "";
         }

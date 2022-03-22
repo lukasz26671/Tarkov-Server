@@ -51,11 +51,11 @@ function sortOffers(request, offers) {
       break;
 
     case 5: // Price
-/*       if (request.offerOwnerType == 1) {
-        offers.sort(sortOffersByPriceSummaryCost);
-      } else {
-        offers.sort(sortOffersByPrice);
-      } */
+      /*       if (request.offerOwnerType == 1) {
+              offers.sort(sortOffersByPriceSummaryCost);
+            } else {
+              offers.sort(sortOffersByPrice);
+            } */
 
       offers.sort(sortOffersByPrice);
       break;

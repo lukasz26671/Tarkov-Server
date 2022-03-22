@@ -118,6 +118,10 @@ function moveItemInternal(items, body) {
 
   for (const item of items) {
     if (item._id && item._id === body.item) {
+      // don't overwrite camera_ items (happens when loading shells ito mts-255 revolver shotgun)
+      if (item.slotId.includes("camora_")) {
+        return;
+      }
       item.parentId = body.to.id;
       item.slotId = body.to.container;
 

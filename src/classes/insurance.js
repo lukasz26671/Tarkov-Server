@@ -100,7 +100,7 @@ class InsuranceServer {
         offraidData.profile.Inventory.items.forEach(i => offRaidGearHash[i._id] = i);
 
         let gears = [];
-        
+
         for (let insuredItem of pmcData.InsuredItems) {
             if (preRaidGearHash[insuredItem.itemId]) {
                 // This item exists in preRaidGear, meaning we brought it into the raid...
@@ -120,7 +120,7 @@ class InsuranceServer {
     }
 
     /* store insured items on pmc death */
-    storeDeadGear(pmcData, offraidData, preRaidGear, sessionID) {        
+    storeDeadGear(pmcData, offraidData, preRaidGear, sessionID) {
         let gears = [];
 
         let securedContainerItems = offraid_f.getSecuredContainer(offraidData.profile.Inventory.items);
@@ -197,7 +197,7 @@ class InsuranceServer {
     }
 }
 
-function getPremium(pmcData, inventoryItem, traderId) {    
+function getPremium(pmcData, inventoryItem, traderId) {
     let loyaltyLevelIndex = profile_f.getLoyalty(pmcData, traderId) - 1;
     let trader = trader_f.handler.getTrader(traderId, pmcData.aid);
     let insuranceMultiplier;

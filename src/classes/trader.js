@@ -349,7 +349,7 @@ class TraderServer {
     let output = [];
     for (let traderID in global._database.traders) {
       ///if customization_seller
-      if(global._database.traders[traderID].base.customization_seller == true){
+      if (global._database.traders[traderID].base.customization_seller == true) {
         output = output.concat(this.getCustomization(traderID, sessionID));
       }
     }

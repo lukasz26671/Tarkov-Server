@@ -29,9 +29,9 @@ function handleBitcoinReproduction(pmcData, sessionID) {
 function registerProduction(pmcData, body, sessionID) {
   const databaseHideoutProduction = _database.hideout.production.find((production) => production._id === body.recipeId);
   let prodTime = undefined;
-  if(databaseHideoutProduction.ProductionTime){
+  if (databaseHideoutProduction.ProductionTime) {
     prodTime = databaseHideoutProduction.ProductionTime;
-  }else{
+  } else {
     prodTime = databaseHideoutProduction.productionTime;
   }
   try {
@@ -438,18 +438,18 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
         i--;
         continue;
       }
-      
+
       products.push({
         _id: utility.generateNewItemId(),
         _tpl: rolledItem._id,
       });
-      
+
     }
   }
   let prodTime = undefined;
-  if(databaseHideoutScavcase.ProductionTime){
+  if (databaseHideoutScavcase.ProductionTime) {
     prodTime = databaseHideoutScavcase.ProductionTime;
-  }else{
+  } else {
     prodTime = databaseHideoutScavcase.productionTime;
   }
 
@@ -548,7 +548,7 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
           }
         }
 
-        output = move_f.addItem(pmcData, newReq, sessionID, true);        
+        output = move_f.addItem(pmcData, newReq, sessionID, true);
       }
 
       delete pmcData.Hideout.Production[prod];

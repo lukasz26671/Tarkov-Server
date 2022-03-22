@@ -33,14 +33,14 @@ function getQuestsForPlayer(url, info, sessionID) {
     }
 
     //check if quest has a side field
-    if(quests[quest].Side){
+    if (quests[quest].Side) {
       //if profile side is not the same side as the quest requires, delete from array
-      if(quests[quest].Side != side){
+      if (quests[quest].Side != side) {
         //logger.logError("ID: "+quests[quest]._id);
         quests.splice(count, 1);
       }
     }
-   count++;
+    count++;
   }
   //console.log(quests);
   return quests;
@@ -135,8 +135,8 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
         /* not used in game (can lock or unlock location suposedly...) */ break;
       case "Skill":
         //this is actually shorter, faster and easier than filtering. Plus it works (CQ)
-        for(let skill in pmcData.Skills.Common){
-          if(pmcData.Skills.Common[skill].Id == reward.target){
+        for (let skill in pmcData.Skills.Common) {
+          if (pmcData.Skills.Common[skill].Id == reward.target) {
             pmcData.Skills.Common[skill].Progress += parseInt(reward.value);
             break;
           }

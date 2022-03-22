@@ -62,10 +62,10 @@ class Logger {
         setColors += colorData[i][colors[i]];
       }
     }
-    
+
     let date = new Date().toISOString().
-    replace(/T/, ' ').
-    replace(/\..+/, '');
+      replace(/T/, ' ').
+      replace(/\..+/, '');
 
     let deltaTime = serverConfig.debugTimer ? "[" + date + "] " : " ";
 

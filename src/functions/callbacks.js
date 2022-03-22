@@ -68,14 +68,14 @@ class Callbacks {
 		}
 
 		// if file does not exist
-		if(!baseNode[fileName]){
+		if (!baseNode[fileName]) {
 			logger.logError("Image not found! Sending backup image.");
-			baseNode[fileName] = "res/noimage/"+imgCategory+".png";
+			baseNode[fileName] = "res/noimage/" + imgCategory + ".png";
 			server.tarkovSend.file(resp, baseNode[fileName]);
-		}else{
+		} else {
 			// send image
 			server.tarkovSend.file(resp, baseNode[fileName]);
-		}		
+		}
 	}
 	respondNotify(sessionID, req, resp, data) {
 		let splittedUrl = req.url.split('/');

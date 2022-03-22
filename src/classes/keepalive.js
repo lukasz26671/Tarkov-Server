@@ -120,22 +120,22 @@ function updatePlayerHideout(sessionID) {
           //let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
           if (needGenerator == true) {
             //time_elapsed = time_elapsed * 0.2;
-            if(isGeneratorOn){
+            if (isGeneratorOn) {
               pmcData.Hideout.Production[prod].inProgress = true;
-            }else{
+            } else {
               pmcData.Hideout.Production[prod].inProgress = false;
             }
           }
           //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
           pmcData.Hideout.Production[prod].Progress = Math.floor((Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp);
-          
+
           // if progress exceeds 100%, make it 100%
-          if(pmcData.Hideout.Production[prod].Progress > pmcData.Hideout.Production[prod].ProductionTime){
+          if (pmcData.Hideout.Production[prod].Progress > pmcData.Hideout.Production[prod].ProductionTime) {
             pmcData.Hideout.Production[prod].Progress = pmcData.Hideout.Production[prod].ProductionTime;
           }
           /*TODO: TIMING IS BAD, we haven't handled turning on/off generator and the progress in between. 
           Time elapsed didn't do shit and the calculations were wrong. CQ.*/
-          
+
         }
         break;
       }
@@ -309,7 +309,7 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
       btcProd.Progress = 0;
     }
   }
-  
+
   btcProd.ProductionTime = Math.floor(production.productionTime);
   btcProd.StartTimestamp = Math.floor(Date.now() / 1000);
   return btcProd;

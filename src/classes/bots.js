@@ -337,7 +337,7 @@ class Controller {
     //if we generated bots and are in raid
     if (count > 0 && offraid_f.handler.getPlayer(sessionID)) {
       logger.logSuccess(
-        "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map. ("+(Date.now() - dateNow)+"ms)"
+        "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map. (" + (Date.now() - dateNow) + "ms)"
       );
       if (swapped > 0) {
         logger.logSuccess("\u001b[32;1mSwapped " + swapped + " bot(s).");
@@ -801,14 +801,14 @@ class Generator {
     }
 
     //if item can be a stack higher than 1 | CQ: this fixes money spawning in stacks of 1, and whatever else.
-    if(itemTemplate._props.StackMaxSize > 1){
+    if (itemTemplate._props.StackMaxSize > 1) {
       //if item has random stacks properties
-      if(itemTemplate._props.StackMaxRandom && itemTemplate._props.StackMinRandom){
+      if (itemTemplate._props.StackMaxRandom && itemTemplate._props.StackMinRandom) {
         properties.StackObjectsCount = utility.getRandomInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
-      }else{
+      } else {
         //if it doesn't, randomize it between 1 and the stack max size
         properties.StackObjectsCount = utility.getRandomInt(1, itemTemplate._props.StackMaxSize);
-      }      
+      }
     }
 
     if (itemTemplate._props.weapFireType && itemTemplate._props.weapFireType.length) {
@@ -1063,31 +1063,31 @@ class Generator {
 
     // handle specialItems uniquely because of bandaid and bc JET didn't bother implementing...
     let specialLoot = [];
-    if(lootPool.SpecialLoot && lootPool.SpecialLoot.length > 0){
+    if (lootPool.SpecialLoot && lootPool.SpecialLoot.length > 0) {
       // if bot has SpecialLoot
-      if(itemCounts.specialItems && itemCounts.specialItems.max > 0){
+      if (itemCounts.specialItems && itemCounts.specialItems.max > 0) {
         //if specialItems exists
         let randomAmount = utility.getRandomInt(itemCounts.specialItems.min, itemCounts.specialItems.max);
-        for(let i = 0; i < randomAmount; i++){
+        for (let i = 0; i < randomAmount; i++) {
           //pull a random item from the array
           let randomIndex = utility.getRandomInt(0, lootPool.SpecialLoot.length); //this can generate duplicates but w/e
           let itemID = lootPool.SpecialLoot[randomIndex];
           let item = utility.DeepCopy(global._database.items[itemID]);
 
           //in case the ID doesn't exist, which would cause the item to be null
-          if(item){
+          if (item) {
             specialLoot.push(item);
             //logger.logError(`Pushed. RAm: ${randomAmount}, RIn: ${randomIndex}, iID: ${itemID}`);
-          }          
+          }
         }
       }
       //logger.logError(JSON.stringify(specialLoot, null, 2));
-      if(specialLoot.length > 0){
+      if (specialLoot.length > 0) {
         //only add loot if any was generated.
         bots_f.generator.addLootFromPool(specialLoot, [EquipmentSlots.Pockets], specialLoot.length); //we handled amount earlier, so no need to count
-      }      
+      }
     }
-    
+
     bots_f.generator.addLootFromPool(healingItems, [EquipmentSlots.TacticalVest, EquipmentSlots.Pockets], healingItemCount);
     bots_f.generator.addLootFromPool(lootItems, [EquipmentSlots.Backpack, EquipmentSlots.Pockets, EquipmentSlots.TacticalVest], lootItemCount);
     bots_f.generator.addLootFromPool(grenadeItems, [EquipmentSlots.TacticalVest, EquipmentSlots.Pockets], grenadeCount);
@@ -1107,7 +1107,7 @@ class Generator {
             ...bots_f.generator.generateExtraPropertiesForItem(itemTemplate),
           },
         ];
-        
+
         // Fill ammo box
         if (itemTemplate._props.StackSlots && itemTemplate._props.StackSlots.length) {
           itemsToAdd.push({

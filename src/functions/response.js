@@ -701,19 +701,19 @@ class Responses {
   singleplayerSettingsRaidMenu(url, info, sessionID) {
     return response_f.noBody(global._database.gameplayConfig.defaultRaidSettings);
   }
-/*   singleplayerSettingsBotDifficulty(url, info, sessionID) {
-     let data = [];
-    for (const botType in global._database.bots) {
-      for (const difficulty in global._database.bots[botType].difficulty) {
-        const key = `${difficulty}.${botType}`;
-        data.push({
-          Key: key,
-          Value: global._database.bots[botType].difficulty[difficulty],
-        });
+  /*   singleplayerSettingsBotDifficulty(url, info, sessionID) {
+       let data = [];
+      for (const botType in global._database.bots) {
+        for (const difficulty in global._database.bots[botType].difficulty) {
+          const key = `${difficulty}.${botType}`;
+          data.push({
+            Key: key,
+            Value: global._database.bots[botType].difficulty[difficulty],
+          });
+        }
       }
-    }
-    return response_f.noBody(data); 
-    bots_f.getBotDifficulty(type, difficulty)
-  } */
+      return response_f.noBody(data); 
+      bots_f.getBotDifficulty(type, difficulty)
+    } */
 }
 module.exports.responses = new Responses();

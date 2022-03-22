@@ -115,18 +115,18 @@ function RemoveFoundItems(profile) {
 }
 
 function setInventory(pmcData, profile) {
-	
+
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.equipment);
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questRaidItems);
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems);
-	
+
 	//fix for duplicate ids in items by creating new ids for item ids created in-raid
 	profile.Inventory = repairInventoryIDs(profile.Inventory, pmcData.aid);
 
 	// Bandaid fix to duplicate IDs being saved to profile after raid. May cause inconsistent item data. (~Kiobu)
 	// no more duplicates should exist but I'll leave this here untouched bc it's working (CQ)
 	let duplicates = [];
-	
+
 	x: for (let item of profile.Inventory.items) {
 		for (let key in pmcData.Inventory.items) {
 			let currid = pmcData.Inventory.items[key]._id;
@@ -137,7 +137,7 @@ function setInventory(pmcData, profile) {
 		}
 		pmcData.Inventory.items.push(item);
 	}
-	
+
 	pmcData.Inventory.fastPanel = profile.Inventory.fastPanel;
 
 	// Don't count important IDs as errors.
@@ -150,7 +150,7 @@ function setInventory(pmcData, profile) {
 
 	if (duplicates.length > 0) {
 		logger.logWarning(`Duplicate ID(s) encountered in profile after-raid. Found ${duplicates.length} duplicates. Ignoring...`);
-		logger.logWarning(`Duplicates: \n`+JSON.stringify(duplicates, null, 2));
+		logger.logWarning(`Duplicates: \n` + JSON.stringify(duplicates, null, 2));
 		//console.log(duplicates); //this won't be saved in log file, don't use this crap
 	}
 
@@ -500,7 +500,7 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 			cachedQuest = utility.DeepCopy(quest);
 		}
 	}
-	if(cachedQuest){
+	if (cachedQuest) {
 		//iterate quest conditions that are relevant
 		for (let condAFF of cachedQuest.conditions.AvailableForFinish) {
 			if (condAFF._props.id === conditionId) {
@@ -513,10 +513,10 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 				}
 			}
 		}
-	}else{
+	} else {
 		logger.logWarning("isConditionRelatedToQuestItem: No matching quest was found.");
 	}
-	
+
 	return false;
 }
 /**
@@ -528,7 +528,7 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
  * @param {pmcData.aid} AID The account ID for which the items are being repaired. Used for logging and debugging.
  * @author CQInmanis
  */
-function repairInventoryIDs(pInv, AID){
+function repairInventoryIDs(pInv, AID) {
 
 	// Don't count important IDs as errors.
 	const ignoreIDs = [
@@ -538,12 +538,12 @@ function repairInventoryIDs(pInv, AID){
 
 	// from : "", to : ""
 	let repairedIDs = [];
-	
+
 	// repair in-raid created IDs (looking like pmcAID) by creating
 	// new ids and pointing children to the new id
-	for(let item of pInv.items){
+	for (let item of pInv.items) {
 		//if item does not need fixing or is in ignore list, skip.
-		if(!item._id.includes("pmcAID") || ignoreIDs.includes(item._id)){
+		if (!item._id.includes("pmcAID") || ignoreIDs.includes(item._id)) {
 			continue;
 		}
 		//store original id before repairing
@@ -553,20 +553,20 @@ function repairInventoryIDs(pInv, AID){
 
 		//add to repaired list for debugging purposes.
 		repairedIDs.push({
-			from 	: ogID,
-			to		: item._id
+			from: ogID,
+			to: item._id
 		});
 
 		// check for children whose parentId was the item's original ID
 		// and replace it with the new id
-		for(let iitem of pInv.items){
-			if(iitem.parentId == ogID){
+		for (let iitem of pInv.items) {
+			if (iitem.parentId == ogID) {
 				iitem.parentId = item._id;
 			}
 		}
 	}
-	if(repairedIDs.length > 0){
-		logger.logWarning("Repaired IDs for "+AID+":\n"+JSON.stringify(repairedIDs, null, 2));
+	if (repairedIDs.length > 0) {
+		logger.logWarning("Repaired IDs for " + AID + ":\n" + JSON.stringify(repairedIDs, null, 2));
 	}
 	return pInv;
 }

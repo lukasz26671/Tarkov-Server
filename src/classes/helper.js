@@ -1006,7 +1006,7 @@ module.exports.getSizeByInventoryItemHash_old = (itemtpl, itemID, inventoryItemH
  * @returns containerObject with the given item if it was possible, else, returns original array.
  * @author CQInmanis
  */
-function tryPlaceItemInContainer(itemTpl, containerObject){
+function tryPlaceItemInContainer(itemTpl, containerObject) {
   //future use | in development...
 
   return containerObject;

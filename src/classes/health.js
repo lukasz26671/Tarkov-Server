@@ -330,7 +330,7 @@ class HealthServer {
       });
     });
 
-    pmcHealth.UpdateTime = Math.round(Date.now() / 1000);
+    pmcHealth.UpdateTime = Math.round(utility.getTimestamp());
 
     this.initializeHealth(sessionID);
   }
