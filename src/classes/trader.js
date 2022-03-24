@@ -92,7 +92,7 @@ function generateFenceAssort() {
 function copyFromBaseAssorts(baseAssorts) {
   let newAssorts = {};
   newAssorts.items = [];
-  for (let item of baseAssorts.items) {
+  for (let item of Object.fromEntries(baseAssorts.items)) {
     newAssorts.items.push(item);
   }
   newAssorts.barter_scheme = {};
@@ -181,12 +181,15 @@ class TraderServer {
       base.data.loyal_level_items[item] = inputNodes[item].loyalty;
     }
 
-    fileIO.write(`./user/cache/assort_${traderId}.json`, base, true, false);
+    //fileIO.write(`./user/cache/assort_${traderId}.json`, base, true, false);
+    global._database.traders[traderId].assort = base;
   }
   setTraderBase(base) {
-    global._database.traders[base._id].base = base;
-/*     if (typeof db.traders[base._id] != "undefined")
-      fileIO.write(db.traders[base._id].base, base, true, false); */
+    if (typeof global._database.traders[base._id] != "undefined") {
+      global._database.traders[base._id].base = base;
+    }
+    /*     if (typeof db.traders[base._id] != "undefined")
+          fileIO.write(db.traders[base._id].base, base, true, false); */
   }
 
   getAllTraders(sessionID, keepalive = false) {
@@ -244,7 +247,7 @@ class TraderServer {
         global._database.gameplayConfig.trading.traderSupply[traderID];
 
       // Current time in seconds
-      let current_time = Math.floor(new Date().getTime() / 1000);
+      let current_time = utility.getTimestamp();
 
       // Initial Fence generation pass.
       if (this.fence_generated_at === 0 || !this.fence_generated_at) {

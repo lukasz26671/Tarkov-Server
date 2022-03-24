@@ -30,7 +30,9 @@ function updateTraders(sessionID) {
 
     if (typeof db.traders[tradersToUpdateList[i]._id] == "undefined") return;
     let assort = fileIO.readParsed(db.traders[tradersToUpdateList[i]._id].assort);
-    //let assort = global._database.traders[tradersToUpdateList[i]._id].assort;
+    let memoryAssort = global._database.traders[tradersToUpdateList[i]._id].assort;
+    fileIO.write("./memoryAssort.json", memoryAssort)
+    //lets try to get this to go direct to memory
 
     for (let assortItem in assort) {
       if (typeof assort[assortItem].default == "undefined") {
@@ -38,7 +40,15 @@ function updateTraders(sessionID) {
         continue;
       }
 
-      assort[assortItem].currentStack = assort[assortItem].default.stack;
+      //get assort in memory
+      let memoryItem = memoryAssort.items
+      //check if item is in the db assort and it has `upd` property 
+      if (typeof memoryItem._tpl == assort[assortItem].items._tpl && memoryItem.hasOwnProperty("upd")) {
+        memoryItem.upd.StackObjectsCount = assort[assortItem].default.stack;
+        console.log(memoryItem.upd.StackObjectsCount)
+        memoryItem.upd.UnlimitedCount = assort[assortItem].default.unlimited;
+        console.log(memoryItem.upd.UnlimitedCount)
+      }
     }
 
     //fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
