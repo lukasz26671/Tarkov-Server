@@ -90,10 +90,14 @@ function generateFenceAssort() {
 }
 // Deep clone (except for the actual items) from base assorts.
 function copyFromBaseAssorts(baseAssorts) {
+
+  fileIO.write("./baseAssorts.json", baseAssorts)
+
   let newAssorts = {};
   newAssorts.items = [];
-  for (let item of Object.fromEntries(baseAssorts.items)) {
-    newAssorts.items.push(item);
+
+  for (let item in baseAssorts.items) {
+    newAssorts.items.push(baseAssorts.items[item]);
   }
   newAssorts.barter_scheme = {};
   for (let barterScheme in baseAssorts.barter_scheme) {
@@ -104,8 +108,12 @@ function copyFromBaseAssorts(baseAssorts) {
   for (let loyalLevelItem in baseAssorts.loyal_level_items) {
     newAssorts.loyal_level_items[loyalLevelItem] =
       baseAssorts.loyal_level_items[loyalLevelItem];
-  }
+  } 
+
+  fileIO.write("./newAssorts.json", newAssorts);
+
   return newAssorts;
+
 }
 // delete assort keys
 function removeItemFromAssort(assort, itemID) {

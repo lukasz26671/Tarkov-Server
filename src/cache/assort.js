@@ -15,9 +15,23 @@ exports.cache = () => {
       if (trader != "ragfair") {
         if (typeof inputNodes[item].items[0] != "undefined") {
           let ItemsList = inputNodes[item].items;
-          ItemsList[0]["upd"] = {};
-          if (inputNodes[item].default.unlimited) ItemsList[0].upd["UnlimitedCount"] = true;
-          ItemsList[0].upd["StackObjectsCount"] = inputNodes[item].currentStack;
+
+          /*
+          copy properties of db item 
+          There are a lot of properties missing and that is gay and retarded
+          */
+          ItemsList[0]["upd"] = Object.assign({}, inputNodes[item].items[0].upd);
+
+
+          ItemsList[0]["default"] = Object.assign({} ,inputNodes[item].default);
+          
+          //console.log(ItemsList[0]["default"].unlimited, "unlimited default")
+          ItemsList[0]["default"].unlimited = ItemsList[0]["upd"].UnlimitedCount;
+          //console.log(ItemsList[0]["default"].unlimited, "unlimited altered")
+
+          //console.log(ItemsList[0]["default"].stack, "stack default")
+          ItemsList[0]["default"].stack = ItemsList[0]["upd"].StackObjectsCount;
+          //console.log(ItemsList[0]["default"].stack, "stack altered")
         }
       } else {
         if (typeof inputNodes[item].items[0] != "undefined") {
