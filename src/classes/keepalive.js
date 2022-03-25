@@ -29,31 +29,36 @@ function updateTraders(sessionID) {
     if (tradersToUpdateList[i]._id === "579dc571d53a0658a154fbec") continue;
 
     if (typeof db.traders[tradersToUpdateList[i]._id] == "undefined") return;
-    let assort = fileIO.readParsed(db.traders[tradersToUpdateList[i]._id].assort);
+    //let assort = fileIO.readParsed(db.traders[tradersToUpdateList[i]._id].assort);
     let memoryAssort = global._database.traders[tradersToUpdateList[i]._id].assort;
     fileIO.write("./memoryAssort.json", memoryAssort)
     //lets try to get this to go direct to memory
 
-    for (let assortItem in assort) {
-      if (typeof assort[assortItem].default == "undefined") {
-        logger.logWarning(`Unable to find item assort default for scheme: ${assortItem} and trader: ${tradersToUpdateList[i]._id}`);
-        continue;
+    for (let assortItem in memoryAssort) {
+      if (typeof memoryAssort[assortItem].default == "undefined") {
+        if (memoryAssort[assortItem]._tpl != tradersToUpdateList[i]) {
+          logger.logWarning(`Unable to find item assort default for scheme: ${memoryAssort[assortItem]._tpl} and trader: ${tradersToUpdateList[i]._id}`);
+          continue;
+        }
       }
 
-      //get assort in memory
-      let memoryItem = memoryAssort.items
-      //check if item is in the db assort and it has `upd` property 
-      if (typeof memoryItem._tpl == assort[assortItem].items._tpl && memoryItem.hasOwnProperty("upd")) {
-        memoryItem.upd.StackObjectsCount = assort[assortItem].default.stack;
-        console.log(memoryItem.upd.StackObjectsCount)
-        memoryItem.upd.UnlimitedCount = assort[assortItem].default.unlimited;
-        console.log(memoryItem.upd.UnlimitedCount)
-      }
+
+      memoryAssort[assortItem].items[0].StackObjectsCount = memoryAssort[assortItem].default.stack;
+
+      console.log(memoryAssort[assortItem].items[0].UnlimitedCount, "UnlimitedCount current")
+      memoryAssort[assortItem].items[0].UnlimitedCount = memoryAssort[assortItem].default.unlimited;
+      console.log(memoryAssort[assortItem].items[0].UnlimitedCount, "UnlimitedCount reset")
+
+
+      /*     for (let assortItem in assort) {
+            if (typeof assort[assortItem].default == "undefined") {
+              logger.logWarning(`Unable to find item assort default for scheme: ${assortItem} and trader: ${tradersToUpdateList[i]._id}`);
+              continue;
+            } */
     }
 
     //fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
-    global._database.traders[tradersToUpdateList[i]._id].assort = assort
-
+    //global._database.traders[tradersToUpdateList[i]._id].assort = memoryAssort;
     trader_f.handler.saveTrader(tradersToUpdateList[i]._id);
   }
 }
