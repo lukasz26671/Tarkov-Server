@@ -2,7 +2,7 @@
 
 exports.buyItem = (pmcData, body, sessionID) => {
   if (!helper_f.payMoney(pmcData, body, sessionID)) {
-    logger.logError("no money found");
+    logger.logError("You've got no sheckels!");
     return "";
   }
   const newReq = {
@@ -16,12 +16,8 @@ exports.buyItem = (pmcData, body, sessionID) => {
   };
 
   let tAssort = global._database.traders[body.tid].assort; //fileIO.readParsed(db.traders[body.tid].assort);
-  if (
-    typeof tAssort[body.item_id] != "undefined" &&
-    tAssort[body.item_id].currentStack
-  ) {
-    tAssort[body.item_id].currentStack -= body.count;
-    fileIO.write(db.traders[body.tid].assort, tAssort);
+  if (typeof tAssort[body.item_id] != "undefined" && tAssort[body.item_id].upd.StackObjectsCount) {
+    tAssort[body.item_id].upd.StackObjectsCount -= body.count;
   }
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));

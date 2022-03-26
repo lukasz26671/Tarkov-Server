@@ -19,6 +19,7 @@ function updateTraders(sessionID) {
   let tradersToUpdateList = trader_f.handler.getAllTraders(sessionID, true);
   for (let i = 0; i < tradersToUpdateList.length; i++) {
 
+    //fileIO.write("./tradersToUpdateList.json", tradersToUpdateList);
     // added for better readability
     let traderToUpdate = tradersToUpdateList[i];
 
@@ -32,9 +33,9 @@ function updateTraders(sessionID) {
       logger.logInfo(`${traderToUpdate.nickname + "'s"} supplies have not arrived`);
       continue;
     }
-    //console.log(update_per, "traderUpdateTime")
+
+    trader.refreshAssort = true; //idk taking this from AKI
     traderToUpdate.nextResupply = timeNow + update_per;
-    //console.log(traderToUpdate.nextResupply, "trader_nextResupply")
 
     logger.logInfo(`[${traderToUpdate.nickname}] supply time data to ${traderToUpdate.nextResupply}`);
 
@@ -46,9 +47,11 @@ function updateTraders(sessionID) {
 
       return
     };
+
     //let assort = fileIO.readParsed(db.traders[traderToUpdate._id].assort);
     let memoryAssort = global._database.traders[traderToUpdate._id].assort;
-    //fileIO.write("./memoryAssort.json", memoryAssort)
+    fileIO.write("./memoryAssort.json", memoryAssort)
+
     //lets try to get this to go direct to memory
 
     console.log(memoryAssort.nextResupply, "memoryAssort.nextResupply_old")
@@ -65,10 +68,12 @@ function updateTraders(sessionID) {
       }
 
       memoryAssort.items[0].StackObjectsCount = memoryAssort.items[0].default.stack;
+      memoryAssort.items[0].upd.UnlimitedCount = memoryAssort.items[0].default.unlimited;
 
-      console.log(memoryAssort.items[0].UnlimitedCount, "UnlimitedCount current")
-      memoryAssort.items[0].UnlimitedCount = memoryAssort.items[0].default.unlimited;
-      console.log(memoryAssort.items[0].UnlimitedCount, "UnlimitedCount reset")
+      console.log(memoryAssort.items[0].upd.BuyRestrictionCurrent, "BuyRestrictionCurrent_old");
+      memoryAssort.items[0].upd.BuyRestrictionCurrent = 0;
+      console.log(memoryAssort.items[0].upd.BuyRestrictionCurrent, "BuyRestrictionCurrent_new");
+
 
     }
 
