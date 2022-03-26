@@ -91,13 +91,13 @@ function generateFenceAssort() {
 // Deep clone (except for the actual items) from base assorts.
 function copyFromBaseAssorts(baseAssorts) {
 
-  //fileIO.write("./baseAssorts.json", baseAssorts)
+  fileIO.write("./baseAssorts.json", baseAssorts)
   let oldAssorts = baseAssorts;
   //sometimes baseAssorts is coming through differently so we need to check
   if (typeof oldAssorts.data != "undefined") {
     oldAssorts = baseAssorts.data;
   }
-  //fileIO.write("./oldAssorts.json", oldAssorts)
+  fileIO.write("./oldAssorts.json", oldAssorts)
 
   let newAssorts = {
     nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {}
@@ -122,7 +122,7 @@ function copyFromBaseAssorts(baseAssorts) {
       oldAssorts.loyal_level_items[loyalLevelItem];
   }
 
-  //fileIO.write("./newAssorts.json", newAssorts);
+  fileIO.write("./newAssorts.json", newAssorts);
 
   return newAssorts;
 
@@ -180,14 +180,17 @@ class TraderServer {
     return global._database.traders[traderID].base;
   }
   saveTrader(traderId) {
-    let inputNodes = fileIO.readParsed(db.traders[traderId].assort);
+    let inputNodes = global._database.traders[traderId].assort
+    //fileIO.readParsed(db.traders[traderId].assort);
     let base = {
       err: 0,
       errmsg: null,
-      data: { items: [], barter_scheme: {}, loyal_level_items: {} },
+      data: { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} },
     };
+
+    base.data.nextResupply = inputNodes.nextResupply;
     for (let item in inputNodes) {
-      if (typeof inputNodes[item].items[0] != "undefined") {
+      if (typeof inputNodes[item].items != "undefined") {
         let ItemsList = inputNodes[item].items;
         ItemsList[0]["upd"] = {};
         if (inputNodes[item].default.unlimited)
@@ -197,11 +200,12 @@ class TraderServer {
       for (let assort_item in inputNodes[item].items) {
         base.data.items.push(inputNodes[item].items[assort_item]);
       }
+
       base.data.barter_scheme[item] = inputNodes[item].barter_scheme;
+
       base.data.loyal_level_items[item] = inputNodes[item].loyalty;
     }
 
-    //fileIO.write(`./user/cache/assort_${traderId}.json`, base, true, false);
     global._database.traders[traderId].assort = base;
   }
   setTraderBase(base) {
@@ -271,15 +275,17 @@ class TraderServer {
       let current_time = utility.getTimestamp();
 
       // Initial Fence generation pass.
-      if (this.fence_generated_at === 0 || !this.fence_generated_at) {
+      if (this.fence_generated_at === 0 || !this.fence_generated_at || trader.refreshAssort) {
         this.fence_generated_at = current_time;
         generateFenceAssort();
+        trader.refreshAssort = false;
       }
 
-      if (this.fence_generated_at + fence_assort_lifetime < current_time) {
+      if (this.fence_generated_at + fence_assort_lifetime < current_time || trader.refreshAssort) {
         this.fence_generated_at = current_time;
         logger.logInfo("We are regenerating Fence's assort.");
         generateFenceAssort();
+        trader.refreshAssort = false;
       }
     }
     // if (!(traderid in this.assorts)) {

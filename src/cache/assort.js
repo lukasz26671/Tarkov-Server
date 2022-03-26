@@ -27,14 +27,17 @@ exports.cache = () => {
           ItemsList[0]["upd"] = Object.assign({}, inputNodes[item].items[0].upd);
 
 
-          ItemsList[0]["default"] = Object.assign({}, inputNodes[item].default);
+          //ItemsList[0]["default"] = Object.assign({}, inputNodes[item].default);
 
           //console.log(ItemsList[0]["default"].unlimited, "unlimited default")
-          ItemsList[0]["default"].unlimited = ItemsList[0]["upd"].UnlimitedCount;
+          ItemsList[0].upd.UnlimitedCount = inputNodes[item].items[0].upd.UnlimitedCount;
           //console.log(ItemsList[0]["default"].unlimited, "unlimited altered")
 
           //console.log(ItemsList[0]["default"].stack, "stack default")
-          ItemsList[0]["default"].stack = ItemsList[0]["upd"].StackObjectsCount;
+          ItemsList[0].upd.StackObjectsCount = inputNodes[item].items[0].upd.StackObjectsCount;
+          if (inputNodes[item].items[0].upd.BuyRestrictionsMax != "undefined") {
+            ItemsList[0].upd.StackObjectsCount = inputNodes[item].items[0].upd.BuyRestrictionMax;
+          }
           //console.log(ItemsList[0]["default"].stack, "stack altered")
         }
       } else {
