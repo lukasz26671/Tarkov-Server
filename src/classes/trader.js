@@ -103,7 +103,7 @@ function copyFromBaseAssorts(baseAssorts) {
     nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {}
   };
 
-  newAssorts.nextResupply = oldAssorts.nextResupply
+  newAssorts.nextResupply = utility.getTimestamp() + 3600;
 
   for (let items in oldAssorts.items) {
     //Object.keys(baseAssorts.items).forEach(items => newAssorts.items.concat(baseAssorts.items[items]));
