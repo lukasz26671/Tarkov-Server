@@ -8,8 +8,12 @@ exports.cache = () => {
     let base = {
       err: 0,
       errmsg: null,
-      data: { items: [], barter_scheme: {}, loyal_level_items: {} },
+      data: { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} },
     };
+
+    //let traderBase = fileIO.readParsed(db.traders[trader].base)
+    base.data.nextResupply = utility.getTimestamp();//traderBase.nextResupply;
+
     let inputNodes = fileIO.readParsed(db.traders[trader].assort);
     for (let item in inputNodes) {
       if (trader != "ragfair") {
@@ -23,8 +27,8 @@ exports.cache = () => {
           ItemsList[0]["upd"] = Object.assign({}, inputNodes[item].items[0].upd);
 
 
-          ItemsList[0]["default"] = Object.assign({} ,inputNodes[item].default);
-          
+          ItemsList[0]["default"] = Object.assign({}, inputNodes[item].default);
+
           //console.log(ItemsList[0]["default"].unlimited, "unlimited default")
           ItemsList[0]["default"].unlimited = ItemsList[0]["upd"].UnlimitedCount;
           //console.log(ItemsList[0]["default"].unlimited, "unlimited altered")

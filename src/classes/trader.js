@@ -91,26 +91,38 @@ function generateFenceAssort() {
 // Deep clone (except for the actual items) from base assorts.
 function copyFromBaseAssorts(baseAssorts) {
 
-  fileIO.write("./baseAssorts.json", baseAssorts)
+  //fileIO.write("./baseAssorts.json", baseAssorts)
+  let oldAssorts = baseAssorts;
+  //sometimes baseAssorts is coming through differently so we need to check
+  if (typeof oldAssorts.data != "undefined") {
+    oldAssorts = baseAssorts.data;
+  }
+  //fileIO.write("./oldAssorts.json", oldAssorts)
 
-  let newAssorts = {};
-  newAssorts.items = [];
+  let newAssorts = {
+    nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {}
+  };
 
-  for (let item in baseAssorts.items) {
-    newAssorts.items.push(baseAssorts.items[item]);
+  newAssorts.nextResupply = oldAssorts.nextResupply
+
+  for (let items in oldAssorts.items) {
+    //Object.keys(baseAssorts.items).forEach(items => newAssorts.items.concat(baseAssorts.items[items]));
+    //newAssorts.items = Object.assign({}, baseAssorts.items[items]) 
+    newAssorts.items.push(oldAssorts.items[items]);
+    /* for (let item of baseAssorts.items[items]) { newAssorts.items.push(item); } */
   }
   newAssorts.barter_scheme = {};
-  for (let barterScheme in baseAssorts.barter_scheme) {
+  for (let barterScheme in oldAssorts.barter_scheme) {
     newAssorts.barter_scheme[barterScheme] =
-      baseAssorts.barter_scheme[barterScheme];
+      oldAssorts.barter_scheme[barterScheme];
   }
   newAssorts.loyal_level_items = {};
-  for (let loyalLevelItem in baseAssorts.loyal_level_items) {
+  for (let loyalLevelItem in oldAssorts.loyal_level_items) {
     newAssorts.loyal_level_items[loyalLevelItem] =
-      baseAssorts.loyal_level_items[loyalLevelItem];
-  } 
+      oldAssorts.loyal_level_items[loyalLevelItem];
+  }
 
-  fileIO.write("./newAssorts.json", newAssorts);
+  //fileIO.write("./newAssorts.json", newAssorts);
 
   return newAssorts;
 
@@ -207,6 +219,7 @@ class TraderServer {
       if (traderID === "ragfair") {
         continue;
       }
+      //console.log(global._database.traders[traderID].base.nextResupply, "nextResupply")
       Traders.push(global._database.traders[traderID].base);
     }
     return Traders;
@@ -328,6 +341,7 @@ class TraderServer {
         }
       }
     } else {
+      logger.logInfo("Something is `else` in getAssort");
     }
     return assorts;
   }

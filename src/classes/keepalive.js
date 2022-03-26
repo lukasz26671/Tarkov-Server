@@ -12,54 +12,67 @@ function main(sessionID) {
 function updateTraders(sessionID) {
   let update_per = 3600;
   let timeNow = utility.getTimestamp();
+  //console.log(timeNow, "timeNow")
   dialogue_f.handler.removeExpiredItems(sessionID);
 
   // update each hour
   let tradersToUpdateList = trader_f.handler.getAllTraders(sessionID, true);
   for (let i = 0; i < tradersToUpdateList.length; i++) {
-    if (tradersToUpdateList[i]._id == "ragfair") continue;
 
-    update_per = global._database.gameplayConfig.trading.traderSupply[tradersToUpdateList[i]._id];
-    if (tradersToUpdateList[i].nextResupply > timeNow) {
+    // added for better readability
+    let traderToUpdate = tradersToUpdateList[i];
+
+    if (traderToUpdate._id == "ragfair") {
+      logger.logInfo(`Skipping ragfair in updateTraders`);
       continue;
     }
-    tradersToUpdateList[i].nextResupply = timeNow + update_per;
-    logger.logInfo(`Updating trader[${tradersToUpdateList[i]._id}] supply time data to ${tradersToUpdateList[i].nextResupply}`);
-    trader_f.handler.setTraderBase(tradersToUpdateList[i]);
-    if (tradersToUpdateList[i]._id === "579dc571d53a0658a154fbec") continue;
 
-    if (typeof db.traders[tradersToUpdateList[i]._id] == "undefined") return;
-    //let assort = fileIO.readParsed(db.traders[tradersToUpdateList[i]._id].assort);
-    let memoryAssort = global._database.traders[tradersToUpdateList[i]._id].assort;
-    fileIO.write("./memoryAssort.json", memoryAssort)
+    update_per = global._database.gameplayConfig.trading.traderSupply[traderToUpdate._id];
+    if (traderToUpdate.nextResupply > timeNow) {
+      logger.logInfo(`${traderToUpdate.nickname + "'s"} supplies have not arrived`);
+      continue;
+    }
+    //console.log(update_per, "traderUpdateTime")
+    traderToUpdate.nextResupply = timeNow + update_per;
+    //console.log(traderToUpdate.nextResupply, "trader_nextResupply")
+
+    logger.logInfo(`[${traderToUpdate.nickname}] supply time data to ${traderToUpdate.nextResupply}`);
+
+    trader_f.handler.setTraderBase(traderToUpdate);
+    if (traderToUpdate._id == "579dc571d53a0658a154fbec") continue;
+
+    if (typeof db.traders[traderToUpdate._id] == "undefined") {
+      logger.logError(`Trader doesn't exist, wtf?`);
+
+      return
+    };
+    //let assort = fileIO.readParsed(db.traders[traderToUpdate._id].assort);
+    let memoryAssort = global._database.traders[traderToUpdate._id].assort;
+    //fileIO.write("./memoryAssort.json", memoryAssort)
     //lets try to get this to go direct to memory
 
-    for (let assortItem in memoryAssort) {
-      if (typeof memoryAssort[assortItem].default == "undefined") {
-        if (memoryAssort[assortItem]._tpl != tradersToUpdateList[i]) {
-          logger.logWarning(`Unable to find item assort default for scheme: ${memoryAssort[assortItem]._tpl} and trader: ${tradersToUpdateList[i]._id}`);
+    console.log(memoryAssort.nextResupply, "memoryAssort.nextResupply_old")
+    memoryAssort.nextResupply = traderToUpdate.nextResupply;
+    console.log(memoryAssort.nextResupply, "memoryAssort.nextResupply_new")
+
+    for (let assortItem in memoryAssort.items) {
+      if (typeof memoryAssort.items[assortItem].default == "undefined") {
+        //continue;
+        if (memoryAssort.items[assortItem]._tpl != traderToUpdate._id) {
+          logger.logWarning(`Unable to find item assort default for scheme: ${memoryAssort.items[assortItem]._tpl} and trader: ${traderToUpdate.nickname}`);
           continue;
         }
       }
 
+      memoryAssort.items[0].StackObjectsCount = memoryAssort.items[0].default.stack;
 
-      memoryAssort[assortItem].items[0].StackObjectsCount = memoryAssort[assortItem].default.stack;
+      console.log(memoryAssort.items[0].UnlimitedCount, "UnlimitedCount current")
+      memoryAssort.items[0].UnlimitedCount = memoryAssort.items[0].default.unlimited;
+      console.log(memoryAssort.items[0].UnlimitedCount, "UnlimitedCount reset")
 
-      console.log(memoryAssort[assortItem].items[0].UnlimitedCount, "UnlimitedCount current")
-      memoryAssort[assortItem].items[0].UnlimitedCount = memoryAssort[assortItem].default.unlimited;
-      console.log(memoryAssort[assortItem].items[0].UnlimitedCount, "UnlimitedCount reset")
-
-
-      /*     for (let assortItem in assort) {
-            if (typeof assort[assortItem].default == "undefined") {
-              logger.logWarning(`Unable to find item assort default for scheme: ${assortItem} and trader: ${tradersToUpdateList[i]._id}`);
-              continue;
-            } */
     }
 
-    //fileIO.write(db.traders[tradersToUpdateList[i]._id].assort, assort, true, false);
-    //global._database.traders[tradersToUpdateList[i]._id].assort = memoryAssort;
-    trader_f.handler.saveTrader(tradersToUpdateList[i]._id);
+    trader_f.handler.saveTrader(traderToUpdate._id);
   }
 }
 
