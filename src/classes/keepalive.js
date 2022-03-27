@@ -10,75 +10,40 @@ function main(sessionID) {
 }
 
 function updateTraders(sessionID) {
-  let update_per = 3600;
+  console.log(sessionID, "sessionID")
+  let hour = 3600;
+  let test = 30
   let timeNow = utility.getTimestamp();
-  //console.log(timeNow, "timeNow")
+  let traders = global._database.traders;
+  //console.log(traders, "traders")
+  //let update_per = global._database.gameplayConfig.trading.traderSupply;
+
+  for (let trader in traders) {
+    let base = traders[trader].base;
+    let assort = traders[trader].assort;
+    console.log(base.nickname)
+
+    if (base.nextResupply > timeNow) {
+      continue;
+    }
+    console.log(base.refreshAssort, "ref1")
+    base.refreshAssort = true;
+    console.log(base.nextResupply, "res1")
+    base.nextResupply = timeNow + test;
+    console.log(base.nextResupply, "res2")
+    console.log(assort.nextResupply, "ass1")
+    assort.nextResupply = base.nextResupply;
+    console.log(assort.nextResupply, "ass2")
+
+
+    console.log(base.refreshAssort, "ref2")
+
+    global._database.traders[trader].base = base
+  }
+
   dialogue_f.handler.removeExpiredItems(sessionID);
 
-  // update each hour
-  let tradersToUpdateList = trader_f.handler.getAllTraders(sessionID, true);
-  for (let i = 0; i < tradersToUpdateList.length; i++) {
-
-    //fileIO.write("./tradersToUpdateList.json", tradersToUpdateList);
-    // added for better readability
-    let traderToUpdate = tradersToUpdateList[i];
-
-    if (traderToUpdate._id == "ragfair") {
-      logger.logInfo(`Skipping ragfair in updateTraders`);
-      continue;
-    }
-
-    update_per = global._database.gameplayConfig.trading.traderSupply[traderToUpdate._id];
-    if (traderToUpdate.nextResupply > timeNow) {
-      logger.logInfo(`${traderToUpdate.nickname + "'s"} supplies have not arrived`);
-      continue;
-    }
-
-    traderToUpdate.refreshAssort = true; //idk taking this from AKI
-    traderToUpdate.nextResupply = timeNow + update_per;
-
-    logger.logInfo(`[${traderToUpdate.nickname}] supply time data to ${traderToUpdate.nextResupply}`);
-
-    trader_f.handler.setTraderBase(traderToUpdate);
-    if (traderToUpdate._id == "579dc571d53a0658a154fbec") continue;
-
-    if (typeof db.traders[traderToUpdate._id] == "undefined") {
-      logger.logError(`Trader doesn't exist, wtf?`);
-
-      return
-    };
-
-    //let assort = fileIO.readParsed(db.traders[traderToUpdate._id].assort);
-    let memoryAssort = global._database.traders[traderToUpdate._id].assort;
-    fileIO.write("./memoryAssort.json", memoryAssort)
-
-    //lets try to get this to go direct to memory
-
-    console.log(memoryAssort.nextResupply, "memoryAssort.nextResupply_old")
-    memoryAssort.nextResupply = traderToUpdate.nextResupply;
-    console.log(memoryAssort.nextResupply, "memoryAssort.nextResupply_new")
-
-    for (let assortItem in memoryAssort.items) {
-      if (typeof memoryAssort.items[assortItem].default == "undefined") {
-        //continue;
-        if (memoryAssort.items[assortItem]._tpl != traderToUpdate._id) {
-          logger.logWarning(`Unable to find item assort default for scheme: ${memoryAssort.items[assortItem]._tpl} and trader: ${traderToUpdate.nickname}`);
-          continue;
-        }
-      }
-
-      memoryAssort.items[0].StackObjectsCount = memoryAssort.items[0].default.stack;
-      memoryAssort.items[0].upd.UnlimitedCount = memoryAssort.items[0].default.unlimited;
-
-      console.log(memoryAssort.items[0].upd.BuyRestrictionCurrent, "BuyRestrictionCurrent_old");
-      memoryAssort.items[0].upd.BuyRestrictionCurrent = 0;
-      console.log(memoryAssort.items[0].upd.BuyRestrictionCurrent, "BuyRestrictionCurrent_new");
-
-
-    }
-
-    trader_f.handler.saveTrader(traderToUpdate._id);
-  }
+  return true;
 }
 
 function updatePlayerHideout(sessionID) {

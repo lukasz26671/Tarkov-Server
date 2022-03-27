@@ -188,6 +188,12 @@ function _load_TradersData() {
     _database.traders[traderID].base.sell_category = _database.traders[traderID].categories; // override trader categories
     _database.traders[traderID].assort = fileIO.readParsed("./" + db.user.cache["assort_" + traderID]);
     if (typeof _database.traders[traderID].assort.data != "undefined") _database.traders[traderID].assort = _database.traders[traderID].assort.data;
+
+    if (typeof db.traders[traderID].questassort != "undefined"){
+      _database.traders[traderID].questassort = fileIO.readParsed("./" + db.traders[traderID].questassort);
+    }
+    
+
     if (_database.traders[traderID].base.repair.price_rate === 0) {
       _database.traders[traderID].base.repair.price_rate = 100;
       _database.traders[traderID].base.repair.price_rate *= _database.gameplayConfig.trading.repairMultiplier;

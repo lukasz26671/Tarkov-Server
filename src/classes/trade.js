@@ -15,9 +15,13 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
+  console.log(body.item_id)
   let tAssort = global._database.traders[body.tid].assort; //fileIO.readParsed(db.traders[body.tid].assort);
+  //fileIO.write("./tAssort.json", tAssort)
   if (typeof tAssort[body.item_id] != "undefined" && tAssort[body.item_id].upd.StackObjectsCount) {
+    console.log(tAssort[body.item_id].upd.StackObjectsCount, "tAssort[body.item_id].upd.StackObjectsCount old")
     tAssort[body.item_id].upd.StackObjectsCount -= body.count;
+    console.log(tAssort[body.item_id].upd.StackObjectsCount, "tAssort[body.item_id].upd.StackObjectsCount new")
   }
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));

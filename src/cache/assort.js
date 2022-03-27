@@ -12,7 +12,7 @@ exports.cache = () => {
     };
 
     //let traderBase = fileIO.readParsed(db.traders[trader].base)
-    base.data.nextResupply = utility.getTimestamp();//traderBase.nextResupply;
+    base.data.nextResupply = db.traders[trader].nextResupply //traderBase.nextResupply;
 
     let inputNodes = fileIO.readParsed(db.traders[trader].assort);
     for (let item in inputNodes) {
