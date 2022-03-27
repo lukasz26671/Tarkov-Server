@@ -34,7 +34,7 @@ function updateTraders(sessionID) {
       continue;
     }
 
-    trader.refreshAssort = true; //idk taking this from AKI
+    traderToUpdate.refreshAssort = true; //idk taking this from AKI
     traderToUpdate.nextResupply = timeNow + update_per;
 
     logger.logInfo(`[${traderToUpdate.nickname}] supply time data to ${traderToUpdate.nextResupply}`);

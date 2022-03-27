@@ -273,6 +273,7 @@ class TraderServer {
 
       // Current time in seconds
       let current_time = utility.getTimestamp();
+      let trader = this.getTrader(traderID);
 
       // Initial Fence generation pass.
       if (this.fence_generated_at === 0 || !this.fence_generated_at || trader.refreshAssort) {
