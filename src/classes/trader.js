@@ -321,9 +321,7 @@ class TraderServer {
         assorts = removeItemFromAssort(assorts, key);
       }
     }
-  } else {
-  logger.logInfo("Something is `else` in getAssort");
-}
+  }
 return assorts;
   }
 

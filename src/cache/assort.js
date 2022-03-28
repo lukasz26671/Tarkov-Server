@@ -11,8 +11,7 @@ exports.cache = () => {
       data: { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} },
     };
 
-    //let traderBase = fileIO.readParsed(db.traders[trader].base)
-    base.data.nextResupply = db.traders[trader].nextResupply //traderBase.nextResupply;
+    base.data.nextResupply = db.traders[trader].nextResupply
 
     let inputNodes = fileIO.readParsed(db.traders[trader].assort);
     for (let item in inputNodes) {
@@ -26,19 +25,12 @@ exports.cache = () => {
           */
           ItemsList[0]["upd"] = Object.assign({}, inputNodes[item].items[0].upd);
 
-
-          //ItemsList[0]["default"] = Object.assign({}, inputNodes[item].default);
-
-          //console.log(ItemsList[0]["default"].unlimited, "unlimited default")
           ItemsList[0].upd.UnlimitedCount = inputNodes[item].items[0].upd.UnlimitedCount;
-          //console.log(ItemsList[0]["default"].unlimited, "unlimited altered")
 
-          //console.log(ItemsList[0]["default"].stack, "stack default")
           ItemsList[0].upd.StackObjectsCount = inputNodes[item].items[0].upd.StackObjectsCount;
           if (inputNodes[item].items[0].upd.BuyRestrictionsMax != "undefined") {
             ItemsList[0].upd.StackObjectsCount = inputNodes[item].items[0].upd.BuyRestrictionMax;
           }
-          //console.log(ItemsList[0]["default"].stack, "stack altered")
         }
       } else {
         if (typeof inputNodes[item].items[0] != "undefined") {

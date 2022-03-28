@@ -12,13 +12,12 @@ function main(sessionID) {
 function updateTraders(sessionID) {
   console.log(sessionID, "sessionID")
   let hour = 3600;
-  let test = 30
+  //let test = 30
   let timeNow = utility.getTimestamp();
   let traders = global._database.traders;
-  //console.log(traders, "traders")
-  //let update_per = global._database.gameplayConfig.trading.traderSupply;
 
   for (let trader in traders) {
+    if (traders[trader].base._id === "ragfair") continue;
     let base = traders[trader].base;
     let assort = traders[trader].assort;
     console.log(base.nickname)
@@ -26,17 +25,9 @@ function updateTraders(sessionID) {
     if (base.nextResupply > timeNow) {
       continue;
     }
-    console.log(base.refreshAssort, "ref1")
     base.refreshAssort = true;
-    console.log(base.nextResupply, "res1")
-    base.nextResupply = timeNow + test;
-    console.log(base.nextResupply, "res2")
-    console.log(assort.nextResupply, "ass1")
+    base.nextResupply = timeNow + hour;
     assort.nextResupply = base.nextResupply;
-    console.log(assort.nextResupply, "ass2")
-
-
-    console.log(base.refreshAssort, "ref2")
 
     global._database.traders[trader].base = base
   }
