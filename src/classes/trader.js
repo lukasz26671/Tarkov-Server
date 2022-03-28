@@ -198,7 +198,6 @@ class TraderServer {
       if (traderID === "ragfair") {
         continue;
       }
-      //console.log(global._database.traders[traderID].base.nextResupply, "nextResupply")
       Traders.push(global._database.traders[traderID].base);
     }
     return Traders;
@@ -273,7 +272,7 @@ class TraderServer {
     if (trader.base.refreshAssort) trader.base.refreshAssort = false;
 
     // Build what we're going to return.
-    let assorts = copyFromBaseAssorts(baseAssorts, traderID);
+    let assorts = utility.DeepCopy(baseAssorts);
 
     // Fetch the current trader loyalty level
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
