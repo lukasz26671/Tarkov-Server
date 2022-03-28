@@ -174,23 +174,23 @@ function GetLootModifiers()
 {
   let modifierSuperRare = global._database.gameplayConfig.locationloot.RarityMultipliers.Superrare;
   if(modifierSuperRare == undefined){
-    modifierSuperRare = 0.5;
-    logger.logWarning("Loot Modifier: Superrare: Couldn't find the config. Reset to 0.5.")
+    modifierSuperRare = 0.2;
+    logger.logWarning("Loot Modifier: Superrare: Couldn't find the config. Reset to 0.2.")
   }
   let modifierRare = global._database.gameplayConfig.locationloot.RarityMultipliers.Rare;
   if(modifierRare == undefined){
-    modifierRare = 0.6;
-    logger.logWarning("Loot Modifier: Rare: Couldn't find the config. Reset to 0.9.")
+    modifierRare = 0.45;
+    logger.logWarning("Loot Modifier: Rare: Couldn't find the config. Reset to 0.45.")
   }
   let modifierUnCommon = global._database.gameplayConfig.locationloot.RarityMultipliers.Uncommon;
   if(modifierUnCommon == undefined){
     modifierUnCommon = 0.85;
-    logger.logWarning("Loot Modifier: Uncommon: Couldn't find the config. Reset to 0.95.")
+    logger.logWarning("Loot Modifier: Uncommon: Couldn't find the config. Reset to 0.85.")
   }
   let modifierCommon = global._database.gameplayConfig.locationloot.RarityMultipliers.Common;
   if(modifierCommon == undefined){
-    modifierCommon = 0.95;
-    logger.logWarning("Loot Modifier: Common: Couldn't find the config. Reset to 0.95.")
+    modifierCommon = 1.2;
+    logger.logWarning("Loot Modifier: Common: Couldn't find the config. Reset to 1.2.")
   }
 
   logger.logInfo("Loot Modifier: Location: " + LocationLootChanceModifierFromFile);

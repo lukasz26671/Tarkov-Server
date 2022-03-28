@@ -97,9 +97,10 @@
     },
     "RarityMultipliers": {
       "Not_exist": 0,
-      "Common": 1.25,
-      "Rare": 0.85,
-      "Superrare": 0.4
+      "Common": 1.2,
+      "Uncommon": 0.85,
+      "Rare": 0.45,
+      "Superrare": 0.2
     },
     "noDuplicatesTill": 2,
     "useDynamicLootFromItemsArray": false,
