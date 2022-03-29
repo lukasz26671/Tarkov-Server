@@ -140,6 +140,32 @@ exports.getRandomInt = (min = 0, max = 100) => {
     return (max > min) ? Math.floor(Math.random() * (max - min + 1) + min) : min;
 }
 
+/**
+     * Used to get percentage between two numbers
+     *
+     * @param {number}      num1         first number input
+     * @param {number}      num2         second number input
+
+     */
+exports.getPercentDiff = (num1, num2) => {
+    let raw = ((num1 - num2) / num2) * 100;
+    let diff = raw.toFixed(2);
+    return diff;
+}
+
+/**
+     * Used to get percentage difference between two numbers
+     *
+     * @param {number}      num1         first number input
+     * @param {number}      num2         second number input
+
+     */
+ exports.getPercentOf = (num1, num2) => {
+     let raw = (num1 / num2) * 100;;
+     let percent = raw.toFixed(2);
+    return percent;
+}
+
 // getPercentRandomBool
 // true if lucky, false if unlucky
 exports.getPercentRandomBool = (percentage) => {
