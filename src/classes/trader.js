@@ -89,13 +89,6 @@ function generateFenceAssort() {
   global._database.traders[fenceId].assort = base;
 }
 
-// Deep clone from base assorts
-function copyFromBaseAssorts(baseAssorts) {
-  let newAssorts = utility.DeepCopy(baseAssorts);
-
-  return newAssorts
-}
-
 // delete assort keys
 function removeItemFromAssort(assort, itemID) {
   let ids_toremove = helper_f.findAndReturnChildrenByItems(

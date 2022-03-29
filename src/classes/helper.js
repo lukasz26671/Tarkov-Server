@@ -1012,6 +1012,60 @@ function tryPlaceItemInContainer(itemTpl, containerObject) {
   return containerObject;
 }
 
+function getDurability(itemTemplate, botRole) {
+
+  let maxDurability = getRandomisedMaxDurability(itemTemplate, botRole);
+  let minDurability = getRandomisedMinDurability(itemTemplate, botRole);
+
+}
+
+/**
+     * To get the max randomized durability for weapons/armor on AI
+     *
+     * @param {object}      itemTemplate         The item
+     * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
+
+     */
+function getRandomisedMaxDurability(itemTemplate, botRole) {
+  const minDurability = 70
+  const maxDurability = 100
+  //combine da numbers
+  let currentDurability = utility.getRandomInt(minDurability, maxDurability)
+
+  const minDelta = 0
+  const maxDelta = 10
+  //combine da numbers
+
+  let currentDelta = utility.getRandomInt(minDelta, maxDelta)
+
+  let newDurability = currentDurability - currentDelta;
+  return newDurability;
+}
+
+/**
+     * To get the min randomized durability for weapons/armor on AI
+     *
+     * @param {object}      itemTemplate         The item
+     * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
+
+     */
+function getRandomisedMinDurability(itemTemplate, botRole) {
+  const minDurability = 45
+  const maxDurability = 90
+  //combine da numbers
+  let currentDurability = utility.getRandomInt(minDurability, maxDurability)
+
+  const minDelta = 0
+  const maxDelta = 10
+  //combine da numbers
+  let currentDelta = utility.getRandomInt(minDelta, maxDelta)
+
+  let newDurability = currentDurability - currentDelta;
+  return newDurability;
+}
+
+module.exports.getRandomisedMaxDurability = getRandomisedMaxDurability;
+module.exports.getRandomisedMinDurability = getRandomisedMinDurability;
 module.exports.tryPlaceItemInContainer = tryPlaceItemInContainer;
 module.exports.getPreset = getPreset;
 module.exports.getTemplatePrice = getTemplatePrice;

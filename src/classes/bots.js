@@ -194,11 +194,7 @@ class Controller {
     }    
     */
 
-    bot.Inventory = bots_f.generator.generateInventory(
-      inventoryData,
-      node.chances,
-      node.generation
-    );
+    bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, role);
 
     const levelResult = bots_f.botHandler.generateRandomLevel(
       node.experience.level.min,
@@ -491,7 +487,7 @@ class Generator {
     this.inventory = {};
   }
 
-  generateInventory(templateInventory, equipmentChances, generation) {
+  generateInventory(templateInventory, equipmentChances, generation, botRole) {
     // Generate base inventory with no items
     this.inventory = bots_f.generator.generateInventoryBase();
 
@@ -503,11 +499,11 @@ class Generator {
       if (excludedSlots.includes(equipmentSlot)) {
         continue;
       }
-      bots_f.generator.generateEquipment(equipmentSlot, templateInventory.equipment[equipmentSlot], templateInventory.mods, equipmentChances);
+      bots_f.generator.generateEquipment(equipmentSlot, templateInventory.equipment[equipmentSlot], templateInventory.mods, equipmentChances, botRole);
     }
 
     // ArmorVest is generated afterwards to ensure that TacticalVest is always first, in case it is incompatible
-    bots_f.generator.generateEquipment(EquipmentSlots.ArmorVest, templateInventory.equipment.ArmorVest, templateInventory.mods, equipmentChances);
+    bots_f.generator.generateEquipment(EquipmentSlots.ArmorVest, templateInventory.equipment.ArmorVest, templateInventory.mods, equipmentChances, botRole);
 
     // Roll weapon spawns and generate a weapon for each roll that passed
     const shouldSpawnPrimary = utility.getRandomIntEx(100) <= equipmentChances.equipment.FirstPrimaryWeapon;
@@ -535,7 +531,8 @@ class Generator {
           templateInventory.equipment[weaponSpawn.slot],
           templateInventory.mods,
           equipmentChances.mods,
-          generation.items.magazines
+          generation.items.magazines,
+          botRole
         );
       }
     }
@@ -593,7 +590,7 @@ class Generator {
     };
   }
 
-  generateEquipment(equipmentSlot, equipmentPool, modPool, spawnChances) {
+  generateEquipment(equipmentSlot, equipmentPool, modPool, spawnChances, botRole) {
     const spawnChance = [EquipmentSlots.Pockets, EquipmentSlots.SecuredContainer].includes(equipmentSlot) ? 100 : spawnChances.equipment[equipmentSlot];
     if (typeof spawnChance === "undefined") {
       logger.logWarning(`No spawn chance was defined for ${equipmentSlot}`);
@@ -622,7 +619,7 @@ class Generator {
         _tpl: tpl,
         parentId: this.inventory.equipment,
         slotId: equipmentSlot,
-        ...bots_f.generator.generateExtraPropertiesForItem(itemTemplate),
+        ...bots_f.generator.generateExtraPropertiesForItem(itemTemplate, botRole),
       };
 
       if (Object.keys(modPool).includes(tpl)) {
@@ -634,7 +631,7 @@ class Generator {
     }
   }
 
-  generateWeapon(equipmentSlot, weaponPool, modPool, modChances, magCounts) {
+  generateWeapon(equipmentSlot, weaponPool, modPool, modChances, magCounts, botRole) {
     const id = utility.generateNewItemId();
     const tpl = utility.getArrayValue(weaponPool);
     const itemTemplate = global._database.items[tpl];
@@ -651,7 +648,7 @@ class Generator {
         _tpl: tpl,
         parentId: this.inventory.equipment,
         slotId: equipmentSlot,
-        ...bots_f.generator.generateExtraPropertiesForItem(itemTemplate),
+        ...bots_f.generator.generateExtraPropertiesForItem(itemTemplate, botRole),
       },
     ];
 
@@ -785,11 +782,33 @@ class Generator {
     return items;
   }
 
-  generateExtraPropertiesForItem(itemTemplate) {
+  generateExtraPropertiesForItem(itemTemplate, botRole = null) {
     let properties = {};
 
-    if (itemTemplate._props.MaxDurability) {
-      properties.Repairable = { Durability: itemTemplate._props.MaxDurability };
+    if (itemTemplate._props.weapClass) {
+      let maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
+      let currentDurability = helper_f.getRandomisedMinDurability(itemTemplate, botRole);
+
+      if (currentDurability > maxDurability) {
+        maxDurability = (currentDurability - utility.getRandomInt(0, 10))
+      }
+
+      properties.Repairable = {
+        Durability: currentDurability,
+        MaxDurability: maxDurability
+      };
+    } else if (itemTemplate._props.armorClass) {
+      let maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
+      let currentDurability = helper_f.getRandomisedMinDurability(itemTemplate, botRole);
+
+      if (currentDurability > maxDurability) {
+        maxDurability = (currentDurability - utility.getRandomInt(0, 10))
+      }
+
+      properties.Repairable = {
+        Durability: currentDurability,
+        MaxDurability: maxDurability
+      };
     }
 
     if (itemTemplate._props.HasHinge) {
