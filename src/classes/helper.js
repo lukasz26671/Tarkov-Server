@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 /* A reverse lookup for templates */
 function tplLookup() {
   if (tplLookup.lookup === undefined) {
@@ -1020,6 +1022,37 @@ function getDurability(itemTemplate, botRole) {
 }
 
 /**
+     * To get type of `durability` to make function more flexible
+     *
+     * @param {object}      itemTemplate         The item to get _props from
+
+     */
+function getDurabilityType(itemTemplate) {
+  const _props = itemTemplate._props;
+  let durabilityType;
+
+  switch (true) {
+    case _props.hasOwnProperty("MaxDurability"):
+      durabilityType = "MaxDurability";
+      break;
+
+    case _props.hasOwnProperty("MaxResource"):
+      durabilityType = "MaxResource";
+      break;
+
+    case _props.hasOwnProperty("Durability"):
+      durabilityType = "Durability";
+      break;
+
+    default:
+      logger.logWarning("${itemTemplate._name} [${itemTemplate._id}] doesn't have a type of durability; skipping");
+      break;
+  }
+  console.log(durabilityType)
+  return durabilityType;
+}
+
+/**
      * To get the max randomized durability for weapons/armor on AI
      *
      * @param {object}      itemTemplate         The item
@@ -1027,43 +1060,43 @@ function getDurability(itemTemplate, botRole) {
 
      */
 function getRandomisedMaxDurability(itemTemplate, botRole) {
-  const minDurability = 70
-  const maxDurability = 100
+
+  //store properties in variable
+  const itemProperties = itemTemplate._props;
+  let durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
+
+
+  //number variables
+  let minDurability = 50; //set minimum percentage
+  if (botRole == "pmc") {
+    minDurability = 90;
+  }
+
+  const maxDurability = itemProperties[durabilityType]; //set maxDurability from item
   //combine da numbers
-  let currentDurability = utility.getRandomInt(minDurability, maxDurability)
-
-  const minDelta = 0
-  const maxDelta = 10
-  //combine da numbers
-
-  let currentDelta = utility.getRandomInt(minDelta, maxDelta)
-
-  let newDurability = currentDurability - currentDelta;
-  return newDurability;
+  let currentDurability = maxDurability * utility.getPercentOf(maxDurability, minDurability);
+  return currentDurability;
 }
 
 /**
      * To get the min randomized durability for weapons/armor on AI
      *
-     * @param {object}      itemTemplate         The item
+     * @param {number}      maxDurability       Max Durability from getRandomisedMaxDurability
      * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
 
      */
-function getRandomisedMinDurability(itemTemplate, botRole) {
-  const minDurability = 45
-  const maxDurability = 90
-  //combine da numbers
-  let currentDurability = utility.getRandomInt(minDurability, maxDurability)
+function getRandomisedMinDurability(maxDurability, botRole) {
+  const currentDurability = maxDurability;
+  const min = 0;
+  const max = 10;
 
-  const minDelta = 0
-  const maxDelta = 10
-  //combine da numbers
-  let currentDelta = utility.getRandomInt(minDelta, maxDelta)
+  let delta = utility.getRandomInt(min, max);
+  let newDurability = currentDurability - delta;
 
-  let newDurability = currentDurability - currentDelta;
   return newDurability;
 }
 
+module.exports.getDurabilityType = getDurabilityType;
 module.exports.getRandomisedMaxDurability = getRandomisedMaxDurability;
 module.exports.getRandomisedMinDurability = getRandomisedMinDurability;
 module.exports.tryPlaceItemInContainer = tryPlaceItemInContainer;

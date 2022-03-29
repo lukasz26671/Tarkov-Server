@@ -784,25 +784,54 @@ class Generator {
 
   generateExtraPropertiesForItem(itemTemplate, botRole = null) {
     let properties = {};
+    const itemProperties = itemTemplate._props; 
 
-    if (itemTemplate._props.weapClass) {
+    if (itemProperties.weapClass) {
       let maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
-      let currentDurability = helper_f.getRandomisedMinDurability(itemTemplate, botRole);
+      let currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
 
       if (currentDurability > maxDurability) {
-        maxDurability = (currentDurability - utility.getRandomInt(0, 10))
+        maxDurability = (currentDurability - utility.getRandomInt(0, 2))
       }
 
       properties.Repairable = {
         Durability: currentDurability,
         MaxDurability: maxDurability
       };
-    } else if (itemTemplate._props.armorClass) {
+    } else if (itemProperties.armorClass) {
       let maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
-      let currentDurability = helper_f.getRandomisedMinDurability(itemTemplate, botRole);
+      let currentDurability = helper_f.getRandomisedMinDurability(maxDurability);
 
       if (currentDurability > maxDurability) {
-        maxDurability = (currentDurability - utility.getRandomInt(0, 10))
+        maxDurability = (currentDurability - utility.getRandomInt(0, 2))
+      }
+
+      //increase malfunction chance on low durability items
+      const durabilityType = helper_f.getDurabilityType(itemTemplate); //get type of durability in string
+
+      if (durabilityType == "Durability") {
+        //check for durability type Durability so that we can see if it has MalfunctionChance
+        maxDurability = itemProperties.Durability; //fetch Durability
+        if (itemProperties.hasOwnProperty("MalfunctionChance")) {
+          /*
+          We're now going to adjust MalfunctionChance based on the percentage difference between
+          the original MaxDurability and NewDurability, then increase the MalfunctionChance based
+          on the percentage difference of the durabilities and the original MalfunctionChance 
+          */
+    
+          const malfunctionChance = itemProperties.MalfunctionChance; //default malfunction chance
+          let currentMalfunctionChance = 0;
+    
+          let newDurability = maxDurability * utility.getPercentOf(maxDurability, minDurability);
+          let percentDiff = utility.getPercentDiff(maxDurability, newDurability);
+    
+          console.log(malfunctionChance, "defMalChance")
+          currentMalfunctionChance = malfunctionChance * percentDiff;
+          currentMalfunctionChance = currentMalfunctionChance.toFixed(2); //we dont need giant decimals
+          itemProperties.MalfunctionChance = currentMalfunctionChance;
+          console.log(itemProperties.MalfunctionChance, "newMalChance")
+
+        }
       }
 
       properties.Repairable = {
@@ -811,35 +840,37 @@ class Generator {
       };
     }
 
-    if (itemTemplate._props.HasHinge) {
+
+
+    if (itemProperties.HasHinge) {
       properties.Togglable = { On: true };
     }
 
-    if (itemTemplate._props.Foldable) {
+    if (itemProperties.Foldable) {
       properties.Foldable = { Folded: false };
     }
 
     //if item can be a stack higher than 1 | CQ: this fixes money spawning in stacks of 1, and whatever else.
-    if (itemTemplate._props.StackMaxSize > 1) {
+    if (itemProperties.StackMaxSize > 1) {
       //if item has random stacks properties
-      if (itemTemplate._props.StackMaxRandom && itemTemplate._props.StackMinRandom) {
-        properties.StackObjectsCount = utility.getRandomInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
+      if (itemProperties.StackMaxRandom && itemProperties.StackMinRandom) {
+        properties.StackObjectsCount = utility.getRandomInt(itemProperties.StackMinRandom, itemProperties.StackMaxRandom);
       } else {
         //if it doesn't, randomize it between 1 and the stack max size
-        properties.StackObjectsCount = utility.getRandomInt(1, itemTemplate._props.StackMaxSize);
+        properties.StackObjectsCount = utility.getRandomInt(1, itemProperties.StackMaxSize);
       }
     }
 
-    if (itemTemplate._props.weapFireType && itemTemplate._props.weapFireType.length) {
-      properties.FireMode = { FireMode: itemTemplate._props.weapFireType[0] };
+    if (itemProperties.weapFireType && itemProperties.weapFireType.length) {
+      properties.FireMode = { FireMode: itemProperties.weapFireType[0] };
     }
 
-    if (itemTemplate._props.MaxHpResource) {
-      properties.MedKit = { HpResource: itemTemplate._props.MaxHpResource };
+    if (itemProperties.MaxHpResource) {
+      properties.MedKit = { HpResource: itemProperties.MaxHpResource };
     }
 
-    if (itemTemplate._props.MaxResource && itemTemplate._props.foodUseTime) {
-      properties.FoodDrink = { HpPercent: itemTemplate._props.MaxResource };
+    if (itemProperties.MaxResource && itemProperties.foodUseTime) {
+      properties.FoodDrink = { HpPercent: itemProperties.MaxResource };
     }
 
     return Object.keys(properties).length ? { upd: properties } : {};
