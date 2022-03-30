@@ -792,7 +792,6 @@ class Generator {
 
     if (itemProperties.hasOwnProperty("weapClass")) {
       durabilityType = helper_f.getDurabilityType(itemTemplate)
-      //console.log(durabilityType, "weapClass check")
 
       maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
       currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
@@ -803,7 +802,6 @@ class Generator {
       };
     } else if (itemProperties.hasOwnProperty("armorClass")) {
       durabilityType = helper_f.getDurabilityType(itemTemplate)
-      //console.log(durabilityType, "armorClass check")
 
       maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
       currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
