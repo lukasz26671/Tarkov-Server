@@ -1,5 +1,6 @@
 "use strict";
 
+var decimalAdjust = require('decimal-adjust')
 /* START NEW DEEPCOPY CODE */
 
 function cloneOtherType(target) {
@@ -135,9 +136,9 @@ exports.clearString = (s) => {
 }
 // getRandomInt
 exports.getRandomInt = (min = 0, max = 100) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return (max > min) ? Math.floor(Math.random() * (max - min + 1) + min) : min;
+    min = ~~ (min);
+    max = ~~ (max);
+    return (max > min) ? ~~ (Math.random() * (max - min + 1) + min) : min;
 }
 
 /**
@@ -148,34 +149,65 @@ exports.getRandomInt = (min = 0, max = 100) => {
 
      */
 exports.getPercentDiff = (num1, num2) => {
-    let raw = ((num1 - num2) / num2) * 100;
-    let diff = raw.toFixed(2);
+    let raw = (num1 / num2) * 100;
+    let diff = raw;
     return diff;
 }
 
 /**
      * Used to get percentage difference between two numbers
      *
-     * @param {number}      num1         first number input
-     * @param {number}      num2         second number input
+     * @param {number}      num1         first number input (percentage)
+     * @param {number}      num2         second number input (value to get percentage of)
 
      */
- exports.getPercentOf = (num1, num2) => {
-     let raw = (num1 / num2) * 100;;
-     let percent = raw.toFixed(2);
+exports.getPercentOf = (num1, num2) => {
+    let percentAsDecimal = num1 / 100
+    let percent = percentAsDecimal * num2;
     return percent;
 }
 
 // getPercentRandomBool
 // true if lucky, false if unlucky
 exports.getPercentRandomBool = (percentage) => {
-    return ((Math.random() * 100) < percentage);
+    return ~~ ((Math.random() * 100) < percentage);
 }
 
 // getRandomIntEx
 exports.getRandomIntEx = (max) => {
-    return (max > 1) ? Math.floor(Math.random() * (max - 2) + 1) : 1;
+    return (max > 1) ? ~~ (Math.random() * (max - 2) + 1) : 1;
 }
+
+// getRandomIntEx
+exports.getRandomIntInc = (min, max) => {
+    min = ~~ (min);
+    max = ~~ (max);
+    return ~~ (Math.random() * (max - min + 1) + min);
+}
+
+/**
+ * Decimal adjustment of a number.
+ *
+ * @param {String}  type The type (round, floor, ceil)
+ * @param {Number}  value The number
+ * @param {Integer} exp The exponent (the 10 logarithm of the adjustment base)
+ * 
+ * @returns {Number} The adjusted value.
+ */
+exports.decimalAdjust = (type, value, exp) => {
+
+    if (type == "round"){
+        return decimalAdjust('round', value, exp);
+    }
+    if (type == "floor"){
+        return decimalAdjust('floor', value, exp);
+    }
+    if (type == "ceil"){
+        return decimalAdjust('ceil', value, exp);
+    }
+}
+
+
 // getDirList TODO: OBSOLETE
 exports.getDirList = (path) => {
     return fileIO.readDir(path).filter(function (file) {
@@ -198,12 +230,12 @@ exports.removeDir = (dir) => {
 }
 // getServerUptimeInSeconds
 exports.getServerUptimeInSeconds = () => {
-    return Math.floor(internal.process.uptime());
+    return ~~ (internal.process.uptime());
 }
 // getTimestamp
 exports.getTimestamp = () => {
     let time = new Date();
-    return Math.floor(time.getTime() / 1000);
+    return ~~ (time.getTime() / 1000);
 }
 // getTime
 exports.getTime = () => {
@@ -233,7 +265,7 @@ exports.makeSign = (Length) => {
     let charactersLength = characters.length;
 
     for (let i = 0; i < Length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        result += characters.charAt(~~ (Math.random() * charactersLength));
     }
 
     return result;
@@ -272,9 +304,9 @@ exports.generateNewId = (prefix = "", useOld = false) => {
 }
 // secondsToTime
 exports.secondsToTime = (timestamp) => {
-    timestamp = Math.round(timestamp);
-    let hours = Math.floor(timestamp / 60 / 60);
-    let minutes = Math.floor(timestamp / 60) - (hours * 60);
+    timestamp = ~~ (timestamp);
+    let hours = ~~ (timestamp / 60 / 60);
+    let minutes = ~~ ((timestamp / 60) - (hours * 60));
     let seconds = timestamp % 60;
 
     if (minutes < 10) { minutes = "0" + minutes }

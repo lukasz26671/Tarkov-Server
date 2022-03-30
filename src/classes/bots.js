@@ -783,56 +783,24 @@ class Generator {
   }
 
   generateExtraPropertiesForItem(itemTemplate, botRole = null) {
+
     let properties = {};
-    const itemProperties = itemTemplate._props; 
+    const itemProperties = itemTemplate._props;
+    const durabilityType = helper_f.getDurabilityType(itemTemplate)
+    let maxDurability;
+    let currentDurability;
 
     if (itemProperties.weapClass) {
-      let maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
-      let currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
-
-      if (currentDurability > maxDurability) {
-        maxDurability = (currentDurability - utility.getRandomInt(0, 2))
-      }
+      maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
+      currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
 
       properties.Repairable = {
         Durability: currentDurability,
         MaxDurability: maxDurability
       };
     } else if (itemProperties.armorClass) {
-      let maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
-      let currentDurability = helper_f.getRandomisedMinDurability(maxDurability);
-
-      if (currentDurability > maxDurability) {
-        maxDurability = (currentDurability - utility.getRandomInt(0, 2))
-      }
-
-      //increase malfunction chance on low durability items
-      const durabilityType = helper_f.getDurabilityType(itemTemplate); //get type of durability in string
-
-      if (durabilityType == "Durability") {
-        //check for durability type Durability so that we can see if it has MalfunctionChance
-        maxDurability = itemProperties.Durability; //fetch Durability
-        if (itemProperties.hasOwnProperty("MalfunctionChance")) {
-          /*
-          We're now going to adjust MalfunctionChance based on the percentage difference between
-          the original MaxDurability and NewDurability, then increase the MalfunctionChance based
-          on the percentage difference of the durabilities and the original MalfunctionChance 
-          */
-    
-          const malfunctionChance = itemProperties.MalfunctionChance; //default malfunction chance
-          let currentMalfunctionChance = 0;
-    
-          let newDurability = maxDurability * utility.getPercentOf(maxDurability, minDurability);
-          let percentDiff = utility.getPercentDiff(maxDurability, newDurability);
-    
-          console.log(malfunctionChance, "defMalChance")
-          currentMalfunctionChance = malfunctionChance * percentDiff;
-          currentMalfunctionChance = currentMalfunctionChance.toFixed(2); //we dont need giant decimals
-          itemProperties.MalfunctionChance = currentMalfunctionChance;
-          console.log(itemProperties.MalfunctionChance, "newMalChance")
-
-        }
-      }
+      maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
+      currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
 
       properties.Repairable = {
         Durability: currentDurability,
@@ -840,7 +808,15 @@ class Generator {
       };
     }
 
+//need to fix this and the function
+    /* if (durabilityType === "Durability") {
+      if (itemProperties.hasOwnProperty("MalfunctionChance")) {
 
+        console.log(itemProperties.MalfunctionChance, "defMalChance")
+        itemProperties.MalfunctionChance = helper_f.getItemReliability(maxDurability, itemTemplate);
+        console.log(itemProperties.MalfunctionChance, "newMalChance")
+      }
+    } */
 
     if (itemProperties.HasHinge) {
       properties.Togglable = { On: true };
@@ -895,6 +871,7 @@ class Generator {
   isWeaponValid(itemList) {
     for (const item of itemList) {
       const template = global._database.items[item._tpl];
+      if (template._type != "Item") continue;
       if (!template._props.Slots || !template._props.Slots.length) {
         continue;
       }

@@ -277,7 +277,7 @@ function calculateCost(barter_scheme) {
     summaryCost += helper_f.getTemplatePrice(barter._tpl) * barter.count;
   }
 
-  return Math.round(summaryCost);
+  return ~~ (summaryCost);
 }
 
 function getLinkedSearchList(linkedSearchId) {
@@ -364,7 +364,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
-      offer.requirements[0].count = Math.round(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
+      offer.requirements[0].count = ~~ (rub * global._database.gameplayConfig.trading.ragfairMultiplier);
       offers.push(offer);
       //console.log("offer:", offer)
     }
@@ -374,7 +374,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
   if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
     let offer = utility.DeepCopy(offerBase);
 
-    let rubPrice = Math.round(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
+    let rubPrice = ~~ (helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
     offer._id = template;
     offer.items[0]._tpl = template;
     offer.requirements[0].count = rubPrice;

@@ -27,8 +27,8 @@ exports.main = (pmcData, body, sessionID) => {
         }
 
         // updated repair cost to match with Repair window, taking into account loyalty levels
-        // using Math.floor to match repair window
-        let repairCost = Math.floor(global._database.items[itemToRepair._tpl]._props.RepairCost * repairItem.count * coef);
+        // using ~~  to match repair window
+        let repairCost = ~~ (global._database.items[itemToRepair._tpl]._props.RepairCost * repairItem.count * coef);
         logger.logInfo("repCost: " + repairCost);//just to make sure we spend what the repair window say.
 
         if (!helper_f.payMoney(pmcData, { "scheme_items": [{ "id": repairItem._id, "count": repairCost }], "tid": body.tid }, sessionID)) {

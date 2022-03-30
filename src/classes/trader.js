@@ -77,7 +77,7 @@ function generateFenceAssort() {
     barter_scheme[random_item._id] = [
       [
         {
-          count: Math.round(item_price),
+          count: ~~ (item_price),
           _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
         },
       ],

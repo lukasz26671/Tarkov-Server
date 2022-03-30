@@ -94,9 +94,9 @@ function updatePlayerHideout(sessionID) {
       prod == "5dd129295a9ae32efe41a367" ||
       prod == "5e074e5e2108b14e1c62f2a7"
     ) {
-      //let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
-      //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
-      pmcData.Hideout.Production[prod].Progress = Math.floor(utility.getTimestamp() - pmcData.Hideout.Production[prod].StartTimestamp);
+      //let time_elapsed = ~~ (Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
+      //pmcData.Hideout.Production[prod].Progress = ~~ (pmcData.Hideout.Production[prod].Progress + time_elapsed);
+      pmcData.Hideout.Production[prod].Progress = ~~ (utility.getTimestamp() - pmcData.Hideout.Production[prod].StartTimestamp);
     }
 
     for (let recipe in recipes) {
@@ -108,7 +108,7 @@ function updatePlayerHideout(sessionID) {
         if (pmcData.Hideout.Production[prod].RecipeId == "5d5c205bd582a50d042a3c0e") {
           pmcData.Hideout.Production[prod] = updateBitcoinFarm(pmcData.Hideout.Production[prod], recipes[recipe], btcFarmCGs, isGeneratorOn, pmcData);
         } else {
-          //let time_elapsed = Math.floor(Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
+          //let time_elapsed = ~~ (Date.now() / 1000) - pmcData.Hideout.Production[prod].StartTimestamp - pmcData.Hideout.Production[prod].Progress;
           if (needGenerator == true) {
             //time_elapsed = time_elapsed * 0.2;
             if (isGeneratorOn) {
@@ -117,8 +117,8 @@ function updatePlayerHideout(sessionID) {
               pmcData.Hideout.Production[prod].inProgress = false;
             }
           }
-          //pmcData.Hideout.Production[prod].Progress = Math.floor(pmcData.Hideout.Production[prod].Progress + time_elapsed);
-          pmcData.Hideout.Production[prod].Progress = Math.floor(utility.getTimestamp() - pmcData.Hideout.Production[prod].StartTimestamp);
+          //pmcData.Hideout.Production[prod].Progress = ~~ (pmcData.Hideout.Production[prod].Progress + time_elapsed);
+          pmcData.Hideout.Production[prod].Progress = ~~ (utility.getTimestamp() - pmcData.Hideout.Production[prod].StartTimestamp);
 
           // if progress exceeds 100%, make it 100%
           if (pmcData.Hideout.Production[prod].Progress > pmcData.Hideout.Production[prod].ProductionTime) {
@@ -149,7 +149,7 @@ function updateWaterFilters(pmcData, area) {
       } else {
         resourceValue -= decreaseValue;
       }
-      resourceValue = Math.round(resourceValue * 10000) / 10000;
+      resourceValue = ~~ (resourceValue * 10000) / 10000;
 
       if (resourceValue > 0) {
         waterFilterArea.slots[i].item[0].upd = {
@@ -192,7 +192,7 @@ function updateFuel(pmcData, solarPower, area) {
       } else {
         resourceValue -= decreaseFuel;
       }
-      resourceValue = Math.round(resourceValue * 10000) / 10000;
+      resourceValue = ~~ (resourceValue * 10000) / 10000;
 
       if (resourceValue > 0) {
         generatorArea.slots[i].item[0].upd = {
@@ -240,7 +240,7 @@ function updateAirFilters(pmcData, area) {
       } else {
         resourceValue -= decreaseValue;
       }
-      resourceValue = Math.round(resourceValue * 10000) / 10000;
+      resourceValue = ~~ (resourceValue * 10000) / 10000;
 
       if (resourceValue > 0) {
         airFilterArea.slots[i].item[0].upd = {
@@ -279,11 +279,11 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
   let time_elapsed = utility.getTimestamp() - btcProd.StartTimestamp;
 
   if (isGeneratorOn == true) {
-    btcProd.Progress = Math.floor(btcProd.Progress + time_elapsed);
+    btcProd.Progress = ~~ (btcProd.Progress + time_elapsed);
   }
 
   let t2 = Math.pow(0.05 + ((btcFarmCGs - 1) / 49) * 0.15, -1); //THE FUNCTION TO REDUCE TIME OF PRODUCTION DEPENDING OF CGS
-  let final_prodtime = Math.floor(t2 * (production.productionTime / 20));
+  let final_prodtime = ~~ (t2 * (production.productionTime / 20));
 
   while (btcProd.Progress > final_prodtime) {
     if (btcProd.Products.length < MAX_BTC) {
@@ -294,15 +294,15 @@ function updateBitcoinFarm(btcProd, farmrecipe, btcFarmCGs, isGeneratorOn, pmcDa
           StackObjectsCount: 1,
         },
       });
-      btcProd.Progress = Math.floor(btcProd.Progress - final_prodtime);
+      btcProd.Progress = ~~ (btcProd.Progress - final_prodtime);
       logger.logSuccess("Bitcoin produced on server.");
     } else {
       btcProd.Progress = 0;
     }
   }
 
-  btcProd.ProductionTime = Math.floor(production.productionTime);
-  btcProd.StartTimestamp = Math.floor(Date.now() / 1000);
+  btcProd.ProductionTime = ~~ (production.productionTime);
+  btcProd.StartTimestamp = ~~ (Date.now() / 1000);
   return btcProd;
 }
 

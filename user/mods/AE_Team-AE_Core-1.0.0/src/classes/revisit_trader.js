@@ -76,7 +76,7 @@ function generateFenceAssort() {
     barter_scheme[random_item._id] = [
       [
         {
-          count: Math.round(item_price),
+          count: ~~ (item_price),
           _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
         },
       ],
@@ -236,7 +236,7 @@ class TraderServer {
         global._database.gameplayConfig.trading.traderSupply[traderID];
 
       // Current time in seconds
-      let current_time = Math.floor(new Date().getTime() / 1000);
+      let current_time = ~~ (new Date().getTime() / 1000);
 
       // Initial Fence generation pass.
       if (this.fence_generated_at === 0 || !this.fence_generated_at) {

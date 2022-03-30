@@ -133,7 +133,7 @@ function fleaLock(sessionID) {
     let pmcData = profile_f.handler.getPmcProfile(sessionID); //set player profile
     let fleaKeyId = "fleaKey";
     let devfleakeyId = "devfleaKey";
-    let timenow = Math.floor(Date.now() / 1000); //get the time //read the file
+    let timenow = ~~ (Date.now() / 1000); //get the time //read the file
     let fleaOpen = false;
     let killtime = fleaConfig.fleaKeyLife; //get the key life from config
 
@@ -337,7 +337,7 @@ function calculateCost(barter_scheme) {
         summaryCost += helper_f.getTemplatePrice(barter._tpl) * barter.count;
     }
 
-    return Math.round(summaryCost);
+    return ~~ (summaryCost);
 }
 
 function getLinkedSearchList(linkedSearchId) {
@@ -417,7 +417,7 @@ function createOffer(template, onlyFunc, usePresets = true, sessionID) {
                     offerBase.items[0].upd.StackObjectsCount = utility.getRandomInt(getCat.min, getCat.max); //random stock if found
                     break;
                 case false:
-                    offerBase.items[0].upd.StackObjectsCount = Math.floor(Math.random() * 4);
+                    offerBase.items[0].upd.StackObjectsCount = ~~ (Math.random() * 4);
                     break;
             }
             offerBase.items[0].upd.UnlimitedCount = false;
@@ -445,7 +445,7 @@ function createOffer(template, onlyFunc, usePresets = true, sessionID) {
                             mods[0].upd.StackObjectsCount = offerBase.items[0].upd.StackObjectsCount;
                             break;
                         case false:
-                            mods[0].upd.StackObjectsCount = Math.floor(Math.random() * 3);
+                            mods[0].upd.StackObjectsCount = ~~ (Math.random() * 3);
                     }
                     break;
                 case false:
@@ -457,7 +457,7 @@ function createOffer(template, onlyFunc, usePresets = true, sessionID) {
             offer.items = mods;
             offer.requirements[0].count = 0
             if (!hasDevKey(sessionID)) { //check if false
-                offer.requirements[0].count = Math.round(rub * fleaConfig.ragfairMultiplier);
+                offer.requirements[0].count = ~~ (rub * fleaConfig.ragfairMultiplier);
             }
             offers.push(offer);
         }
@@ -467,7 +467,7 @@ function createOffer(template, onlyFunc, usePresets = true, sessionID) {
     if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
         let rubPrice = 0
         if (!hasDevKey(sessionID)) { //check if false
-            rubPrice = Math.round(helper_f.getTemplatePrice(template) * fleaConfig.ragfairMultiplier);
+            rubPrice = ~~ (helper_f.getTemplatePrice(template) * fleaConfig.ragfairMultiplier);
         }
         offerBase._id = template;
         offerBase.items[0]._tpl = template;

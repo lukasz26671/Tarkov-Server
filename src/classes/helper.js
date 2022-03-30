@@ -122,7 +122,7 @@ function getCurrency(currency) {
  * output: value after conversion
  */
 function inRUB(value, currency) {
-  return Math.round(value * getTemplatePrice(currency));
+  return ~~ (value * getTemplatePrice(currency));
 }
 
 /* Gets Ruble to Currency conversion Value
@@ -130,7 +130,7 @@ function inRUB(value, currency) {
  * output: value after conversion
  * */
 function fromRUB(value, currency) {
-  return Math.round(value / getTemplatePrice(currency));
+  return ~~ (value / getTemplatePrice(currency));
 }
 
 /* take money and insert items into return to server request
@@ -1044,11 +1044,15 @@ function getDurabilityType(itemTemplate) {
       durabilityType = "Durability";
       break;
 
-    default:
-      logger.logWarning("${itemTemplate._name} [${itemTemplate._id}] doesn't have a type of durability; skipping");
+    case _props.hasOwnProperty("MaxHpResource"):
+      durabilityType = "MaxHpResource";
       break;
+
+    default:
+      logger.logWarning(`${itemTemplate._name} [${itemTemplate._id}] doesn't have a type of durability; skipping`);
+      return;
   }
-  console.log(durabilityType)
+
   return durabilityType;
 }
 
@@ -1065,17 +1069,15 @@ function getRandomisedMaxDurability(itemTemplate, botRole) {
   const itemProperties = itemTemplate._props;
   let durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
 
+  let percent = utility.getRandomIntInc(90, 100);
 
-  //number variables
-  let minDurability = 50; //set minimum percentage
-  if (botRole == "pmc") {
-    minDurability = 90;
-  }
 
   const maxDurability = itemProperties[durabilityType]; //set maxDurability from item
-  //combine da numbers
-  let currentDurability = maxDurability * utility.getPercentOf(maxDurability, minDurability);
-  return currentDurability;
+  // console.log(maxDurability, "maxDurability")
+  //console.log(percent, "percent")
+  let randomMaxDurability = utility.getPercentOf(percent, maxDurability);
+  //console.log(randomMaxDurability, "randomMaxDurability");
+  return utility.decimalAdjust("round", randomMaxDurability, -1);
 }
 
 /**
@@ -1090,12 +1092,58 @@ function getRandomisedMinDurability(maxDurability, botRole) {
   const min = 0;
   const max = 10;
 
-  let delta = utility.getRandomInt(min, max);
-  let newDurability = currentDurability - delta;
+  let delta = utility.getRandomIntInc(min, max);
+  let randomMinDurability = currentDurability - delta;
 
-  return newDurability;
+  //console.log(randomMinDurability, "getRandomisedMinDurability");
+  return utility.decimalAdjust('round', randomMinDurability, -1);
 }
 
+/**
+     * Adjust reliability of item based on condition (durability)
+     *
+     * @param {number}      maxDurability       Current max condition of item
+     * @param {string}      itemTemplate        Item
+
+     */
+function getItemReliability(maxDurability, itemTemplate) {
+  //increase malfunction chance on low durability items
+  const durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
+  let itemProperties = itemTemplate._props;
+  let itemMaxDurability;
+  let minDurability = maxDurability;
+
+  if (itemProperties.hasOwnProperty("MalfunctionChance")) {
+    //check for durability type Durability so that we can see if it has MalfunctionChance
+    if (durabilityType == "Durability") {
+      /*
+      We're now going to adjust MalfunctionChance based on the percentage difference between
+      the original MaxDurability and NewDurability, then increase the MalfunctionChance based
+      on the percentage difference of the durabilities and the original MalfunctionChance 
+      */
+
+      const malfunctionChance = itemProperties.MalfunctionChance; //default malfunction chance
+      let currentMalfunctionChance;
+
+
+      itemMaxDurability = itemProperties.Durability;
+      console.log(itemMaxDurability, "itemMaxDurability")
+      console.log(minDurability, "minDurability")
+
+
+      //let newDurability = itemMaxDurability * utility.getPercentOf(itemMaxDurability, minDurability);
+      let percentDiff = utility.getPercentDiff(itemMaxDurability, minDurability);
+      console.log(percentDiff)
+
+      currentMalfunctionChance = malfunctionChance * percentDiff;
+      currentMalfunctionChance = currentMalfunctionChance.toFixed(2); //we dont need giant decimals
+
+      return currentMalfunctionChance;
+    }
+  }
+}
+
+module.exports.getItemReliability = getItemReliability;
 module.exports.getDurabilityType = getDurabilityType;
 module.exports.getRandomisedMaxDurability = getRandomisedMaxDurability;
 module.exports.getRandomisedMinDurability = getRandomisedMinDurability;
