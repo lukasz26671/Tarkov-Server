@@ -181,9 +181,9 @@ module.exports.upgrade = (pmcData, body, sessionID) => {
   let ctime = databaseHideoutArea.stages[constructionLevel].constructionTime;
 
   if (ctime > 0) {
-    const timestamp = Math.floor(Date.now() / 1000);
+    const timestamp = ~~ (Date.now() / 1000);
 
-    foundHideoutArea.completeTime = Math.floor(timestamp + ctime);
+    foundHideoutArea.completeTime = ~~ (timestamp + ctime);
     foundHideoutArea.constructing = true;
   }
 

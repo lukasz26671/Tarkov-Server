@@ -236,7 +236,7 @@ class Responses {
       {
         _id: "5ae20a0dcb1c13123084756f",
         RegistrationId: 20,
-        DateTime: Math.floor(new Date() / 1000),
+        DateTime: ~~ (new Date() / 1000),
         IsDeveloper: true,
         Regions: ["EUR"],
         VersionId: "bgkidft87ddd",
@@ -342,7 +342,7 @@ class Responses {
 
     return response_f.getBody({
       status: 0,
-      nicknamechangedate: Math.floor(new Date() / 1000),
+      nicknamechangedate: ~~ (new Date() / 1000),
     });
   }
   clientGameProfileNicknameReserved(url, info, sessionID) {

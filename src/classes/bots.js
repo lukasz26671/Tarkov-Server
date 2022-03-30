@@ -786,11 +786,14 @@ class Generator {
 
     let properties = {};
     const itemProperties = itemTemplate._props;
-    const durabilityType = helper_f.getDurabilityType(itemTemplate)
+    let durabilityType;
     let maxDurability;
     let currentDurability;
 
-    if (itemProperties.weapClass) {
+    if (itemProperties.hasOwnProperty("weapClass")) {
+      durabilityType = helper_f.getDurabilityType(itemTemplate)
+      console.log(durabilityType, "weapClass check")
+
       maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
       currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
 
@@ -798,7 +801,10 @@ class Generator {
         Durability: currentDurability,
         MaxDurability: maxDurability
       };
-    } else if (itemProperties.armorClass) {
+    } else if (itemProperties.hasOwnProperty("armorClass")) {
+      durabilityType = helper_f.getDurabilityType(itemTemplate)      
+      console.log(durabilityType, "armorClass check")
+
       maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
       currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
 
@@ -808,7 +814,8 @@ class Generator {
       };
     }
 
-//need to fix this and the function
+
+    //need to fix this and the function
     /* if (durabilityType === "Durability") {
       if (itemProperties.hasOwnProperty("MalfunctionChance")) {
 
@@ -911,7 +918,7 @@ class Generator {
     }
 
     const range = magCounts.max - magCounts.min;
-    const count = bots_f.generator.getBiasedRandomNumber(magCounts.min, magCounts.max, Math.round(range * 0.75), 4);
+    const count = bots_f.generator.getBiasedRandomNumber(magCounts.min, magCounts.max, ~~(range * 0.75), 4);
 
     if (magTemplate._props.ReloadMagType === "InternalMagazine") {
       /* Get the amount of bullets that would fit in the internal magazine
@@ -1249,7 +1256,7 @@ class Generator {
     };
 
     const boundedGaussian = (start, end, n) => {
-      return Math.round(start + gaussianRandom(n) * (end - start + 1));
+      return ~~(start + gaussianRandom(n) * (end - start + 1));
     };
 
     const biasedMin = shift >= 0 ? min - shift : min;
