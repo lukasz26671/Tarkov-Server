@@ -601,7 +601,7 @@ class Generator {
     if (equipmentPool.length && shouldSpawn) {
       const id = utility.generateNewItemId();
       const tpl = utility.getArrayValue(equipmentPool);
-      const itemTemplate = global._database.items[tpl];
+      const itemTemplate = utility.DeepCopy(global._database.items[tpl]);
 
       if (!itemTemplate) {
         logger.logError(`Could not find item template with tpl ${tpl}`);
@@ -634,7 +634,7 @@ class Generator {
   generateWeapon(equipmentSlot, weaponPool, modPool, modChances, magCounts, botRole) {
     const id = utility.generateNewItemId();
     const tpl = utility.getArrayValue(weaponPool);
-    const itemTemplate = global._database.items[tpl];
+    const itemTemplate = utility.DeepCopy(global._database.items[tpl]);
 
     if (!itemTemplate) {
       logger.logError(`Could not find item template with tpl ${tpl}`);
@@ -758,7 +758,7 @@ class Generator {
         continue;
       }
 
-      const modTemplate = global._database.items[modTpl];
+      const modTemplate = utility.DeepCopy(global._database.items[modTpl]);
       if (!modTemplate) {
         logger.logWarning(`Could not find mod item template with tpl ${modTpl}`);
         logger.logInfo(`Item -> ${parentTemplate._id}; Slot -> ${modSlot}`);
@@ -792,7 +792,7 @@ class Generator {
 
     if (itemProperties.hasOwnProperty("weapClass")) {
       durabilityType = helper_f.getDurabilityType(itemTemplate)
-      console.log(durabilityType, "weapClass check")
+      //console.log(durabilityType, "weapClass check")
 
       maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
       currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
@@ -802,8 +802,8 @@ class Generator {
         MaxDurability: maxDurability
       };
     } else if (itemProperties.hasOwnProperty("armorClass")) {
-      durabilityType = helper_f.getDurabilityType(itemTemplate)      
-      console.log(durabilityType, "armorClass check")
+      durabilityType = helper_f.getDurabilityType(itemTemplate)
+      //console.log(durabilityType, "armorClass check")
 
       maxDurability = helper_f.getRandomisedMaxDurability(itemTemplate, botRole);
       currentDurability = helper_f.getRandomisedMinDurability(maxDurability, botRole);
@@ -813,17 +813,6 @@ class Generator {
         MaxDurability: maxDurability
       };
     }
-
-
-    //need to fix this and the function
-    /* if (durabilityType === "Durability") {
-      if (itemProperties.hasOwnProperty("MalfunctionChance")) {
-
-        console.log(itemProperties.MalfunctionChance, "defMalChance")
-        itemProperties.MalfunctionChance = helper_f.getItemReliability(maxDurability, itemTemplate);
-        console.log(itemProperties.MalfunctionChance, "newMalChance")
-      }
-    } */
 
     if (itemProperties.HasHinge) {
       properties.Togglable = { On: true };
@@ -862,7 +851,7 @@ class Generator {
   isItemIncompatibleWithCurrentItems(items, tplToCheck, equipmentSlot) {
     // TODO: Can probably be optimized to cache itemTemplates as items are added to inventory
     const itemTemplates = items.map((i) => global._database.items[i._tpl]);
-    const templateToCheck = global._database.items[tplToCheck];
+    const templateToCheck = utility.DeepCopy(global._database.items[tplToCheck]);
 
     // Check if any of the current inventory templates have the incoming item defined as incompatible
     const currentInventoryCheck = itemTemplates.some((item) => item._props[`Blocks${equipmentSlot}`] || item._props.ConflictingItems.includes(tplToCheck));
@@ -975,7 +964,7 @@ class Generator {
       }
     }
 
-    const ammoTemplate = global._database.items[ammoTpl];
+    const ammoTemplate = utility.DeepCopy(global._database.items[ammoTpl]);
     if (!ammoTemplate) {
       logger.logError(`Could not find ammo template with tpl ${ammoTpl}`);
       return;
@@ -1035,7 +1024,7 @@ class Generator {
 
   /** Fill existing magazines to full, while replacing their contents with specified ammo */
   fillExistingMagazines(weaponMods, magazine, ammoTpl) {
-    const modTemplate = global._database.items[magazine._tpl];
+    const modTemplate = utility.DeepCopy(global._database.items[magazine._tpl]);
     if (!modTemplate) {
       logger.logError(`Could not find magazine template with tpl ${magazine._tpl}`);
       return;

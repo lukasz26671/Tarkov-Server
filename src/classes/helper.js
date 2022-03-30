@@ -1024,7 +1024,7 @@ function getDurability(itemTemplate, botRole) {
 /**
      * To get type of `durability` to make function more flexible
      *
-     * @param {object}      itemTemplate         The item to get _props from
+     * @param {object}      itemTemplate         The item to check Durability-type of
 
      */
 function getDurabilityType(itemTemplate) {
@@ -1057,7 +1057,7 @@ function getDurabilityType(itemTemplate) {
 }
 
 /**
-     * To get the max randomized durability for weapons/armor on AI
+     * To get the `max randomized durability` for weapons/armor on AI
      *
      * @param {object}      itemTemplate         The item
      * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
@@ -1081,7 +1081,7 @@ function getRandomisedMaxDurability(itemTemplate, botRole) {
 }
 
 /**
-     * To get the min randomized durability for weapons/armor on AI
+     * To get the `min randomized durability` for weapons/armor on AI
      *
      * @param {number}      maxDurability       Max Durability from getRandomisedMaxDurability
      * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
@@ -1100,22 +1100,24 @@ function getRandomisedMinDurability(maxDurability, botRole) {
 }
 
 /**
-     * Adjust reliability of item based on condition (durability)
+     * `Adjust reliability` of item based on condition (durability)
      *
      * @param {number}      maxDurability       Current max condition of item
      * @param {string}      itemTemplate        Item
 
      */
-function getItemReliability(maxDurability, itemTemplate) {
+function getItemReliability(maxDurability, itemTemplate, durabilityType) {
   //increase malfunction chance on low durability items
-  const durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
+  //const durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
   let itemProperties = itemTemplate._props;
   let itemMaxDurability;
   let minDurability = maxDurability;
 
+  console.log(minDurability)
+
   if (itemProperties.hasOwnProperty("MalfunctionChance")) {
     //check for durability type Durability so that we can see if it has MalfunctionChance
-    if (durabilityType == "Durability") {
+    if (durabilityType == "MaxDurability") {
       /*
       We're now going to adjust MalfunctionChance based on the percentage difference between
       the original MaxDurability and NewDurability, then increase the MalfunctionChance based
@@ -1136,7 +1138,7 @@ function getItemReliability(maxDurability, itemTemplate) {
       console.log(percentDiff)
 
       currentMalfunctionChance = malfunctionChance * percentDiff;
-      currentMalfunctionChance = currentMalfunctionChance.toFixed(2); //we dont need giant decimals
+      currentMalfunctionChance = currentMalfunctionChance; //we dont need giant decimals
 
       return currentMalfunctionChance;
     }

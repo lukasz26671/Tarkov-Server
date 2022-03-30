@@ -1,6 +1,9 @@
 "use strict";
 
-/* Based on the item action, determine whose inventories we should be looking at for from and to. */
+/** Based on the item action, determine whose inventories we should be looking at for from and to.
+ * @param body Request to determine
+ * @param sessionID SessionID
+*/
 function getOwnerInventoryItems(body, sessionID) {
   let isSameInventory = false;
   let pmcItems = profile_f.handler.getPmcProfile(sessionID).Inventory.items;
@@ -40,7 +43,7 @@ function getOwnerInventoryItems(body, sessionID) {
   };
 }
 
-/* Move Item
+/** Move Item
  * change location of item with parentId and slotId
  * transfers items from one profile to another if fromOwner/toOwner is set in the body.
  * otherwise, move is contained within the same profile_f.
@@ -76,10 +79,10 @@ module.exports.applyInventoryChanges = (pmcData, body, sessionID) => {
 
 };
 
-/* Internal helper function to transfer an item from one profile to another.
- * fromProfileData: Profile of the source.
- * toProfileData: Profile of the destination.
- * body: Move request
+/** Internal helper function to transfer an item from one profile to another.
+ * @param fromItems Item source from source Profile.
+ * @param toItems Item source of destination Profile.
+ * @param body Move request
  */
 function moveItemToProfile(fromItems, toItems, body) {
   handleCartridges(fromItems, body);
@@ -109,9 +112,9 @@ function moveItemToProfile(fromItems, toItems, body) {
   }
 }
 
-/* Internal helper function to move item within the same profile_f.
- * items: Items
- * body: Move request
+/** Internal helper function to move item within the same profile_f.
+ * @param items Items
+ * @param body Move request
  */
 function moveItemInternal(items, body) {
   handleCartridges(items, body);
@@ -138,9 +141,9 @@ function moveItemInternal(items, body) {
   }
 }
 
-/* Internal helper function to handle cartridges in inventory if any of them exist.
- * items: Items
- * body: Move request
+/** Internal helper function to handle cartridges in inventory if any of them exist.
+ * @param items Items
+ * @param body Move request
  */
 function handleCartridges(items, body) {
   // -> Move item to diffrent place - counts with equiping filling magazine etc
@@ -411,7 +414,7 @@ function swapItem(pmcData, body, sessionID) {
 }
 
 
-/* Give Item
+/** Give Item
  * its used for "add" item like gifts etc.
  * */
 function addItem(pmcData, body, sessionID, foundInRaid = false) {
@@ -459,7 +462,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
           let count = baseItem.count;
           let calc = baseItem.count - ~~ (baseItem.count / tmpItem._props.StackMaxSize) * tmpItem._props.StackMaxSize;
 
-          MaxStacks = calc > 0 ? MaxStacks + ~~ (count / tmpItem._props.StackMaxSize) : ~~ (count / tmpItem._props.StackMaxSize);
+          MaxStacks = calc > 0 ? MaxStacks + ~~ (count / tmpItem._props.StackMaxSize) : ~~(count / tmpItem._props.StackMaxSize);
 
           for (let sv = 0; sv < MaxStacks; sv++) {
             if (count > 0) {
