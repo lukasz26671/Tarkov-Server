@@ -427,7 +427,36 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
   }
 
   for (let baseItem of body.items) {
-    if (baseItem.item_id in global._database.globals.ItemPresets) {
+
+    switch (true) {
+
+      case (baseItem.item_id in global._database.globals.ItemPresets): //if item is in ItemPresets
+        const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
+        itemLib.push(...presetItems);
+        baseItem.isPreset = true;
+        baseItem.item_id = presetItems[0]._id; //push preset
+        break;
+
+      case (helper_f.isMoneyTpl(baseItem.item_id) || (body.tid == "")): //if item_id is money, or tid is empty?
+        console.log(body.tid, "body.tid", baseItem.item_id, "baseItem.item_id" )
+        itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
+        break;
+
+      default:
+        // Only grab the relevant trader items and add unique values
+        let isBuyingFromFence = false;
+        if (body.tid === "579dc571d53a0658a154fbec") isBuyingFromFence = true;
+        const traderItems = trader_f.handler.getAssort(sessionID, body.tid, isBuyingFromFence).items;
+        const relevantItems = helper_f.findAndReturnChildrenAsItems(traderItems, baseItem.item_id);
+        const toAdd = relevantItems.filter((traderItem) => !itemLib.some((item) => traderItem._id === item._id));
+        itemLib.push(...toAdd);
+        break;
+    }
+
+
+
+
+/*     if (baseItem.item_id in global._database.globals.ItemPresets) {
       const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
       itemLib.push(...presetItems);
       baseItem.isPreset = true;
@@ -445,7 +474,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
       const relevantItems = helper_f.findAndReturnChildrenAsItems(traderItems, baseItem.item_id);
       const toAdd = relevantItems.filter((traderItem) => !itemLib.some((item) => traderItem._id === item._id));
       itemLib.push(...toAdd);
-    }
+    } */
 
     for (let item of itemLib) {
       if (item._id === baseItem.item_id) {
@@ -460,9 +489,9 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         // split stacks if the size is higher than allowed by StackMaxSize
         if (baseItem.count > tmpItem._props.StackMaxSize) {
           let count = baseItem.count;
-          let calc = baseItem.count - ~~ (baseItem.count / tmpItem._props.StackMaxSize) * tmpItem._props.StackMaxSize;
+          let calc = baseItem.count - ~~(baseItem.count / tmpItem._props.StackMaxSize) * tmpItem._props.StackMaxSize;
 
-          MaxStacks = calc > 0 ? MaxStacks + ~~ (count / tmpItem._props.StackMaxSize) : ~~(count / tmpItem._props.StackMaxSize);
+          MaxStacks = calc > 0 ? MaxStacks + ~~(count / tmpItem._props.StackMaxSize) : ~~(count / tmpItem._props.StackMaxSize);
 
           for (let sv = 0; sv < MaxStacks; sv++) {
             if (count > 0) {
@@ -526,7 +555,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
   for (let itemToAdd of itemsToAdd) {
     let newItem = utility.generateNewItemId();
     let toDo = [[itemToAdd.itemRef._id, newItem]];
-    let upd = { StackObjectsCount: itemToAdd.count };
+    let upd = { StackObjectsCount: itemToAdd.count }; //Object.assign({}, inputNodes[item].items[0].upd); //{ StackObjectsCount: itemToAdd.count };
 
     //if it is from ItemPreset, load preset's upd data too.
     if (itemToAdd.isPreset) {

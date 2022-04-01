@@ -131,117 +131,116 @@ class Controller {
 
   //START -----
   generateBot(bot, role, pmcData) {
-    if (role !== "names") {
-      let node = [];
-      let Role = role.toLowerCase()
-      //default
+    let node = [];
+    let Role = role.toLowerCase()
+    //default
 
-      node = global._database.bots[Role];
+    node = global._database.bots[Role];
 
-      //pmc generation from Scavs
-      if (Role == "assault") {
-        //50% chance of being a pmc
+    //pmc generation from Scavs
+    if (Role == "assault") {
+      //50% chance of being a pmc
+      if (utility.getPercentRandomBool(50)) {
+        //if pmc
+        //50% chance of being usec or bear
         if (utility.getPercentRandomBool(50)) {
-          //if pmc
-          //50% chance of being usec or bear
-          if (utility.getPercentRandomBool(50)) {
-            bot.Info.Side = "Usec";
-            node = global._database.bots["usec"];
-          } else {
-            bot.Info.Side = "Bear";
-            node = global._database.bots["bear"];
-          }
+          bot.Info.Side = "Usec";
+          node = global._database.bots["usec"];
         } else {
-          //if scav
-          bot.Info.Side = "Savage";
-          node = global._database.bots["assault"];
+          bot.Info.Side = "Bear";
+          node = global._database.bots["bear"];
         }
+      } else {
+        //if scav
+        bot.Info.Side = "Savage";
+        node = global._database.bots["assault"];
       }
-
-      //Examples for randomizing properties without the need for roles.
-      //this could be used an "event" or something
-      //just change false to true if wanting to test
-      if (Role == "assault" && false) {
-        let scavRoleSelect = utility.getRandomInt(1, 6)
-        switch (scavRoleSelect) {
-          case 1:
-            node = global._database.bots["followersanitar"];
-            break;
-          case 2:
-            node = global._database.bots["followergluharscout"];
-            break;
-          case 3:
-            node = global._database.bots["followergluharassault"];
-            break;
-          case 4:
-            node = global._database.bots["followergluharsecurity"];
-            break;
-          case 5:
-            node = global._database.bots["followerbully"];
-            break;
-          case 6:
-            node = global._database.bots["sectantwarrior"];
-            break;
-        }
-      }
-
-
-
-      bot.Info.Nickname = this.generateBotName(Role);
-      bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
-      bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
-      bot.Health = bots_f.botHandler.generateHealth(node.health);
-      bot.Customization.Head = utility.getArrayValue(node.appearance.head);
-      bot.Customization.Body = utility.getArrayValue(node.appearance.body);
-      bot.Customization.Feet = utility.getArrayValue(node.appearance.feet);
-      bot.Customization.Hands = utility.getArrayValue(node.appearance.hands);
-
-      let inventoryData = "";
-      for (const inventoryNode in node.inventory) {
-        const levelFromTo = inventoryNode.split("_");
-        const levelFrom = parseInt(levelFromTo[0]);
-        const levelTo = parseInt(levelFromTo[1]);
-
-        if (pmcData.Info.Level >= levelFrom && pmcData.Info.Level < levelTo) {
-          inventoryData = node.inventory[inventoryNode];
-          break;  // once we got our datas, no need to keep looping
-        }
-      }
-      if (inventoryData == "") {
-        // inventory is empty using fallback
-        inventoryData = node.inventory[Object.keys(node.inventory)[0]];
-      }
-
-      // The Punisher Role | CQ: this should be changed in the future.
-      /*
-      if (role === "followergluharsnipe") {
-        bot.Info.Settings.Role = "bossTagilla";
-      }    
-      */
-
-      bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, Role);
-
-      const levelResult = bots_f.botHandler.generateRandomLevel(
-        node.experience.level.min,
-        node.experience.level.max,
-        pmcData.Info.Level
-      );
-      bot.Info.Experience = levelResult.exp;
-      bot.Info.Level = levelResult.level;
-
-      if (bot.Info.Side.toLowerCase() == "usec"
-        || bot.Info.Side.toLowerCase() == "bear") {
-        bot = bots_f.botHandler.generateDogtag(bot);
-      }
-
-      // generate new bot ID
-      bot = bots_f.botHandler.generateId(bot);
-
-      // generate new inventory ID
-      bot = utility.generateInventoryID(bot);
-
-      return bot;
     }
+
+    //Examples for randomizing properties without the need for roles.
+    //this could be used an "event" or something
+    //just change false to true if wanting to test
+    if (Role == "assault" && false) {
+      let scavRoleSelect = utility.getRandomInt(1, 6)
+      switch (scavRoleSelect) {
+        case 1:
+          node = global._database.bots["followersanitar"];
+          break;
+        case 2:
+          node = global._database.bots["followergluharscout"];
+          break;
+        case 3:
+          node = global._database.bots["followergluharassault"];
+          break;
+        case 4:
+          node = global._database.bots["followergluharsecurity"];
+          break;
+        case 5:
+          node = global._database.bots["followerbully"];
+          break;
+        case 6:
+          node = global._database.bots["sectantwarrior"];
+          break;
+      }
+    }
+
+
+
+    bot.Info.Nickname = this.generateBotName(Role);
+    bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
+    bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
+    bot.Health = bots_f.botHandler.generateHealth(node.health);
+    bot.Customization.Head = utility.getArrayValue(node.appearance.head);
+    bot.Customization.Body = utility.getArrayValue(node.appearance.body);
+    bot.Customization.Feet = utility.getArrayValue(node.appearance.feet);
+    bot.Customization.Hands = utility.getArrayValue(node.appearance.hands);
+
+    let inventoryData = "";
+    for (const inventoryNode in node.inventory) {
+      const levelFromTo = inventoryNode.split("_");
+      const levelFrom = parseInt(levelFromTo[0]);
+      const levelTo = parseInt(levelFromTo[1]);
+
+      if (pmcData.Info.Level >= levelFrom && pmcData.Info.Level < levelTo) {
+        inventoryData = node.inventory[inventoryNode];
+        break;  // once we got our datas, no need to keep looping
+      }
+    }
+    if (inventoryData == "") {
+      // inventory is empty using fallback
+      inventoryData = node.inventory[Object.keys(node.inventory)[0]];
+    }
+
+    // The Punisher Role | CQ: this should be changed in the future.
+    /*
+    if (role === "followergluharsnipe") {
+      bot.Info.Settings.Role = "bossTagilla";
+    }    
+    */
+
+    bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, Role);
+
+    const levelResult = bots_f.botHandler.generateRandomLevel(
+      node.experience.level.min,
+      node.experience.level.max,
+      pmcData.Info.Level
+    );
+    bot.Info.Experience = levelResult.exp;
+    bot.Info.Level = levelResult.level;
+
+    if (bot.Info.Side.toLowerCase() == "usec"
+      || bot.Info.Side.toLowerCase() == "bear") {
+      bot = bots_f.botHandler.generateDogtag(bot);
+    }
+
+    // generate new bot ID
+    bot = bots_f.botHandler.generateId(bot);
+
+    // generate new inventory ID
+    bot = utility.generateInventoryID(bot);
+
+    return bot;
+
   }
 
   //extended generateBot function for custom types of bot as defined in isCustomBot

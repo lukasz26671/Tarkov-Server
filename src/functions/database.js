@@ -21,36 +21,35 @@ function _load_BlacklistConfig() {
 function _load_BotsData() {
   _database.bots = {};
   for (let botType in db.bots) {
-    if (botType !== "names") {
-      _database.bots[botType] = {};
-      let difficulty_easy = null;
-      let difficulty_normal = null;
-      let difficulty_hard = null;
-      let difficulty_impossible = null;
-      if (typeof db.bots[botType].difficulty != "undefined") {
-        if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
-        if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
-        if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
-        if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
-      }
-      _database.bots[botType].difficulty = {
-        easy: difficulty_easy,
-        normal: difficulty_normal,
-        hard: difficulty_hard,
-        impossible: difficulty_impossible,
-      };
-      _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
-      _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
-      _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
-      _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
-      _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
-      _database.bots[botType].inventory = {};
-      for (const name in db.bots[botType].inventory) {
-        _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
-      }
+    _database.bots[botType] = {};
+    let difficulty_easy = null;
+    let difficulty_normal = null;
+    let difficulty_hard = null;
+    let difficulty_impossible = null;
+    if (typeof db.bots[botType].difficulty != "undefined") {
+      if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
+      if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
+      if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
+      if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
     }
+    _database.bots[botType].difficulty = {
+      easy: difficulty_easy,
+      normal: difficulty_normal,
+      hard: difficulty_hard,
+      impossible: difficulty_impossible,
+    };
+    _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
+    _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
+    _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
+    _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
+    _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
+    _database.bots[botType].inventory = {};
+    for (const name in db.bots[botType].inventory) {
+      _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
+    }
+
   }
-  _database.bots.names = fileIO.readParsed("./" + db.bots.names);
+  _database.bots.names = fileIO.readParsed("./" + db.base.botNames);
   //fileIO.write("./names.json", _database.bots.names)
 }
 function _load_CoreData() {
