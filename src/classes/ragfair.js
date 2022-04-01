@@ -11,8 +11,8 @@ function sortOffersByRating(a, b) {
 function sortOffersByName(a, b) {
   // @TODO: Get localized item names
   try {
-    let aa = helper_f.tryGetItem(a._id)._name;
-    let bb = helper_f.tryGetItem(b._id)._name;
+    let aa = helper_f.tryGetItem(a._id)[1]._name;
+    let bb = helper_f.tryGetItem(b._id)[1]._name;
 
     aa = aa.substring(aa.indexOf("_") + 1);
     bb = bb.substring(bb.indexOf("_") + 1);
@@ -129,14 +129,16 @@ function countCategories(response) {
 }
 
 function getOffers(sessionID, request) {
-  //if its traders items, just a placeholder it will be handled differently later
-  if (request.offerOwnerType === 1) {
-    return getOffersFromTraders(sessionID, request);
-  }
+
 
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
   let itemsToAdd = [];
   let offers = [];
+
+  let offersFromTraders = getOffersFromTraders(sessionID, request);
+  if (request.offerOwnerType === 1) {
+    return offersFromTraders;
+  }
 
   if (!request.linkedSearchId && !request.neededSearchId) {
     response.categories = trader_f.handler.getAssort(sessionID, "ragfair").loyal_level_items;
@@ -184,7 +186,7 @@ function getOffers(sessionID, request) {
 function getOffersFromTraders(sessionID, request) {
   //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
   let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
-  let offersFilters = []; //this is an array of item tpl who filter only items to show
+/*   let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
   for (let offerC of jsonToReturn.offers) {
@@ -244,7 +246,7 @@ function getOffersFromTraders(sessionID, request) {
     }
   }
   jsonToReturn.offers = offersToKeep;
-  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers);
+  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers); */
 
   return jsonToReturn;
 }
@@ -276,8 +278,8 @@ function calculateCost(barter_scheme) {
   for (let barter of barter_scheme) {
     summaryCost += helper_f.getTemplatePrice(barter._tpl) * barter.count;
   }
-
-  return ~~ (summaryCost);
+  //Math.round
+  return ~~(summaryCost);
 }
 
 function getLinkedSearchList(linkedSearchId) {
@@ -364,7 +366,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
-      offer.requirements[0].count = ~~ (rub * global._database.gameplayConfig.trading.ragfairMultiplier);
+      // ~~ = Math.round
+      offer.requirements[0].count = ~~(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
       offers.push(offer);
       //console.log("offer:", offer)
     }
@@ -374,7 +377,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
   if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
     let offer = utility.DeepCopy(offerBase);
 
-    let rubPrice = ~~ (helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
+    //~~ = Math.round
+    let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
     offer._id = template;
     offer.items[0]._tpl = template;
     offer.requirements[0].count = rubPrice;

@@ -21,34 +21,37 @@ function _load_BlacklistConfig() {
 function _load_BotsData() {
   _database.bots = {};
   for (let botType in db.bots) {
-    _database.bots[botType] = {};
-    let difficulty_easy = null;
-    let difficulty_normal = null;
-    let difficulty_hard = null;
-    let difficulty_impossible = null;
-    if (typeof db.bots[botType].difficulty != "undefined") {
-      if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
-      if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
-      if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
-      if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
+    if (botType !== "names") {
+      _database.bots[botType] = {};
+      let difficulty_easy = null;
+      let difficulty_normal = null;
+      let difficulty_hard = null;
+      let difficulty_impossible = null;
+      if (typeof db.bots[botType].difficulty != "undefined") {
+        if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
+        if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
+        if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
+        if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
+      }
+      _database.bots[botType].difficulty = {
+        easy: difficulty_easy,
+        normal: difficulty_normal,
+        hard: difficulty_hard,
+        impossible: difficulty_impossible,
+      };
+      _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
+      _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
+      _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
+      _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
+      _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
+      _database.bots[botType].inventory = {};
+      for (const name in db.bots[botType].inventory) {
+        _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
+      }
     }
-    _database.bots[botType].difficulty = {
-      easy: difficulty_easy,
-      normal: difficulty_normal,
-      hard: difficulty_hard,
-      impossible: difficulty_impossible,
-    };
-    _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
-    _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
-    _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
-    _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
-    _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
-    _database.bots[botType].inventory = {};
-    for (const name in db.bots[botType].inventory) {
-      _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
-    }
-    _database.bots[botType].names = fileIO.readParsed("./" + db.bots[botType].names);
   }
+  _database.bots.names = fileIO.readParsed("./" + db.bots.names);
+  //fileIO.write("./names.json", _database.bots.names)
 }
 function _load_CoreData() {
   _database.core = {};
@@ -189,10 +192,10 @@ function _load_TradersData() {
     _database.traders[traderID].assort = fileIO.readParsed("./" + db.user.cache["assort_" + traderID]);
     if (typeof _database.traders[traderID].assort.data != "undefined") _database.traders[traderID].assort = _database.traders[traderID].assort.data;
 
-    if (typeof db.traders[traderID].questassort != "undefined"){
+    if (typeof db.traders[traderID].questassort != "undefined") {
       _database.traders[traderID].questassort = fileIO.readParsed("./" + db.traders[traderID].questassort);
     }
-    
+
 
     if (_database.traders[traderID].base.repair.price_rate === 0) {
       _database.traders[traderID].base.repair.price_rate = 100;
