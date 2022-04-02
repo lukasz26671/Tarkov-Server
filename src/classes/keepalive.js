@@ -20,7 +20,7 @@ function updateTraders(sessionID) {
     if (traders[trader].base._id === "ragfair") continue;
     let base = traders[trader].base;
     let assort = traders[trader].assort;
-    console.log(base.nickname)
+    //console.log(base.nickname)
 
     if (base.nextResupply > timeNow) {
       continue;
