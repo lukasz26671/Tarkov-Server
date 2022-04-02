@@ -924,7 +924,7 @@ class Generator {
       magazineTpl = magazine._tpl;
     }
 
-    let magTemplate = global._database.items[magazineTpl];
+    let magTemplate = utility.DeepCopy(global._database.items[magazineTpl]);
     if (!magTemplate) {
       logger.logError(`Could not find magazine template with tpl ${magazineTpl}`);
       return;

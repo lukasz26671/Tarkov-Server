@@ -269,9 +269,7 @@ function findItemById(items, id) {
  */
 function tryGetItem(template) {
   const item = global._database.items[template];
-
   if (typeof item == "undefined") return { error: true, errorMessage: `Unable to find item '${template}' in database` }
-
   return item;
 }
 
