@@ -15,7 +15,6 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
-  console.log(body.item_id, "body.item_id (buyItem)")
   let tAssort = utility.DeepCopy(_database.traders[body.tid].assort);
   //fileIO.write("./tAssort.json", tAssort)
   if (typeof tAssort[body.item_id] != "undefined" && tAssort[body.item_id].upd.StackObjectsCount) {

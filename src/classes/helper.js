@@ -122,7 +122,7 @@ function getCurrency(currency) {
  * output: value after conversion
  */
 function inRUB(value, currency) {
-  return ~~ (value * getTemplatePrice(currency));
+  return ~~(value * getTemplatePrice(currency));
 }
 
 /* Gets Ruble to Currency conversion Value
@@ -130,7 +130,7 @@ function inRUB(value, currency) {
  * output: value after conversion
  * */
 function fromRUB(value, currency) {
-  return ~~ (value / getTemplatePrice(currency));
+  return ~~(value / getTemplatePrice(currency));
 }
 
 /* take money and insert items into return to server request
@@ -722,20 +722,12 @@ function arrayIntersect(a, b) {
 
 // Searching for first item template ID and for preset ID
 function getPreset(id) {
-  let itmPreset = global._database.globals.ItemPresets[id];
-  if (typeof itmPreset == "undefined") {
-    /* this was causing an error where preset id couldnt be found on the client and caused client stop loading map...
-    for(let itemP in global._database.globals.ItemPresets){
-      if(global._database.globals.ItemPresets[itemP]._items[0]._tpl == id){
-        itmPreset = global._database.globals.ItemPresets[itemP];
-        break;
-      }
-    }*/
-    if (typeof itmPreset == "undefined") {
-      logger.logWarning("Preset of id: " + id + " not found on a list (this warning is not important)");
-      return null;
-    }
+  let itmPreset = utility.DeepCopy(global._database.globals.ItemPresets[id]);
+  if (utility.isUndefined(itmPreset)) {
+    logger.logWarning("Preset of id: " + id + " not found on a list (this warning is not important)");
+    return null;
   }
+
   return itmPreset;
 }
 

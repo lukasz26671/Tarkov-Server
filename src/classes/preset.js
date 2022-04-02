@@ -37,7 +37,6 @@ class ItemPresets {
         for (const id of ids) {
             presets.push(global._database.globals.ItemPresets[id]);
         }
-
         return presets;
     }
 
@@ -48,7 +47,7 @@ class ItemPresets {
             return [];
         }
         let foundP = utility.DeepCopy(global._database.globals.ItemPresets[presetID]);
-        logger.logError(`Found preset for ID ${presetID}: \n` + JSON.stringify(foundP, null, 2));
+        logger.logSuccess(`Found preset for ID ${presetID}: \n` + JSON.stringify(foundP, null, 2));
 
         for (let item of foundP._items) {
             let ogID = item._id;
