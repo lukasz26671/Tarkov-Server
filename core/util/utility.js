@@ -136,9 +136,9 @@ exports.clearString = (s) => {
 }
 // getRandomInt
 exports.getRandomInt = (min = 0, max = 100) => {
-    min = ~~ (min);
-    max = ~~ (max);
-    return (max > min) ? ~~ (Math.random() * (max - min + 1) + min) : min;
+    min = ~~(min);
+    max = ~~(max);
+    return (max > min) ? ~~(Math.random() * (max - min + 1) + min) : min;
 }
 
 /**
@@ -170,19 +170,19 @@ exports.getPercentOf = (num1, num2) => {
 // getPercentRandomBool
 // true if lucky, false if unlucky
 exports.getPercentRandomBool = (percentage) => {
-    return ~~ ((Math.random() * 100) < percentage);
+    return ~~((Math.random() * 100) < percentage);
 }
 
 // getRandomIntEx
 exports.getRandomIntEx = (max) => {
-    return (max > 1) ? ~~ (Math.random() * (max - 2) + 1) : 1;
+    return (max > 1) ? ~~(Math.random() * (max - 2) + 1) : 1;
 }
 
 // getRandomIntEx
 exports.getRandomIntInc = (min, max) => {
-    min = ~~ (min);
-    max = ~~ (max);
-    return ~~ (Math.random() * (max - min + 1) + min);
+    min = ~~(min);
+    max = ~~(max);
+    return ~~(Math.random() * (max - min + 1) + min);
 }
 
 /**
@@ -196,13 +196,13 @@ exports.getRandomIntInc = (min, max) => {
  */
 exports.decimalAdjust = (type, value, exp) => {
 
-    if (type == "round"){
+    if (type == "round") {
         return decimalAdjust('round', value, exp);
     }
-    if (type == "floor"){
+    if (type == "floor") {
         return decimalAdjust('floor', value, exp);
     }
-    if (type == "ceil"){
+    if (type == "ceil") {
         return decimalAdjust('ceil', value, exp);
     }
 }
@@ -230,12 +230,12 @@ exports.removeDir = (dir) => {
 }
 // getServerUptimeInSeconds
 exports.getServerUptimeInSeconds = () => {
-    return ~~ (internal.process.uptime());
+    return ~~(internal.process.uptime());
 }
 // getTimestamp
 exports.getTimestamp = () => {
     let time = new Date();
-    return ~~ (time.getTime() / 1000);
+    return ~~(time.getTime() / 1000);
 }
 // getTime
 exports.getTime = () => {
@@ -265,7 +265,7 @@ exports.makeSign = (Length) => {
     let charactersLength = characters.length;
 
     for (let i = 0; i < Length; i++) {
-        result += characters.charAt(~~ (Math.random() * charactersLength));
+        result += characters.charAt(~~(Math.random() * charactersLength));
     }
 
     return result;
@@ -304,9 +304,9 @@ exports.generateNewId = (prefix = "", useOld = false) => {
 }
 // secondsToTime
 exports.secondsToTime = (timestamp) => {
-    timestamp = ~~ (timestamp);
-    let hours = ~~ (timestamp / 60 / 60);
-    let minutes = ~~ ((timestamp / 60) - (hours * 60));
+    timestamp = ~~(timestamp);
+    let hours = ~~(timestamp / 60 / 60);
+    let minutes = ~~((timestamp / 60) - (hours * 60));
     let seconds = timestamp % 60;
 
     if (minutes < 10) { minutes = "0" + minutes }
@@ -392,6 +392,6 @@ exports.splitStack = (item) => {
         count -= amount;
         stacks.push(newStack);
     }
-
+    fileIO.write("./stacks.json", stacks);
     return stacks;
 }

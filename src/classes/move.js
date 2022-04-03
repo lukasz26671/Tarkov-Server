@@ -221,66 +221,6 @@ function discardItem(pmcData, body, sessionID) {
   return removeItem(pmcData, body.item, sessionID);
 }
 
-
-/**
- * Split Item
- * spliting 1 item-stack into 2 separate items ...
- *
- * @param {Object} pmcData
- * @param {Object} body
- * @param {string} sessionID
- * @returns
- */
-/* function splitItem(pmcData, body, sessionID) {
-  const output = item_f.handler.getOutput(sessionID);
-  let location = body.container.location;
-
-  const items = getOwnerInventoryItems(body, sessionID);
-
-  if (
-    !("location" in body.container) &&
-    body.container.container === "cartridges"
-  ) {
-    let tmp_counter = 0;
-
-    for (const item_ammo in items.to) {
-      if (items.to[item_ammo].parentId === body.container.id) {
-        tmp_counter++;
-      }
-    }
-
-    location = tmp_counter; //wrong location for first cartrige
-  }
-
-  // The item being merged is possible from three different sources: pmc, scav, or mail.
-  for (const item of items.from) {
-    if (item._id && item._id === body.item) {
-      item.upd.StackObjectsCount -= body.count;
-
-      const newItemId = utility.generateNewItemId();
-
-      output.profileChanges[pmcData._id].items.new.push({
-        _id: newItemId,
-        _tpl: item._tpl,
-        upd: { StackObjectsCount: body.count },
-      });
-
-      items.to.push({
-        _id: newItemId,
-        _tpl: item._tpl,
-        parentId: body.container.id,
-        slotId: body.container.container,
-        location: location,
-        upd: { StackObjectsCount: body.count },
-      });
-
-      return output;
-    }
-  }
-
-  return "";
-} */
-
 /**
  * Merge Item
  * merges 2 items into one, deletes item from `body.item` and adding number of stacks into `body.with`
@@ -503,7 +443,6 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
       case (preset_f.handler.isPreset(baseItem.item_id)):
 
         const presetItems = helper_f.getPreset(baseItem.item_id)._items;
-        //utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
         itemLib.push(...presetItems); //push preset
         baseItem.item_id = presetItems[0]._id; //changeID to presetItems ID
 
@@ -559,15 +498,18 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
   for (let itemToAdd of itemsToAdd) {
     let newItem = utility.generateNewItemId();
     let toDo = [[itemToAdd._id, newItem]];
-    let upd = itemToAdd.upd; //{ StackObjectsCount: itemToAdd.count };
-    console.log(upd, "upd")
+    let upd = itemToAdd.upd;
+    console.log(toDo, "toDo")
+    console.log(itemToAdd._id, "itemToAdd._id")
 
     //if it is from ItemPreset, load preset's upd data too.
-    if (preset_f.handler.isPreset(itemToAdd)) {
+    if (helper_f.getPreset(itemToAdd._id)) {
+      console.log("preset check 1", preset_f.handler.isPreset(itemToAdd._id))
       for (let updID in itemToAdd.upd) {
         upd[updID] = itemToAdd.upd[updID];
       }
     }
+    console.log("did preset check get skipped? if false, yes.", preset_f.handler.isPreset(itemToAdd._id));
 
     // in case people want all items to be marked as found in raid
     if (_database.gameplayConfig.trading.buyItemsMarkedFound) {
@@ -582,6 +524,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) {
       output.profileChanges[pmcData._id].items.new = [];
     }
+    //console.log("output.profileChanges[pmcData._id]", output.profileChanges[pmcData._id])
 
     output.profileChanges[pmcData._id].items.new.push({
       _id: newItem,
@@ -608,6 +551,8 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
       },
       upd: upd,
     });
+    //fileIO.write(`./${pmcData._id}_items.json`, output.profileChanges[pmcData._id])
+
 
     this.fillAmmoBox(itemToAdd, pmcData, toDo, output);
 
@@ -619,8 +564,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
           let SlotID = itemLib[tmpKey].slotId;
 
           //if it is from ItemPreset, load preset's upd data too.
-          if (preset_f.handler.isPreset(itemToAdd)) {
-            console.log(itemToAdd, "itemToAdd while")
+          if (preset_f.handler.isPreset(itemToAdd._id)) {
             upd = itemToAdd.upd;
             for (let updID in itemLib[tmpKey].upd) {
               upd[updID] = itemLib[tmpKey].upd[updID];
