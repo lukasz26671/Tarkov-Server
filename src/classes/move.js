@@ -385,7 +385,7 @@ function fillAmmoBox(itemToAdd, pmcData, toDo, output) {
     output.profileChanges[pmcData._id].items.new = [];
   }
   [output.profileChanges[pmcData._id].items.new, pmcData.Inventory.items].forEach((x) => x.push.apply(x, ammos));
-return output;
+  return output;
 }
 
 function findEmptySlot(itemsToAdd, sessionID, pmcData) {
@@ -440,17 +440,11 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     switch (true) {
       //if item is in ItemPresets
       case (preset_f.handler.isPreset(baseItem.item_id)):
-        //console.log(baseItem.item_id, "baseItem.item_id")
 
         const presetItems = helper_f.getPreset(baseItem.item_id)._items;
-        //console.log(presetItems, "presetItems")
+        presetItems[0]._id = baseItem.item_id; //changeID to presetItems ID
 
         itemLib.push(...presetItems); //push preset
-
-        presetItems[0]._id = baseItem.item_id; //changeID to presetItems ID
-        //console.log(baseItem.item_id, "baseItem.item_id")
-        //console.log(presetItems[0]._id, "presetItems[0]._id")
-
         break;
 
 
@@ -478,13 +472,11 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         item.upd.StackObjectsCount = baseItem.count;
         //check item if it needs to be split
         itemsToAdd = utility.splitStack(item);
-        //console.log(itemsToAdd)
-
       }
     }
   }
 
-
+  console.log(itemsToAdd, "itemsToAdd")
   this.findEmptySlot(itemsToAdd, sessionID, pmcData);
   // We've succesfully found a slot for each item, let's execute the callback and see if it fails (ex. payMoney might fail)
 
