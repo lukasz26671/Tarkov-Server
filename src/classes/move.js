@@ -357,36 +357,35 @@ function fillAmmoBox(itemToAdd, pmcData, toDo, output) {
   // If this is an ammobox, add cartridges to it.
   // Damaged ammo box are not loaded.
   const itemInfo = helper_f.tryGetItem(itemToAdd._tpl);
-  console.log(itemInfo._name)
+  //console.log(itemInfo._name)
   let ammoBoxInfo = itemInfo._props.StackSlots;
-  if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
-    // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
-    let maxCount = ammoBoxInfo[0]._max_count;
-    let ammoTmplId = ammoBoxInfo[0]._props.filters[0].Filter[0];
-    let ammoStackMaxSize = helper_f.tryGetItem(ammoTmplId)._props.StackMaxSize;
-    let ammos = [];
-    let location = 0;
+  // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
+  let maxCount = ammoBoxInfo[0]._max_count;
+  let ammoTmplId = ammoBoxInfo[0]._props.filters[0].Filter[0];
+  let ammoStackMaxSize = helper_f.tryGetItem(ammoTmplId)._props.StackMaxSize;
+  let ammos = [];
+  let location = 0;
 
-    while (maxCount > 0) {
-      let ammoStackSize = maxCount <= ammoStackMaxSize ? maxCount : ammoStackMaxSize;
-      ammos.push({
-        _id: utility.generateNewItemId(),
-        _tpl: ammoTmplId,
-        parentId: toDo[0][1],
-        slotId: "cartridges",
-        location: location,
-        upd: { StackObjectsCount: ammoStackSize },
-      });
+  while (maxCount > 0) {
+    let ammoStackSize = maxCount <= ammoStackMaxSize ? maxCount : ammoStackMaxSize;
+    ammos.push({
+      _id: utility.generateNewItemId(),
+      _tpl: ammoTmplId,
+      parentId: toDo[0][1],
+      slotId: "cartridges",
+      location: location,
+      upd: { StackObjectsCount: ammoStackSize },
+    });
 
-      location++;
-      maxCount -= ammoStackMaxSize;
-    }
-
-    if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) {
-      output.profileChanges[pmcData._id].items.new = [];
-    }
-    [output.profileChanges[pmcData._id].items.new, pmcData.Inventory.items].forEach((x) => x.push.apply(x, ammos));
+    location++;
+    maxCount -= ammoStackMaxSize;
   }
+
+  if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) {
+    output.profileChanges[pmcData._id].items.new = [];
+  }
+  [output.profileChanges[pmcData._id].items.new, pmcData.Inventory.items].forEach((x) => x.push.apply(x, ammos));
+return output;
 }
 
 function findEmptySlot(itemsToAdd, sessionID, pmcData) {
@@ -441,10 +440,16 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     switch (true) {
       //if item is in ItemPresets
       case (preset_f.handler.isPreset(baseItem.item_id)):
+        //console.log(baseItem.item_id, "baseItem.item_id")
 
         const presetItems = helper_f.getPreset(baseItem.item_id)._items;
+        //console.log(presetItems, "presetItems")
+
         itemLib.push(...presetItems); //push preset
-        baseItem.item_id = presetItems[0]._id; //changeID to presetItems ID
+
+        presetItems[0]._id = baseItem.item_id; //changeID to presetItems ID
+        //console.log(baseItem.item_id, "baseItem.item_id")
+        //console.log(presetItems[0]._id, "presetItems[0]._id")
 
         break;
 
@@ -473,7 +478,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         item.upd.StackObjectsCount = baseItem.count;
         //check item if it needs to be split
         itemsToAdd = utility.splitStack(item);
-        console.log(itemsToAdd)
+        //console.log(itemsToAdd)
 
       }
     }
@@ -499,11 +504,11 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     let newItem = utility.generateNewItemId();
     let toDo = [[itemToAdd._id, newItem]];
     let upd = itemToAdd.upd;
-    console.log(toDo, "toDo")
-    console.log(itemToAdd._id, "itemToAdd._id")
+    //console.log(toDo, "toDo")
+    //console.log(itemToAdd._id, "itemToAdd._id")
 
     //if it is from ItemPreset, load preset's upd data too.
-    if (helper_f.getPreset(itemToAdd._id)) {
+    if (preset_f.handler.isPreset(itemToAdd._id)) {
       console.log("preset check 1", preset_f.handler.isPreset(itemToAdd._id))
       for (let updID in itemToAdd.upd) {
         upd[updID] = itemToAdd.upd[updID];
@@ -553,8 +558,11 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     });
     //fileIO.write(`./${pmcData._id}_items.json`, output.profileChanges[pmcData._id])
 
-
-    this.fillAmmoBox(itemToAdd, pmcData, toDo, output);
+    const itemInfo = helper_f.tryGetItem(itemToAdd._tpl);
+    let ammoBoxInfo = itemInfo._props.StackSlots;
+    if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
+      this.fillAmmoBox(itemToAdd, pmcData, toDo, output);
+    }
 
     while (toDo.length > 0) {
       for (let tmpKey in itemLib) {
