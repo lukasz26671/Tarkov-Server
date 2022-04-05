@@ -102,17 +102,6 @@ class ProfileServer {
   }
 
   /**
- * Check if the sessionID is loaded.
- * @param {string} sessionID 
- */
-  isLoaded(sessionID) {
-    if (this.profiles[sessionID]) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * Free the users profile from memory.
    * @param {*} sessionID 
    */
@@ -211,18 +200,30 @@ class ProfileServer {
 
     return this.profiles[sessionID][type];
   }
+  profileAlreadyCreated(ID) {
+    return fileIO.exist(`user/profiles/${ID}/character.json`);
+  }
+  getProfileById(ID, type) {
+    return fileIO.readParsed(`user/profiles/${ID}/character.json`);
+  }
+  getProfileExfilsById(ID) {
+    return fileIO.readParsed(`user/profiles/${ID}/exfiltrations.json`);
+  }
+  setProfileExfilsById(ID, data) {
+    return fileIO.write(`user/profiles/${ID}/exfiltrations.json`, data);
+  }
 
-  profileAlreadyCreated = (ID) => fileIO.exist(`user/profiles/${ID}/character.json`);
-  getProfileById = (ID) => fileIO.readParsed(`user/profiles/${ID}/character.json`);
-  getProfileExfilsById = (ID) => fileIO.readParsed(`user/profiles/${ID}/exfiltrations.json`);
-  setProfileExfilsById = (ID, data) => fileIO.write(`user/profiles/${ID}/exfiltrations.json`, data);
+  getPmcProfile(sessionID) {
+    return this.getProfile(sessionID, "pmc");
+  }
 
-  getPmcProfile = (sessionID) => this.getProfile(sessionID, "pmc");
+  getScavProfile(sessionID) {
+    return this.getProfile(sessionID, "scav");
+  }
 
-  getScavProfile = (sessionID) => this.getProfile(sessionID, "scav");
-
-  setScavProfile = (sessionID, scavData) => { this.profiles[sessionID]["scav"] = scavData; }
-
+  setScavProfile(sessionID, scavData) {
+    this.profiles[sessionID]["scav"] = scavData;
+  }
 
   getCompleteProfile(sessionID) {
     let output = [];
@@ -235,16 +236,16 @@ class ProfileServer {
     return output;
   }
 
-  /** Create the characters profile
-   * 
-   * @param {*} info 
-   * @param {*} sessionID 
-   */
+ /** Create character profile
+  * 
+  * @param {*} info 
+  * @param {*} sessionID 
+  */
   createProfile(info, sessionID) {
-    // Load account data
+    // Load account data //
     const account = account_f.handler.find(sessionID);
 
-    // Get profile location
+    // Get profile location //
     const folder = account_f.getPath(account.id);
 
     // Get the faction the player has chosen //
@@ -265,7 +266,7 @@ class ProfileServer {
       events.scheduledEventHandler.wipeScheduleForSession(sessionID);
     }
 
-    // Set defaults for new profile generation
+    // Set defaults for new profile generation //
     pmcData._id = "pmc" + account.id;
     pmcData.aid = account.id;
     pmcData.savage = "scav" + account.id;
@@ -275,21 +276,21 @@ class ProfileServer {
     pmcData.Info.Voice = customization_f.getCustomization()[info.voiceId]._name;
     pmcData.Customization = fileIO.readParsed(db.profile.defaultCustomization)[ChosenSideCapital]
     pmcData.Customization.Head = info.headId;
-    pmcData.Info.RegistrationDate = ~~(new Date() / 1000);
-    pmcData.Health.UpdateTime = ~~(Date.now() / 1000);
+    pmcData.Info.RegistrationDate = ~~ (new Date() / 1000);
+    pmcData.Health.UpdateTime = ~~ (Date.now() / 1000);
 
-    // Load default clothing into the profile
+    // Load default clothing into the profile //
     let def = fileIO.readParsed(db.profile[account.edition].storage);
     storage = { err: 0, errmsg: null, data: { _id: pmcData._id, suites: def[ChosenSide] } };
 
-    // Write the profile to disk
+    // Write the profile to disk //
     fileIO.write(`${folder}character.json`, pmcData);
     fileIO.write(`${folder}storage.json`, storage);
     fileIO.write(`${folder}userbuilds.json`, {});
     fileIO.write(`${folder}dialogue.json`, {});
     fileIO.write(`${folder}exfiltrations.json`, { bigmap: 0, develop: 0, factory4_day: 0, factory4_night: 0, interchange: 0, laboratory: 0, lighthouse: 0, rezervbase: 0, shoreline: 0, suburbs: 0, tarkovstreets: 0, terminal: 0, town: 0, woods: 0, privatearea: 0 });
 
-    // don't wipe profile again
+    // don't wipe profile again //
     account_f.handler.setWipe(account.id, false);
     this.initializeProfile(sessionID);
   }
@@ -350,7 +351,6 @@ class ProfileServer {
   }
 }
 
-/* const getPmcPath = (sessionID) => `user/profiles/${sessionID}/character.json`; */
 function getPmcPath(sessionID) {
   let pmcPath = db.user.profiles.character;
   return pmcPath.replace("__REPLACEME__", sessionID);
@@ -369,11 +369,6 @@ function getStashType(sessionID) {
   return "";
 }
 
-/** Calculate level of a player
- * 
- * @param {*} pmcData 
- * @returns 
- */
 function calculateLevel(pmcData) {
   let exp = 0;
 
@@ -434,34 +429,7 @@ function getLoyalty(pmcData, traderID) {
   return calculatedLoyalty;
 }
 
-/** Calculate player's current trader loyalty level (created by PauloV)
- * 
- * @param {*} pmcData 
- * @param {*} traderData 
- * @returns 
- */
-
-function calculateLoyalty(pmcData, traderData) {
-  let level = -1;
-  const PMC_LEVEL = profile_f.calculateLevel(pmcData);
-  for (let data in traderData.loyaltyLevels) {
-    if (!pmcData.TradersInfo[traderData._id].unlocked)
-      return 0; // trader is not unlocked what are you doing here ??
-    if (PMC_LEVEL >= traderData.loyaltyLevels[data].minLevel) {
-      if (pmcData.TradersInfo[traderData._id].salesSum >= traderData.loyaltyLevels[data].minSalesSum) {
-        if (pmcData.TradersInfo[traderData._id].standing >= traderData.loyaltyLevels[data].minStanding) {
-          level++;
-        }
-      }
-    }
-  }
-  if (level == -1) return 0;
-
-  return level;
-}
-
 module.exports.handler = new ProfileServer();
 module.exports.getStashType = getStashType;
 module.exports.calculateLevel = calculateLevel;
-module.exports.calculateLoyalty = calculateLoyalty;
 module.exports.getLoyalty = getLoyalty;

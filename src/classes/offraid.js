@@ -195,6 +195,7 @@ function deleteInventory(pmcData, sessionID) {
 function MapNameConversion(sessionID) {
 	// change names to thenames of location file names that are loaded like that into the memory
 	let playerRaidData = offraid_f.handler.getPlayer(sessionID);
+	console.log(playerRaidData.Location, "playerRaidData.Location")
 	switch (playerRaidData.Location) {
 		case "Arena":
 			return "develop";

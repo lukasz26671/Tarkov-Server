@@ -69,7 +69,7 @@ class Controller {
   generateBotName(role) {
     const name_database = global._database.bots.names;
     let name;
-    switch (true) {
+    switch (role) {
       case (role == "usec"
         || role == "exusec"
         || role == "pmcbot"
@@ -115,11 +115,11 @@ class Controller {
 
       default:
         if (role != name_database) {
-          logger.logError(`Bot name not found for role ${role}`);
+          logger.logError(`Bot ${role} name not found in name list, could be a typo`);
         }
         name = utility.getArrayValue(name_database[role]);
         break;
-    
+    }
     return name;
   }
 
