@@ -52,8 +52,8 @@ class Controller {
     return scavData[0];
   }
   getBotLimit(type) {
-    if (typeof global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type] == "undefined") return 30;
-    return global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type];
+    if (typeof global._database.gameplayConfig.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type] == "undefined") return 30;
+    return global._database.gameplayConfig.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type];
   }
   getBotDifficulty(type, difficulty) {
     switch (type) {
@@ -67,51 +67,59 @@ class Controller {
   }
 
   generateBotName(role) {
-
     const name_database = global._database.bots.names;
     let name;
-    switch (role) {
-      case "usec":
-      case "exusec":
-      case "pmcbot":
-      case "bear":
+    switch (true) {
+      case (role == "usec"
+        || role == "exusec"
+        || role == "pmcbot"
+        || role == "bear"):
+        //console.log(role, "role")
         name = utility.getArrayValue(name_database.normal);
+        //console.log(name, "name")
         break;
 
-      case "followertagilla":
-      case "bosstagilla":
+      case (role == "followertagilla"
+        || role == "bosstagilla"):
+        //console.log(role, "role")
         name = utility.getArrayValue(name_database.tagilla);
+        //console.log(name, "name")
+
         break;
 
-      case "followerkojany":
-      case "followertest":
+      case (role == "followerkojany"
+        || role == "followertest"):
+        //console.log(role, "role")
         name = utility.getArrayValue(name_database.followerkojany);
+        //console.log(name, "name")
         break;
 
-      case "followergluharsecurity":
-      case "followergluharsnipe":
-      case "followergluharscout":
-      case "followergluharassault":
+      case (role == "followergluharsecurity"
+        || role == "followergluharsnipe"
+        || role == "followergluharscout"
+        || role == "followergluharassault"):
+        //console.log(role, "role")
         name = utility.getArrayValue(name_database.followergluhar);
+        //console.log(name, "name")
         break;
 
-      case "marksman":
-      case "playerscav":
-      case "cursedassault":
-      case "assaultgroup":
-      case "assault":
+      case (role == "marksman"
+        || role == "playerscav"
+        || role == "cursedassault"
+        || role == "assaultgroup"
+        || role == "assault"):
+        //console.log(role, "role")
         name = utility.getArrayValue(name_database.scav);
+        //console.log(name, "name")
         break;
 
       default:
-        console.log(role, "role");
-          name = utility.getArrayValue(name_database[role]);
-          if(!name) {
-            logger.logError(`Bot ${role} name not found in name list, could be a typo, send help pls.`);
-            name = utility.getArrayValue(name_database.scav);
-          }
+        if (role != name_database) {
+          logger.logError(`Bot name not found for role ${role}`);
+        }
+        name = utility.getArrayValue(name_database[role]);
         break;
-    }
+    
     return name;
   }
 

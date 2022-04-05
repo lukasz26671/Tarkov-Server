@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 function handleBitcoinReproduction(pmcData, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
   keepalive_f.main(sessionID); // Force keepalive call to prevent client/server desync.
@@ -26,8 +28,12 @@ function handleBitcoinReproduction(pmcData, sessionID) {
 
 function registerProduction(pmcData, body, sessionID) {
   const databaseHideoutProduction = _database.hideout.production.find((production) => production._id === body.recipeId);
-  let prodTime = (databaseHideoutProduction.ProductionTime) ? databaseHideoutProduction.ProductionTime : databaseHideoutProduction.productionTime;
-
+  let prodTime = undefined;
+  if (databaseHideoutProduction.ProductionTime) {
+    prodTime = databaseHideoutProduction.ProductionTime;
+  } else {
+    prodTime = databaseHideoutProduction.productionTime;
+  }
   try {
     pmcData.Hideout.Production[databaseHideoutProduction._id] = {
       Progress: 0,
@@ -35,7 +41,7 @@ function registerProduction(pmcData, body, sessionID) {
       RecipeId: body.recipeId,
       Products: [],
       SkipTime: 0,
-      ProductionTime: parseInt(databaseHideoutProduction.productionTime),
+      ProductionTime: parseInt(prodTime),
       StartTimestamp: utility.getTimestamp(),
     };
   } catch (e) {
@@ -69,11 +75,8 @@ function applyPlayerUpgradesBonuses(pmcData, bonus) {
 function getPlayerHideoutSkill(pmcData) {
   for (let skill of pmcData.Skills.Common) {
     if (skill.Id == "HideoutManagement") {
-      // always return full level
-/*       let calculatedLevel = skill.Progress % 100; 
-      return calculatedLevel; */
-      return skill.Progress % 100;
-
+      let calculatedLevel = skill.Progress % 100; // always return full level
+      return calculatedLevel;
     }
   }
   return 0;
@@ -84,14 +87,14 @@ function isHideoutManagementElite(pmcData) {
 }
 
 module.exports.getHideoutSkillDecreasedConsumption = (pmcData) => {
-  //const hideoutManagementLevel = getPlayerHideoutSkill(pmcData);
   const hideoutManagementLevel = getPlayerHideoutSkill(pmcData);
-  return 1 - utility.clamp(0.5 * hideoutManagementLevel, 0, 25) / 100;
+/*   let decreasingBonus = 0.5 * hideoutManagementLevel;
+  if (decreasingBonus >= 25) {
+    decreasingBonus = 25; // for elite
+  } */
 
   return 1 - utility.clamp(0.5 * hideoutManagementLevel, 0 ,25) / 100;
 };
-
-//Need to be reviewed if it actually works as intended it should check if bonuses was properly applied and if not apply them again
 module.exports.checkPlayerHideoutBuffsFromSkills = (sessionID) => {
   // requires data t obe finished now is not called anywhere
   let pmcData = profile_f.getPmcProfile(sessionID);
@@ -179,9 +182,10 @@ module.exports.upgrade = (pmcData, body, sessionID) => {
   let ctime = databaseHideoutArea.stages[constructionLevel].constructionTime;
 
   if (ctime > 0) {
-    const timestamp = Math.floor(Date.now() / 1000);
+    //Math.floor
+    const timestamp = ~~ (Date.now() / 1000);
 
-    foundHideoutArea.completeTime = timestamp + ctime;
+    foundHideoutArea.completeTime = ~~ (timestamp + ctime);
     foundHideoutArea.constructing = true;
   }
 
@@ -192,7 +196,7 @@ module.exports.upgrade = (pmcData, body, sessionID) => {
       return;
     }
     // check if item has StackObjectsCount property
-    if (itemFromInventory.upd.hasOwnProperty("StackObjectsCount")) {
+    if (itemFromInventory.hasOwnProperty("upd") && itemFromInventory.upd.hasOwnProperty("StackObjectsCount")) {
       // now check if we should substract the amount or just delete the item...
       if (itemFromInventory.upd.StackObjectsCount > itemToPay.count) {
         itemFromInventory.upd.StackObjectsCount -= itemToPay.count;
@@ -245,8 +249,8 @@ module.exports.putItemsInAreaSlots = (pmcData, body, sessionID) => {
           continue;
         }
 
-        const slot_position = parseInt(itemToMove);
-        const slot_to_add = {
+        let slot_position = parseInt(itemToMove);
+        let slot_to_add = {
           item: [
             {
               _id: inventoryItem._id,
@@ -368,6 +372,8 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
     (scavcase) => scavcase._id == body.recipeId,
   );
 
+  //logger.logError(JSON.stringify(databaseHideoutScavcase, null, 2));
+
   if (!databaseHideoutScavcase) {
     logger.logWarning(
       `Unable to find hideout scavcase ${body.recipeId} in database`,
@@ -434,22 +440,28 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
         i--;
         continue;
       }
+
       products.push({
         _id: utility.generateNewItemId(),
         _tpl: rolledItem._id,
       });
+
     }
   }
-  pmcData.Hideout.Production["141"] = {
-    Products: products,
-  };
+  let prodTime = undefined;
+  if (databaseHideoutScavcase.ProductionTime) {
+    prodTime = databaseHideoutScavcase.ProductionTime;
+  } else {
+    prodTime = databaseHideoutScavcase.productionTime;
+  }
+
   pmcData.Hideout.Production[body.recipeId] = {
     Progress: 0,
     inProgress: true,
     RecipeId: body.recipeId,
-    Products: [],
+    Products: products,
     SkipTime: 0,
-    ProductionTime: parseInt(databaseHideoutScavcase.productionTime),
+    ProductionTime: parseInt(prodTime),
     StartTimestamp: utility.getTimestamp(),
   };
 
@@ -503,19 +515,21 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
     }
 
     for (let prod in pmcData.Hideout.Production) {
-      if (pmcData.Hideout.Production[prod].RecipeId !== body.recipeId) {
+      if (body.recipeId !== pmcData.Hideout.Production[prod].RecipeId) {
         continue;
       }
+      //pmcData.Hideout.Production[prod].Products = pmcData.Hideout.Production["141"].Products;
       // give items BEFORE deleting the production
       for (let itemProd of pmcData.Hideout.Production[prod].Products) {
         pmcData = profile_f.handler.getPmcProfile(sessionID);
         let id = itemProd._tpl;
         //if item is a weapon preset, get a random one
         if (preset_f.handler.hasPreset(id)) {
+          //id = preset_f.handler.getStandardPreset(id)._id;
           id = preset_f.handler.getRandomPresetIdFromWeaponId(itemProd._tpl);
         }
         let newReq = {
-          item_id: itemProd._tpl,
+          item_id: id,
           count: 1,
           tid: "ragfair",
         };
@@ -524,20 +538,22 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
           if (
             cacheditems[itemProd._tpl]._parent === "5485a8684bdc2da71d8b4567"
           ) {
+            console.log("Ammo Found");
             if (cacheditems[itemProd._tpl]._props.StackMaxSize !== 1) {
-              const min = cacheditems[itemProd._tpl]._props.StackMinRandom;
-              const max = cacheditems[itemProd._tpl]._props.StackMaxRandom * 2;
+              console.log("Checking Stack Size");
+              let min = cacheditems[itemProd._tpl]._props.StackMinRandom;
+              let max = cacheditems[itemProd._tpl]._props.StackMaxRandom * 2;
 
               newReq.count = utility.getRandomInt(min, max);
+              console.log(min, max);
             }
           }
         }
+
         output = move_f.addItem(pmcData, newReq, sessionID, true);
       }
 
       delete pmcData.Hideout.Production[prod];
-      delete pmcData.Hideout.Production["141"];
-
       return output;
     }
   }

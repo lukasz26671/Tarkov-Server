@@ -453,9 +453,6 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         break;
     }
 
-
-
-
 /*     if (baseItem.item_id in global._database.globals.ItemPresets) {
       const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
       itemLib.push(...presetItems);
