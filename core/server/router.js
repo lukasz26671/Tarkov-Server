@@ -6,7 +6,6 @@ class Router {
   }
 
   getResponse(req, body, sessionID) {
-    console.log(body, sessionID);
     let output = "";
     let url = req.url;
     let info = {};

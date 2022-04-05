@@ -134,6 +134,7 @@ exports.clearString = (s) => {
         .replace(/[\t]/g, '')
         .replace(/[\\]/g, '');
 }
+
 // getRandomInt
 exports.getRandomInt = (min = 0, max = 100) => {
     min = ~~(min);
@@ -142,12 +143,11 @@ exports.getRandomInt = (min = 0, max = 100) => {
 }
 
 /**
-     * Used to get percentage between two numbers
-     *
-     * @param {number}      num1         first number input
-     * @param {number}      num2         second number input
-
-     */
+ * Used to get percentage between two numbers
+ *
+ * @param {number} num1 first number input
+ * @param {number} num2 second number input
+*/
 exports.getPercentDiff = (num1, num2) => {
     let raw = (num1 / num2) * 100;
     let diff = raw;
@@ -155,12 +155,11 @@ exports.getPercentDiff = (num1, num2) => {
 }
 
 /**
-     * Used to get percentage difference between two numbers
-     *
-     * @param {number}      num1         first number input (percentage)
-     * @param {number}      num2         second number input (value to get percentage of)
-
-     */
+ * Used to get percentage difference between two numbers
+ *
+ * @param {number} num1 first number input (percentage)
+ * @param {number} num2 second number input (value to get percentage of)
+ */
 exports.getPercentOf = (num1, num2) => {
     let percentAsDecimal = num1 / 100
     let percent = percentAsDecimal * num2;
@@ -367,7 +366,7 @@ exports.generateInventoryID = (profile) => {
 }
 
 exports.splitStack = (item) => {
-    console.log(item, "splitStack")
+    //console.log(item, "splitStack")
 
     if (!("upd" in item) || !("StackObjectsCount" in item.upd)) {
         return [item];
@@ -393,6 +392,8 @@ exports.splitStack = (item) => {
         count -= amount;
         stacks.push(newStack);
     }
-    fileIO.write("./stacks.json", stacks);
+    //fileIO.write("./stacks.json", stacks);
     return stacks;
 }
+
+exports.clamp = (value, min, max) => Math.min(Math.max(value, min), max);
