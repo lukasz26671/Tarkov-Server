@@ -442,10 +442,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
       case (preset_f.handler.isPreset(baseItem.item_id)):
 
         const presetItems = helper_f.getPreset(baseItem.item_id)._items;
-        //utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
-        itemLib.push(...presetItems); //push preset
-        baseItem.item_id = presetItems[0]._id; //changeID to presetItems ID
-        console.log(baseItem.item_id, "baseItem.item_id", presetItems[0]._id, "presetItems._id")
+        presetItems[0]._id = baseItem.item_id; //changeID to presetItems ID
 
         itemLib.push(...presetItems); //push preset
         break;
@@ -459,7 +456,6 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         break;
 
       default:
-        console.log("default")
         // Only grab the relevant trader items and add unique values
         let isBuyingFromFence = false;
         if (body.tid === "579dc571d53a0658a154fbec") isBuyingFromFence = true;
@@ -475,9 +471,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         //give item the amount purchased to be split
         item.upd.StackObjectsCount = baseItem.count;
         //check item if it needs to be split
-        itemsToAdd = global.utility.splitStack(item);
-        console.log(itemsToAdd)
-
+        itemsToAdd = utility.splitStack(item);
       }
     }
   }
@@ -578,7 +572,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
           }
 
           if (SlotID === "hideout") {
-            if (typeof output.profileChanges[pmcData._id].items.new == "undefined") output.profileChanges[pmcData._id].items.new = [];
+            if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) output.profileChanges[pmcData._id].items.new = [];
             output.profileChanges[pmcData._id].items.new.push({
               _id: newItem,
               _tpl: itemLib[tmpKey]._tpl,
@@ -605,7 +599,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
               upd: upd,
             });
           } else {
-            if (typeof output.profileChanges[pmcData._id].items.new == "undefined") output.profileChanges[pmcData._id].items.new = [];
+            if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) output.profileChanges[pmcData._id].items.new = [];
             output.profileChanges[pmcData._id].items.new.push({
               _id: newItem,
               _tpl: itemLib[tmpKey]._tpl,
