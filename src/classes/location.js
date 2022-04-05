@@ -108,7 +108,7 @@ const ItemParentsList = [
 
 function GenerateDynamicLootSpawnTable(lootData, mapName) {
   let containsSpawns = [];
-  if (global._database.gameplayConfig.useDynamicLootFromItemsArray) {
+  if (global._database.gameplay.useDynamicLootFromItemsArray) {
     for (const spawnTemplate in lootData.Items) {
       const filteredData = Object.values(global._database.items).filter(
         (itemTemplate) => itemTemplate._parent == spawnTemplate,
@@ -203,13 +203,13 @@ function _RollMaxItemsToSpawn(container) {
 
   if (
     utility.getRandomInt(0, 100) >
-    _database.gameplayConfig.locationloot.containers.ChanceForEmpty
+    global._database.gameplay.locationloot.containers.ChanceForEmpty
   ) {
     minCount++;
     for (let i = 1; i < maxItemsPossibleToSpawn; i++) {
       if (
         utility.getRandomInt(0, 100) <
-        _database.gameplayConfig.locationloot.containers.ChanceToSpawnNextItem
+        global._database.gameplay.locationloot.containers.ChanceToSpawnNextItem
       ) {
         minCount++;
       }
@@ -347,10 +347,10 @@ function _GenerateContainerLoot(_items) {
       }
       let result = { success: false };
       let maxAttempts =
-        global._database.gameplayConfig.locationloot.containers
+        global._database.gameplay.locationloot.containers
           .AttemptsToPlaceLoot > 10
           ? 1
-          : global._database.gameplayConfig.locationloot.containers
+          : global._database.gameplay.locationloot.containers
             .AttemptsToPlaceLoot;
 
       // attempt to add item x times
@@ -956,7 +956,7 @@ class LocationServer {
     }
     let _location = global._database.locations[name];
 
-    if (global._database.gameplayConfig.locationloot.useDynamicLootMultiplier) {
+    if (global._database.gameplay.locationloot.useDynamicLootMultiplier) {
       if (sessionID != "" && typeof sessionID != "undefined") {
         let exfilData = profile_f.handler.getProfileExfilsById(sessionID);
 

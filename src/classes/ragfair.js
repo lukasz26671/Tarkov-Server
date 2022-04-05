@@ -1,18 +1,28 @@
 "use strict";
 
-function sortOffersByID(a, b) {
+const sortOffersByID = (a, b) => a.intId - b.intId;
+
+const sortOffersByRating = (a, b) => a.user.rating - b.user.rating;
+
+const sortOffersByPrice = (a, b) => a.requirements[0].count - b.requirements[0].count;
+
+const sortOffersByPriceSummaryCost = (a, b) => a.summaryCost - b.summaryCost;
+
+const sortOffersByExpiry = (a, b) => a.endTime - b.endTime;
+/* function sortOffersByID(a, b) {
   return a.intId - b.intId;
 }
 
 function sortOffersByRating(a, b) {
   return a.user.rating - b.user.rating;
-}
+} */
 
 function sortOffersByName(a, b) {
   // @TODO: Get localized item names
+  // Mao: global._database.locals["en"].global.templates[TemplateID]
   try {
-    let aa = helper_f.tryGetItem(a._id)[1]._name;
-    let bb = helper_f.tryGetItem(b._id)[1]._name;
+    let aa = helper_f.tryGetItem(a._id)._name;
+    let bb = helper_f.tryGetItem(b._id)._name;
 
     aa = aa.substring(aa.indexOf("_") + 1);
     bb = bb.substring(bb.indexOf("_") + 1);
@@ -23,17 +33,17 @@ function sortOffersByName(a, b) {
   }
 }
 
-function sortOffersByPrice(a, b) {
+/* function sortOffersByPrice(a, b) {
   return a.requirements[0].count - b.requirements[0].count;
 }
 
 /* function sortOffersByPriceSummaryCost(a, b) {
   return a.summaryCost - b.summaryCost;
-} */
+} 
 
 function sortOffersByExpiry(a, b) {
   return a.endTime - b.endTime;
-}
+}*/
 
 function sortOffers(request, offers) {
   // Sort results
@@ -51,11 +61,11 @@ function sortOffers(request, offers) {
       break;
 
     case 5: // Price
-      /*       if (request.offerOwnerType == 1) {
-              offers.sort(sortOffersByPriceSummaryCost);
-            } else {
-              offers.sort(sortOffersByPrice);
-            } */
+/*       if (request.offerOwnerType == 1) {
+        offers.sort(sortOffersByPriceSummaryCost);
+      } else {
+        offers.sort(sortOffersByPrice);
+      } */
 
       offers.sort(sortOffersByPrice);
       break;
@@ -128,17 +138,21 @@ function countCategories(response) {
   response.categories = categ;
 }
 
+/**
+ * 
+ * @param {string} sessionID 
+ * @param {*} request 
+ * @returns 
+ */
 function getOffers(sessionID, request) {
-
+  //if its traders items, just a placeholder it will be handled differently later
+  if (request.offerOwnerType === 1) {
+    return getOffersFromTraders(sessionID, request);
+  }
 
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
   let itemsToAdd = [];
   let offers = [];
-
-  let offersFromTraders = getOffersFromTraders(sessionID, request);
-  if (request.offerOwnerType === 1) {
-    return offersFromTraders;
-  }
 
   if (!request.linkedSearchId && !request.neededSearchId) {
     response.categories = trader_f.handler.getAssort(sessionID, "ragfair").loyal_level_items;
@@ -168,6 +182,7 @@ function getOffers(sessionID, request) {
   }
 
   for (let item of itemsToAdd) {
+    // Mao: shouldnt it be offers.push() ??
     offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
   }
 
@@ -186,7 +201,8 @@ function getOffers(sessionID, request) {
 function getOffersFromTraders(sessionID, request) {
   //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
   let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
-   let offersFilters = []; //this is an array of item tpl who filter only items to show
+<<<<<<< Updated upstream
+  let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
   for (let offerC of jsonToReturn.offers) {
@@ -206,47 +222,75 @@ function getOffersFromTraders(sessionID, request) {
     } else if (request.neededSearchId) {
       offersFilters = [...offersFilters, ...getNeededSearchList(request.neededSearchId)];
       jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+=======
+  /*   let offersFilters = []; //this is an array of item tpl who filter only items to show
+  
+    jsonToReturn.categories = {};
+    for (let offerC of jsonToReturn.offers) {
+      jsonToReturn.categories[offerC.items[0]._tpl] = 1;
+>>>>>>> Stashed changes
     }
-
-    if (request.removeBartering == true) {
-      jsonToReturn = removeBarterOffers(jsonToReturn);
+  
+    if (request.buildCount) {
+      // Case: weapon builds
+      offersFilters = Object.keys(request.buildItems);
       jsonToReturn = fillCategories(jsonToReturn, offersFilters);
-    }
-
-    // Case: category
-    if (request.handbookId) {
-      let handbookList = getCategoryList(request.handbookId);
-
-      if (offersFilters.length) {
-        offersFilters = helper_f.arrayIntersect(offersFilters, handbookList);
-      } else {
-        offersFilters = handbookList;
+    } else {
+      // Case: search
+      if (request.linkedSearchId) {
+        //offersFilters.concat( getLinkedSearchList(request.linkedSearchId) );
+        offersFilters = [...offersFilters, ...getLinkedSearchList(request.linkedSearchId)];
+        jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+      } else if (request.neededSearchId) {
+        offersFilters = [...offersFilters, ...getNeededSearchList(request.neededSearchId)];
+        jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+      }
+  
+      if (request.removeBartering == true) {
+        jsonToReturn = removeBarterOffers(jsonToReturn);
+        jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+      }
+  
+      // Case: category
+      if (request.handbookId) {
+        let handbookList = getCategoryList(request.handbookId);
+  
+        if (offersFilters.length) {
+          offersFilters = helper_f.arrayIntersect(offersFilters, handbookList);
+        } else {
+          offersFilters = handbookList;
+        }
       }
     }
-  }
-
-  let offersToKeep = [];
-  for (let offer in jsonToReturn.offers) {
-    for (let tplTokeep of offersFilters) {
-      if (jsonToReturn.offers[offer].items[0]._tpl == tplTokeep) {
-        jsonToReturn.offers[offer].summaryCost = calculateCost(jsonToReturn.offers[offer].requirements);
-        // check if offer is really available, removes any quest locked items not in current assort of a trader
-        let tmpOffer = jsonToReturn.offers[offer];
-        let traderId = tmpOffer.user.id;
-        let traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
-        let keepItem = false; // for testing
-        for (let item of traderAssort) {
-          if (item._id === tmpOffer.root) {
-            offersToKeep.push(jsonToReturn.offers[offer]);
-            keepItem = true;
-            break;
+  
+    let offersToKeep = [];
+    for (let offer in jsonToReturn.offers) {
+      for (let tplTokeep of offersFilters) {
+        if (jsonToReturn.offers[offer].items[0]._tpl == tplTokeep) {
+          jsonToReturn.offers[offer].summaryCost = calculateCost(jsonToReturn.offers[offer].requirements);
+          // check if offer is really available, removes any quest locked items not in current assort of a trader
+          let tmpOffer = jsonToReturn.offers[offer];
+          let traderId = tmpOffer.user.id;
+          let traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
+          let keepItem = false; // for testing
+          for (let item of traderAssort) {
+            if (item._id === tmpOffer.root) {
+              offersToKeep.push(jsonToReturn.offers[offer]);
+              keepItem = true;
+              break;
+            }
           }
         }
       }
     }
+<<<<<<< Updated upstream
   }
   jsonToReturn.offers = offersToKeep;
-  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers); 
+  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers);
+=======
+    jsonToReturn.offers = offersToKeep;
+    jsonToReturn.offers = sortOffers(request, jsonToReturn.offers); */
+>>>>>>> Stashed changes
 
   return jsonToReturn;
 }
@@ -278,8 +322,8 @@ function calculateCost(barter_scheme) {
   for (let barter of barter_scheme) {
     summaryCost += helper_f.getTemplatePrice(barter._tpl) * barter.count;
   }
-  //Math.round
-  return ~~(summaryCost);
+
+  return Math.round(summaryCost);
 }
 
 function getLinkedSearchList(linkedSearchId) {
@@ -330,7 +374,6 @@ function getCategoryList(handbookId) {
 }
 
 function createOffer(template, onlyFunc, usePresets = true) {
-  //console.log("createOffer is called")
   // Some slot filters reference bad items
   if (!(template in global._database.items)) {
     logger.logWarning(`Item ${template} does not exist`);
@@ -343,8 +386,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
     return [];
   }
 
-  const offerBase = _database.core.fleaOffer;
-  //let offerBase = fileIO.readParsed(db.user.cache.ragfair_offers);
+  const offerBase = global._database.core.fleaOffer;
   let offers = [];
 
   // Preset
@@ -366,19 +408,27 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
-      // ~~ = Math.round
-      offer.requirements[0].count = ~~(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
+<<<<<<< Updated upstream
+      offer.requirements[0].count = Math.round(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
+=======
+      //Math.round
+      offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
+>>>>>>> Stashed changes
       offers.push(offer);
-      //console.log("offer:", offer)
     }
   }
 
   // Single item
   if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
+    
     let offer = utility.DeepCopy(offerBase);
 
-    //~~ = Math.round
-    let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
+<<<<<<< Updated upstream
+    let rubPrice = Math.round(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
+=======
+    //Math.round
+    let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplay.trading.ragfairMultiplier);
+>>>>>>> Stashed changes
     offer._id = template;
     offer.items[0]._tpl = template;
     offer.requirements[0].count = rubPrice;

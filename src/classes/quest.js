@@ -1,7 +1,5 @@
 "use strict";
 
-const { logger } = require("../../core/util/logger");
-
 /*
  * Quest status values
  * 0 - Locked
@@ -14,9 +12,7 @@ const { logger } = require("../../core/util/logger");
  * 7 - MarkedAsFailed
  */
 
-function getQuestsCache() {
-  return fileIO.stringify(global._database.quests, true);
-}
+const getQuestsCache = () => fileIO.stringify(global._database.quests, true);
 
 //Fix for new quests where previous quest already required to found in raid items as same ID
 function getQuestsForPlayer(url, info, sessionID) {
@@ -33,14 +29,14 @@ function getQuestsForPlayer(url, info, sessionID) {
     }
 
     //check if quest has a side field
-    if (quests[quest].Side) {
+    if(quests[quest].Side){
       //if profile side is not the same side as the quest requires, delete from array
-      if (quests[quest].Side != side) {
+      if(quests[quest].Side != side){
         //logger.logError("ID: "+quests[quest]._id);
         quests.splice(count, 1);
       }
     }
-    count++;
+   count++;
   }
   //console.log(quests);
   return quests;
@@ -134,12 +130,9 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
       case "Location":
         /* not used in game (can lock or unlock location suposedly...) */ break;
       case "Skill":
-        //this is actually shorter, faster and easier than filtering. Plus it works (CQ)
-        for (let skill in pmcData.Skills.Common) {
-          if (pmcData.Skills.Common[skill].Id == reward.target) {
-            pmcData.Skills.Common[skill].Progress += parseInt(reward.value);
-            break;
-          }
+        let skills = pmcData.Skills.Common.filter((skill) => skill.Id == reward.target);
+        for (const Id in skills) {
+          pmcData.Skills.Common[Id].Progress += parseInt(reward.value);
         }
         /*	if we gonna use masterings increaser then yea ;)
         let masterings = pmcData.Skills.Mastering.filter(skill => skill.Id == reward.target);
@@ -167,7 +160,6 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
     if (typeof questItem.upd == "undefined") questItem.upd = {};
     questItem.upd["SpawnedInSession"] = true;
   }
-  //logger.logError("rew: "+JSON.stringify(questRewards, null, 2));
   return questRewards;
 }
 
@@ -203,14 +195,14 @@ function acceptQuest(pmcData, body, sessionID) {
   let messageContent = {
     templateId: locale_f.handler.getGlobal().mail[questLocale.startedMessageText],
     type: dialogue_f.getMessageTypeValue("questStart"),
-    maxStorageTime: global._database.gameplayConfig.other.RedeemTime * 3600,
+    maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
   };
 
   if (typeof messageContent.templateId == "undefined" || questLocale.startedMessageText === "") {
     messageContent = {
       templateId: questLocale.description,
       type: dialogue_f.getMessageTypeValue("questStart"),
-      maxStorageTime: global._database.gameplayConfig.other.RedeemTime * 3600,
+      maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
     };
   }
 
@@ -271,7 +263,7 @@ function completeQuest(pmcData, body, sessionID) {
   let messageContent = {
     templateId: questLocale.successMessageText,
     type: dialogue_f.getMessageTypeValue("questSuccess"),
-    maxStorageTime: global._database.gameplayConfig.other.RedeemTime * 3600,
+    maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
   };
   let output = item_f.handler.getOutput(sessionID);
   if (typeof output.profileChanges[pmcData._id].quests == "undefined") output.profileChanges[pmcData._id].quests = [];
@@ -362,7 +354,12 @@ function applyMoneyBoost(quest, moneyBoost) {
   for (let reward of quest.rewards.Success) {
     if (reward.type === "Item") {
       if (helper_f.isMoneyTpl(reward.items[0]._tpl)) {
-        reward.items[0].upd.StackObjectsCount += ~~ ((reward.items[0].upd.StackObjectsCount * moneyBoost) / 100);
+<<<<<<< Updated upstream
+        reward.items[0].upd.StackObjectsCount += Math.round((reward.items[0].upd.StackObjectsCount * moneyBoost) / 100);
+=======
+        //Math.round
+        reward.items[0].upd.StackObjectsCount += ~~((reward.items[0].upd.StackObjectsCount * moneyBoost) / 100);
+>>>>>>> Stashed changes
       }
     }
   }

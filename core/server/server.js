@@ -22,9 +22,13 @@ class Server {
     logger.logSuccess("Create: Receive Callback");
   }
 
-  resetBuffer(sessionID) {
-    this.buffers[sessionID] = undefined;
-  }
+  resetBuffer = (sessionID) => { this.buffers[sessionID] = undefined; }
+  getFromBuffer = (sessionID) => (this.buffers[sessionID]) ? this.buffers[sessionID].buffer : "";
+  getName = () => this.name;
+  getIp = () => this.ip;
+  getPort = () => this.port;
+  getBackendUrl = () => this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
+  getVersion = () => global.core.constants.ServerVersion;
   putInBuffer(sessionID, data, bufLength) {
     if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
       this.buffers[sessionID] = {
@@ -40,28 +44,9 @@ class Server {
     buf.written += data.length;
     return buf.written === buf.allocated;
   }
-  getFromBuffer(sessionID) {
-    return this.buffers[sessionID].buffer;
-  }
-  getName() {
-    return this.name;
-  }
-  getIp() {
-    return this.ip;
-  }
-  getPort() {
-    return this.port;
-  }
-  getBackendUrl() {
-    return this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
-  }
-  getVersion() {
-    return global.core.constants.ServerVersion;
-  }
 
   sendResponse(sessionID, req, resp, body) {
     let output = "";
-
     //check if page is static html page or requests like 
     if (this.tarkovSend.sendStaticFile(req, resp))
       return;
@@ -94,11 +79,7 @@ class Server {
     }
   }
 
-  handleAsyncRequest(req, resp) {
-    return new Promise(resolve => {
-      resolve(this.handleRequest(req, resp));
-    });
-  }
+  handleAsyncRequest = (req, resp) => new Promise(resolve => { resolve(this.handleRequest(req, resp)); });
 
   // Logs the requests made by users. Also stripped from bullshit requests not important ones.
   requestLog(req, sessionID) {
@@ -122,65 +103,69 @@ class Server {
   }
 
   handleRequest(req, resp) {
-    const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
-
-    this.requestLog(req, sessionID);
-
-    switch (req.method) {
-      case "GET":
-        {
-          server.sendResponse(sessionID, req, resp, "");
-          return true;
-        }
-      case "POST":
-        {
-          req.on("data", function (data) {
-            if (req.url == "/" || req.url.includes("/server/config")) {
-              let _Data = data.toString();
-              _Data = _Data.split("&");
-              let _newData = {};
-              for (let item in _Data) {
-                let datas = _Data[item].split("=");
-                _newData[datas[0]] = datas[1];
+    new Promise(resolve => {
+      const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
+      this.requestLog(req, sessionID);
+      switch (req.method) {
+        case "GET":
+          {
+            server.sendResponse(sessionID, req, resp, "");
+            resolve(true)
+          }
+        case "POST":
+          {
+            req.on("data", function (data) {
+              if (req.url == "/" || req.url.includes("/server/config")) {
+                let _Data = data.toString();
+                _Data = _Data.split("&");
+                let _newData = {};
+                for (let item in _Data) {
+                  let datas = _Data[item].split("=");
+                  _newData[datas[0]] = datas[1];
+                }
+                server.sendResponse(sessionID, req, resp, _newData);
+                resolve(true);
+                return;
               }
-              server.sendResponse(sessionID, req, resp, _newData);
-              return;
-            }
-            internal.zlib.inflate(data, function (err, body) {
-              let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-              server.sendResponse(sessionID, req, resp, jsonData);
-            });
-          });
-          return true;
-        }
-      case "PUT":
-        {
-          req.on("data", function (data) {
-            // receive data
-            if ("expect" in req.headers) {
-              const requestLength = parseInt(req.headers["content-length"]);
-
-              if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
-                resp.writeContinue();
-              }
-            }
-          })
-            .on("end", function () {
-              let data = server.getFromBuffer(sessionID);
-              server.resetBuffer(sessionID);
-
               internal.zlib.inflate(data, function (err, body) {
-                let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+                let jsonData = body !== undefined && body !== null && body !== "" ? body.toString() : "{}";
                 server.sendResponse(sessionID, req, resp, jsonData);
+                resolve(true);
               });
             });
-          return true;
-        }
-      default:
-        {
-          return true;
-        }
-    }
+
+          }
+        case "PUT":
+          {
+            /*             req.on("data", function (data) {
+                          // receive data
+                          if ("expect" in req.headers) {
+                            const requestLength = parseInt(req.headers["content-length"]);
+            
+                            if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+                              resp.writeContinue();
+                            }
+                          }
+                        })
+                          .on("end", function () {
+                            let data = server.getFromBuffer(sessionID);
+                            server.resetBuffer(sessionID);
+            
+                            internal.zlib.inflate(data, function (err, body) {
+                              let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+                              server.sendResponse(sessionID, req, resp, jsonData);
+                            });
+                          });
+                        return true; */
+            resolve(true);
+          }
+        default:
+          {
+            resolve(true);
+            //return true;
+          }
+      }
+    });
   }
 
   CreateServer() {
@@ -227,7 +212,11 @@ class Server {
     logger.logInfo("[SoftRestart]: Reloading Database");
     global.mods_f.ResModLoad();
     const databasePath = "/src/functions/database.js";
-    require(executedDir + databasePath).load();
+<<<<<<< Updated upstream
+    require(executedDir + databasePath).lokidb;
+=======
+    require(process.cwd() + databasePath).load();
+>>>>>>> Stashed changes
     // will not be required if all data is loaded into memory
     logger.logInfo("[SoftRestart]: Re-initializing");
     account_f.handler.initialize();
@@ -243,21 +232,33 @@ class Server {
   start() {
     logger.logDebug("Loading Database...");
     const databasePath = "/src/functions/database.js";
+<<<<<<< Updated upstream
+    global.lokidb = require(executedDir + databasePath).lokidb;
+=======
+    const executedDir = internal.process.cwd();
+    logger.logDebug(`ExecutedDir: ${executedDir}`);
     require(executedDir + databasePath).load();
+>>>>>>> Stashed changes
 
     // will not be required if all data is loaded into memory
-    logger.logDebug("Initialize account...")
+    logger.logDebug("Initialize account class...")
     account_f.handler.initialize();
-    logger.logDebug("Initialize save handler...")
+    logger.logDebug("Initialize save handler class...")
     savehandler_f.initialize();
-    logger.logDebug("Initialize locale...")
+    logger.logDebug("Initialize locale class...")
     locale_f.handler.initialize();
-    logger.logDebug("Initialize preset...")
+    logger.logDebug("Initialize preset class...")
     preset_f.handler.initialize();
 
+<<<<<<< Updated upstream
+    //logger.logDebug("Load Tamper Mods...")
+    //global.mods_f.TamperModLoad(); // TamperModLoad
+    logger.logDebug("Initialize bundles...")
+=======
     logger.logDebug("Load Tamper Mods...")
     global.mods_f.TamperModLoad(); // TamperModLoad
-    logger.logDebug("Initialize bundles...")
+    logger.logDebug("Initialize bundles class...")
+>>>>>>> Stashed changes
     bundles_f.handler.initialize();
     logger.logInfo("Starting server...");
     this.CreateServer();

@@ -199,6 +199,11 @@ class AccountServer {
     }
   }
 
+  /**
+ * Tries to find account data in loaded account list if not present returns undefined
+ * @param {*} sessionID 
+ * @returns Account_data
+ */
   find(sessionID) {
     // This needs to be at the top to check for changed accounts.
     this.reloadAccountBySessionID(sessionID);
@@ -213,6 +218,11 @@ class AccountServer {
     return undefined;
   }
 
+  /**
+ * Searches for account and tries to retrive the account language
+ * @param {*} sessionID 
+ * @returns string - Account language (en, ru...)
+ */
   getAccountLang(sessionID) {
     // This needs to be at the top to check for changed accounts.
     this.reloadAccountBySessionID(sessionID);
@@ -315,10 +325,11 @@ class AccountServer {
   }
 
   nicknameTaken(info) {
+    // this will be usefull if you dont want to have same nicknames in accounts info otherwise leave it to always false
     // for (let accountID in this.accounts) {
-    // if (info.nickname.toLowerCase() === this.accounts[accountID].nickname.toLowerCase()) {
-    // return true;
-    // }
+      // if (info.nickname.toLowerCase() === this.accounts[accountID].nickname.toLowerCase()) {
+        // return true;
+      // }
     // }
 
     return false;

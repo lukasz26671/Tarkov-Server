@@ -92,13 +92,12 @@ class ItemServer {
       logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
       return;
     }
-    let _profile;
-    if (typeof profile_f.handler.getPmcProfile(sessionID) != "undefined") {
-      _profile = profile_f.handler.getPmcProfile(sessionID);
-    } else {
+    let _profile = profile_f.handler.getPmcProfile(sessionID);
+    if (utility.isUndefined(_profile)) {
       logger.logError(`[MISSING PROFILE] Profile with sessionID: ${sessionID} is missing?`);
+      return;
     }
-    //let _profile = {"_id": ""};
+    
     this.output = {
       warnings: [],
       profileChanges: {},

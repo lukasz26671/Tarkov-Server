@@ -321,7 +321,7 @@ function getSecuredContainer(items) {
 }
 
 function saveProgress(offraidData, sessionID) {
-	if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
+	if (!global._database.gameplay.inraid.saveLootEnabled) {
 		return;
 	}
 	const isPlayerScav = offraidData.isPlayerScav;

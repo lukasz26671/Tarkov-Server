@@ -3,7 +3,7 @@
 class DialogueServer {
   constructor() {
     this.dialogues = {};
-    this.dialogueFileAge = {}
+    this.dialogueFileAge = {};
   }
 
   /**
@@ -146,7 +146,7 @@ class DialogueServer {
     return fileIO.stringify({ err: 0, errmsg: null, data: { messages: this.dialogues[sessionID][dialogueId].messages } });
   }
 
-  /*
+  /**
    * Add a templated message to the dialogue.
    */
   addDialogueMessage(dialogueID, messageContent, sessionID, rewards = []) {
@@ -316,12 +316,9 @@ class DialogueServer {
   }
 }
 
-function getPath(sessionID) {
-  let path = db.user.profiles.dialogue;
-  return path.replace("__REPLACEME__", sessionID);
-}
+const getPath = (sessionID) => `user/profiles/${sessionID}/dialogue.json`;
 
-let messageTypes = {
+const messageTypes = {
   npcTrader: 2,
   insuranceReturn: 8,
   questStart: 10,

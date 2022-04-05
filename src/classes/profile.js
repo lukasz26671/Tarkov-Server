@@ -26,12 +26,6 @@ class ProfileServer {
   loadProfileFromDisk(sessionID) {
     if (typeof sessionID == "undefined") logger.throwErr("[CLUSTER]Session ID is undefined", "~/src/classes/profile.js | 19");
     try {
-      // Check if the profile file exists
-      if (!global.internal.fs.existsSync(getPmcPath(sessionID))) {
-        logger.logError(`[CLUSTER] Profile file for session ID ${sessionID} not found.`);
-        return false;
-      }
-
       //Load the PMC profile from disk.
       this.profiles[sessionID]["pmc"] = fileIO.readParsed(getPmcPath(sessionID));
 
@@ -200,30 +194,18 @@ class ProfileServer {
 
     return this.profiles[sessionID][type];
   }
-  profileAlreadyCreated(ID) {
-    return fileIO.exist(`user/profiles/${ID}/character.json`);
-  }
-  getProfileById(ID, type) {
-    return fileIO.readParsed(`user/profiles/${ID}/character.json`);
-  }
-  getProfileExfilsById(ID) {
-    return fileIO.readParsed(`user/profiles/${ID}/exfiltrations.json`);
-  }
-  setProfileExfilsById(ID, data) {
-    return fileIO.write(`user/profiles/${ID}/exfiltrations.json`, data);
-  }
 
-  getPmcProfile(sessionID) {
-    return this.getProfile(sessionID, "pmc");
-  }
+  profileAlreadyCreated = (ID) => fileIO.exist(`user/profiles/${ID}/character.json`);
+  getProfileById = (ID) => fileIO.readParsed(`user/profiles/${ID}/character.json`);
+  getProfileExfilsById = (ID) => fileIO.readParsed(`user/profiles/${ID}/exfiltrations.json`);
+  setProfileExfilsById = (ID, data) => fileIO.write(`user/profiles/${ID}/exfiltrations.json`, data);
 
-  getScavProfile(sessionID) {
-    return this.getProfile(sessionID, "scav");
-  }
+  getPmcProfile = (sessionID) => this.getProfile(sessionID, "pmc");
 
-  setScavProfile(sessionID, scavData) {
-    this.profiles[sessionID]["scav"] = scavData;
-  }
+  getScavProfile = (sessionID) => this.getProfile(sessionID, "scav");
+
+  setScavProfile = (sessionID, scavData) => { this.profiles[sessionID]["scav"] = scavData; }
+
 
   getCompleteProfile(sessionID) {
     let output = [];
@@ -236,20 +218,24 @@ class ProfileServer {
     return output;
   }
 
+<<<<<<< Updated upstream
   // Create the characters profile //
+=======
+  /** Create the characters profile
+   * 
+   * @param {*} info 
+   * @param {*} sessionID 
+   */
+>>>>>>> Stashed changes
   createProfile(info, sessionID) {
-    // Load account data //
+    // Load account data
     const account = account_f.handler.find(sessionID);
-
-    // Get profile location //
+    // Get profile location
     const folder = account_f.getPath(account.id);
-
     // Get the faction the player has chosen //
     const ChosenSide = info.side.toLowerCase();
-
     // Get the faction the player has chosen as UpperCase String //
     const ChosenSideCapital = ChosenSide.charAt(0).toUpperCase() + ChosenSide.slice(1);
-
     // Get the profile template for the chosen faction //
     let pmcData = fileIO.readParsed(db.profile[account.edition]["character_" + ChosenSide]);
 
@@ -262,7 +248,7 @@ class ProfileServer {
       events.scheduledEventHandler.wipeScheduleForSession(sessionID);
     }
 
-    // Set defaults for new profile generation //
+    // Set defaults for new profile generation
     pmcData._id = "pmc" + account.id;
     pmcData.aid = account.id;
     pmcData.savage = "scav" + account.id;
@@ -272,21 +258,26 @@ class ProfileServer {
     pmcData.Info.Voice = customization_f.getCustomization()[info.voiceId]._name;
     pmcData.Customization = fileIO.readParsed(db.profile.defaultCustomization)[ChosenSideCapital]
     pmcData.Customization.Head = info.headId;
-    pmcData.Info.RegistrationDate = ~~ (new Date() / 1000);
-    pmcData.Health.UpdateTime = ~~ (Date.now() / 1000);
+<<<<<<< Updated upstream
+    pmcData.Info.RegistrationDate = Math.floor(new Date() / 1000);
+    pmcData.Health.UpdateTime = Math.round(Date.now() / 1000);
+=======
+    pmcData.Info.RegistrationDate = ~~(new Date() / 1000);
+    pmcData.Health.UpdateTime = ~~(Date.now() / 1000);
+>>>>>>> Stashed changes
 
-    // Load default clothing into the profile //
+    // Load default clothing into the profile
     let def = fileIO.readParsed(db.profile[account.edition].storage);
     storage = { err: 0, errmsg: null, data: { _id: pmcData._id, suites: def[ChosenSide] } };
 
-    // Write the profile to disk //
+    // Write the profile to disk
     fileIO.write(`${folder}character.json`, pmcData);
     fileIO.write(`${folder}storage.json`, storage);
     fileIO.write(`${folder}userbuilds.json`, {});
     fileIO.write(`${folder}dialogue.json`, {});
     fileIO.write(`${folder}exfiltrations.json`, { bigmap: 0, develop: 0, factory4_day: 0, factory4_night: 0, interchange: 0, laboratory: 0, lighthouse: 0, rezervbase: 0, shoreline: 0, suburbs: 0, tarkovstreets: 0, terminal: 0, town: 0, woods: 0, privatearea: 0 });
 
-    // don't wipe profile again //
+    // don't wipe profile again
     account_f.handler.setWipe(account.id, false);
     this.initializeProfile(sessionID);
   }
@@ -300,7 +291,7 @@ class ProfileServer {
 
     // Set cooldown time.
     // Make sure to apply ScavCooldownTimer bonus from Hideout if the player has it.
-    let currDt = Date.now() / 1000;
+    let currDt = ~~(Date.now() / 1000);
     let scavLockDuration = global._database.globals.config.SavagePlayCooldown;
     let modifier = 1;
     for (let bonus of pmcData.Bonuses) {
@@ -347,10 +338,7 @@ class ProfileServer {
   }
 }
 
-function getPmcPath(sessionID) {
-  let pmcPath = db.user.profiles.character;
-  return pmcPath.replace("__REPLACEME__", sessionID);
-}
+const getPmcPath = (sessionID) => `user/profiles/${sessionID}/character.json`;
 
 function getStashType(sessionID) {
   let pmcData = profile_f.handler.getPmcProfile(sessionID);

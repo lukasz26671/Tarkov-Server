@@ -2,7 +2,7 @@
 
 exports.buyItem = (pmcData, body, sessionID) => {
   if (!helper_f.payMoney(pmcData, body, sessionID)) {
-    logger.logError("You've got no sheckels!");
+    logger.logError("no money found");
     return "";
   }
   const newReq = {
@@ -15,10 +15,19 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
-  let tAssort = utility.DeepCopy(_database.traders[body.tid].assort);
-
+<<<<<<< Updated upstream
+  let tAssort = global._database.traders[body.tid].assort; //fileIO.readParsed(db.traders[body.tid].assort);
+  if (
+    typeof tAssort[body.item_id] != "undefined" &&
+    tAssort[body.item_id].currentStack
+  ) {
+    tAssort[body.item_id].currentStack -= body.count;
+    fileIO.write(db.traders[body.tid].assort, tAssort);
+=======
+  let tAssort = global._database.traders[body.tid].assort; 
   if (typeof tAssort[body.item_id] != "undefined" && tAssort[body.item_id].upd.StackObjectsCount) {
     tAssort[body.item_id].upd.StackObjectsCount -= body.count;
+>>>>>>> Stashed changes
   }
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
@@ -63,10 +72,7 @@ exports.sellItem = (pmcData, body, sessionID) => {
       }
     }
   }
-  item_f.handler.setOutput(
-    helper_f.getMoney(pmcData, money, body, output, sessionID),
-  );
-
+  item_f.handler.setOutput(helper_f.getMoney(pmcData, money, body, output, sessionID));
   return;
 };
 
@@ -74,12 +80,12 @@ exports.sellItem = (pmcData, body, sessionID) => {
 exports.confirmTrading = (pmcData, body, sessionID) => {
   // buying
   if (body.type === "buy_from_trader") {
-    return trade_f.buyItem(pmcData, body, sessionID);
+    return this.buyItem(pmcData, body, sessionID);
   }
 
   // selling
   if (body.type === "sell_to_trader") {
-    return trade_f.sellItem(pmcData, body, sessionID);
+    return this.sellItem(pmcData, body, sessionID);
   }
 
   return "";
@@ -88,7 +94,6 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
 // Ragfair trading
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
   let ragfair_offers_traders = utility.DeepCopy(_database.ragfair_offers);
-  //let ragfair_offers_traders = _database.ragfair_offers;
   let offers = body.offers;
 
   for (let offer of offers) {

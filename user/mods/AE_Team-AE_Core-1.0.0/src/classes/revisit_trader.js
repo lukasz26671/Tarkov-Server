@@ -50,7 +50,7 @@ function generateFenceAssort() {
   const barter_scheme = {};
 
   const FENCE_ASSORT_SIZE =
-    global._database.gameplayConfig.trading.fenceAssortSize;
+    global._database.gameplay.trading.fenceAssortSize;
   for (let i = 0; i < FENCE_ASSORT_SIZE; i++) {
     let random_item_index = utility.getRandomInt(
       0,
@@ -233,7 +233,7 @@ class TraderServer {
       // Fence
       // Lifetime in seconds
       let fence_assort_lifetime =
-        global._database.gameplayConfig.trading.traderSupply[traderID];
+        global._database.gameplay.trading.traderSupply[traderID];
 
       // Current time in seconds
       let current_time = ~~ (new Date().getTime() / 1000);

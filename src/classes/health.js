@@ -239,7 +239,7 @@ class HealthServer {
     for (let key of BodyPartKeys) {
       let bodyPart = info.difference.BodyParts[key];
       healthInfo.Health[key] = {};
-      healthInfo.Health[key].Current = ~~ (pmcHealth.BodyParts[key].Health.Current + bodyPart.Health);
+      healthInfo.Health[key].Current = Math.round(pmcHealth.BodyParts[key].Health.Current + bodyPart.Health);
 
       if ("Effects" in bodyPart && bodyPart.Effects != undefined && bodyPart.Effects != null) {
         healthInfo.Health[key].Effects = bodyPart.Effects;
@@ -291,7 +291,7 @@ class HealthServer {
 
   /* apply the health changes to the profile */
   applyHealth(pmcData, sessionID) {
-    if (!global._database.gameplayConfig.inraid.saveHealthEnabled) {
+    if (!global._database.gameplay.inraid.saveHealthEnabled) {
       return;
     }
 
@@ -304,7 +304,11 @@ class HealthServer {
       if (item !== "Hydration" && item !== "Energy") {
         /* set body part health */
         bodyParts[item].Health.Current =
-          nodeHealth[item] <= 0 ? ~~ (bodyParts[item].Health.Maximum * global._database.gameplayConfig.inraid.saveHealthMultiplier) : nodeHealth[item];
+<<<<<<< Updated upstream
+          nodeHealth[item] <= 0 ? Math.round(bodyParts[item].Health.Maximum * global._database.gameplayConfig.inraid.saveHealthMultiplier) : nodeHealth[item];
+=======
+          nodeHealth[item] <= 0 ? ~~ (bodyParts[item].Health.Maximum * global._database.gameplay.inraid.saveHealthMultiplier) : nodeHealth[item];
+>>>>>>> Stashed changes
       } else {
         /* set resources */
         pmcHealth[item].Current = nodeHealth[item];
@@ -330,7 +334,7 @@ class HealthServer {
       });
     });
 
-    pmcHealth.UpdateTime = ~~ (utility.getTimestamp());
+    pmcHealth.UpdateTime = Math.round(Date.now() / 1000);
 
     this.initializeHealth(sessionID);
   }

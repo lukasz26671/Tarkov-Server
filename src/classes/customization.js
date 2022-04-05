@@ -1,9 +1,7 @@
 "use strict";
 
-function getPath(sessionID) {
-	let path = db.user.profiles.storage;
-	return path.replace("__REPLACEME__", sessionID);
-}
+const getPath = (sessionID) => `user/profiles/${sessionID}/storage.json`;
+
 module.exports.getPath = getPath;
 
 module.exports.getCustomization = () => {

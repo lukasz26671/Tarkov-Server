@@ -100,7 +100,7 @@ class InsuranceServer {
         offraidData.profile.Inventory.items.forEach(i => offRaidGearHash[i._id] = i);
 
         let gears = [];
-
+        
         for (let insuredItem of pmcData.InsuredItems) {
             if (preRaidGearHash[insuredItem.itemId]) {
                 // This item exists in preRaidGear, meaning we brought it into the raid...
@@ -120,7 +120,7 @@ class InsuranceServer {
     }
 
     /* store insured items on pmc death */
-    storeDeadGear(pmcData, offraidData, preRaidGear, sessionID) {
+    storeDeadGear(pmcData, offraidData, preRaidGear, sessionID) {        
         let gears = [];
 
         let securedContainerItems = offraid_f.getSecuredContainer(offraidData.profile.Inventory.items);
@@ -187,7 +187,7 @@ class InsuranceServer {
 
     processReturn(event) {
         // chance to fail insurance
-        if (!utility.getPercentRandomBool(global._database.gameplayConfig.trading.insureReturnChance)) {
+        if (!utility.getPercentRandomBool(global._database.gameplay.trading.insureReturnChance)) {
             let insuranceFailedTemplates = fileIO.readParsed(db.dialogues[event.data.traderId]).insuranceFailed;
             event.data.messageContent.templateId = insuranceFailedTemplates[utility.getRandomInt(0, insuranceFailedTemplates.length - 1)];
             event.data.items = [];
@@ -197,7 +197,7 @@ class InsuranceServer {
     }
 }
 
-function getPremium(pmcData, inventoryItem, traderId) {
+function getPremium(pmcData, inventoryItem, traderId) {    
     let loyaltyLevelIndex = profile_f.getLoyalty(pmcData, traderId) - 1;
     let trader = trader_f.handler.getTrader(traderId, pmcData.aid);
     let insuranceMultiplier;
@@ -215,7 +215,11 @@ function getPremium(pmcData, inventoryItem, traderId) {
         premium *= (1 - trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef / 100);
     }
 
-    return ~~ (premium);
+<<<<<<< Updated upstream
+    return Math.round(premium);
+=======
+    return ~~(premium);
+>>>>>>> Stashed changes
 }
 
 /* calculates insurance cost */
@@ -231,7 +235,11 @@ function cost(info, sessionID) {
 
         for (let key of info.items) {
             try {
-                traderItems[inventoryItemsHash[key]._tpl] = ~~ (getPremium(pmcData, inventoryItemsHash[key], trader));
+<<<<<<< Updated upstream
+                traderItems[inventoryItemsHash[key]._tpl] = Math.round(getPremium(pmcData, inventoryItemsHash[key], trader));
+=======
+                traderItems[inventoryItemsHash[key]._tpl] = ~~(getPremium(pmcData, inventoryItemsHash[key], trader));
+>>>>>>> Stashed changes
             } catch (e) {
                 logger.logError("Anomalies in the calculation of insurance prices");
                 logger.logError("InventoryItemId:" + key);
@@ -258,7 +266,11 @@ function insure(pmcData, body, sessionID) {
     for (let key of body.items) {
         itemsToPay.push({
             "id": inventoryItemsHash[key]._id,
-            "count": ~~ (getPremium(pmcData, inventoryItemsHash[key], body.tid))
+<<<<<<< Updated upstream
+            "count": Math.round(getPremium(pmcData, inventoryItemsHash[key], body.tid))
+=======
+            "count": ~~(getPremium(pmcData, inventoryItemsHash[key], body.tid))
+>>>>>>> Stashed changes
         });
     }
 
