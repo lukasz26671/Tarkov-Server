@@ -480,7 +480,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
           isPreset: baseItem.isPreset, */
         };
         let MaxStacks = 1;
-        itemsToAdd = global.utility.splitStack(item);
+
 
 
 
@@ -496,29 +496,28 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
                 } */
 
         // split stacks if the size is higher than allowed by StackMaxSize
+        if (baseItem.count > tmpItem._props.StackMaxSize) {
 
-        //if (baseItem.count > tmpItem._props.StackMaxSize) {
-//
-        //  let count = baseItem.count;
-        //  let calc = baseItem.count - ~~(baseItem.count / tmpItem._props.StackMaxSize) * tmpItem._props.StackMaxSize;
-//
-        //  MaxStacks = calc > 0 ? MaxStacks + ~~(count / tmpItem._props.StackMaxSize) : ~~(count / tmpItem._props.StackMaxSize);
-//
-        //  for (let sv = 0; sv < MaxStacks; sv++) {
-        //    if (count > 0) {
-        //      let newItemToAdd = utility.DeepCopy(itemToAdd);
-        //      if (count > tmpItem._props.StackMaxSize) {
-        //        count = count - tmpItem._props.StackMaxSize;
-        //        newItemToAdd.itemRef.upd.StackObjectsCount = tmpItem._props.StackMaxSize;
-        //      } else {
-        //        newItemToAdd.itemRef.upd.StackObjectsCount = count;
-        //      }
-        //      itemsToAdd.push(newItemToAdd);
-        //    }
-        //  }
-        //} else {
-        //  itemsToAdd.push(itemToAdd);
-        //}
+          let count = baseItem.count;
+          let calc = baseItem.count - ~~(baseItem.count / tmpItem._props.StackMaxSize) * tmpItem._props.StackMaxSize;
+
+          MaxStacks = calc > 0 ? MaxStacks + ~~(count / tmpItem._props.StackMaxSize) : ~~(count / tmpItem._props.StackMaxSize);
+
+          for (let sv = 0; sv < MaxStacks; sv++) {
+            if (count > 0) {
+              let newItemToAdd = utility.DeepCopy(itemToAdd);
+              if (count > tmpItem._props.StackMaxSize) {
+                count = count - tmpItem._props.StackMaxSize;
+                newItemToAdd.itemRef.upd.StackObjectsCount = tmpItem._props.StackMaxSize;
+              } else {
+                newItemToAdd.itemRef.upd.StackObjectsCount = count;
+              }
+              itemsToAdd.push(newItemToAdd);
+            }
+          }
+        } else {
+          itemsToAdd.push(itemToAdd);
+        }
         // stacks prepared
       }
     }
@@ -527,7 +526,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
   // Find an empty slot in stash for each of the items being added
   let StashFS_2D = helper_f.getPlayerStashSlotMap(sessionID, pmcData);
   for (let itemToAdd of itemsToAdd) {
-    let itemSize = helper_f.getItemSize(itemToAdd._tpl, itemToAdd._id, itemLib);
+    let itemSize = helper_f.getItemSize(itemToAdd.itemRef._tpl, itemToAdd.itemRef._id, itemLib);
     let findSlotResult = helper_f.findSlotForItem(StashFS_2D, itemSize[0], itemSize[1]);
 
     if (findSlotResult.success) {
