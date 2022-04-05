@@ -422,21 +422,23 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
   // const fenceID = "579dc571d53a0658a154fbec";
   let itemLib = [];
   let itemsToAdd = [];
-  if (utility.isUndefined(body.items)) {
+  if (typeof body.items == "undefined") {
     body.items = [{ item_id: body.item_id, count: body.count }];
   }
 
-  console.log(body.items, "body.items")
   for (let baseItem of body.items) {
 
     switch (true) {
-      case (preset_f.handler.isPreset(baseItem.item_id)): //if item is in ItemPresets
+
+      case (baseItem.item_id in global._database.globals.ItemPresets): //if item is in ItemPresets
         const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
-        itemLib.push(...presetItems); //push preset
-        baseItem.item_id = presetItems[0]._id; //changeID to presetItems ID
+        itemLib.push(...presetItems);
+        baseItem.isPreset = true;
+        baseItem.item_id = presetItems[0]._id; //push preset
         break;
 
       case (helper_f.isMoneyTpl(baseItem.item_id) || (body.tid == "")): //if item_id is money, or tid is empty?
+        console.log(body.tid, "body.tid", baseItem.item_id, "baseItem.item_id" )
         itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
         break;
 
@@ -451,53 +453,41 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         break;
     }
 
-    /*     if (baseItem.item_id in global._database.globals.ItemPresets) {
-          const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
-          itemLib.push(...presetItems);
-          baseItem.isPreset = true;
-          baseItem.item_id = presetItems[0]._id;
-        } else if (helper_f.isMoneyTpl(baseItem.item_id)) {
-          itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
-        } else if (body.tid == "") {
-          itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
-        } else {
-          // Only grab the relevant trader items and add unique values
-          let isBuyingFromFence = false;
-          if (body.tid === "579dc571d53a0658a154fbec") isBuyingFromFence = true;
-    
-          const traderItems = trader_f.handler.getAssort(sessionID, body.tid, isBuyingFromFence).items;
-          const relevantItems = helper_f.findAndReturnChildrenAsItems(traderItems, baseItem.item_id);
-          const toAdd = relevantItems.filter((traderItem) => !itemLib.some((item) => traderItem._id === item._id));
-          itemLib.push(...toAdd);
-        } */
+
+
+
+/*     if (baseItem.item_id in global._database.globals.ItemPresets) {
+      const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
+      itemLib.push(...presetItems);
+      baseItem.isPreset = true;
+      baseItem.item_id = presetItems[0]._id;
+    } else if (helper_f.isMoneyTpl(baseItem.item_id)) {
+      itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
+    } else if (body.tid == "") {
+      itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
+    } else {
+      // Only grab the relevant trader items and add unique values
+      let isBuyingFromFence = false;
+      if (body.tid === "579dc571d53a0658a154fbec") isBuyingFromFence = true;
+
+      const traderItems = trader_f.handler.getAssort(sessionID, body.tid, isBuyingFromFence).items;
+      const relevantItems = helper_f.findAndReturnChildrenAsItems(traderItems, baseItem.item_id);
+      const toAdd = relevantItems.filter((traderItem) => !itemLib.some((item) => traderItem._id === item._id));
+      itemLib.push(...toAdd);
+    } */
 
     for (let item of itemLib) {
       if (item._id === baseItem.item_id) {
         const tmpItem = helper_f.tryGetItem(item._tpl);
         const itemToAdd = {
-          itemRef: item/*,
-           count: baseItem.count,
-          isPreset: baseItem.isPreset, */
+          itemRef: item,
+          count: baseItem.count,
+          isPreset: baseItem.isPreset,
         };
         let MaxStacks = 1;
 
-
-
-
-        console.log(itemToAdd.itemRef._id, itemToAdd, "itemToAdd")
-        // 
-
-        /*         if (baseItem.count > tmpItem._props.StackMaxSize) {
-                  const newItemToAdd = utility.DeepCopy(itemToAdd);
-                  MaxStacks = utility.splitStack(newItemToAdd);
-                  itemsToAdd.push(itemToAdd);
-                } else {
-                  itemsToAdd.push(itemToAdd);
-                } */
-
         // split stacks if the size is higher than allowed by StackMaxSize
         if (baseItem.count > tmpItem._props.StackMaxSize) {
-
           let count = baseItem.count;
           let calc = baseItem.count - ~~(baseItem.count / tmpItem._props.StackMaxSize) * tmpItem._props.StackMaxSize;
 
@@ -508,9 +498,9 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
               let newItemToAdd = utility.DeepCopy(itemToAdd);
               if (count > tmpItem._props.StackMaxSize) {
                 count = count - tmpItem._props.StackMaxSize;
-                newItemToAdd.itemRef.upd.StackObjectsCount = tmpItem._props.StackMaxSize;
+                newItemToAdd.count = tmpItem._props.StackMaxSize;
               } else {
-                newItemToAdd.itemRef.upd.StackObjectsCount = count;
+                newItemToAdd.count = count;
               }
               itemsToAdd.push(newItemToAdd);
             }
@@ -584,7 +574,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
       upd["SpawnedInSession"] = true;
     }
 
-    if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) output.profileChanges[pmcData._id].items.new = [];
+    if (typeof output.profileChanges[pmcData._id].items.new == "undefined") output.profileChanges[pmcData._id].items.new = [];
     output.profileChanges[pmcData._id].items.new.push({
       _id: newItem,
       _tpl: itemToAdd.itemRef._tpl,
