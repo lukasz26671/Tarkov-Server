@@ -357,7 +357,7 @@ function fillAmmoBox(itemToAdd, pmcData, toDo, output) {
   // If this is an ammobox, add cartridges to it.
   // Damaged ammo box are not loaded.
   const itemInfo = helper_f.tryGetItem(itemToAdd._tpl);
-  console.log(itemInfo._name)
+  //console.log(itemInfo._name)
   let ammoBoxInfo = itemInfo._props.StackSlots;
   if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
     // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
@@ -499,8 +499,6 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     let newItem = utility.generateNewItemId();
     let toDo = [[itemToAdd._id, newItem]];
     let upd = itemToAdd.upd;
-    console.log(toDo, "toDo")
-    console.log(itemToAdd._id, "itemToAdd._id")
 
     //if it is from ItemPreset, load preset's upd data too.
     if (helper_f.getPreset(itemToAdd._id)) {
@@ -554,7 +552,11 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     //fileIO.write(`./${pmcData._id}_items.json`, output.profileChanges[pmcData._id])
 
 
-    this.fillAmmoBox(itemToAdd, pmcData, toDo, output);
+    const itemInfo = helper_f.tryGetItem(itemToAdd._tpl);
+    let ammoBoxInfo = itemInfo._props.StackSlots;
+    if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
+      this.fillAmmoBox(itemToAdd, pmcData, toDo, output);
+    }
 
     while (toDo.length > 0) {
       for (let tmpKey in itemLib) {

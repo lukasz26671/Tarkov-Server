@@ -367,10 +367,11 @@ exports.generateInventoryID = (profile) => {
 }
 
 exports.splitStack = (item) => {
+    console.log(item, "splitStack")
+
     if (!("upd" in item) || !("StackObjectsCount" in item.upd)) {
         return [item];
     }
-    //console.log(item)
 
     let maxStack = global._database.items[item._tpl]._props.StackMaxSize;
     let count = item.upd.StackObjectsCount;
