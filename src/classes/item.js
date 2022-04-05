@@ -52,7 +52,7 @@ class ItemServer {
       RemoveFromWishList: wishlist_f.removeFromWishList,
       Repair: repair_f.main,
       SaveBuild: weaponbuilds_f.saveBuild,
-      Split: utility.splitStack,
+      Split: move_f.splitItem,
       Swap: move_f.swapItem,
       Tag: status_f.tagItem,
       Toggle: status_f.toggleItem,
