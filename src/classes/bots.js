@@ -67,47 +67,48 @@ class Controller {
   }
 
   generateBotName(role) {
+
     const name_database = global._database.bots.names;
     let name;
     switch (role) {
-      case (role == "usec"
-        || role == "exusec"
-        || role == "pmcbot"
-        || role == "bear"):
+      case "usec":
+      case "exusec":
+      case "pmcbot":
+      case "bear":
         //console.log(role, "role")
         name = utility.getArrayValue(name_database.normal);
         //console.log(name, "name")
         break;
 
-      case (role == "followertagilla"
-        || role == "bosstagilla"):
+      case "followertagilla":
+      case "bosstagilla":
         //console.log(role, "role")
         name = utility.getArrayValue(name_database.tagilla);
         //console.log(name, "name")
 
         break;
 
-      case (role == "followerkojany"
-        || role == "followertest"):
+      case "followerkojany":
+      case "followertest":
         //console.log(role, "role")
         name = utility.getArrayValue(name_database.followerkojany);
         //console.log(name, "name")
         break;
 
-      case (role == "followergluharsecurity"
-        || role == "followergluharsnipe"
-        || role == "followergluharscout"
-        || role == "followergluharassault"):
+      case "followergluharsecurity":
+      case "followergluharsnipe":
+      case "followergluharscout":
+      case "followergluharassault":
         //console.log(role, "role")
         name = utility.getArrayValue(name_database.followergluhar);
         //console.log(name, "name")
         break;
 
-      case (role == "marksman"
-        || role == "playerscav"
-        || role == "cursedassault"
-        || role == "assaultgroup"
-        || role == "assault"):
+      case "marksman":
+      case "playerscav":
+      case "cursedassault":
+      case "assaultgroup":
+      case "assault":
         //console.log(role, "role")
         name = utility.getArrayValue(name_database.scav);
         //console.log(name, "name")
