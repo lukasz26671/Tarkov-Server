@@ -304,11 +304,7 @@ class HealthServer {
       if (item !== "Hydration" && item !== "Energy") {
         /* set body part health */
         bodyParts[item].Health.Current =
-<<<<<<< Updated upstream
-          nodeHealth[item] <= 0 ? Math.round(bodyParts[item].Health.Maximum * global._database.gameplayConfig.inraid.saveHealthMultiplier) : nodeHealth[item];
-=======
           nodeHealth[item] <= 0 ? ~~ (bodyParts[item].Health.Maximum * global._database.gameplay.inraid.saveHealthMultiplier) : nodeHealth[item];
->>>>>>> Stashed changes
       } else {
         /* set resources */
         pmcHealth[item].Current = nodeHealth[item];

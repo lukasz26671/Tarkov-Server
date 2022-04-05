@@ -26,11 +26,8 @@ function handleBitcoinReproduction(pmcData, sessionID) {
 
 function registerProduction(pmcData, body, sessionID) {
   const databaseHideoutProduction = _database.hideout.production.find((production) => production._id === body.recipeId);
-<<<<<<< Updated upstream
-=======
   let prodTime = (databaseHideoutProduction.ProductionTime) ? databaseHideoutProduction.ProductionTime : databaseHideoutProduction.productionTime;
 
->>>>>>> Stashed changes
   try {
     pmcData.Hideout.Production[databaseHideoutProduction._id] = {
       Progress: 0,
@@ -87,20 +84,11 @@ function isHideoutManagementElite(pmcData) {
 }
 
 module.exports.getHideoutSkillDecreasedConsumption = (pmcData) => {
-<<<<<<< Updated upstream
-  let hideoutManagementLevel = getPlayerHideoutSkill(pmcData);
-  let decreasingBonus = 0.5 * hideoutManagementLevel;
-  if (decreasingBonus >= 25) {
-    decreasingBonus = 25; // for elite
-  }
-  return 1 - decreasingBonus / 100;
-=======
   //const hideoutManagementLevel = getPlayerHideoutSkill(pmcData);
   const hideoutManagementLevel = getPlayerHideoutSkill(pmcData);
   return 1 - utility.clamp(0.5 * hideoutManagementLevel, 0, 25) / 100;
 
   return 1 - utility.clamp(0.5 * hideoutManagementLevel, 0 ,25) / 100;
->>>>>>> Stashed changes
 };
 
 //Need to be reviewed if it actually works as intended it should check if bonuses was properly applied and if not apply them again
@@ -518,14 +506,6 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
       if (pmcData.Hideout.Production[prod].RecipeId !== body.recipeId) {
         continue;
       }
-<<<<<<< Updated upstream
-      pmcData.Hideout.Production[prod].Products =
-        pmcData.Hideout.Production["141"].Products;
-      // give items BEFORE deleting the production
-      for (let itemProd of pmcData.Hideout.Production[prod].Products) {
-        pmcData = profile_f.handler.getPmcProfile(sessionID);
-
-=======
       // give items BEFORE deleting the production
       for (let itemProd of pmcData.Hideout.Production[prod].Products) {
         pmcData = profile_f.handler.getPmcProfile(sessionID);
@@ -534,7 +514,6 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
         if (preset_f.handler.hasPreset(id)) {
           id = preset_f.handler.getRandomPresetIdFromWeaponId(itemProd._tpl);
         }
->>>>>>> Stashed changes
         let newReq = {
           item_id: itemProd._tpl,
           count: 1,

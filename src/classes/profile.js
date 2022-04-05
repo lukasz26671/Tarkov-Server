@@ -218,15 +218,11 @@ class ProfileServer {
     return output;
   }
 
-<<<<<<< Updated upstream
-  // Create the characters profile //
-=======
   /** Create the characters profile
    * 
    * @param {*} info 
    * @param {*} sessionID 
    */
->>>>>>> Stashed changes
   createProfile(info, sessionID) {
     // Load account data
     const account = account_f.handler.find(sessionID);
@@ -258,13 +254,8 @@ class ProfileServer {
     pmcData.Info.Voice = customization_f.getCustomization()[info.voiceId]._name;
     pmcData.Customization = fileIO.readParsed(db.profile.defaultCustomization)[ChosenSideCapital]
     pmcData.Customization.Head = info.headId;
-<<<<<<< Updated upstream
-    pmcData.Info.RegistrationDate = Math.floor(new Date() / 1000);
-    pmcData.Health.UpdateTime = Math.round(Date.now() / 1000);
-=======
     pmcData.Info.RegistrationDate = ~~(new Date() / 1000);
     pmcData.Health.UpdateTime = ~~(Date.now() / 1000);
->>>>>>> Stashed changes
 
     // Load default clothing into the profile
     let def = fileIO.readParsed(db.profile[account.edition].storage);

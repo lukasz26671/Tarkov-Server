@@ -212,11 +212,7 @@ class Server {
     logger.logInfo("[SoftRestart]: Reloading Database");
     global.mods_f.ResModLoad();
     const databasePath = "/src/functions/database.js";
-<<<<<<< Updated upstream
-    require(executedDir + databasePath).lokidb;
-=======
     require(process.cwd() + databasePath).load();
->>>>>>> Stashed changes
     // will not be required if all data is loaded into memory
     logger.logInfo("[SoftRestart]: Re-initializing");
     account_f.handler.initialize();
@@ -232,13 +228,9 @@ class Server {
   start() {
     logger.logDebug("Loading Database...");
     const databasePath = "/src/functions/database.js";
-<<<<<<< Updated upstream
-    global.lokidb = require(executedDir + databasePath).lokidb;
-=======
     const executedDir = internal.process.cwd();
     logger.logDebug(`ExecutedDir: ${executedDir}`);
     require(executedDir + databasePath).load();
->>>>>>> Stashed changes
 
     // will not be required if all data is loaded into memory
     logger.logDebug("Initialize account class...")
@@ -250,15 +242,9 @@ class Server {
     logger.logDebug("Initialize preset class...")
     preset_f.handler.initialize();
 
-<<<<<<< Updated upstream
-    //logger.logDebug("Load Tamper Mods...")
-    //global.mods_f.TamperModLoad(); // TamperModLoad
-    logger.logDebug("Initialize bundles...")
-=======
     logger.logDebug("Load Tamper Mods...")
     global.mods_f.TamperModLoad(); // TamperModLoad
     logger.logDebug("Initialize bundles class...")
->>>>>>> Stashed changes
     bundles_f.handler.initialize();
     logger.logInfo("Starting server...");
     this.CreateServer();

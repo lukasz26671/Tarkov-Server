@@ -354,12 +354,8 @@ function applyMoneyBoost(quest, moneyBoost) {
   for (let reward of quest.rewards.Success) {
     if (reward.type === "Item") {
       if (helper_f.isMoneyTpl(reward.items[0]._tpl)) {
-<<<<<<< Updated upstream
-        reward.items[0].upd.StackObjectsCount += Math.round((reward.items[0].upd.StackObjectsCount * moneyBoost) / 100);
-=======
         //Math.round
         reward.items[0].upd.StackObjectsCount += ~~((reward.items[0].upd.StackObjectsCount * moneyBoost) / 100);
->>>>>>> Stashed changes
       }
     }
   }

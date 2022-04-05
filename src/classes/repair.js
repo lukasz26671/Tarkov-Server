@@ -28,26 +28,16 @@ exports.main = (pmcData, body, sessionID) => {
 
         // updated repair cost to match with Repair window, taking into account loyalty levels
         // using Math.floor to match repair window
-<<<<<<< Updated upstream
-        let repairCost = Math.floor(global._database.items[itemToRepair._tpl]._props.RepairCost * repairItem.count * coef);
-=======
         const repairCost = ~~(global._database.items[itemToRepair._tpl]._props.RepairCost * repairItem.count * coef);
->>>>>>> Stashed changes
         logger.logInfo("repCost: " + repairCost);//just to make sure we spend what the repair window say.
 
         if (!helper_f.payMoney(pmcData, { "scheme_items": [{ "id": repairItem._id, "count": repairCost }], "tid": body.tid }, sessionID)) {
-            logger.logError("no money found");
+            logger.logError("You've got no sheckels!");
             return "";
         }
 
         // change item durability
         const calculateDurability = utility.clamp(itemToRepair.upd.Repairable.Durability + repairItem.count, 0, itemToRepair.upd.Repairable.MaxDurability);
-
-        /*         let calculateDurability = itemToRepair.upd.Repairable.Durability + repairItem.count;
-        
-                if (itemToRepair.upd.Repairable.MaxDurability <= calculateDurability) {
-                    calculateDurability = itemToRepair.upd.Repairable.MaxDurability;
-                } */
 
         itemToRepair.upd.Repairable.Durability = calculateDurability;
         itemToRepair.upd.Repairable.MaxDurability = calculateDurability;

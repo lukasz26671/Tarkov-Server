@@ -201,34 +201,11 @@ function getOffers(sessionID, request) {
 function getOffersFromTraders(sessionID, request) {
   //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
   let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
-<<<<<<< Updated upstream
-  let offersFilters = []; //this is an array of item tpl who filter only items to show
-
-  jsonToReturn.categories = {};
-  for (let offerC of jsonToReturn.offers) {
-    jsonToReturn.categories[offerC.items[0]._tpl] = 1;
-  }
-
-  if (request.buildCount) {
-    // Case: weapon builds
-    offersFilters = Object.keys(request.buildItems);
-    jsonToReturn = fillCategories(jsonToReturn, offersFilters);
-  } else {
-    // Case: search
-    if (request.linkedSearchId) {
-      //offersFilters.concat( getLinkedSearchList(request.linkedSearchId) );
-      offersFilters = [...offersFilters, ...getLinkedSearchList(request.linkedSearchId)];
-      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
-    } else if (request.neededSearchId) {
-      offersFilters = [...offersFilters, ...getNeededSearchList(request.neededSearchId)];
-      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
-=======
   /*   let offersFilters = []; //this is an array of item tpl who filter only items to show
   
     jsonToReturn.categories = {};
     for (let offerC of jsonToReturn.offers) {
       jsonToReturn.categories[offerC.items[0]._tpl] = 1;
->>>>>>> Stashed changes
     }
   
     if (request.buildCount) {
@@ -283,14 +260,8 @@ function getOffersFromTraders(sessionID, request) {
         }
       }
     }
-<<<<<<< Updated upstream
-  }
-  jsonToReturn.offers = offersToKeep;
-  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers);
-=======
     jsonToReturn.offers = offersToKeep;
     jsonToReturn.offers = sortOffers(request, jsonToReturn.offers); */
->>>>>>> Stashed changes
 
   return jsonToReturn;
 }
@@ -408,12 +379,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
-<<<<<<< Updated upstream
-      offer.requirements[0].count = Math.round(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
-=======
       //Math.round
       offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
->>>>>>> Stashed changes
       offers.push(offer);
     }
   }
@@ -423,12 +390,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
     
     let offer = utility.DeepCopy(offerBase);
 
-<<<<<<< Updated upstream
-    let rubPrice = Math.round(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
-=======
     //Math.round
     let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplay.trading.ragfairMultiplier);
->>>>>>> Stashed changes
     offer._id = template;
     offer.items[0]._tpl = template;
     offer.requirements[0].count = rubPrice;

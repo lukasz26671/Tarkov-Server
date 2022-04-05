@@ -120,11 +120,7 @@ function getCurrency(currency) {
  * output: value after conversion
  */
 function inRUB(value, currency) {
-<<<<<<< Updated upstream
-  return Math.round(value * getTemplatePrice(currency));
-=======
   return ~~(value * getTemplatePrice(currency));
->>>>>>> Stashed changes
 }
 
 /* Gets Ruble to Currency conversion Value
@@ -132,11 +128,7 @@ function inRUB(value, currency) {
  * output: value after conversion
  * */
 function fromRUB(value, currency) {
-<<<<<<< Updated upstream
-  return Math.round(value / getTemplatePrice(currency));
-=======
   return ~~(value / getTemplatePrice(currency));
->>>>>>> Stashed changes
 }
 
 /* take money and insert items into return to server request
@@ -1020,8 +1012,6 @@ module.exports.getPlayerStashSlotMap = (sessionID, pmcData) => {
   return [outX + SizeLeft + SizeRight + ForcedLeft + ForcedRight, outY + SizeUp + SizeDown + ForcedUp + ForcedDown];
 };
 
-<<<<<<< Updated upstream
-=======
 /**
  * Tries to place a given item template inside the given container object.
  * Container object must be an array of items with a container table as the first
@@ -1151,7 +1141,6 @@ module.exports.getDurabilityType = getDurabilityType;
 module.exports.getRandomisedMaxDurability = getRandomisedMaxDurability;
 module.exports.getRandomisedMinDurability = getRandomisedMinDurability;
 module.exports.tryPlaceItemInContainer = tryPlaceItemInContainer;
->>>>>>> Stashed changes
 module.exports.getPreset = getPreset;
 module.exports.getTemplatePrice = getTemplatePrice;
 module.exports.templatesWithParent = templatesWithParent;

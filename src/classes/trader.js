@@ -38,27 +38,15 @@ function generateFenceAssort() {
   const fenceId = "579dc571d53a0658a154fbec";
   let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
 
-<<<<<<< Updated upstream
-  let fence_base_assort = fileIO.readParsed(
-    db.user.cache.assort_579dc571d53a0658a154fbec
-  ).data.items;
-  //let fence_base_assort = global._database.traders[fenceId].assort.items;
-=======
   let fence_base_assort = _database.traders[fenceId].base_assort.items;
   //fileIO.readParsed(db.user.cache.assort_579dc571d53a0658a154fbec).data.items;
->>>>>>> Stashed changes
 
   let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
 
   const fence_assort = [];
   const barter_scheme = {};
 
-<<<<<<< Updated upstream
-  const FENCE_ASSORT_SIZE =
-    global._database.gameplayConfig.trading.fenceAssortSize;
-=======
   const FENCE_ASSORT_SIZE = global._database.gameplay.trading.fenceAssortSize;
->>>>>>> Stashed changes
   for (let i = 0; i < FENCE_ASSORT_SIZE; i++) {
     let random_item_index = utility.getRandomInt(
       0,
@@ -248,12 +236,7 @@ class TraderServer {
     if (traderID === "579dc571d53a0658a154fbec" && !isBuyingFromFence) {
       // Fence
       // Lifetime in seconds
-<<<<<<< Updated upstream
-      let fence_assort_lifetime =
-        global._database.gameplayConfig.trading.traderSupply[traderID];
-=======
       let fence_assort_lifetime = global._database.gameplay.trading.traderSupply[traderID];
->>>>>>> Stashed changes
 
       // Current time in seconds
       let current_time = Math.floor(new Date().getTime() / 1000);

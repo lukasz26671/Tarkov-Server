@@ -215,11 +215,7 @@ function getPremium(pmcData, inventoryItem, traderId) {
         premium *= (1 - trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef / 100);
     }
 
-<<<<<<< Updated upstream
-    return Math.round(premium);
-=======
     return ~~(premium);
->>>>>>> Stashed changes
 }
 
 /* calculates insurance cost */
@@ -235,11 +231,7 @@ function cost(info, sessionID) {
 
         for (let key of info.items) {
             try {
-<<<<<<< Updated upstream
-                traderItems[inventoryItemsHash[key]._tpl] = Math.round(getPremium(pmcData, inventoryItemsHash[key], trader));
-=======
                 traderItems[inventoryItemsHash[key]._tpl] = ~~(getPremium(pmcData, inventoryItemsHash[key], trader));
->>>>>>> Stashed changes
             } catch (e) {
                 logger.logError("Anomalies in the calculation of insurance prices");
                 logger.logError("InventoryItemId:" + key);
@@ -266,11 +258,7 @@ function insure(pmcData, body, sessionID) {
     for (let key of body.items) {
         itemsToPay.push({
             "id": inventoryItemsHash[key]._id,
-<<<<<<< Updated upstream
-            "count": Math.round(getPremium(pmcData, inventoryItemsHash[key], body.tid))
-=======
             "count": ~~(getPremium(pmcData, inventoryItemsHash[key], body.tid))
->>>>>>> Stashed changes
         });
     }
 

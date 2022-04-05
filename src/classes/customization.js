@@ -1,7 +1,6 @@
 "use strict";
 
 const getPath = (sessionID) => `user/profiles/${sessionID}/storage.json`;
-
 module.exports.getPath = getPath;
 
 module.exports.getCustomization = () => {

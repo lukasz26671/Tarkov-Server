@@ -65,8 +65,6 @@ class Controller {
         return global._database.bots[type].difficulty[difficulty];
     }
   }
-<<<<<<< Updated upstream
-=======
 
   generateBotName(role) {
 
@@ -127,7 +125,6 @@ class Controller {
     return name;
   }
 
->>>>>>> Stashed changes
   generateId(bot) {
     const botId = utility.generateNewAccountId();
     bot._id = botId;
