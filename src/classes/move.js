@@ -474,17 +474,17 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     for (let item of itemLib) {
       if (item._id === baseItem.item_id) {
         const tmpItem = helper_f.tryGetItem(item._tpl);
-        //const itemToAdd = {
-        //  itemRef: item/*,
-        //   count: baseItem.count,
-        //  isPreset: baseItem.isPreset, */
-        //};
+        const itemToAdd = {
+          itemRef: item/*,
+           count: baseItem.count,
+          isPreset: baseItem.isPreset, */
+        };
         let MaxStacks = 1;
         itemsToAdd = global.utility.splitStack(item);
 
 
 
-        //console.log(itemToAdd.itemRef._id, itemToAdd, "itemToAdd")
+        console.log(itemToAdd.itemRef._id, itemToAdd, "itemToAdd")
         // 
 
         /*         if (baseItem.count > tmpItem._props.StackMaxSize) {
@@ -527,7 +527,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
   // Find an empty slot in stash for each of the items being added
   let StashFS_2D = helper_f.getPlayerStashSlotMap(sessionID, pmcData);
   for (let itemToAdd of itemsToAdd) {
-    let itemSize = helper_f.getItemSize(itemToAdd._tpl, itemToAdd._id, itemsToAdd);
+    let itemSize = helper_f.getItemSize(itemToAdd._tpl, itemToAdd._id, itemLib);
     let findSlotResult = helper_f.findSlotForItem(StashFS_2D, itemSize[0], itemSize[1]);
 
     if (findSlotResult.success) {
@@ -565,13 +565,13 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
   for (let itemToAdd of itemsToAdd) {
     let newItem = utility.generateNewItemId();
-    let toDo = [[itemToAdd._id, newItem]];
+    let toDo = [[itemToAdd.itemRef._id, newItem]];
     let upd = { StackObjectsCount: itemToAdd.count }; //Object.assign({}, inputNodes[item].items[0].upd); //{ StackObjectsCount: itemToAdd.count };
 
     //if it is from ItemPreset, load preset's upd data too.
     if (itemToAdd.isPreset) {
-      for (let updID in itemToAdd.upd) {
-        upd[updID] = itemToAdd.upd[updID];
+      for (let updID in itemToAdd.itemRef.upd) {
+        upd[updID] = itemToAdd.itemRef.upd[updID];
       }
     }
 
@@ -588,7 +588,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) output.profileChanges[pmcData._id].items.new = [];
     output.profileChanges[pmcData._id].items.new.push({
       _id: newItem,
-      _tpl: itemToAdd._tpl,
+      _tpl: itemToAdd.itemRef._tpl,
       parentId: pmcData.Inventory.stash,
       slotId: "hideout",
       location: {
@@ -601,7 +601,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
     pmcData.Inventory.items.push({
       _id: newItem,
-      _tpl: itemToAdd._tpl,
+      _tpl: itemToAdd.itemRef._tpl,
       parentId: pmcData.Inventory.stash,
       slotId: "hideout",
       location: {
@@ -614,7 +614,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
 
     // If this is an ammobox, add cartridges to it.
     // Damaged ammo box are not loaded.
-    const itemInfo = helper_f.tryGetItem(itemToAdd._tpl);
+    const itemInfo = helper_f.tryGetItem(itemToAdd.itemRef._tpl);
     let ammoBoxInfo = itemInfo._props.StackSlots;
     if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
       // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
