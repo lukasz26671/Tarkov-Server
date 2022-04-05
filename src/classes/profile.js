@@ -102,6 +102,17 @@ class ProfileServer {
   }
 
   /**
+   * Check if the sessionID is loaded.
+   * @param {string} sessionID 
+   */
+  isLoaded(sessionID) {
+    if(this.profiles[sessionID]) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Free the users profile from memory.
    * @param {*} sessionID 
    */

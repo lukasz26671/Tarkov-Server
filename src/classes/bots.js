@@ -115,10 +115,11 @@ class Controller {
         break;
 
       default:
-        if (role != name_database) {
-          logger.logError(`Bot ${role} name not found in name list, could be a typo`);
-        }
-        name = utility.getArrayValue(name_database[role]);
+          name = utility.getArrayValue(name_database[role]);
+          if(!name) {
+            logger.logError(`Bot ${role} name not found in name list, could be a typo, send help pls.`);
+            name = utility.getArrayValue(name_database.scav);
+          }
         break;
     }
     return name;

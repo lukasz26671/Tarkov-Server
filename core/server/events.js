@@ -41,7 +41,7 @@ class ScheduledEventHandler {
 					// Save the events from memory to disk.
 					fileIO.write(db.user.events.schedule, this.scheduledEvents);
 					logger.logInfo(`[CLUSTER] Schedules were saved.`);
-				}
+				}			
 			} else {
 				// As the file on disk was changed, reload the file from disk instead of overwriting it.
 				this.scheduledEvents = fileIO.readParsed(db.user.events.schedule);
@@ -60,7 +60,7 @@ class ScheduledEventHandler {
 		if (global.internal.fs.existsSync(db.user.events.schedule)) {
 			// Check if the file was modified elsewhere
 			this.scheduledEvents = fileIO.readParsed(db.user.events.schedule);
-
+		
 			// Set the file age for the schedule.json.
 			let stats = global.internal.fs.statSync(db.user.events.schedule);
 			this.scheduleFileAge = stats.mtimeMs;
