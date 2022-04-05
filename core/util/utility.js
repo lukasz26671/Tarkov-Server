@@ -367,9 +367,7 @@ exports.generateInventoryID = (profile) => {
 }
 
 exports.splitStack = (item) => {
-    console.log(item, "item in splitStack");
     if (!("upd" in item) || !("StackObjectsCount" in item.upd)) {
-        console.log(`[ERROR] splitStack: ${item} is not stackable`);
         return [item];
     }
     //console.log(item)
@@ -388,14 +386,9 @@ exports.splitStack = (item) => {
     while (count) {
         let amount = Math.min(count, maxStack);
         let newStack = utility.DeepCopy(item);
-        if (preset_f.handler.isPreset(newStack._id)){
-            newStack = helper_f.getPreset(newStack._id)._items;
-            newStack[0].upd = item.upd
-        }
-        if (!preset_f.handler.isPreset(newStack._id)) {
-            newStack._id = utility.generateNewItemId();
-        }
-        newStack[0].upd.StackObjectsCount = amount;
+
+        newStack._id = utility.generateNewItemId();
+        newStack.upd.StackObjectsCount = amount;
         count -= amount;
         stacks.push(newStack);
     }
