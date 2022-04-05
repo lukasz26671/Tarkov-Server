@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 /* A reverse lookup for templates */
 function tplLookup() {
   if (tplLookup.lookup === undefined) {
@@ -120,7 +122,7 @@ function getCurrency(currency) {
  * output: value after conversion
  */
 function inRUB(value, currency) {
-  return ~~(value * getTemplatePrice(currency));
+  return ~~ (value * getTemplatePrice(currency));
 }
 
 /* Gets Ruble to Currency conversion Value
@@ -128,7 +130,7 @@ function inRUB(value, currency) {
  * output: value after conversion
  * */
 function fromRUB(value, currency) {
-  return ~~(value / getTemplatePrice(currency));
+  return ~~ (value / getTemplatePrice(currency));
 }
 
 /* take money and insert items into return to server request
@@ -172,6 +174,7 @@ function payMoney(pmcData, body, sessionID) {
   for (let item of body.scheme_items) {
     barterPrice += item.count;
   }
+
 
   // prepare the amount of money in the profile
   let amountMoney = 0;
@@ -267,7 +270,6 @@ function findItemById(items, id) {
 function tryGetItem(template) {
   const item = global._database.items[template];
   if (typeof item == "undefined") return { error: true, errorMessage: `Unable to find item '${template}' in database` }
-
   return item;
 }
 
@@ -428,18 +430,6 @@ function getItem(template) {
   return [false, {}];
 }
 
-/* Get item data from items.json
- * input: Item Template ID
- * output: item | { error: true, errorMessage: string }
- */
-function tryGetItem(template) {
-  const item = global._database.items[template];
-
-  if (typeof item == "undefined") return { error: true, errorMessage: `Unable to find item '${template}' in database` }
-
-  return item;
-}
-
 function getInventoryItemHash(InventoryItem) {
   let inventoryItemHash = {
     byItemId: {},
@@ -468,11 +458,11 @@ note from Maoci: you can merge and split items from parent-childrens
 */
 module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash) => {
   let toDo = [itemID];
-  const tmpItem = this.tryGetItem(itemtpl);
-  const rootItem = inventoryItemHash.byItemId[itemID];
+  let tmpItem = helper_f.tryGetItem(itemtpl);
+  let rootItem = inventoryItemHash.byItemId[itemID];
   if (typeof tmpItem._props == "undefined") { return; }
-  const FoldableWeapon = tmpItem._props.Foldable;
-  const FoldedSlot = tmpItem._props.FoldedSlot;
+  let FoldableWeapon = tmpItem._props.Foldable;
+  let FoldedSlot = tmpItem._props.FoldedSlot;
 
   let SizeUp = 0,
     SizeDown = 0,
@@ -508,8 +498,8 @@ module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash)
           toDo.push(item._id);
 
           // If the barrel is folded the space in the barrel is not counted
-          let itm = this.tryGetItem(item._tpl);
-          const childFoldable = itm._props.Foldable;
+          let itm = helper_f.tryGetItem(item._tpl);
+          let childFoldable = itm._props.Foldable;
           let childFolded = item.upd && item.upd.Foldable && item.upd.Foldable.Folded === true;
 
           if (FoldableWeapon && FoldedSlot === item.slotId && (rootFolded || childFolded)) {
@@ -591,15 +581,13 @@ function findAndReturnChildrenAsItems(items, itemID) {
  * Checks if an item is a dogtag. Used under profile_f.js to modify preparePrice based
  * on the level of the dogtag
  */
-const isDogtag = (itemId) => itemId === "59f32bb586f774757e1e8442" || itemId === "59f32c3b86f77472a31742f0";
+function isDogtag(itemId) {
+  return itemId === "59f32bb586f774757e1e8442" || itemId === "59f32c3b86f77472a31742f0";
+}
 
-const isNotSellable = (itemid) => 
-                          "544901bf4bdc2ddf018b456d" === itemid || 
-                          "5449016a4bdc2d6f028b456f" === itemid || 
-                          "569668774bdc2da2298b4568" === itemid || 
-                          "5696686a4bdc2da3298b456a" === itemid;
-
-const arrayIntersect = (a, b) => a.filter((x) => b.includes(x));
+function isNotSellable(itemid) {
+  return "544901bf4bdc2ddf018b456d" === itemid || "5449016a4bdc2d6f028b456f" === itemid || "569668774bdc2da2298b4568" === itemid || "5696686a4bdc2da3298b456a" === itemid;
+}
 
 /* Gets the identifier for a child using slotId, locationX and locationY. */
 function getChildId(item) {
@@ -708,13 +696,13 @@ function splitStack(item) {
     return [item];
   }
 
-  const maxStack = global._database.items[item._tpl]._props.StackMaxSize;
+  let maxStack = global._database.items[item._tpl]._props.StackMaxSize;
   let count = item.upd.StackObjectsCount;
   let stacks = [];
 
   while (count) {
-    const amount = Math.min(count, maxStack);
-    const newStack = utility.DeepCopy(item);
+    let amount = Math.min(count, maxStack);
+    let newStack = clone(item);
 
     newStack.upd.StackObjectsCount = amount;
     count -= amount;
@@ -724,14 +712,30 @@ function splitStack(item) {
   return stacks;
 }
 
+function clone(x) {
+  return fileIO.parse(fileIO.stringify(x));
+}
+
+function arrayIntersect(a, b) {
+  return a.filter((x) => b.includes(x));
+}
+
 // Searching for first item template ID and for preset ID
 function getPreset(id) {
-  let itmPreset = utility.DeepCopy(global._database.globals.ItemPresets[id]);
-  if (utility.isUndefined(itmPreset)) {
+  let itmPreset = global._database.globals.ItemPresets[id];
+  if (typeof itmPreset == "undefined") {
+    /* this was causing an error where preset id couldnt be found on the client and caused client stop loading map...
+    for(let itemP in global._database.globals.ItemPresets){
+      if(global._database.globals.ItemPresets[itemP]._items[0]._tpl == id){
+        itmPreset = global._database.globals.ItemPresets[itemP];
+        break;
+      }
+    }*/
+    if (typeof itmPreset == "undefined") {
       logger.logWarning("Preset of id: " + id + " not found on a list (this warning is not important)");
       return null;
+    }
   }
-
   return itmPreset;
 }
 
@@ -770,10 +774,10 @@ module.exports.getContainerMap = (containerW, containerH, itemList, containerId)
 
   return container2D;
 };
-
+// TODO: REWORK EVERYTHING ABOVE ~Maoci
 module.exports.fillContainerMapWithItem = (container2D, x, y, itemW, itemH, rotate) => {
-  const itemWidth = rotate ? itemH : itemW;
-  const itemHeight = rotate ? itemW : itemH;
+  let itemWidth = rotate ? itemH : itemW;
+  let itemHeight = rotate ? itemW : itemH;
 
   for (let tmpY = y; tmpY < y + itemHeight; tmpY++) {
     for (let tmpX = x; tmpX < x + itemWidth; tmpX++) {
@@ -788,13 +792,13 @@ module.exports.fillContainerMapWithItem = (container2D, x, y, itemW, itemH, rota
 };
 module.exports.findSlotForItem = (container2D, itemWidth, itemHeight) => {
   let rotation = false;
-  const minVolume = (itemWidth < itemHeight ? itemWidth : itemHeight) - 1;
-  const containerY = container2D.length;
-  const containerX = container2D[0].length;
-  const limitY = containerY - minVolume;
-  const limitX = containerX - minVolume;
+  let minVolume = (itemWidth < itemHeight ? itemWidth : itemHeight) - 1;
+  let containerY = container2D.length;
+  let containerX = container2D[0].length;
+  let limitY = containerY - minVolume;
+  let limitX = containerX - minVolume;
 
-  const locateSlot = (x, y, itemW, itemH) => {
+  let locateSlot = (x, y, itemW, itemH) => {
     let foundSlot = true;
     for (let itemY = 0; itemY < itemH; itemY++) {
       if (foundSlot && y + itemH > containerY) {
@@ -852,20 +856,11 @@ module.exports.appendErrorToOutput = (output, message = "An unknown error occurr
   return output;
 };
 
-/** Prepares item Width and Height returns [sizeX, sizeY]
- * 
- * @param {*} itemtpl 
- * @param {*} itemID 
- * @param {*} InventoryItem 
- * @returns 
- */
- module.exports.getItemSize = (itemtpl, itemID, InventoryItem) => helper_f.getSizeByInventoryItemHash(itemtpl, itemID, this.getInventoryItemHash(InventoryItem));
+module.exports.getItemSize = (itemtpl, itemID, InventoryItem) => {
+  // -> Prepares item Width and height returns [sizeX, sizeY]
+  return helper_f.getSizeByInventoryItemHash(itemtpl, itemID, this.getInventoryItemHash(InventoryItem));
+};
 
-/**
- * 
- * @param {*} InventoryItem 
- * @returns 
- */
 module.exports.getInventoryItemHash = (InventoryItem) => {
   let inventoryItemHash = {
     byItemId: {},
@@ -895,19 +890,19 @@ module.exports.getPlayerStashSlotMap = (sessionID, pmcData) => {
     .fill(0)
     .map((x) => Array(PlayerStashSize[0]).fill(0));
 
-  const inventoryItemHash = helper_f.getInventoryItemHash(pmcData.Inventory.items);
+  let inventoryItemHash = helper_f.getInventoryItemHash(pmcData.Inventory.items);
 
   for (let item of inventoryItemHash.byParentId[pmcData.Inventory.stash]) {
     if (!("location" in item)) {
       continue;
     }
 
-    const tmpSize = helper_f.getSizeByInventoryItemHash(item._tpl, item._id, inventoryItemHash);
-    const iW = tmpSize[0]; // x
-    const iH = tmpSize[1]; // y
-    const fH = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iW : iH;
-    const fW = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iH : iW;
-    const fillTo = item.location.x + fW;
+    let tmpSize = helper_f.getSizeByInventoryItemHash(item._tpl, item._id, inventoryItemHash);
+    let iW = tmpSize[0]; // x
+    let iH = tmpSize[1]; // y
+    let fH = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iW : iH;
+    let fW = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iH : iW;
+    let fillTo = item.location.x + fW;
 
     for (let y = 0; y < fH; y++) {
       try {
@@ -920,19 +915,12 @@ module.exports.getPlayerStashSlotMap = (sessionID, pmcData) => {
 
   return Stash2D;
 };
-
-/** RELIC OF THE PAST
- * note from 2027: there IS a thing i didn't explore and that is Merges With Children
- * -> Prepares item Width and height returns [sizeX, sizeY]
- * check if this new one works and remove this one if it does
- * @param {*} itemtpl 
- * @param {*} itemID 
- * @param {*} inventoryItemHash 
- * @returns 
- */
- module.exports.getSizeByInventoryItemHash_old = (itemtpl, itemID, inventoryItemHash) => {
+// note from 2027: there IS a thing i didn't explore and that is Merges With Children
+// -> Prepares item Width and height returns [sizeX, sizeY]
+// check if this new one works and remove this one if it does
+module.exports.getSizeByInventoryItemHash_old = (itemtpl, itemID, inventoryItemHash) => {
   let toDo = [itemID];
-  let tmpItem = helper_f.getItem(itemtpl)[1];
+  let tmpItem = helper_f.tryGetItem(itemtpl);
 
   // Prevent traders not working if an template ID does not fetch a real item. -- kiobu
   // Note: This may cause problems when attempting to place an item in the same/relative place as a broken template item.
@@ -976,7 +964,7 @@ module.exports.getPlayerStashSlotMap = (sessionID, pmcData) => {
           toDo.push(item._id);
 
           // If the barrel is folded the space in the barrel is not counted
-          let itm = helper_f.getItem(item._tpl)[1];
+          let itm = helper_f.tryGetItem(item._tpl);
           let childFoldable = itm._props.Foldable;
           let childFolded = item.upd && item.upd.Foldable && item.upd.Foldable.Folded === true;
 
@@ -1024,11 +1012,19 @@ function tryPlaceItemInContainer(itemTpl, containerObject) {
   return containerObject;
 }
 
-/** To get type of `durability` to make function more flexible
- * 
- * @param {*} itemTemplate - The item to check Durability-type of
- * @returns 
- */
+function getDurability(itemTemplate, botRole) {
+
+  let maxDurability = getRandomisedMaxDurability(itemTemplate, botRole);
+  let minDurability = getRandomisedMinDurability(itemTemplate, botRole);
+
+}
+
+/**
+     * To get type of `durability` to make function more flexible
+     *
+     * @param {object}      itemTemplate         The item to check Durability-type of
+
+     */
 function getDurabilityType(itemTemplate) {
   const _props = itemTemplate._props;
   let durabilityType;
@@ -1058,52 +1054,62 @@ function getDurabilityType(itemTemplate) {
   return durabilityType;
 }
 
-/** To get the `max randomized durability` for weapons/armor on AI
- * 
- * @param {*} itemTemplate - The item
- * @param {*} botRole - Role of Bot, in case we want to add this to the gameplay config for more customization
- * @returns 
- */
+/**
+     * To get the `max randomized durability` for weapons/armor on AI
+     *
+     * @param {object}      itemTemplate         The item
+     * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
+
+     */
 function getRandomisedMaxDurability(itemTemplate, botRole) {
+
   //store properties in variable
   const itemProperties = itemTemplate._props;
-  const durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
-  const percent = utility.getRandomIntInc(90, 100);
+  let durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
+
+  let percent = utility.getRandomIntInc(90, 100);
+
+
   const maxDurability = itemProperties[durabilityType]; //set maxDurability from item
-  const randomMaxDurability = utility.getPercentOf(percent, maxDurability);
+  // console.log(maxDurability, "maxDurability")
+  //console.log(percent, "percent")
+  let randomMaxDurability = utility.getPercentOf(percent, maxDurability);
+  //console.log(randomMaxDurability, "randomMaxDurability");
   return utility.decimalAdjust("round", randomMaxDurability, -1);
 }
 
-/** To get the `min randomized durability` for weapons/armor on AI
- * 
- * @param {*} maxDurability - Max Durability from getRandomisedMaxDurability
- * @param {*} botRole - Role of Bot, in case we want to add this to the gameplay config for more customization
- * @returns 
- */
+/**
+     * To get the `min randomized durability` for weapons/armor on AI
+     *
+     * @param {number}      maxDurability       Max Durability from getRandomisedMaxDurability
+     * @param {string}      botRole             Role of Bot, in case we want to add this to the gameplay config for more customization
+
+     */
 function getRandomisedMinDurability(maxDurability, botRole) {
   const currentDurability = maxDurability;
   const min = 0;
   const max = 10;
 
-  const delta = utility.getRandomIntInc(min, max);
-  const randomMinDurability = currentDurability - delta;
+  let delta = utility.getRandomIntInc(min, max);
+  let randomMinDurability = currentDurability - delta;
 
   //console.log(randomMinDurability, "getRandomisedMinDurability");
   return utility.decimalAdjust('round', randomMinDurability, -1);
 }
 
-/**`Adjust reliability` of item based on condition (durability)
- * 
- * @param {*} maxDurability 
- * @param {*} itemTemplate 
- * @param {*} durabilityType 
- * @returns 
- */
+/**
+     * `Adjust reliability` of item based on condition (durability)
+     *
+     * @param {number}      maxDurability       Current max condition of item
+     * @param {string}      itemTemplate        Item
+
+     */
 function getItemReliability(maxDurability, itemTemplate, durabilityType) {
   //increase malfunction chance on low durability items
-  const itemProperties = itemTemplate._props;
+  //const durabilityType = getDurabilityType(itemTemplate); //get type of durability in string
+  let itemProperties = itemTemplate._props;
   let itemMaxDurability;
-  const minDurability = maxDurability;
+  let minDurability = maxDurability;
 
   console.log(minDurability)
 
@@ -1117,15 +1123,20 @@ function getItemReliability(maxDurability, itemTemplate, durabilityType) {
       */
 
       const malfunctionChance = itemProperties.MalfunctionChance; //default malfunction chance
+      let currentMalfunctionChance;
+
 
       itemMaxDurability = itemProperties.Durability;
       console.log(itemMaxDurability, "itemMaxDurability")
       console.log(minDurability, "minDurability")
 
-      const percentDiff = utility.getPercentDiff(itemMaxDurability, minDurability);
+
+      //let newDurability = itemMaxDurability * utility.getPercentOf(itemMaxDurability, minDurability);
+      let percentDiff = utility.getPercentDiff(itemMaxDurability, minDurability);
       console.log(percentDiff)
 
-      const currentMalfunctionChance = malfunctionChance * percentDiff;
+      currentMalfunctionChance = malfunctionChance * percentDiff;
+      currentMalfunctionChance = currentMalfunctionChance; //we dont need giant decimals
 
       return currentMalfunctionChance;
     }
@@ -1160,6 +1171,7 @@ module.exports.isDogtag = isDogtag;
 module.exports.isNotSellable = isNotSellable;
 module.exports.replaceIDs = replaceIDs;
 module.exports.splitStack = splitStack;
+module.exports.clone = clone;
 module.exports.arrayIntersect = arrayIntersect;
 module.exports.findInventoryItemById = findInventoryItemById;
 module.exports.getInventoryItemHash = getInventoryItemHash;
