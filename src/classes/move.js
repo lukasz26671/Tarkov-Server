@@ -231,7 +231,7 @@ function discardItem(pmcData, body, sessionID) {
  * @param {string} sessionID
  * @returns
  */
-/* function splitItem(pmcData, body, sessionID) {
+function splitItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);
   let location = body.container.location;
 
@@ -279,7 +279,7 @@ function discardItem(pmcData, body, sessionID) {
   }
 
   return "";
-} */
+}
 
 /**
  * Merge Item
@@ -413,7 +413,51 @@ function swapItem(pmcData, body, sessionID) {
   return output;
 }
 
-function findEmptySlot(itemsToAdd, sessionID, pmcData) {
+
+/** Give Item
+ * its used for "add" item like gifts etc.
+ * */
+function addItem(pmcData, body, sessionID, foundInRaid = false) {
+  let output = item_f.handler.getOutput(sessionID);
+  // const fenceID = "579dc571d53a0658a154fbec";
+  let itemLib = [];
+  let itemsToAdd = [];
+  if (utility.isUndefined(body.items)) {
+    body.items = [{ item_id: body.item_id, count: body.count }];
+  }
+
+  console.log(body.items, "body.items")
+  for (let baseItem of body.items) {
+
+    switch (true) {
+      case (preset_f.handler.isPreset(baseItem.item_id)): //if item is in ItemPresets
+        const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
+        itemLib.push(...presetItems); //push preset
+        baseItem.item_id = presetItems[0]._id; //changeID to presetItems ID
+        break;
+
+      case (helper_f.isMoneyTpl(baseItem.item_id) || (body.tid == "")): //if item_id is money, or tid is empty?
+        itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
+        break;
+
+      default:
+        // Only grab the relevant trader items and add unique values
+        let isBuyingFromFence = false;
+        if (body.tid === "579dc571d53a0658a154fbec") isBuyingFromFence = true;
+        const traderItems = trader_f.handler.getAssort(sessionID, body.tid, isBuyingFromFence).items;
+        const relevantItems = helper_f.findAndReturnChildrenAsItems(traderItems, baseItem.item_id);
+        const toAdd = relevantItems.filter((traderItem) => !itemLib.some((item) => traderItem._id === item._id));
+        itemLib.push(...toAdd);
+        break;
+    }
+
+    for (let item of itemLib) {
+      if (item._id === baseItem.item_id) {
+        itemsToAdd = global.utility.splitStack(item);
+      }
+    }
+  }
+
   // Find an empty slot in stash for each of the items being added
   let StashFS_2D = helper_f.getPlayerStashSlotMap(sessionID, pmcData);
   for (let itemToAdd of itemsToAdd) {
@@ -442,63 +486,10 @@ function findEmptySlot(itemsToAdd, sessionID, pmcData) {
       return helper_f.appendErrorToOutput(output, "Not enough stash space");
     }
   }
-}
 
-/** Give Item
- * its used for "add" item like gifts etc.
- * */
-function addItem(pmcData, body, sessionID, foundInRaid = false) {
-  let output = item_f.handler.getOutput(sessionID);
-  // const fenceID = "579dc571d53a0658a154fbec";
-  let itemLib = [];
-  let itemsToAdd = [];
-  if (utility.isUndefined(body.items)) {
-    body.items = [{ item_id: body.item_id, count: body.count }];
-  }
-
-  //console.log(body.items, "body.items")
-  for (let baseItem of body.items) {
-
-    switch (true) {
-      case (preset_f.handler.isPreset(baseItem.item_id)): //if item is in ItemPresets
-        const presetItems = utility.DeepCopy(global._database.globals.ItemPresets[baseItem.item_id]._items);
-        itemLib.push(...presetItems); //push preset
-        baseItem.item_id = presetItems[0]._id; //changeID to presetItems ID
-        break;
-
-      case (helper_f.isMoneyTpl(baseItem.item_id) || (body.tid == "")): //if item_id is money, or tid is empty?
-        itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
-        break;
-
-      default:
-        // Only grab the relevant trader items and add unique values
-        let isBuyingFromFence = false;
-        if (body.tid === "579dc571d53a0658a154fbec") isBuyingFromFence = true;
-        const traderItems = trader_f.handler.getAssort(sessionID, body.tid, isBuyingFromFence).items;
-        const relevantItems = helper_f.findAndReturnChildrenAsItems(traderItems, baseItem.item_id);
-        const toAdd = relevantItems.filter((traderItem) => !itemLib.some((item) => traderItem._id === item._id));
-        itemLib.push(...toAdd);
-        break;
-    }
-
-    for (let item of itemLib) {
-      console.log(item)
-      if (item._id === baseItem.item_id) {
-        //give item the amount purchased to be split
-        item.upd.StackObjectsCount = baseItem.count;
-        //check item if it needs to be split
-        itemsToAdd = global.utility.splitStack(item);
-      }
-    }
-  }
-
-
-  this.findEmptySlot(itemsToAdd, sessionID, pmcData);
   // We've succesfully found a slot for each item, let's execute the callback and see if it fails (ex. payMoney might fail)
- 
   try {
     if (typeof callback === "function") {
-      console.log(callback(), "we got called fella")
       callback();
     }
   } catch (err) {
@@ -506,23 +497,20 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
     return helper_f.appendErrorToOutput(output, message);
   }
 
-  //block above might be useless, who tf knows rn
-
   for (let itemToAdd of itemsToAdd) {
     let newItem = utility.generateNewItemId();
     let toDo = [[itemToAdd._id, newItem]];
-    let upd = itemToAdd.upd; //{ StackObjectsCount: itemToAdd.count };
-    console.log(upd ,"upd")
+    let upd = { StackObjectsCount: itemToAdd.count }; //Object.assign({}, inputNodes[item].items[0].upd); //{ StackObjectsCount: itemToAdd.count };
 
     //if it is from ItemPreset, load preset's upd data too.
-    if (preset_f.handler.isPreset(itemToAdd)) {
+    if (itemToAdd.isPreset) {
       for (let updID in itemToAdd.upd) {
         upd[updID] = itemToAdd.upd[updID];
       }
     }
 
     // in case people want all items to be marked as found in raid
-    if (_database.gameplayConfig.trading.buyItemsMarkedFound) {
+    if (global._database.gameplayConfig.trading.buyItemsMarkedFound) {
       foundInRaid = true;
     }
 
@@ -531,11 +519,7 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
       upd["SpawnedInSession"] = true;
     }
 
-    console.log(utility.isUndefined(output.profileChanges[pmcData._id].items.new), output.profileChanges[pmcData._id].items.new, "new" )
-    if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) {
-      output.profileChanges[pmcData._id].items.new = [];
-    }
-
+    if (utility.isUndefined(output.profileChanges[pmcData._id].items.new)) output.profileChanges[pmcData._id].items.new = [];
     output.profileChanges[pmcData._id].items.new.push({
       _id: newItem,
       _tpl: itemToAdd._tpl,
@@ -669,8 +653,7 @@ module.exports.moveItem = moveItem;
 module.exports.removeItemFromProfile = removeItemFromProfile;
 module.exports.removeItem = removeItem;
 module.exports.discardItem = discardItem;
-//module.exports.splitItem = splitItem;
-module.exports.findEmptySlot = findEmptySlot;
+module.exports.splitItem = splitItem;
 module.exports.mergeItem = mergeItem;
 module.exports.transferItem = transferItem;
 module.exports.swapItem = swapItem;
