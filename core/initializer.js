@@ -104,7 +104,7 @@ class Initializer {
   /* load classes */
   initializeClasses() {
     logger.logSuccess("Create: Classes as global variables");
-    let path = executedDir + "/src/classes/";
+    //let path = global.executedDir + "/src/classes/";
     //let files = fileIO.readDir(path);
     let loadedModules = "";
     const loadOrder = [
@@ -145,7 +145,7 @@ class Initializer {
     for (let file of loadOrder) {
       loadedModules += file.replace(".js", ", ");
       let name = file.replace(".js", "").toLowerCase() + "_f"; // fixes the weaponbuilds.js file bug ... lol
-      global[name] = require(path + file);
+      global[name] = require(process.cwd() + "/src/classes/" + file);
     }
     logger.logInfo("[Modules] " + loadedModules.slice(0, -2));
   }

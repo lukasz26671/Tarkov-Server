@@ -62,9 +62,9 @@ function scanRecursiveRoute(filepath, deep = false) { // recursively scans given
 
 function routeDatabaseAndResources() { // populate global.db and global.res with folders data
 	logger.logInfo("Rebuilding cache: route database");
-	db = scanRecursiveRoute("db/");
+	global.db = scanRecursiveRoute("db/");
 	logger.logInfo("Rebuilding cache: route resources");
-	res = scanRecursiveRoute("res/");
+	global.res = scanRecursiveRoute("res/");
 
 	// populate res/bundles
 	res.bundles = { files: [], folders: [] };
@@ -76,20 +76,23 @@ function routeDatabaseAndResources() { // populate global.db and global.res with
 
 	/* add important server paths */
 	db.user = {
-		"configs": {
-			"server": "user/configs/server.json"
+		configs: {
+			server: "user/configs/server.json",
+			gameplay: "user/configs/gameplay.json",
+			cluster: "user/configs/cluster.json",
+			blacklist: "user/configs/blacklist.json",
+			mods: "user/configs/mods.json"
 		},
-		"events": {
-			"schedule": "user/events/schedule.json"
+		events: {
+			schedule: "user/events/schedule.json"
 		}
 	}
 	fileIO.write("user/cache/db.json", db);
 	fileIO.write("user/cache/res.json", res);
 }
 
-function SortedModKeys() {
-	return Object.keys(global.mods.toLoad).sort((a, b) => (global.mods.toLoad[a].order > global.mods.toLoad[b].order) ? 1 : -1);
-}
+const SortedModKeys = () => Object.keys(global.mods.toLoad)
+	.sort((a, b) => (global.mods.toLoad[a].order > global.mods.toLoad[b].order) ? 1 : -1);
 
 function loadMod(loadType) {
 	const sortedList = SortedModKeys();
@@ -120,7 +123,8 @@ function loadMod(loadType) {
 			for (const srcToExecute in mod.src)
 				if (mod.src[srcToExecute] == loadType) {
 					logger.logDebug(`Executing Mod: ${modFolder}/${srcToExecute}`);
-					require(`../../user/mods/${modFolder}/${srcToExecute}`).mod(mod); // execute mod
+					// make sure to use correct pathing excludes usage of path and is shorter :)
+					require(process.cwd() + `/user/mods/${modFolder}/${srcToExecute}`).mod(mod); // execute mod
 				}
 		}
 	}

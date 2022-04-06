@@ -29,6 +29,7 @@ class Server {
   getPort = () => this.port;
   getBackendUrl = () => this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
   getVersion = () => global.core.constants.ServerVersion;
+
   putInBuffer(sessionID, data, bufLength) {
     if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
       this.buffers[sessionID] = {
@@ -162,7 +163,6 @@ class Server {
         default:
           {
             resolve(true);
-            //return true;
           }
       }
     });

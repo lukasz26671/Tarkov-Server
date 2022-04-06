@@ -365,8 +365,6 @@ exports.generateInventoryID = (profile) => {
 }
 
 exports.splitStack = (item) => {
-    //console.log(item, "splitStack")
-
     if (!("upd" in item) || !("StackObjectsCount" in item.upd)) {
         return [item];
     }
@@ -391,7 +389,7 @@ exports.splitStack = (item) => {
         count -= amount;
         stacks.push(newStack);
     }
-    //fileIO.write("./stacks.json", stacks);
+    
     return stacks;
 }
 
