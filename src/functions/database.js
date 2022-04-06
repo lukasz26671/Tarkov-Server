@@ -126,6 +126,25 @@ function _load_HideoutData() {
 function _load_QuestsData() {
   _database.quests = fileIO.readParsed("./" + db.quests.quests);
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
+  
+  /*   // this should load quests depending on file content if its single quest it will be pushed to the list
+    // if its quests array containing more then 1 quest it will be loaded as for loop push 
+    // unless database quests array is empty then it will just everride the empty array
+    _database.quests = [];
+    for (let quest in db.quests) {
+      let questData = fileIO.readParsed("./" + db.quests[quest]);
+      if (typeof questData.length != "undefined") {
+        if (_database.quests.length == 0) {
+          _database.quests = questData;
+        } else {
+          for (let q in questData) {
+            _database.quests.push(questData[q]);
+          }
+        }
+      } else {
+        _database.quests.push(questData);
+      }
+    } */
 }
 
 function _load_CustomizationData() {
