@@ -61,11 +61,11 @@ function sortOffers(request, offers) {
       break;
 
     case 5: // Price
-/*       if (request.offerOwnerType == 1) {
-        offers.sort(sortOffersByPriceSummaryCost);
-      } else {
-        offers.sort(sortOffersByPrice);
-      } */
+      /*       if (request.offerOwnerType == 1) {
+              offers.sort(sortOffersByPriceSummaryCost);
+            } else {
+              offers.sort(sortOffersByPrice);
+            } */
 
       offers.sort(sortOffersByPrice);
       break;
@@ -182,6 +182,9 @@ function getOffers(sessionID, request) {
   }
 
   for (let item of itemsToAdd) {
+    if (global._database.blacklist.includes(item)) {
+      continue;
+    }
     // Mao: shouldnt it be offers.push() ??
     offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
   }
@@ -199,7 +202,6 @@ function getOffers(sessionID, request) {
 }
 
 function getOffersFromTraders(sessionID, request) {
-  //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
   let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
   /*   let offersFilters = []; //this is an array of item tpl who filter only items to show
   
@@ -293,8 +295,8 @@ function calculateCost(barter_scheme) {
   for (let barter of barter_scheme) {
     summaryCost += helper_f.getTemplatePrice(barter._tpl) * barter.count;
   }
-
-  return Math.round(summaryCost);
+  //Math.round
+  return ~~(summaryCost);
 }
 
 function getLinkedSearchList(linkedSearchId) {
@@ -387,7 +389,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
 
   // Single item
   if (!preset_f.handler.hasPreset(template) || !onlyFunc) {
-    
+
     let offer = utility.DeepCopy(offerBase);
 
     //Math.round

@@ -366,7 +366,7 @@ function calculateLevel(pmcData) {
  * @param {string} traderID -> current trader ID,
  * @returns {number} calculatedLoyalty -> loyalty level
  */
-function getLoyalty(pmcData, traderID) {
+function calculateLoyalty(pmcData, traderID) {
   let playerSaleSum;
   let playerStanding;
   let playerLevel;
@@ -404,7 +404,34 @@ function getLoyalty(pmcData, traderID) {
   return calculatedLoyalty;
 }
 
+/** Calculate player's current trader loyalty level (created by PauloV)
+ * 
+ * @param {*} pmcData 
+ * @param {*} traderData 
+ * @returns 
+ */
+
+function calculateLoyalty(pmcData, traderData){
+  let level = -1;
+  const PMC_LEVEL = profile_f.calculateLevel(pmcData);
+  for(let data in traderData.loyaltyLevels){
+    if(!pmcData.TradersInfo[traderData._id].unlocked)
+      return 0; // trader is not unlocked what are you doing here ??
+    if(PMC_LEVEL >= traderData.loyaltyLevels[data].minLevel){
+      if(pmcData.TradersInfo[traderData._id].salesSum >= traderData.loyaltyLevels[data].minSalesSum){
+        if(pmcData.TradersInfo[traderData._id].standing >= traderData.loyaltyLevels[data].minStanding){
+          level++;
+        }
+      }
+    }
+  }
+  if(level == -1) return 0;
+
+  return level;
+}
+
 module.exports.handler = new ProfileServer();
 module.exports.getStashType = getStashType;
 module.exports.calculateLevel = calculateLevel;
-module.exports.getLoyalty = getLoyalty;
+module.exports.calculateLoyalty = calculateLoyalty;
+module.exports.calculateLoyalty = calculateLoyalty;

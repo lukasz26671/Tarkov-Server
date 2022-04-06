@@ -173,7 +173,6 @@ function payMoney(pmcData, body, sessionID) {
     barterPrice += item.count;
   }
 
-
   // prepare the amount of money in the profile
   let amountMoney = 0;
 
@@ -469,11 +468,11 @@ note from Maoci: you can merge and split items from parent-childrens
 */
 module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash) => {
   let toDo = [itemID];
-  let tmpItem = this.tryGetItem(itemtpl);
-  let rootItem = inventoryItemHash.byItemId[itemID];
+  const tmpItem = this.tryGetItem(itemtpl);
+  const rootItem = inventoryItemHash.byItemId[itemID];
   if (typeof tmpItem._props == "undefined") { return; }
-  let FoldableWeapon = tmpItem._props.Foldable;
-  let FoldedSlot = tmpItem._props.FoldedSlot;
+  const FoldableWeapon = tmpItem._props.Foldable;
+  const FoldedSlot = tmpItem._props.FoldedSlot;
 
   let SizeUp = 0,
     SizeDown = 0,
@@ -510,7 +509,7 @@ module.exports.getSizeByInventoryItemHash = (itemtpl, itemID, inventoryItemHash)
 
           // If the barrel is folded the space in the barrel is not counted
           let itm = this.tryGetItem(item._tpl);
-          let childFoldable = itm._props.Foldable;
+          const childFoldable = itm._props.Foldable;
           let childFolded = item.upd && item.upd.Foldable && item.upd.Foldable.Folded === true;
 
           if (FoldableWeapon && FoldedSlot === item.slotId && (rootFolded || childFolded)) {
@@ -592,17 +591,15 @@ function findAndReturnChildrenAsItems(items, itemID) {
  * Checks if an item is a dogtag. Used under profile_f.js to modify preparePrice based
  * on the level of the dogtag
  */
-function isDogtag(itemId) {
-  return itemId === "59f32bb586f774757e1e8442" || itemId === "59f32c3b86f77472a31742f0";
-}
+const isDogtag = (itemId) => itemId === "59f32bb586f774757e1e8442" || itemId === "59f32c3b86f77472a31742f0";
 
-function isNotSellable(itemid) {
-  return "544901bf4bdc2ddf018b456d" === itemid || "5449016a4bdc2d6f028b456f" === itemid || "569668774bdc2da2298b4568" === itemid || "5696686a4bdc2da3298b456a" === itemid;
-}
+const isNotSellable = (itemid) => 
+                          "544901bf4bdc2ddf018b456d" === itemid || 
+                          "5449016a4bdc2d6f028b456f" === itemid || 
+                          "569668774bdc2da2298b4568" === itemid || 
+                          "5696686a4bdc2da3298b456a" === itemid;
 
-function arrayIntersect(a, b) {
-  return a.filter((x) => b.includes(x));
-}
+const arrayIntersect = (a, b) => a.filter((x) => b.includes(x));
 
 /* Gets the identifier for a child using slotId, locationX and locationY. */
 function getChildId(item) {

@@ -4,7 +4,7 @@ exports.main = (pmcData, body, sessionID) => {
     let output = item_f.handler.getOutput(sessionID);
     const trader = trader_f.handler.getTrader(body.tid, sessionID);
 
-    const TraderLevel = profile_f.getLoyalty(pmcData, body.tid);
+    const TraderLevel = profile_f.calculateLoyalty(pmcData, body.tid);
 
     const LoyaltyIndex = TraderLevel - 1;
 

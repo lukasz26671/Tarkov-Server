@@ -5,12 +5,13 @@ function _load_Globals() {
   //allow to use file with {data:{}} as well as {}
   if (typeof _database.globals.data != "undefined") _database.globals = _database.globals.data;
 }
+
 function _load_ClusterConfig() {
   _database.clusterConfig = fileIO.readParsed("./" + db.user.configs.cluster);
 }
 
 function _load_GameplayConfig() {
-  _database.gameplay = fileIO.readParsed("./user/configs/gameplay.json");
+  global._database.gameplay = fileIO.readParsed("./user/configs/gameplay.json");
 }
 
 function _load_BlacklistConfig() {
@@ -185,8 +186,6 @@ function _load_LocaleData() {
       _database.locales.global[lang] = _database.locales.global[lang].data;
     }
   }
-  //fileIO.write("./dblang.json", _database.languages);
-  //fileIO.write("./dblocale.json", _database.locales);
 
   //original code
   /*   _database.languages = fileIO.readParsed("./" + db.user.cache.languages);
@@ -321,7 +320,7 @@ function _load_TradersData() {
       global._database.traders[traderID].base.repair.price_rate = -100;
     }
   }
-  fileIO.write("./traders.json", global._database.traders);
+  //fileIO.write("./traders.json", global._database.traders);
 }
 /*   _database.traders = {};
   for (let traderID in db.traders) {
@@ -353,11 +352,90 @@ function _load_TradersData() {
 } */
 
 function _load_WeatherData() {
-  _database.weather = fileIO.readParsed("./" + db.user.cache.weather);
+  _database.weather = [];
   let i = 0;
-  for (let weather in db.weather) {
-    logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + weather);
+  for (let file in db.weather) {
+      let filePath = db.weather[file];
+      let fileData = fileIO.readParsed(filePath);
+
+      logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + file.replace(".json", ""));
+      _database.weather.push(fileData);
   }
+}
+
+function GenerateRagfairOffersCache() {
+
+  const findChildren = (itemIdToFind, assort) => {
+    let Array = [];
+    for (let itemFromAssort of assort) {
+      if (itemFromAssort.parentId == itemIdToFind) {
+        Array.push(itemFromAssort)
+        Array = Array.concat(findChildren(itemFromAssort._id, assort));
+      }
+    }
+    return Array;
+  }
+  const OfferBase = fileIO.readParsed(db.base.fleaOffer);
+  const loadCache = (OFFER_BASE, itemsToSell, barter_scheme, loyal_level, trader, counter = 911) => {
+    let offer = utility.DeepCopy(OFFER_BASE);
+    const traderObj = global._database.traders[trader].base;
+    offer._id = itemsToSell[0]._id;
+    offer.intId = counter;
+    offer.user = {
+      "id": traderObj._id,
+      "memberType": 4,
+      "nickname": traderObj.surname,
+      "rating": 1,
+      "isRatingGrowing": true,
+      "avatar": traderObj.avatar
+    };
+    offer.root = itemsToSell[0]._id;
+    offer.items = itemsToSell;
+    offer.requirements = barter_scheme;
+    offer.loyaltyLevel = loyal_level;
+    return offer;
+  }
+  let response = { "categories": {}, "offers": [], "offersCount": 100, "selectedCategory": "5b5f78dc86f77409407a7f8e" };
+  let counter = 0;
+
+  for (let trader in db.traders) {
+    if (trader === "ragfair" || trader === "579dc571d53a0658a154fbec") {
+      continue;
+    }
+    const allAssort = global._database.traders[trader].assort;////fileIO.readParsed("./user/cache/assort_" + trader + ".json");
+    //allAssort = allAssort.data;
+
+    for (let itemAssort of allAssort.items) {
+      if (itemAssort.slotId === "hideout") {
+        let barter_scheme = null;
+        let loyal_level = 0;
+
+        let itemsToSell = [];
+        itemsToSell.push(itemAssort);
+        itemsToSell = [...itemsToSell, ...findChildren(itemAssort._id, allAssort.items)];
+
+        for (let barterFromAssort in allAssort.barter_scheme) {
+          if (itemAssort._id == barterFromAssort) {
+            barter_scheme = allAssort.barter_scheme[barterFromAssort][0];
+            break;
+          }
+        }
+
+        for (let loyal_levelFromAssort in allAssort.loyal_level_items) {
+          if (itemAssort._id == loyal_levelFromAssort) {
+            loyal_level = allAssort.loyal_level_items[loyal_levelFromAssort];
+            break;
+          }
+        }
+
+        response.offers.push(loadCache(OfferBase, itemsToSell, barter_scheme, loyal_level, trader, counter));
+        counter += 1;
+      }
+    }
+  }
+  logger.logDebug(`[Ragfair Cache] Generated ${counter} offers inluding all traders assort`)
+  //fileIO.write("user/cache/ragfair_offers.json", response, true, false);
+  _database.ragfair_offers = response;
 }
 
 exports.load = () => {
@@ -387,7 +465,9 @@ exports.load = () => {
   _load_LocationData();
   logger.logDebug("Load: 'Traders'");
   _load_TradersData();
+  logger.logDebug("Load: 'Flea Market'");
+  GenerateRagfairOffersCache();
   logger.logDebug("Load: 'Weather'");
   _load_WeatherData();
-  logger.logDebug("Database loaded");
+  logger.logInfo("Database loaded");
 };

@@ -1,6 +1,5 @@
 "use strict";
 
-var decimalAdjust = require('decimal-adjust')
 /* START NEW DEEPCOPY CODE */
 
 function cloneOtherType(target) {
@@ -184,6 +183,7 @@ exports.getRandomIntInc = (min, max) => {
     return ~~(Math.random() * (max - min + 1) + min);
 }
 
+const decimalAdjust = require('decimal-adjust')
 /**
  * Decimal adjustment of a number.
  *
@@ -205,7 +205,6 @@ exports.decimalAdjust = (type, value, exp) => {
         return decimalAdjust('ceil', value, exp);
     }
 }
-
 
 // getDirList TODO: OBSOLETE
 exports.getDirList = (path) => {

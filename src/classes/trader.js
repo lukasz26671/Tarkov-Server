@@ -261,7 +261,7 @@ class TraderServer {
 
     // Fetch the current trader loyalty level
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
-    const TraderLevel = profile_f.getLoyalty(pmcData, traderID);
+    const TraderLevel = profile_f.calculateLoyalty(pmcData, traderID);
 
     if (TraderLevel !== "ragfair") {
       // 1 is min level, 4 is max level
@@ -374,7 +374,7 @@ class TraderServer {
           continue;
         } // Ignore child item if it does not have an entry in the db. -- kiobu
         const getPrice = helper_f.getTemplatePrice(childItem._tpl);
-        let priceCoef = (trader.loyaltyLevels[profile_f.getLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
+        let priceCoef = (trader.loyaltyLevels[profile_f.calculateLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
         let tempPrice = getPrice >= 1 ? getPrice : 1;
         let count =
           "upd" in childItem && "StackObjectsCount" in childItem.upd
