@@ -1,7 +1,5 @@
 "use strict";
 
-//const helper_f = require("./helper");
-
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
   "543be5cb4bdc2deb348b4568",
@@ -861,10 +859,8 @@ class Generator {
         for (var p in preset._items) {
           let currentItem = utility.DeepCopy(preset._items[p]);
           OldIds[currentItem.id] = utility.generateNewItemId();
-          if (currentItem.parentId == oldBaseItem._id)
-            currentItem.parentId = createEndLootData.Items[0]._id;
-          if (typeof OldIds[currentItem.parentId] != "undefined")
-            currentItem.parentId = OldIds[currentItem.parentId];
+          if (currentItem.parentId == oldBaseItem._id) currentItem.parentId = createEndLootData.Items[0]._id;
+          if (typeof OldIds[currentItem.parentId] != "undefined") currentItem.parentId = OldIds[currentItem.parentId];
 
           currentItem.id = OldIds[currentItem.id];
           createEndLootData.Items.push(currentItem);
@@ -1013,12 +1009,8 @@ class LocationServer {
 
     // dyanmic loot
     count = 0;
-    count = lootGenerator.lootDynamic(
-      dynamic,
-      output,
-      _location.base.GlobalLootChanceModifier,
-      name,
-    );
+    count = lootGenerator.lootDynamic(dynamic, output, _location.base.GlobalLootChanceModifier, name);
+    
     logger.logInfo(`State Dynamic, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
@@ -1047,8 +1039,7 @@ class LocationServer {
     let base = global._database.core.location_base;
     let newData = {};
     for (let location in global._database.locations) {
-      newData[global._database.locations[location].base._Id] =
-        utility.DeepCopy(global._database.locations[location].base);
+      newData[global._database.locations[location].base._Id] = utility.DeepCopy(global._database.locations[location].base);
       newData[global._database.locations[location].base._Id].Loot = [];
     }
     base.locations = newData;

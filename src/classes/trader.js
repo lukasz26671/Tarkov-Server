@@ -261,18 +261,18 @@ class TraderServer {
 
     // Fetch the current trader loyalty level
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
-    const TraderLevel = profile_f.calculateLoyalty(pmcData, traderID);
+    const TraderLevel = profile_f.getLoyalty(pmcData, traderID);
 
     if (TraderLevel !== "ragfair") {
       // 1 is min level, 4 is max level
-      let questassort = { started: {}, success: {}, fail: {} };
-      if (typeof db.traders[traderID] != "undefined") {
+      let questassort = global._database.traders[traderID].questassort;
+/*       if (typeof db.traders[traderID] != "undefined") {
         if (typeof db.traders[traderID].questassort == "undefined") {
           questassort = { started: {}, success: {}, fail: {} };
         } else if (fileIO.exist(db.traders[traderID].questassort)) {
           questassort = fileIO.readParsed(db.traders[traderID].questassort);
         }
-      }
+      } */
 
       for (let key in baseAssorts.loyal_level_items) {
         let requiredLevel = baseAssorts.loyal_level_items[key];
@@ -317,7 +317,7 @@ class TraderServer {
     //let suitArray = utility.DeepCopy(_database.customization);
     //had to bring this back until we have some time to edit the whole tree
     //of things to make it work in memory (database.js, cache creation and more)
-    let suitArray = fileIO.readParsed(`./user/cache/customization_${traderID}.json`);
+    let suitArray = global._database.traders[traderID].suits;
     let suitList = [];
 
     for (let suit in suitArray) {
@@ -374,7 +374,7 @@ class TraderServer {
           continue;
         } // Ignore child item if it does not have an entry in the db. -- kiobu
         const getPrice = helper_f.getTemplatePrice(childItem._tpl);
-        let priceCoef = (trader.loyaltyLevels[profile_f.calculateLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
+        let priceCoef = (trader.loyaltyLevels[profile_f.getLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
         let tempPrice = getPrice >= 1 ? getPrice : 1;
         let count =
           "upd" in childItem && "StackObjectsCount" in childItem.upd

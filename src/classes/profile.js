@@ -344,6 +344,11 @@ function getStashType(sessionID) {
   return "";
 }
 
+/** Calculate level of a player
+ * 
+ * @param {*} pmcData 
+ * @returns 
+ */
 function calculateLevel(pmcData) {
   let exp = 0;
 
@@ -366,7 +371,7 @@ function calculateLevel(pmcData) {
  * @param {string} traderID -> current trader ID,
  * @returns {number} calculatedLoyalty -> loyalty level
  */
-function calculateLoyalty(pmcData, traderID) {
+function getLoyalty(pmcData, traderID) {
   let playerSaleSum;
   let playerStanding;
   let playerLevel;
@@ -434,4 +439,4 @@ module.exports.handler = new ProfileServer();
 module.exports.getStashType = getStashType;
 module.exports.calculateLevel = calculateLevel;
 module.exports.calculateLoyalty = calculateLoyalty;
-module.exports.calculateLoyalty = calculateLoyalty;
+module.exports.getLoyalty = getLoyalty;

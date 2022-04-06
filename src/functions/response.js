@@ -236,7 +236,7 @@ class Responses {
       {
         _id: "5ae20a0dcb1c13123084756f",
         RegistrationId: 20,
-        DateTime: ~~ (new Date() / 1000),
+        DateTime: ~~(new Date() / 1000),
         IsDeveloper: true,
         Regions: ["EUR"],
         VersionId: "bgkidft87ddd",
@@ -342,7 +342,7 @@ class Responses {
 
     return response_f.getBody({
       status: 0,
-      nicknamechangedate: ~~ (new Date() / 1000),
+      nicknamechangedate: ~~(new Date() / 1000),
     });
   }
   clientGameProfileNicknameReserved(url, info, sessionID) {
@@ -414,7 +414,7 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGetMetricsConfig(url, info, sessionID) {
-    return response_f.getBody(fileIO.readParsed(_database.core.matchMetrics));
+    return response_f.getBody(_database.core.matchMetrics);
   }
   clientGlobals(url, info, sessionID) {
     return response_f.getBody(globals_f.getGlobals(url, info, sessionID));
@@ -674,7 +674,7 @@ class Responses {
   }
   serverConfigGameplay(url, body, sessionID) {
     //execute data save here with info cause info should be $_GET transfered to json type with info[variableName]
-    home_f.processSaveData(body, _database.gameplay);
+    home_f.processSaveData(body, global._database.gameplay);
     return home_f.RenderGameplayConfigPage("/server/config/gameplay");
   }
   serverConfigMods(url, body, sessionID) {

@@ -205,22 +205,186 @@ function _load_LocaleData() {
     } */
 }
 
+//needs to be worked to consolidate functions below
+/* function Create_LootGameUsableStruct(item_data, Type) {
+  let isStatic = false;
+  let useGravity = false;
+  let randomRotation = false;
+  let position = { x: 0, y: 0, z: 0 };
+  let rotation = { x: 0, y: 0, z: 0 };
+  let IsGroupPosition = false;
+  let GroupPositions = [];
+
+  if (typeof item_data.IsStatic != "undefined") isStatic = item_data.IsStatic;
+  if (typeof item_data.useGravity != "undefined") useGravity = item_data.useGravity;
+  if (typeof item_data.randomRotation != "undefined") randomRotation = item_data.randomRotation;
+
+  if (item_data.Position != 0 && item_data.Position != "0") {
+    position.x = item_data.Position.x;
+    position.y = item_data.Position.y;
+    position.z = item_data.Position.z;
+  }
+  if (item_data.Rotation != 0 && item_data.Rotation != "0") {
+    rotation.x = item_data.Rotation.x;
+    rotation.y = item_data.Rotation.y;
+    rotation.z = item_data.Rotation.z;
+  }
+  if (typeof item_data.IsGroupPosition != "undefined") {
+    IsGroupPosition = item_data.IsGroupPosition;
+    GroupPositions = item_data.GroupPositions;
+  }
+  let structure = {
+    "Id": item_data.id,
+    "IsStatic": isStatic,
+    "useGravity": useGravity,
+    "randomRotation": randomRotation,
+    "Position": position,
+    "Rotation": rotation,
+    "IsGroupPosition": IsGroupPosition,
+    "GroupPositions": GroupPositions,
+    "Items": item_data.Items
+  };
+  if (Type == "static" || Type == "mounted") {
+    const Root = typeof item_data.Items[0] == "string" ? item_data.id : item_data.Items[0]._id;
+    structure["Root"] = Root;
+  }
+  return structure;
+} */
+
+function Create_ForcedDynamicStruct(item_data) {
+  let isStatic = false;
+  let useGravity = false;
+  let randomRotation = false;
+  let position = { x: 0, y: 0, z: 0 };
+  let rotation = { x: 0, y: 0, z: 0 };
+  let IsGroupPosition = false;
+  let GroupPositions = [];
+
+  if (typeof item_data.IsStatic != "undefined") isStatic = item_data.IsStatic;
+  if (typeof item_data.useGravity != "undefined")
+    useGravity = item_data.useGravity;
+  if (typeof item_data.randomRotation != "undefined")
+    randomRotation = item_data.randomRotation;
+
+  if (item_data.Position != 0 && item_data.Position != "0") {
+    position.x = item_data.Position.x;
+    position.y = item_data.Position.y;
+    position.z = item_data.Position.z;
+  }
+  if (item_data.Rotation != 0 && item_data.Rotation != "0") {
+    rotation.x = item_data.Rotation.x;
+    rotation.y = item_data.Rotation.y;
+    rotation.z = item_data.Rotation.z;
+  }
+  if (typeof item_data.IsGroupPosition != "undefined") {
+    IsGroupPosition = item_data.IsGroupPosition;
+    GroupPositions = item_data.GroupPositions;
+  }
+
+  return {
+    Id: item_data.id,
+    IsStatic: isStatic,
+    useGravity: useGravity,
+    randomRotation: randomRotation,
+    Position: position,
+    Rotation: rotation,
+    IsGroupPosition: IsGroupPosition,
+    GroupPositions: GroupPositions,
+    Items: item_data.Items,
+  };
+}
+function Create_StaticMountedStruct(item_data) {
+  let isStatic = false;
+  let useGravity = false;
+  let randomRotation = false;
+  let position = { x: 0, y: 0, z: 0 };
+  let rotation = { x: 0, y: 0, z: 0 };
+  let IsGroupPosition = false;
+  let GroupPositions = [];
+
+  if (typeof item_data.IsStatic != "undefined") isStatic = item_data.IsStatic;
+  if (typeof item_data.useGravity != "undefined")
+    useGravity = item_data.useGravity;
+  if (typeof item_data.randomRotation != "undefined")
+    randomRotation = item_data.randomRotation;
+  if (item_data.Position != 0 && item_data.Position != "0") {
+    position.x = item_data.Position.x;
+    position.y = item_data.Position.y;
+    position.z = item_data.Position.z;
+  }
+  if (item_data.Rotation != 0 && item_data.Rotation != "0") {
+    rotation.x = item_data.Rotation.x;
+    rotation.y = item_data.Rotation.y;
+    rotation.z = item_data.Rotation.z;
+  }
+  if (typeof item_data.IsGroupPosition != "undefined") {
+    IsGroupPosition = item_data.IsGroupPosition;
+    GroupPositions = item_data.GroupPositions;
+  }
+  //console.log(typeof item_data.Items[0]);
+  //console.log(item_data.id);
+  let Root =
+    typeof item_data.Items[0] == "string"
+      ? item_data.id
+      : item_data.Items[0]._id;
+  return {
+    Id: item_data.id,
+    IsStatic: isStatic,
+    useGravity: useGravity,
+    randomRotation: randomRotation,
+    Position: position,
+    Rotation: rotation,
+    IsGroupPosition: IsGroupPosition,
+    GroupPositions: GroupPositions,
+    Root: Root, // id of container
+    Items: item_data.Items,
+  };
+}
+
 function _load_LocationData() {
-  var _locations = fileIO.readParsed("./" + db.user.cache.locations);
   _database.locations = {};
-  for (let _location in _locations) {
-    _database.locations[_location] = _locations[_location];
+  for (let name in db.locations.base) {
+    let _location = { "base": {}, "loot": {} };
+    _location.base = fileIO.readParsed(db.locations.base[name]);
+    _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
+    if (typeof db.locations.loot[name] != "undefined") {
+      let loot_data = fileIO.readParsed(db.locations.loot[name]);
+      for (let type in loot_data) {
+        for (item of loot_data[type]) {
+          if (type == "static" || type == "mounted") {
+            _location.loot[type].push(Create_StaticMountedStruct(item));
+            continue;
+          }
+          _location.loot[type].push(Create_ForcedDynamicStruct(item));
+        }
+/*         for (let item of loot_data[type]) {
+          _location.loot[type].push(Create_LootGameUsableStruct(item))
+        } */
+      }
+    }
+    _database.locations[name] = _location;
   }
   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
   _database.locationConfigs = {};
   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
+
+  /*  var _locations = fileIO.readParsed("./" + db.user.cache.locations);
+   _database.locations = {};
+   for (let _location in _locations) {
+     _database.locations[_location] = _locations[_location]; 
+   }
+   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
+   _database.locationConfigs = {};
+   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
+   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
+   */
 }
 
 const LoadTraderAssort = (traderId) => {
   let base = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
   const assort = fileIO.readParsed(db.traders[traderId].assort);
-  
+
   for (let item in assort) {
     let items;
     if (traderId != "ragfair") {
@@ -231,7 +395,7 @@ const LoadTraderAssort = (traderId) => {
         copy properties of db item 
         There are a lot of properties missing and that is gay and retarded
         */
-       
+
         items[0]["upd"] = Object.assign({}, items[0].upd);
 
         items[0].upd.UnlimitedCount = items[0].upd.UnlimitedCount;
@@ -255,28 +419,6 @@ const LoadTraderAssort = (traderId) => {
     base.barter_scheme[item] = assort[item].barter_scheme;
     base.loyal_level_items[item] = assort[item].loyalty;
   }
-
-/*   for (let item in assort) {
-    if (traderId != "ragfair") {
-      if (typeof assort[item].items[0] != "undefined") {
-        let items = assort[item].items;
-
-        assort[item].items[0] = { upd: { StackObjectsCount: assort[item].currentStack } };
-        if (assort[item].default.unlimited)
-          assort[item].items[0].upd["UnlimitedCount"] = true;
-      }
-    } else {
-      if (typeof assort[item].items[0] != "undefined") {
-        assort[item].items[0] = { upd: { StackObjectsCount: 9999 } };
-      }
-    }
-    for (let assort_item in assort[item].items) {
-      base.items.push(assort[item].items[assort_item]);
-    }
-    base.barter_scheme[item] = assort[item].barter_scheme;
-    base.loyal_level_items[item] = assort[item].loyalty;
-  } */
-  //fileIO.write("./trader_assort.json", base);
   return base;
 }
 
@@ -306,6 +448,11 @@ function _load_TradersData() {
         }
         global._database.traders[traderID].suits = suitsTable;
       }
+    }
+
+    // Loading Trader Quests
+    if (typeof db.traders[traderID].questassort != "undefined") {
+      _database.traders[traderID].questassort = fileIO.readParsed("./" + db.traders[traderID].questassort);
     }
 
     if (global._database.traders[traderID].base.repair.price_rate === 0) {
@@ -355,11 +502,11 @@ function _load_WeatherData() {
   _database.weather = [];
   let i = 0;
   for (let file in db.weather) {
-      let filePath = db.weather[file];
-      let fileData = fileIO.readParsed(filePath);
+    let filePath = db.weather[file];
+    let fileData = fileIO.readParsed(filePath);
 
-      logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + file.replace(".json", ""));
-      _database.weather.push(fileData);
+    logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + file.replace(".json", ""));
+    _database.weather.push(fileData);
   }
 }
 

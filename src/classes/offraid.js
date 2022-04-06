@@ -371,12 +371,12 @@ function saveProgress(offraidData, sessionID) {
 
 			//if ran through
 			case "runner":
-				multiplier = 1;
+				multiplier = 0.25;
 				break;
 
 			//if death or any other state
 			default:
-				multiplier = 2;
+				multiplier = 1;
 				break;
 		}
 		//multiply all our earned points by the multiplier on all skills
