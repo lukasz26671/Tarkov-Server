@@ -344,10 +344,9 @@ class TraderServer {
     return output;
   }
   getPurchasesData(traderID, sessionID) {
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
-    let trader = global._database.traders[traderID].base;
-    //const traderCategories = global._database.traders[traderID].categories;
-    let currency = helper_f.getCurrency(trader.currency);
+    const pmcData = profile_f.handler.getPmcProfile(sessionID);
+    const trader = global._database.traders[traderID].base;
+    const currency = helper_f.getCurrency(trader.currency);
     let output = {};
 
     // get sellable items
@@ -374,14 +373,13 @@ class TraderServer {
         if (!global._database.items[childItem._tpl]) {
           continue;
         } // Ignore child item if it does not have an entry in the db. -- kiobu
-        let getPrice = helper_f.getTemplatePrice(childItem._tpl);
+        const getPrice = helper_f.getTemplatePrice(childItem._tpl);
         let priceCoef = (trader.loyaltyLevels[profile_f.getLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
         let tempPrice = getPrice >= 1 ? getPrice : 1;
         let count =
           "upd" in childItem && "StackObjectsCount" in childItem.upd
             ? childItem.upd.StackObjectsCount
             : 1;
-        //logger.logError("tempPrice: "+tempPrice+ " getPrice: "+getPrice+" priceCoef: "+priceCoef+" count: "+count);
         price = price + ((tempPrice - (tempPrice * priceCoef)) * count); // I know parentheses aren't needed but I find it more readable -cq
       }
 

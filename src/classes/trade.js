@@ -83,8 +83,8 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
 
 // Ragfair trading
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
-  let ragfair_offers_traders = utility.DeepCopy(_database.ragfair_offers);
-  let offers = body.offers;
+  const flea = utility.DeepCopy(global._database.traders["ragfair"]);
+  const offers = body.offers;
 
   for (let offer of offers) {
     pmcData = profile_f.handler.getPmcProfile(sessionID);
@@ -99,9 +99,9 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
       scheme_items: offer.items,
     };
 
-    for (let offerFromTrader of ragfair_offers_traders.offers) {
-      if (offerFromTrader._id == offer.id) {
-        body.tid = offerFromTrader.user.id;
+    for (let traderOffer in flea.base) {
+      if (flea.assort._id == offer.id) {
+        body.tid = flea[traderOffer]._id;
         break;
       }
     }

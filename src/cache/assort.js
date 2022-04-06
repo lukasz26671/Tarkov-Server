@@ -13,36 +13,37 @@ exports.cache = () => {
 
     base.data.nextResupply = db.traders[trader].nextResupply
 
-    let inputNodes = fileIO.readParsed(db.traders[trader].assort);
-    for (let item in inputNodes) {
+    let assort = fileIO.readParsed(db.traders[trader].assort);
+    for (let item in assort) {
       if (trader != "ragfair") {
-        if (typeof inputNodes[item].items[0] != "undefined") {
-          let ItemsList = inputNodes[item].items;
+        if (typeof assort[item].items[0] != "undefined") {
+          let items = assort[item].items;
 
           /*
           copy properties of db item 
           There are a lot of properties missing and that is gay and retarded
           */
-          ItemsList[0]["upd"] = Object.assign({}, inputNodes[item].items[0].upd);
+         
+          items[0]["upd"] = Object.assign({}, assort[item].items[0].upd);
 
-          ItemsList[0].upd.UnlimitedCount = inputNodes[item].items[0].upd.UnlimitedCount;
+          items[0].upd.UnlimitedCount = assort[item].items[0].upd.UnlimitedCount;
 
-          ItemsList[0].upd.StackObjectsCount = inputNodes[item].items[0].upd.StackObjectsCount;
-          if (inputNodes[item].items[0].upd.BuyRestrictionsMax != "undefined") {
-            ItemsList[0].upd.StackObjectsCount = inputNodes[item].items[0].upd.BuyRestrictionMax;
+          items[0].upd.StackObjectsCount = assort[item].items[0].upd.StackObjectsCount;
+          if (assort[item].items[0].upd.BuyRestrictionsMax != "undefined") {
+            items[0].upd.StackObjectsCount = assort[item].items[0].upd.BuyRestrictionMax;
           }
         }
       } else {
-        if (typeof inputNodes[item].items[0] != "undefined") {
-          inputNodes[item].items[0]["upd"] = {};
-          inputNodes[item].items[0].upd["StackObjectsCount"] = 99;
+        if (typeof assort[item].items[0] != "undefined") {
+          assort[item].items[0]["upd"] = {};
+          assort[item].items[0].upd["StackObjectsCount"] = 99;
         }
       }
-      for (let assort_item in inputNodes[item].items) {
-        base.data.items.push(inputNodes[item].items[assort_item]);
+      for (let assort_item in assort[item].items) {
+        base.data.items.push(assort[item].items[assort_item]);
       }
-      base.data.barter_scheme[item] = inputNodes[item].barter_scheme;
-      base.data.loyal_level_items[item] = inputNodes[item].loyalty;
+      base.data.barter_scheme[item] = assort[item].barter_scheme;
+      base.data.loyal_level_items[item] = assort[item].loyalty;
     }
 
     fileIO.write(`./user/cache/assort_${trader}.json`, base, true, false);

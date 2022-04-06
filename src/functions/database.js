@@ -219,27 +219,66 @@ function _load_LocationData() {
 }
 
 const LoadTraderAssort = (traderId) => {
-  let assortTable = { items: [], barter_scheme: {}, loyal_level_items: {} };
-  let assortFileData = fileIO.readParsed(db.traders[traderId].assort);
-  for (let item in assortFileData) {
+  let base = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
+  const assort = fileIO.readParsed(db.traders[traderId].assort);
+  
+  for (let item in assort) {
+    let items;
     if (traderId != "ragfair") {
-      if (typeof assortFileData[item].items[0] != "undefined") {
-        assortFileData[item].items[0] = { upd: { StackObjectsCount: assortFileData[item].currentStack } };
-        if (assortFileData[item].default.unlimited)
-          assortFileData[item].items[0].upd["UnlimitedCount"] = true;
+      if (utility.isUndefined(assort[item].items[0])) {
+        let items = assort[item].items;
+
+        /*
+        copy properties of db item 
+        There are a lot of properties missing and that is gay and retarded
+        */
+       
+        items[0]["upd"] = Object.assign({}, items[0].upd);
+
+        items[0].upd.UnlimitedCount = items[0].upd.UnlimitedCount;
+
+        items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
+        if (items[0].upd.BuyRestrictionsMax != "undefined") {
+          items[0].upd.StackObjectsCount = items[0].upd.BuyRestrictionMax;
+        }
       }
     } else {
-      if (typeof assortFileData[item].items[0] != "undefined") {
-        assortFileData[item].items[0] = { upd: { StackObjectsCount: 9999 } };
+      let items = assort[item].items;
+      if (utility.isUndefined(items[0])) {
+        items[0]["upd"] = {};
+        items[0].upd["StackObjectsCount"] = 99;
       }
     }
-    for (let assort_item in assortFileData[item].items) {
-      assortTable.items.push(assortFileData[item].items[assort_item]);
+    items = assort[item].items;
+    for (let assort_item in items) {
+      base.items.push(items[assort_item]);
     }
-    assortTable.barter_scheme[item] = assortFileData[item].barter_scheme;
-    assortTable.loyal_level_items[item] = assortFileData[item].loyalty;
+    base.barter_scheme[item] = assort[item].barter_scheme;
+    base.loyal_level_items[item] = assort[item].loyalty;
   }
-  return assortTable;
+
+/*   for (let item in assort) {
+    if (traderId != "ragfair") {
+      if (typeof assort[item].items[0] != "undefined") {
+        let items = assort[item].items;
+
+        assort[item].items[0] = { upd: { StackObjectsCount: assort[item].currentStack } };
+        if (assort[item].default.unlimited)
+          assort[item].items[0].upd["UnlimitedCount"] = true;
+      }
+    } else {
+      if (typeof assort[item].items[0] != "undefined") {
+        assort[item].items[0] = { upd: { StackObjectsCount: 9999 } };
+      }
+    }
+    for (let assort_item in assort[item].items) {
+      base.items.push(assort[item].items[assort_item]);
+    }
+    base.barter_scheme[item] = assort[item].barter_scheme;
+    base.loyal_level_items[item] = assort[item].loyalty;
+  } */
+  //fileIO.write("./trader_assort.json", base);
+  return base;
 }
 
 function _load_TradersData() {
@@ -253,7 +292,7 @@ function _load_TradersData() {
     // Loading Assort depending if its Fence or not
     if (traderID == "579dc571d53a0658a154fbec") {
       global._database.traders[traderID].base_assort = LoadTraderAssort(traderID);
-      global._database.traders[traderID].assort = { items: [], barter_scheme: {}, loyal_level_items: {} };
+      global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
     } else {
       global._database.traders[traderID].assort = LoadTraderAssort(traderID);
     }
@@ -282,6 +321,7 @@ function _load_TradersData() {
       global._database.traders[traderID].base.repair.price_rate = -100;
     }
   }
+  fileIO.write("./traders.json", global._database.traders);
 }
 /*   _database.traders = {};
   for (let traderID in db.traders) {
