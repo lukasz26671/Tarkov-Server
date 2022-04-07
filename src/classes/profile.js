@@ -106,7 +106,7 @@ class ProfileServer {
    * @param {string} sessionID 
    */
   isLoaded(sessionID) {
-    if(this.profiles[sessionID]) {
+    if (this.profiles[sessionID]) {
       return true;
     }
     return false;
@@ -247,11 +247,11 @@ class ProfileServer {
     return output;
   }
 
- /** Create character profile
-  * 
-  * @param {*} info 
-  * @param {*} sessionID 
-  */
+  /** Create character profile
+   * 
+   * @param {*} info 
+   * @param {*} sessionID 
+   */
   createProfile(info, sessionID) {
     // Load account data //
     const account = account_f.handler.find(sessionID);
@@ -287,8 +287,8 @@ class ProfileServer {
     pmcData.Info.Voice = customization_f.getCustomization()[info.voiceId]._name;
     pmcData.Customization = fileIO.readParsed(db.profile.defaultCustomization)[ChosenSideCapital]
     pmcData.Customization.Head = info.headId;
-    pmcData.Info.RegistrationDate = ~~ (new Date() / 1000);
-    pmcData.Health.UpdateTime = ~~ (Date.now() / 1000);
+    pmcData.Info.RegistrationDate = ~~(new Date() / 1000);
+    pmcData.Health.UpdateTime = ~~(Date.now() / 1000);
 
     // Load default clothing into the profile //
     let def = fileIO.readParsed(db.profile[account.edition].storage);
