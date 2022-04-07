@@ -26,6 +26,12 @@ class ProfileServer {
   loadProfileFromDisk(sessionID) {
     if (typeof sessionID == "undefined") logger.throwErr("[CLUSTER]Session ID is undefined", "~/src/classes/profile.js | 19");
     try {
+      // Check if the profile file exists
+      if (!global.internal.fs.existsSync(getPmcPath(sessionID))) {
+        logger.logError(`[CLUSTER] Profile file for session ID ${sessionID} not found.`);
+        return false;
+      }
+
       //Load the PMC profile from disk.
       this.profiles[sessionID]["pmc"] = fileIO.readParsed(getPmcPath(sessionID));
 
@@ -237,12 +243,16 @@ class ProfileServer {
   createProfile(info, sessionID) {
     // Load account data
     const account = account_f.handler.find(sessionID);
+
     // Get profile location
     const folder = account_f.getPath(account.id);
+
     // Get the faction the player has chosen //
     const ChosenSide = info.side.toLowerCase();
+
     // Get the faction the player has chosen as UpperCase String //
     const ChosenSideCapital = ChosenSide.charAt(0).toUpperCase() + ChosenSide.slice(1);
+
     // Get the profile template for the chosen faction //
     let pmcData = fileIO.readParsed(db.profile[account.edition]["character_" + ChosenSide]);
 
@@ -293,7 +303,7 @@ class ProfileServer {
 
     // Set cooldown time.
     // Make sure to apply ScavCooldownTimer bonus from Hideout if the player has it.
-    let currDt = ~~(Date.now() / 1000);
+    let currDt = Date.now() / 1000;
     let scavLockDuration = global._database.globals.config.SavagePlayCooldown;
     let modifier = 1;
     for (let bonus of pmcData.Bonuses) {
@@ -340,7 +350,11 @@ class ProfileServer {
   }
 }
 
-const getPmcPath = (sessionID) => `user/profiles/${sessionID}/character.json`;
+/* const getPmcPath = (sessionID) => `user/profiles/${sessionID}/character.json`; */
+function getPmcPath(sessionID) {
+  let pmcPath = db.user.profiles.character;
+  return pmcPath.replace("__REPLACEME__", sessionID);
+}
 
 function getStashType(sessionID) {
   let pmcData = profile_f.handler.getPmcProfile(sessionID);
