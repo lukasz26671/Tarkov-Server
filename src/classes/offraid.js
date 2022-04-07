@@ -140,9 +140,9 @@ function setInventory(pmcData, profile) {
 
 	pmcData.Inventory.fastPanel = profile.Inventory.fastPanel;
 
-	// Don't count important IDs as errors.
+	// Don't count important IDs as errors. Id's used as sorting tables.
 	const ignoreIDs = [
-		"60de0d80c6b34f52845b4646",		//?
+		"60de0d80c6b34f52845b4646",		//sorting table
 		"61b7367440281631fc83f17f" 		//sorting table
 	];
 
@@ -402,10 +402,8 @@ function saveProgress(offraidData, sessionID) {
 	pmcData.Quests = offraidData.profile.Quests;
 	//pmcData.Hideout = offraidData.profile.Hideout;
 
-	//logger.logError("BEFORE UPDATE: \n"+JSON.stringify(pmcData.Hideout.Production, null, 2));
 	//correctly update hideout production after raid.
 	keepalive_f.updatePlayerHideout(sessionID);
-	//logger.logError("AFTER UPDATE: \n"+JSON.stringify(pmcData.Hideout.Production, null, 2));
 
 	// For some reason, offraidData seems to drop the latest insured items.
 	// It makes more sense to use pmcData's insured items as the source of truth.
@@ -519,6 +517,7 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 
 	return false;
 }
+
 /**
  * Function that checks for duplicates inside the required parameters and
  * repairs them by creating new IDs. Repairs recursively child items whose parents
@@ -532,7 +531,7 @@ function repairInventoryIDs(pInv, AID) {
 
 	// Don't count important IDs as errors.
 	const ignoreIDs = [
-		"60de0d80c6b34f52845b4646",		//?
+		"60de0d80c6b34f52845b4646",		//sorting table
 		"61b7367440281631fc83f17f" 		//sorting table
 	];
 
