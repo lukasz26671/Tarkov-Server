@@ -86,7 +86,7 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
   const flea = utility.DeepCopy(global._database.traders["ragfair"]);
   const offers = body.offers;
 
-  for (let offer of offers) {
+  for (const offer of offers) {
     pmcData = profile_f.handler.getPmcProfile(sessionID);
 
     body = {
@@ -99,7 +99,7 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
       scheme_items: offer.items,
     };
 
-    for (let traderOffer in flea.base) {
+    for (const traderOffer in flea.base) {
       if (flea.assort._id == offer.id) {
         body.tid = flea[traderOffer]._id;
         break;
