@@ -186,7 +186,7 @@ function getOffers(sessionID, request) {
 function getOffersFromTraders(sessionID, request) {
   //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
   let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
-/*   let offersFilters = []; //this is an array of item tpl who filter only items to show
+  let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
   for (let offerC of jsonToReturn.offers) {
@@ -246,7 +246,7 @@ function getOffersFromTraders(sessionID, request) {
     }
   }
   jsonToReturn.offers = offersToKeep;
-  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers); */
+  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers);
 
   return jsonToReturn;
 }
