@@ -75,33 +75,24 @@ class Controller {
       case "exusec":
       case "pmcbot":
       case "bear":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.normal);
-        //console.log(name, "name")
         break;
 
       case "followertagilla":
       case "bosstagilla":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.tagilla);
-        //console.log(name, "name")
-
         break;
 
       case "followerkojany":
       case "followertest":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.followerkojany);
-        //console.log(name, "name")
         break;
 
       case "followergluharsecurity":
       case "followergluharsnipe":
       case "followergluharscout":
       case "followergluharassault":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.followergluhar);
-        //console.log(name, "name")
         break;
 
       case "marksman":
@@ -109,9 +100,7 @@ class Controller {
       case "cursedassault":
       case "assaultgroup":
       case "assault":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.scav);
-        //console.log(name, "name")
         break;
 
       default:

@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../util/logger");
+
 /*
 * An event is an object as follows:
 * event = {
@@ -12,10 +14,12 @@
 class ScheduledEventHandler {
 	constructor(scheduleIntervalMillis) {
 		this.eventCallbacks = {};
+		this.scheduleFileAge = {};
 
 		this.loadSchedule();
 
 		setInterval(() => {
+			this.loadSchedule();
 			this.processSchedule();
 		}, scheduleIntervalMillis * 1000);
 	}
@@ -25,16 +29,47 @@ class ScheduledEventHandler {
 	}
 
 	saveToDisk() {
-		fileIO.write(db.user.events.schedule, this.scheduledEvents);
+		// Check if the event path exists
+		if (global.internal.fs.existsSync(db.user.events.schedule)) {
+			// Check if the file was modified elsewhere
+			let statsPreSave = global.internal.fs.statSync(db.user.events.schedule);
+			if (statsPreSave.mtimeMs == this.scheduleFileAge) {
+				// Compare the events from server memory with the one saved on disk
+				let currentEvents = this.scheduledEvents;
+				let savedEvents = fileIO.readParsed(db.user.events.schedule);
+				if (JSON.stringify(currentEvents) !== JSON.stringify(savedEvents)) {
+					// Save the events from memory to disk.
+					fileIO.write(db.user.events.schedule, this.scheduledEvents);
+					logger.logInfo(`[CLUSTER] Schedules were saved.`);
+				}
+			} else {
+				// As the file on disk was changed, reload the file from disk instead of overwriting it.
+				this.scheduledEvents = fileIO.readParsed(db.user.events.schedule);
+			}
+		} else {
+			// Save events to disk.
+			fileIO.write(db.user.events.schedule, this.scheduledEvents);
+		}
+		// Update the savedFileAge stored in memory for the schedule.json.
+		let statsAfterSave = global.internal.fs.statSync(db.user.events.schedule);
+		this.scheduleFileAge = statsAfterSave.mtimeMs;
 	}
 
 	loadSchedule() {
-		if (!fileIO.exist(db.user.events.schedule)) {
-			this.scheduledEvents = [];
-			return;
-		}
+		// Check if the event path exists
+		if (global.internal.fs.existsSync(db.user.events.schedule)) {
+			// Check if the file was modified elsewhere
+			this.scheduledEvents = fileIO.readParsed(db.user.events.schedule);
 
-		this.scheduledEvents = fileIO.readParsed(db.user.events.schedule);
+			// Set the file age for the schedule.json.
+			let stats = global.internal.fs.statSync(db.user.events.schedule);
+			this.scheduleFileAge = stats.mtimeMs;
+			logger.logInfo(`[CLUSTER] Schedules were loaded.`);
+		} else {
+			// Save events to disk.
+			this.scheduledEvents = [];
+			this.saveToDisk();
+		}
 	}
 
 	processSchedule() {
@@ -43,7 +78,8 @@ class ScheduledEventHandler {
 		while (this.scheduledEvents.length > 0) {
 			let event = this.scheduledEvents.shift();
 
-			if (event.scheduledTime < now) {
+			if (event.scheduledTime < now && (!event.sessionId || profile_f.handler.isLoaded(event.sessionId))) {
+				logger.logInfo(`[CLUSTER] Firing schedule for session ID ${event.sessionId}.`);
 				this.processEvent(event);
 				continue;
 			}
