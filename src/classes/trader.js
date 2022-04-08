@@ -236,10 +236,10 @@ class TraderServer {
     if (traderID === "579dc571d53a0658a154fbec" && !isBuyingFromFence) {
       // Fence
       // Lifetime in seconds
-      let fence_assort_lifetime = global._database.gameplay.trading.traderSupply[traderID];
+      const fence_assort_lifetime = global._database.gameplay.trading.traderSupply[traderID];
 
       // Current time in seconds
-      let current_time = Math.floor(new Date().getTime() / 1000);
+      const current_time = Math.floor(new Date().getTime() / 1000);
 
       // Initial Fence generation pass.
       if (this.fence_generated_at === 0 || !this.fence_generated_at) {
@@ -257,22 +257,16 @@ class TraderServer {
     let baseAssorts = global._database.traders[traderID].assort;
 
     // Build what we're going to return.
-    let assorts = copyFromBaseAssorts(baseAssorts);
+    let assorts = utility.DeepCopy(baseAssorts);
+    //fileIO.write(`./assorts.json`, assorts);
 
     // Fetch the current trader loyalty level
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    const pmcData = profile_f.handler.getPmcProfile(sessionID);
     const TraderLevel = profile_f.getLoyalty(pmcData, traderID);
 
     if (TraderLevel !== "ragfair") {
       // 1 is min level, 4 is max level
       let questassort = global._database.traders[traderID].questassort;
-/*       if (typeof db.traders[traderID] != "undefined") {
-        if (typeof db.traders[traderID].questassort == "undefined") {
-          questassort = { started: {}, success: {}, fail: {} };
-        } else if (fileIO.exist(db.traders[traderID].questassort)) {
-          questassort = fileIO.readParsed(db.traders[traderID].questassort);
-        }
-      } */
 
       for (let key in baseAssorts.loyal_level_items) {
         let requiredLevel = baseAssorts.loyal_level_items[key];

@@ -426,7 +426,6 @@ class Responses {
     return response_f.getBody(global._database.templates);
   }
   clientHideoutAreas(url, info, sessionID) {
-    // TODO: from _database
     return response_f.getBody(global._database.hideout.areas);
   }
   clientHideoutProductionRecipes(url, info, sessionID) {
