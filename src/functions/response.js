@@ -141,7 +141,7 @@ class Responses {
   }
   dynClientLocale(url, info, sessionID) {
     const lang = account_f.handler.getAccountLang(sessionID);
-    return response_f.getBody(locale_f.handler.getGlobal(lang));
+    return response_f.getBody(locale_f.handler.getGlobal(lang, url, sessionID));
   }
   dynClientLocationGetLocalloot(url, info, sessionID) {
     let location_name = "";
@@ -156,7 +156,7 @@ class Responses {
   }
   dynClientMenuLocale(url, info, sessionID) {
     const lang = account_f.handler.getAccountLang(sessionID);
-    return response_f.getBody(locale_f.handler.getMenu(lang));
+    return response_f.getBody(locale_f.handler.getMenu(lang, url, sessionID));
   }
   dynClientTradingApiGetTrader(url, info, sessionID) {
     let TraderID = url.split("/");

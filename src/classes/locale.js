@@ -15,13 +15,28 @@ class LocaleServer {
     return global._database.languages;
   }
 
-  getMenu(lang = "en") {
+  getMenu(lang, url, sessionID) {
+    console.log(lang, "menu");
+    const currentLang = url.replace("/client/locale/", "");
+    const account = account_f.handler.find(sessionID);
+    console.log(currentLang, "currentLang");
+    lang = currentLang;
+
+    if (account.lang != lang) account.lang = lang;
     if (typeof global._database.locales.menu[lang] == "undefined")
       return global._database.locales.menu["en"];
     return global._database.locales.menu[lang];
   }
 
-  getGlobal(lang = "en") {
+  getGlobal(lang, url, sessionID) {
+    console.log(lang, "global");
+    const currentLang = url.replace("/client/locale/", "");
+    const account = account_f.handler.find(sessionID);
+    console.log(currentLang, "currentLang");
+    lang = currentLang;
+    console.log(lang, "langChange");
+    if (account.lang != lang) account.lang = lang;
+
     if (typeof global._database.locales.global[lang] == "undefined")
       return global._database.locales.global["en"];
     return global._database.locales.global[lang];

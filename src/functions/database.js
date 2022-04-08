@@ -205,6 +205,7 @@ function _load_LocaleData() {
       _database.locales.global[lang] = _database.locales.global[lang].data;
     }
   }
+  //fileIO.write("./database_locales.json", )
 
   //original code
   /*   _database.languages = fileIO.readParsed("./" + db.user.cache.languages);

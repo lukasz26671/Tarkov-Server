@@ -10,7 +10,6 @@ function main(sessionID) {
 }
 
 function updateTraders(sessionID) {
-  console.log(sessionID, "sessionID")
   let hour = 3600;
   //let test = 30
   let timeNow = utility.getTimestamp();
@@ -20,7 +19,6 @@ function updateTraders(sessionID) {
     if (traders[trader].base._id === "ragfair") continue;
     let base = traders[trader].base;
     let assort = traders[trader].assort;
-    console.log(base.nickname)
 
     if (base.nextResupply > timeNow) {
       continue;
