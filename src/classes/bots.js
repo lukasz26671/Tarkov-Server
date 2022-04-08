@@ -52,8 +52,8 @@ class Controller {
     return scavData[0];
   }
   getBotLimit(type) {
-    if (typeof global._database.gameplayConfig.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type] == "undefined") return 30;
-    return global._database.gameplayConfig.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type];
+    if (typeof global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type] == "undefined") return 30;
+    return global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type];
   }
   getBotDifficulty(type, difficulty) {
     switch (type) {

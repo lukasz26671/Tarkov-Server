@@ -367,7 +367,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
       // ~~ = Math.round
-      offer.requirements[0].count = ~~(rub * global._database.gameplayConfig.trading.ragfairMultiplier);
+      offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
       offers.push(offer);
       //console.log("offer:", offer)
     }
@@ -378,7 +378,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
     let offer = utility.DeepCopy(offerBase);
 
     //~~ = Math.round
-    let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplayConfig.trading.ragfairMultiplier);
+    let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplay.trading.ragfairMultiplier);
     offer._id = template;
     offer.items[0]._tpl = template;
     offer.requirements[0].count = rubPrice;

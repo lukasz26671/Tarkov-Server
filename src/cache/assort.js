@@ -23,20 +23,41 @@ exports.cache = () => {
           copy properties of db item 
           There are a lot of properties missing and that is gay and retarded
           */
-         
-          items[0]["upd"] = Object.assign({}, assort[item].items[0].upd);
 
-          items[0].upd.UnlimitedCount = assort[item].items[0].upd.UnlimitedCount;
-
-          items[0].upd.StackObjectsCount = assort[item].items[0].upd.StackObjectsCount;
-          if (assort[item].items[0].upd.BuyRestrictionsMax != "undefined") {
-            items[0].upd.StackObjectsCount = assort[item].items[0].upd.BuyRestrictionMax;
+          items[0].upd = Object.assign({}, items[0].upd);
+          if (utility.isUndefined(items[0].upd)) {
+            items[0]["upd"] = Object.assign({}, items[0].upd);
           }
+
+          items[0].upd.UnlimitedCount = false;
+          if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
+            items[0].upd["UnlimitedCount"] = false;
+          }
+
+          if (utility.isUndefined(items[0].upd.BuyRestrictionMax)) {
+            items[0].upd["BuyRestrictionMax"] = 5;
+          } else { items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax; }
+
+
+          if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
+            items[0].upd["BuyRestrictionCurrent"] = 0;
+          } else { items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent; }
+
+          items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
+          if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
+            items[0].upd["StackObjectsCount"] = assort[item].default.stack;
+          }
+
         }
       } else {
-        if (typeof assort[item].items[0] != "undefined") {
-          assort[item].items[0]["upd"] = {};
-          assort[item].items[0].upd["StackObjectsCount"] = 99;
+        let items = assort[item].items;
+        if (utility.isUndefined(items[0])) {
+          console.log(`items[0] for ${item} is undefined`);
+          items[0]["upd"] = {};
+          items[0].upd["UnlimitedCount"] = false;
+          items[0].upd["StackObjectsCount"] = 99;
+          items[0].upd["BuyRestrictionMax"] = 99;
+          items[0].upd["BuyRestrictionCurrent"] = 0;
         }
       }
       for (let assort_item in assort[item].items) {

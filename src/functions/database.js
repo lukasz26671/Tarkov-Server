@@ -126,7 +126,7 @@ function _load_HideoutData() {
 function _load_QuestsData() {
   _database.quests = fileIO.readParsed("./" + db.quests.quests);
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
-  
+
   /*   // this should load quests depending on file content if its single quest it will be pushed to the list
     // if its quests array containing more then 1 quest it will be loaded as for loop push 
     // unless database quests array is empty then it will just everride the empty array
@@ -377,9 +377,9 @@ function _load_LocationData() {
           }
           _location.loot[type].push(Create_ForcedDynamicStruct(item));
         }
-/*         for (let item of loot_data[type]) {
-          _location.loot[type].push(Create_LootGameUsableStruct(item))
-        } */
+        /*         for (let item of loot_data[type]) {
+                  _location.loot[type].push(Create_LootGameUsableStruct(item))
+                } */
       }
     }
     _database.locations[name] = _location;
@@ -408,30 +408,52 @@ const LoadTraderAssort = (traderId) => {
   for (let item in assort) {
     let items;
     if (traderId != "ragfair") {
-      if (utility.isUndefined(assort[item].items[0])) {
+      if (!utility.isUndefined(assort[item].items[0])) {
         let items = assort[item].items;
+
 
         /*
         copy properties of db item 
         There are a lot of properties missing and that is gay and retarded
         */
 
-        items[0]["upd"] = Object.assign({}, items[0].upd);
+        items[0].upd = Object.assign({}, items[0].upd);
+        if (utility.isUndefined(items[0].upd)) {
+          items[0]["upd"] = Object.assign({}, items[0].upd);
+        }
 
-        items[0].upd.UnlimitedCount = items[0].upd.UnlimitedCount;
+        items[0].upd.UnlimitedCount = false;
+        if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
+          items[0].upd["UnlimitedCount"] = false;
+        }
+
+        if (utility.isUndefined(items[0].upd.BuyRestrictionMax)) {
+          items[0].upd["BuyRestrictionMax"] = 5;
+        } else { items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax; }
+
+
+        if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
+          items[0].upd["BuyRestrictionCurrent"] = 0;
+        } else { items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent; }
 
         items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
-        if (items[0].upd.BuyRestrictionsMax != "undefined") {
-          items[0].upd.StackObjectsCount = items[0].upd.BuyRestrictionMax;
+        if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
+          items[0].upd["StackObjectsCount"] = assort[item].default.stack;
         }
+
       }
     } else {
       let items = assort[item].items;
       if (utility.isUndefined(items[0])) {
+        console.log(`items[0] for ${item} is undefined`);
         items[0]["upd"] = {};
+        items[0].upd["UnlimitedCount"] = false;
         items[0].upd["StackObjectsCount"] = 99;
+        items[0].upd["BuyRestrictionMax"] = 99;
+        items[0].upd["BuyRestrictionCurrent"] = 0;
       }
     }
+
     items = assort[item].items;
     for (let assort_item in items) {
       base.items.push(items[assort_item]);
@@ -489,34 +511,6 @@ function _load_TradersData() {
   }
   //fileIO.write("./traders.json", global._database.traders);
 }
-/*   _database.traders = {};
-  for (let traderID in db.traders) {
-    _database.traders[traderID] = { base: {}, assort: {}, categories: {} };
-    _database.traders[traderID].base = fileIO.readParsed("./" + db.traders[traderID].base);
-    _database.traders[traderID].categories = fileIO.readParsed("./" + db.traders[traderID].categories);
-    _database.traders[traderID].base.sell_category = _database.traders[traderID].categories; // override trader categories
-    _database.traders[traderID].assort = fileIO.readParsed("./" + db.user.cache["assort_" + traderID]);
-    if (typeof _database.traders[traderID].assort.data != "undefined") _database.traders[traderID].assort = _database.traders[traderID].assort.data;
-
-    if (typeof db.traders[traderID].questassort != "undefined") {
-      _database.traders[traderID].questassort = fileIO.readParsed("./" + db.traders[traderID].questassort);
-    }
-
-
-    if (_database.traders[traderID].base.repair.price_rate === 0) {
-      _database.traders[traderID].base.repair.price_rate = 100;
-      _database.traders[traderID].base.repair.price_rate *= global._database.gameplay.trading.repairMultiplier;
-      _database.traders[traderID].base.repair.price_rate -= 100;
-    } else {
-      _database.traders[traderID].base.repair.price_rate *= global._database.gameplay.trading.repairMultiplier;
-      if (_database.traders[traderID].base.repair.price_rate == 0) _database.traders[traderID].base.repair.price_rate = -1;
-    }
-    if (_database.traders[traderID].base.repair.price_rate < 0) {
-      _database.traders[traderID].base.repair.price_rate = -100;
-    }
-  }
-  _database.ragfair_offers = fileIO.readParsed("./" + db.user.cache.ragfair_offers);
-} */
 
 function _load_WeatherData() {
   _database.weather = [];
@@ -542,9 +536,12 @@ function GenerateRagfairOffersCache() {
     }
     return Array;
   }
-  const OfferBase = fileIO.readParsed(db.base.fleaOffer);
-  const loadCache = (OFFER_BASE, itemsToSell, barter_scheme, loyal_level, trader, counter = 911) => {
-    let offer = utility.DeepCopy(OFFER_BASE);
+  const fleaOfferTemplate = global._database.core.fleaOffer;
+  const convertToRagfairAssort = (itemsToSell, barter_scheme, loyal_level, trader, counter = 911) => {
+
+    //console.log(OFFER_BASE, "OFFER_BASE");
+
+    let offer = utility.DeepCopy(fleaOfferTemplate);
     const traderObj = global._database.traders[trader].base;
     offer._id = itemsToSell[0]._id;
     offer.intId = counter;
@@ -559,6 +556,16 @@ function GenerateRagfairOffersCache() {
     offer.root = itemsToSell[0]._id;
     offer.items = itemsToSell;
     offer.requirements = barter_scheme;
+
+    /**
+     * offer.buyRestrictionMax is not populating properly from the fleaOfferTemplate
+     * I have no idea how to get it to work properly
+     * Okay, I can hardcode it to 1 so we might be onto something
+     * 
+     */
+    if (utility.isUndefined(offer.buyRestrictionMax)) { console.log("offer.buyRestrictionMax - undefined"); }
+    offer.buyRestrictionMax = itemsToSell[0].upd.BuyRestrictionMax
+
     offer.loyaltyLevel = loyal_level;
     return offer;
   }
@@ -569,8 +576,7 @@ function GenerateRagfairOffersCache() {
     if (trader === "ragfair" || trader === "579dc571d53a0658a154fbec") {
       continue;
     }
-    const allAssort = global._database.traders[trader].assort;////fileIO.readParsed("./user/cache/assort_" + trader + ".json");
-    //allAssort = allAssort.data;
+    const allAssort = global._database.traders[trader].assort;
 
     for (let itemAssort of allAssort.items) {
       if (itemAssort.slotId === "hideout") {
@@ -595,13 +601,12 @@ function GenerateRagfairOffersCache() {
           }
         }
 
-        response.offers.push(loadCache(OfferBase, itemsToSell, barter_scheme, loyal_level, trader, counter));
+        response.offers.push(convertToRagfairAssort(itemsToSell, barter_scheme, loyal_level, trader, counter));
         counter += 1;
       }
     }
   }
-  logger.logDebug(`[Ragfair Cache] Generated ${counter} offers inluding all traders assort`)
-  //fileIO.write("user/cache/ragfair_offers.json", response, true, false);
+  logger.logDebug(`[Ragfair Cache] Generated ${counter} offers inluding all traders assort`);
   _database.ragfair_offers = response;
 }
 

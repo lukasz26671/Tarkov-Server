@@ -1,7 +1,7 @@
 // TODO: this will require some rewrite
 
 exports.cache = () => {
-    if (!serverConfig.rebuildCache) {
+     if (!serverConfig.rebuildCache) {
         return;
     }
 
@@ -41,7 +41,7 @@ exports.cache = () => {
                     }
                 }
 
-                offers = offers.concat(loadCache(itemsToSell, barter_scheme, loyal_level, trader, counter));
+                offers = offers.concat(convertToRagfairAssort(itemsToSell, barter_scheme, loyal_level, trader, counter));
                 counter += 1;
             }
         }
@@ -51,10 +51,16 @@ exports.cache = () => {
     fileIO.write("user/cache/ragfair_offers.json", response, true, false);
 }
 
-function loadCache(itemsToSell, barter_scheme, loyal_level, trader, counter = 911) {
+function convertToRagfairAssort(itemsToSell, barter_scheme, loyal_level, trader, counter = 911) {
     let offers = [];
     let offerBase = fileIO.readParsed(db.base.fleaOffer);
-    let traderObj = fileIO.readParsed(db.traders[trader].base);
+/*     if (typeof global._database.core.fleaOffer != "undefined") {
+        console.log("fleaOffer is defined")
+        offerBase = global._database.core.fleaOffer;
+    } */
+
+    const traderObj = fileIO.readParsed(db.traders[trader].base);
+
 
     offerBase._id = itemsToSell[0]._id;
     offerBase.intId = counter;
@@ -68,7 +74,9 @@ function loadCache(itemsToSell, barter_scheme, loyal_level, trader, counter = 91
     };
     offerBase.root = itemsToSell[0]._id;
     offerBase.items = itemsToSell;
+    //offerBase.items.upd.StackObjectsCount = itemsToSell[0].upd.StackObjectsCount;
     offerBase.requirements = barter_scheme;
+    offerBase.buyRestrictionMax = itemsToSell[0].upd.BuyRestrictionMax
     offerBase.loyaltyLevel = loyal_level;
 
     offers.push(offerBase);
