@@ -140,7 +140,7 @@ class Responses {
     return response_f.getBody(location_f.handler.get(url.replace("/api/location/", ""), sessionID));
   }
   dynClientLocale(url, info, sessionID) {
-    let lang = account_f.handler.getAccountLang(sessionID);
+    const lang = account_f.handler.getAccountLang(sessionID);
     return response_f.getBody(locale_f.handler.getGlobal(lang));
   }
   dynClientLocationGetLocalloot(url, info, sessionID) {
@@ -155,7 +155,7 @@ class Responses {
     return response_f.getBody(location_f.handler.get(location_name));
   }
   dynClientMenuLocale(url, info, sessionID) {
-    let lang = account_f.handler.getAccountLang(sessionID);
+    const lang = account_f.handler.getAccountLang(sessionID);
     return response_f.getBody(locale_f.handler.getMenu(lang));
   }
   dynClientTradingApiGetTrader(url, info, sessionID) {
