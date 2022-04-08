@@ -294,7 +294,7 @@ class Responses {
       totalInGame: 0,
       utc_time: utility.getTimestamp(),
     };
-    let languages = locale_f.handler.getLanguages().data;
+    const languages = locale_f.handler.getLanguages().data;
     for (let index in languages) {
       let lang = languages[index];
       obj.languages[lang.ShortName] = lang.Name;
@@ -330,7 +330,7 @@ class Responses {
     return response_f.getBody(profile_f.handler.getCompleteProfile(sessionID));
   }
   clientGameProfileNicknameChange(url, info, sessionID) {
-    let output = profile_f.handler.changeNickname(info, sessionID);
+    const output = profile_f.handler.changeNickname(info, sessionID);
 
     if (output == "taken") {
       return response_f.getBody(null, 255, serverConfig.translations.alreadyInUse);
@@ -349,7 +349,7 @@ class Responses {
     return response_f.getBody(account_f.handler.getReservedNickname(sessionID));
   }
   clientGameProfileNicknameValidate(url, info, sessionID) {
-    let output = profile_f.handler.validateNickname(info, sessionID);
+    const output = profile_f.handler.validateNickname(info, sessionID);
 
     if (output == "taken") {
       return response_f.getBody(null, 255, serverConfig.translations.alreadyInUse);
@@ -365,12 +365,12 @@ class Responses {
     return response_f.getBody([profile_f.handler.generateScav(sessionID)]);
   }
   clientGameProfileSearch(url, info, sessionID) {
-    let ids = Object.keys(account_f.handler.accounts).filter((x) => x != sessionID);
+    const ids = Object.keys(account_f.handler.accounts).filter((x) => x != sessionID);
     let users = [];
-    for (let i in ids) {
+    for (const i in ids) {
       let id = ids[i];
       if (!fileIO.exist(`user/profiles/${id}/character.json`)) continue;
-      let character = fileIO.readParsed(`user/profiles/${id}/character.json`);
+      const character = fileIO.readParsed(`user/profiles/${id}/character.json`);
       if (!character.Info.Nickname || !character.Info.Nickname.toLowerCase().includes(info.nickname.toLowerCase())) continue;
       let obj = { Info: {} };
       obj._id = character.aid;
@@ -481,7 +481,7 @@ class Responses {
     return dialogue_f.handler.generateDialogueView(info.dialogId, sessionID);
   }
   clientMatchAvailable(url, info, sessionID) {
-    let output = match_f.handler.getEnabled();
+    const output = match_f.handler.getEnabled();
 
     if (output === false) {
       return response_f.getBody(null, 999, "Offline mode enabled, if you are a server owner please change that in gameplay settings");
@@ -653,7 +653,7 @@ class Responses {
     return response_f.nullResponse();
   }
   playerHealthSync(url, info, sessionID) {
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    const pmcData = profile_f.handler.getPmcProfile(sessionID);
     health_f.handler.saveHealth(pmcData, info, sessionID);
     return response_f.nullResponse();
   }
@@ -692,7 +692,7 @@ class Responses {
     return { status: "OK" };
   }
   singleplayerBundles(url, info, sessionID) {
-    let local = serverConfig.ip === "127.0.0.1";
+    const local = serverConfig.ip === "127.0.0.1";
     return response_f.noBody(bundles_f.handler.getBundles(local));
   }
   singleplayerSettingsRaidEndstate(url, info, sessionID) {
