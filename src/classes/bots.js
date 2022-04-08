@@ -104,6 +104,7 @@ class Controller {
         break;
 
       default:
+        console.log(role, "role");
           name = utility.getArrayValue(name_database[role]);
           if(!name) {
             logger.logError(`Bot ${role} name not found in name list, could be a typo, send help pls.`);
