@@ -16,25 +16,27 @@ class LocaleServer {
   }
 
   getMenu(lang, url, sessionID) {
-    console.log(lang, "menu");
+    console.log(lang, "currentMenuLang");
     const currentLang = url.replace("/client/locale/", "");
     const account = account_f.handler.find(sessionID);
-    console.log(currentLang, "currentLang");
+    console.log(currentLang, "wantedMenuLang");
     lang = currentLang;
+    console.log(lang, "updatedMenuLang");
 
     if (account.lang != lang) account.lang = lang;
+    
     if (typeof global._database.locales.menu[lang] == "undefined")
       return global._database.locales.menu["en"];
     return global._database.locales.menu[lang];
   }
 
   getGlobal(lang, url, sessionID) {
-    console.log(lang, "global");
+    console.log(lang, "currentGlobalLang");
     const currentLang = url.replace("/client/locale/", "");
     const account = account_f.handler.find(sessionID);
-    console.log(currentLang, "currentLang");
+    console.log(currentLang, "wantedGlobalLang");
     lang = currentLang;
-    console.log(lang, "langChange");
+    console.log(lang, "updatedGlobalLang");
     if (account.lang != lang) account.lang = lang;
 
     if (typeof global._database.locales.global[lang] == "undefined")
