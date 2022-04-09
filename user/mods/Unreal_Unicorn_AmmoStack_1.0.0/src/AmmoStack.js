@@ -1,5 +1,5 @@
 exports.mod = (mod_data) => {
-    let cachebase = fileIO.readParsed(global.db.user.cache.items);
+    //let cachebase = fileIO.readParsed(global.db.user.cache.items);
     let base = global._database.items;
 
     let settings = mod_data.settings;
@@ -14,7 +14,7 @@ exports.mod = (mod_data) => {
         }
     }
 
-    for (let file in cachebase.data) {
+/*     for (let file in cachebase.data) {
         let fileData = cachebase.data[file];
         if (fileData._parent === "5485a8684bdc2da71d8b4567") {
             if (fileData._props.StackMaxSize !== 1) {
@@ -22,9 +22,9 @@ exports.mod = (mod_data) => {
 
             }
         }
-    }
+    } */
 
-    fileIO.write(global.db.user.cache.items, cachebase, true);
+    //fileIO.write(global.db.user.cache.items, cachebase, true);
     logger.logSuccess(
         `The Ammo Stack Multiplier of ${settings.maxstackmultiplier} has been applied`
     );

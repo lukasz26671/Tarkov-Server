@@ -15,14 +15,20 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
+  console.log(body, "body");
   console.log(body.item_id, "body.item_id");
   const traderAssort = global._database.traders[body.tid].assort;
+  fileIO.write("traders.json", traderAssort);
+  
+  console.log(traderAssort.items[body.item_id], "traderAssort.items[body.item_id]");
 
-  if (!utility.isUndefined(traderAssort[body.item_id])) {
+  if (!utility.isUndefined(traderAssort.items[body.item_id])) {
     if(traderAssort[body.item_id][0].upd.StackObjectsCount){ console.log("stack"); }
 
+    console.log(traderAssort.items[body.item_id].upd.StackObjectsCount, "originalStack");
+    traderAssort.items[body.item_id].upd.StackObjectsCount -= body.count;
+    console.log(traderAssort.items[body.item_id].upd.StackObjectsCount, "newStack");
 
-    traderAssort[body.item_id].upd.StackObjectsCount -= body.count;
   }
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));

@@ -135,7 +135,7 @@ function getOffers(sessionID, request) {
   let itemsToAdd = [];
   let offers = [];
 
-  let offersFromTraders = getOffersFromTraders(sessionID, request);
+  const offersFromTraders = getOffersFromTraders(sessionID, request);
   if (request.offerOwnerType === 1) {
     return offersFromTraders;
   }

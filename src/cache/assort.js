@@ -16,7 +16,7 @@ exports.cache = () => {
     let assort = fileIO.readParsed(db.traders[trader].assort);
     for (let item in assort) {
       if (trader != "ragfair") {
-        if (typeof assort[item].items[0] != "undefined") {
+        if (!utility.isUndefined(assort[item].items[0])) {
           let items = assort[item].items;
 
           /*

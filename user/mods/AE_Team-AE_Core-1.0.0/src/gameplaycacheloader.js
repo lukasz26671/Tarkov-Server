@@ -2,16 +2,18 @@ exports.mod = (mod_data) => {
   let config = mod_data.settings;
   let PathResolver = global.internal.path.resolve;
 
-  const cacheLoad = function (filepath) {
+/*   const cacheLoad = function (filepath) {
     return global.fileIO.readParsed(PathResolver(filepath));
-  };
+  }; */
   logger.logInfo(`—————————————————————————————————————————`);
   logger.logInfo(`\x1b[91m[GAMEPLAY CACHE CORE] ${mod_data.name} Started\x1b[40m`);
   logger.logInfo(`—————————————————————————————————————————`);
 
   //START ------- BIG VARIABLE LOAD
-  let items = cacheLoad("user/cache/items.json");
-  let locations = cacheLoad("user/cache/locations.json");
+  let items = global._database.items;
+  if (utility.isUndefined(items)) console.log("items is undefined");
+  let locations = global._database.locations;
+  if (utility.isUndefined(locations)) console.log("locations is undefined");
   //END ------- BIG VARIABLE LOAD
 
 
@@ -23,6 +25,7 @@ exports.mod = (mod_data) => {
 
 
     for (const name in config.raidTimeConfig.locations.base) {
+      //console.log(locations[name], "locations[name]");
       let timelimit = locations[name].base.escape_time_limit;
       let temp; // will hold modified time based on mapModifier and timeModifier
       let mapTimeConfig; // will hold mapTimeModifier based on mapModifier
