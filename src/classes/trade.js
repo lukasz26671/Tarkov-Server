@@ -15,34 +15,45 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
-  console.log(body, "body");
-  console.log(body.item_id, "body.item_id");
+  //console.log(body, "body");
+  //console.log(body.item_id, "body.item_id");
   const traderAssort = global._database.traders[body.tid].assort;
+  const ragfairAssort = global._database.ragfair_offers.offers
   //fileIO.write("traders.json", traderAssort);
-  
 
-  //iterate through traderAssort.items
-  //if item_id is equal to body.item_id
-  //then subtract body.count from itemToBeFound.upd.StackObjectsCount
-  
-  for (let item in traderAssort.items) {
+
+/**
+ * This whole loop below needs to be optimized and more thoroughly tested 
+ * I did what I could - King
+ * We need a check similarly to helper_f.payMoney when we update the stack
+ * 
+ */
+
+  for (const item in traderAssort.items) {
     let itemToBeFound = traderAssort.items[item];
 
     if (itemToBeFound._id === body.item_id) {
-  
+
       itemToBeFound.upd.StackObjectsCount -= body.count;
       itemToBeFound.upd.BuyRestrictionCurrent += body.count;
+
+      for (const item in ragfairAssort) {
+
+        if (body.item_id === ragfairAssort[item].root) {
+          let itemToBeFoundRagfair = ragfairAssort[item].items;
+
+          for (const properties in itemToBeFoundRagfair) {
+            if (itemToBeFoundRagfair[properties].upd) {
+
+              let itemToBeFoundRagfairUpd = itemToBeFoundRagfair[properties].upd;
+              if ((itemToBeFoundRagfairUpd.BuyRestrictionCurrent + body.count) < ragfairAssort[item].buyRestrictionMax) {
+              itemToBeFoundRagfairUpd.BuyRestrictionCurrent = itemToBeFound.upd.BuyRestrictionCurrent;
+            }
+          }
+        }
+      }
     }
   }
-
-  /* if (!utility.isUndefined(traderAssort.items[body.item_id])) {
-    if(traderAssort[body.item_id][0].upd.StackObjectsCount){ console.log("stack"); }
-
-    console.log(traderAssort.items[body.item_id].upd.StackObjectsCount, "originalStack");
-    traderAssort.items[body.item_id].upd.StackObjectsCount -= body.count;
-    console.log(traderAssort.items[body.item_id].upd.StackObjectsCount, "newStack");
-
-  } */
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
   let output = item_f.handler.getOutput(sessionID);
@@ -111,7 +122,7 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
 // Ragfair trading
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
   let ragfair_offers_traders = utility.DeepCopy(_database.ragfair_offers);
-  //let ragfair_offers_traders = _database.ragfair_offers;
+
   let offers = body.offers;
 
   for (let offer of offers) {
@@ -133,6 +144,7 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
         break;
       }
     }
+
 
     //output =
     this.confirmTrading(pmcData, body, sessionID);
