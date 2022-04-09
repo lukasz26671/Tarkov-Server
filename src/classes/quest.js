@@ -16,9 +16,9 @@ const getQuestsCache = () => fileIO.stringify(global._database.quests, true);
 
 //Fix for new quests where previous quest already required to found in raid items as same ID
 function getQuestsForPlayer(url, info, sessionID) {
-  let _profile = profile_f.handler.getPmcProfile(sessionID);
+  const _profile = profile_f.handler.getPmcProfile(sessionID);
   let quests = utility.DeepCopy(global._database.quests);
-  let side = _profile.Info.Side;
+  const side = _profile.Info.Side;
   let count = 0;
   for (let quest in quests) {
     //clear completed quests
@@ -89,7 +89,7 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
   let questRewards = [];
   let output = item_f.handler.getOutput(sessionID);
 
-  for (let reward of quest.rewards[state]) {
+  for (const reward of quest.rewards[state]) {
     switch (reward.type) {
       case "Item":
         questRewards = questRewards.concat(processReward(reward));
@@ -108,7 +108,7 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
         pmcData.TradersInfo[reward.target].standing += parseFloat(reward.value);
         break;
       case "TraderUnlock":
-        if (typeof pmcData.TradersInfo[reward.target] == "undefined") {
+        if (utility.isUndefined(pmcData.TradersInfo[reward.target])) {
           pmcData.TradersInfo[reward.target] = {
             salesSum: 0,
             standing: 0,
@@ -130,7 +130,7 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
       case "Location":
         /* not used in game (can lock or unlock location suposedly...) */ break;
       case "Skill":
-        let skills = pmcData.Skills.Common.filter((skill) => skill.Id == reward.target);
+        const skills = pmcData.Skills.Common.filter((skill) => skill.Id == reward.target);
         for (const Id in skills) {
           pmcData.Skills.Common[Id].Progress += parseInt(reward.value);
         }
@@ -156,15 +156,15 @@ function getQuestRewards(quest, state, pmcData, sessionID) {
   output.profileChanges[pmcData._id].traderRelations = pmcData.TradersInfo;
 
   // Quest items are found in raid !!
-  for (let questItem of questRewards) {
-    if (typeof questItem.upd == "undefined") questItem.upd = {};
+  for (const questItem of questRewards) {
+    if (utility.isUndefined(questItem.upd)) questItem.upd = {};
     questItem.upd["SpawnedInSession"] = true;
   }
   return questRewards;
 }
 
 function acceptQuest(pmcData, body, sessionID) {
-  let state = "Started";
+  const state = "Started";
   let found = false;
 
   // If the quest already exists, update its status
@@ -188,14 +188,14 @@ function acceptQuest(pmcData, body, sessionID) {
 
   // Create a dialog message for starting the quest.
   // Note that for starting quests, the correct locale field is "description", not "startedMessageText".
-  let quest = getCachedQuest(body.qid);
-  let accountLang = account_f.handler.getAccountLang(sessionID)
+  const quest = getCachedQuest(body.qid);
+  const accountLang = account_f.handler.getAccountLang(sessionID)
 
-  let globalLocales = locale_f.handler.getGlobal(accountLang, false, sessionID);
+  const globalLocales = locale_f.handler.getGlobal(accountLang, false, sessionID);
   let questLocale = globalLocales.quest;
   questLocale = questLocale[body.qid];
 
-  let questRewards = getQuestRewards(quest, state, pmcData, sessionID);
+  const questRewards = getQuestRewards(quest, state, pmcData, sessionID);
 
   let messageContent = {
     templateId: globalLocales.mail[questLocale.startedMessageText],
@@ -216,11 +216,11 @@ function acceptQuest(pmcData, body, sessionID) {
 }
 
 function completeQuest(pmcData, body, sessionID) {
-  let state = "Success";
+  const state = "Success";
   let intelCenterBonus = 0; //percentage of money reward
 
   //find if player has money reward boost
-  for (let area of pmcData.Hideout.Areas) {
+  for (const area of pmcData.Hideout.Areas) {
     if (area.type === 11) {
       if (area.level === 1) {
         intelCenterBonus = 5;
@@ -232,7 +232,7 @@ function completeQuest(pmcData, body, sessionID) {
     }
   }
 
-  for (let quest in pmcData.Quests) {
+  for (const quest in pmcData.Quests) {
     if (pmcData.Quests[quest].qid === body.qid) {
       pmcData.Quests[quest].status = state;
       break;
@@ -242,7 +242,7 @@ function completeQuest(pmcData, body, sessionID) {
   //Check if any of linked quest is failed, and that is unrestartable.
   for (const quest of pmcData.Quests) {
     if (!(quest.status === "Locked" || quest.status === "Success" || quest.status === "Fail")) {
-      let checkFail = getCachedQuest(quest.qid);
+      const checkFail = getCachedQuest(quest.qid);
       for (let failCondition of checkFail.conditions.Fail) {
         if (checkFail.restartable === false && failCondition._parent === "Quest" && failCondition._props.target === body.qid) {
           quest.status = "Fail";
@@ -252,7 +252,8 @@ function completeQuest(pmcData, body, sessionID) {
   }
 
   // give reward
-  let quest = getCachedQuest(body.qid);
+  const quest = getCachedQuest(body.qid);
+  const locale = account_f.handler.getAccountLang(sessionID);
 
   if (intelCenterBonus > 0) {
     quest = applyMoneyBoost(quest, intelCenterBonus); //money = money + (money*intelCenterBonus/100)
@@ -261,8 +262,7 @@ function completeQuest(pmcData, body, sessionID) {
   let questRewards = getQuestRewards(quest, state, pmcData, sessionID);
 
   // Create a dialog message for completing the quest.
-  let questDb = getCachedQuest(body.qid);
-  let questLocale = global._database.locales.global["en"].quest;
+  let questLocale = global._database.locales.global[locale].quest;
   questLocale = questLocale[body.qid];
   let messageContent = {
     templateId: questLocale.successMessageText,
@@ -271,7 +271,7 @@ function completeQuest(pmcData, body, sessionID) {
   };
   let output = item_f.handler.getOutput(sessionID);
   if (typeof output.profileChanges[pmcData._id].quests == "undefined") output.profileChanges[pmcData._id].quests = [];
-  let questForPlayerToUpdate = utility.DeepCopy(questDb);
+  let questForPlayerToUpdate = utility.DeepCopy(quest);
   questForPlayerToUpdate.conditions.AvailableForStart = [];
   questForPlayerToUpdate.conditions.AvailableForFinish = [];
   questForPlayerToUpdate.conditions.Fail = [];
@@ -279,14 +279,14 @@ function completeQuest(pmcData, body, sessionID) {
 
   //output.profileChanges[pmcData._id].quests[0]["status"] = "Success"; // there is no other way to finish quest for now (if there will be then it need ot be changed to proper status)
   item_f.handler.setOutput(output);
-  dialogue_f.handler.addDialogueMessage(questDb.traderId, messageContent, sessionID, questRewards);
+  dialogue_f.handler.addDialogueMessage(quest.traderId, messageContent, sessionID, questRewards);
   return output;
 }
 
 function handoverQuest(pmcData, body, sessionID) {
   const quest = getCachedQuest(body.qid);
   let output = item_f.handler.getOutput(sessionID);
-  let types = ["HandoverItem", "WeaponAssembly"];
+  const types = ["HandoverItem", "WeaponAssembly"];
   let handoverMode = true;
   let value = 0;
   let counter = 0;
@@ -303,7 +303,7 @@ function handoverQuest(pmcData, body, sessionID) {
     }
   }
 
-  for (let condition of quest.conditions.AvailableForFinish) {
+  for (const condition of quest.conditions.AvailableForFinish) {
     if (condition._props.id === body.conditionId && types.includes(condition._parent)) {
       value = parseInt(condition._props.value);
       handoverMode = condition._parent === types[0];
@@ -316,7 +316,7 @@ function handoverQuest(pmcData, body, sessionID) {
     return output;
   }
 
-  for (let itemHandover of body.items) {
+  for (const itemHandover of body.items) {
     // remove the right quantity of given items
     amount = Math.min(itemHandover.count, value - counter);
     counter += amount;
@@ -328,7 +328,7 @@ function handoverQuest(pmcData, body, sessionID) {
       }
     } else {
       // for weapon handover quests, remove the item and its children.
-      let toRemove = helper_f.findAndReturnChildren(pmcData, itemHandover.id);
+      const toRemove = helper_f.findAndReturnChildren(pmcData, itemHandover.id);
       let index = pmcData.Inventory.items.length;
 
       // important: don't tell the client to remove the attachments, it will handle it
@@ -355,7 +355,7 @@ function handoverQuest(pmcData, body, sessionID) {
 }
 
 function applyMoneyBoost(quest, moneyBoost) {
-  for (let reward of quest.rewards.Success) {
+  for (const reward of quest.rewards.Success) {
     if (reward.type === "Item") {
       if (helper_f.isMoneyTpl(reward.items[0]._tpl)) {
         //Math.round
@@ -370,13 +370,13 @@ function applyMoneyBoost(quest, moneyBoost) {
 /* Sets the item stack to value, or delete the item if value <= 0 */
 // TODO maybe merge this function and the one from customization
 function changeItemStack(pmcData, id, value, output) {
-  for (let inventoryItem in pmcData.Inventory.items) {
+  for (const inventoryItem in pmcData.Inventory.items) {
     if (pmcData.Inventory.items[inventoryItem]._id === id) {
       if (value > 0) {
         let item = pmcData.Inventory.items[inventoryItem];
 
         item.upd.StackObjectsCount = value;
-        if (typeof output.profileChanges[pmcData._id].items.change == "undefined") output.profileChanges[pmcData._id].items.change = [];
+        if (utility.isUndefined(output.profileChanges[pmcData._id].items.change)) output.profileChanges[pmcData._id].items.change = [];
         output.profileChanges[pmcData._id].items.change.push({
           _id: item._id,
           _tpl: item._tpl,
@@ -386,7 +386,7 @@ function changeItemStack(pmcData, id, value, output) {
           upd: { StackObjectsCount: item.upd.StackObjectsCount },
         });
       } else {
-        if (typeof output.profileChanges[pmcData._id].items.del == "undefined") output.profileChanges[pmcData._id].items.del = [];
+        if (utility.isUndefined(output.profileChanges[pmcData._id].items.del)) output.profileChanges[pmcData._id].items.del = [];
         output.profileChanges[pmcData._id].items.del.push({ _id: id });
         pmcData.Inventory.items.splice(inventoryItem, 1);
       }
@@ -397,7 +397,7 @@ function changeItemStack(pmcData, id, value, output) {
 }
 
 function getQuestStatus(pmcData, questID) {
-  for (let quest of pmcData.Quests) {
+  for (const quest of pmcData.Quests) {
     if (quest.qid === questID) {
       return quest.status;
     }

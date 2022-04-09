@@ -15,16 +15,14 @@ exports.buyItem = (pmcData, body, sessionID) => {
     tid: body.tid,
   };
 
-  console.log(body.item_id)
-  let tAssort = global._database.traders[body.tid].assort;
+  console.log(body.item_id, "body.item_id");
+  const traderAssort = global._database.traders[body.tid].assort;
 
-  if (!utility.isUndefined(tAssort[body.item_id]) && tAssort[body.item_id].upd.StackObjectsCount) {
+  if (!utility.isUndefined(traderAssort[body.item_id])) {
+    if(traderAssort[body.item_id][0].upd.StackObjectsCount){ console.log("stack"); }
 
-    console.log(tAssort[body.item_id].upd.StackObjectsCount, "tAssort[body.item_id].upd.StackObjectsCount old")
 
-    tAssort[body.item_id].upd.StackObjectsCount -= body.count;
-    
-    console.log(tAssort[body.item_id].upd.StackObjectsCount, "tAssort[body.item_id].upd.StackObjectsCount new")
+    traderAssort[body.item_id].upd.StackObjectsCount -= body.count;
   }
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
