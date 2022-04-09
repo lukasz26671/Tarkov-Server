@@ -218,10 +218,10 @@ class AccountServer {
     return undefined;
   }
 
-  /**
+ /**
  * Searches for account and tries to retrive the account language
- * @param {*} sessionID 
- * @returns string - Account language (en, ru...)
+ * @param {string} sessionID 
+ * @returns {string} - Account language (en, ru...)
  */
   getAccountLang(sessionID) {
     // This needs to be at the top to check for changed accounts.

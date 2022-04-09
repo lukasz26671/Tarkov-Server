@@ -1,4 +1,7 @@
 ﻿"use strict";
+
+const { logger } = require("../../core/util/logger");
+
 class LocaleServer {
   initialize() {
     global._database.locales.global['en'].interface["Attention! This is a Beta version of Escape from Tarkov for testing purposes."] = "Attention! This is Emulated version of \"Escape from Tarkov\". Provided by JustEmuTarkov Team (justemutarkov.eu).";
@@ -32,7 +35,20 @@ class LocaleServer {
 
   getGlobal(lang, url, sessionID) {
     console.log(lang, "currentGlobalLang");
-    const currentLang = url.replace("/client/locale/", "");
+    let currentLang;
+    if (url) {
+      currentLang = url.replace("/client/locale/", "");
+    } else {
+      if (lang) {
+        currentLang = lang;
+      } else {
+        currentLang = account_f.handler.getLanguages(sessionID);
+      }
+    }
+    if (!currentLang){
+      logger.logError("No language found for global");
+    }
+    
     const account = account_f.handler.find(sessionID);
     console.log(currentLang, "wantedGlobalLang");
     lang = currentLang;

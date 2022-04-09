@@ -189,23 +189,27 @@ function acceptQuest(pmcData, body, sessionID) {
   // Create a dialog message for starting the quest.
   // Note that for starting quests, the correct locale field is "description", not "startedMessageText".
   let quest = getCachedQuest(body.qid);
-  let questLocale = locale_f.handler.getGlobal().quest;
+  let accountLang = account_f.handler.getAccountLang(sessionID)
+
+  let globalLocales = locale_f.handler.getGlobal(accountLang, false, sessionID);
+  let questLocale = globalLocales.quest;
   questLocale = questLocale[body.qid];
+
   let questRewards = getQuestRewards(quest, state, pmcData, sessionID);
+
   let messageContent = {
-    templateId: locale_f.handler.getGlobal().mail[questLocale.startedMessageText],
+    templateId: globalLocales.mail[questLocale.startedMessageText],
     type: dialogue_f.getMessageTypeValue("questStart"),
     maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
-  };
+  }
 
   if (typeof messageContent.templateId == "undefined" || questLocale.startedMessageText === "") {
     messageContent = {
-      templateId: questLocale.description,
+      templateId: globalLocales.mail[questLocale.description],
       type: dialogue_f.getMessageTypeValue("questStart"),
       maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
     };
   }
-
   dialogue_f.handler.addDialogueMessage(quest.traderId, messageContent, sessionID, questRewards);
 
   return item_f.handler.getOutput(sessionID);
