@@ -18,18 +18,31 @@ exports.buyItem = (pmcData, body, sessionID) => {
   console.log(body, "body");
   console.log(body.item_id, "body.item_id");
   const traderAssort = global._database.traders[body.tid].assort;
-  fileIO.write("traders.json", traderAssort);
+  //fileIO.write("traders.json", traderAssort);
   
-  console.log(traderAssort.items[body.item_id], "traderAssort.items[body.item_id]");
 
-  if (!utility.isUndefined(traderAssort.items[body.item_id])) {
+  //iterate through traderAssort.items
+  //if item_id is equal to body.item_id
+  //then subtract body.count from itemToBeFound.upd.StackObjectsCount
+  
+  for (let item in traderAssort.items) {
+    let itemToBeFound = traderAssort.items[item];
+
+    if (itemToBeFound._id === body.item_id) {
+  
+      itemToBeFound.upd.StackObjectsCount -= body.count;
+      itemToBeFound.upd.BuyRestrictionCurrent += body.count;
+    }
+  }
+
+  /* if (!utility.isUndefined(traderAssort.items[body.item_id])) {
     if(traderAssort[body.item_id][0].upd.StackObjectsCount){ console.log("stack"); }
 
     console.log(traderAssort.items[body.item_id].upd.StackObjectsCount, "originalStack");
     traderAssort.items[body.item_id].upd.StackObjectsCount -= body.count;
     console.log(traderAssort.items[body.item_id].upd.StackObjectsCount, "newStack");
 
-  }
+  } */
 
   item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
   let output = item_f.handler.getOutput(sessionID);
