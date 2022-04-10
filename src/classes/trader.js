@@ -1,157 +1,11 @@
 "use strict";
 
-// used only in this file
-function iter_item_children(item, item_list) {
-  // Iterates through children of `item` present in `item_list`
-  return item_list.filter((child_item) => child_item.parentId === item._id);
-}
-function iter_item_children_recursively(item, item_list) {
-  // Recursively iterates through children of `item` present in `item_list`
-
-  let stack = iter_item_children(item, item_list);
-  let child_items = [...stack];
-
-  while (stack.length > 0) {
-    let child = stack.pop();
-    let children_of_child = iter_item_children(child, item_list);
-    stack.push(...children_of_child);
-    child_items.push(...children_of_child);
-  }
-
-  return child_items;
-}
-function generate_item_ids(...items) {
-  const ids_map = {};
-
-  for (const item of items) {
-    ids_map[item._id] = utility.generateNewItemId();
-  }
-
-  for (const item of items) {
-    item._id = ids_map[item._id];
-    if (item.parentId in ids_map) {
-      item.parentId = ids_map[item.parentId];
-    }
-  }
-}
-function generateFenceAssort() {
-  const fenceId = "579dc571d53a0658a154fbec";
-  let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
-
-  let fence_base_assort = _database.traders[fenceId].base_assort.items;
-  //fileIO.readParsed(db.user.cache.assort_579dc571d53a0658a154fbec).data.items;
-
-  let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
-
-  const fence_assort = [];
-  const barter_scheme = {};
-
-  const FENCE_ASSORT_SIZE = global._database.gameplay.trading.fenceAssortSize;
-  for (let i = 0; i < FENCE_ASSORT_SIZE; i++) {
-    let random_item_index = utility.getRandomInt(
-      0,
-      fence_base_assort_root_items.length - 1
-    );
-    let random_item = fence_base_assort_root_items[random_item_index];
-    let random_item_children = iter_item_children_recursively(
-      random_item,
-      fence_base_assort
-    );
-
-    generate_item_ids(random_item, ...random_item_children);
-    if (fence_assort.some((el) => el._id === random_item._id)) {
-      continue;
-    } // Prevent duplicate item IDs.
-    fence_assort.push(random_item, ...random_item_children);
-
-    let item_price = helper_f.getTemplatePrice(random_item._tpl);
-    for (const child_item of random_item_children) {
-      item_price += helper_f.getTemplatePrice(child_item._tpl);
-    }
-
-    barter_scheme[random_item._id] = [
-      [
-        {
-          count: Math.round(item_price),
-          _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
-        },
-      ],
-    ];
-  }
-
-  base.items = fence_assort;
-  base.barter_scheme = barter_scheme;
-  global._database.traders[fenceId].assort = base;
-}
-// Deep clone (except for the actual items) from base assorts.
-function copyFromBaseAssorts(baseAssorts) {
-  let newAssorts = {};
-  newAssorts.items = [];
-  for (let item of baseAssorts.items) {
-    newAssorts.items.push(item);
-  }
-  newAssorts.barter_scheme = {};
-  for (let barterScheme in baseAssorts.barter_scheme) {
-    newAssorts.barter_scheme[barterScheme] =
-      baseAssorts.barter_scheme[barterScheme];
-  }
-  newAssorts.loyal_level_items = {};
-  for (let loyalLevelItem in baseAssorts.loyal_level_items) {
-    newAssorts.loyal_level_items[loyalLevelItem] =
-      baseAssorts.loyal_level_items[loyalLevelItem];
-  }
-  return newAssorts;
-}
-// delete assort keys
-function removeItemFromAssort(assort, itemID) {
-  let ids_toremove = helper_f.findAndReturnChildrenByItems(
-    assort.items,
-    itemID
-  );
-
-  delete assort.barter_scheme[itemID];
-  delete assort.loyal_level_items[itemID];
-
-  for (let i in ids_toremove) {
-    for (let a in assort.items) {
-      if (assort.items[a]._id === ids_toremove[i]) {
-        assort.items.splice(a, 1);
-      }
-    }
-  }
-
-  return assort;
-}
-/*
-check if an item is allowed to be sold to a trader
-input : array of allowed categories, itemTpl of inventory
-output : boolean
-*/
-function traderFilter(traderFilters, tplToCheck) {
-  for (let filter of traderFilters) {
-    for (let iaaaaa of helper_f.templatesWithParent(filter)) {
-      if (iaaaaa == tplToCheck) {
-        return true;
-      }
-    }
-
-    for (let subcateg of helper_f.childrenCategories(filter)) {
-      for (let itemFromSubcateg of helper_f.templatesWithParent(subcateg)) {
-        if (itemFromSubcateg === tplToCheck) {
-          return true;
-        }
-      }
-    }
-  }
-
-  return false;
-}
 /* TraderServer class maintains list of traders for each sessionID in memory. */
 class TraderServer {
   constructor() {
     this.fence_generated_at = 0;
   }
-  getTrader(traderID, sessionID) {
+  getTrader(traderID) {
     return global._database.traders[traderID].base;
   }
   saveTrader(traderId) {
@@ -185,7 +39,7 @@ class TraderServer {
       fileIO.write(db.traders[base._id].base, base, true, false);
   }
 
-  getAllTraders(sessionID, keepalive = false) {
+  getAllTraders() {
     //if (!keepalive) keepalive_f.updateTraders(sessionID);
     let Traders = [];
     for (const traderID in global._database.traders) {
@@ -244,13 +98,13 @@ class TraderServer {
       // Initial Fence generation pass.
       if (this.fence_generated_at === 0 || !this.fence_generated_at) {
         this.fence_generated_at = current_time;
-        generateFenceAssort();
+        TraderUtils.generateFenceAssort();
       }
 
       if (this.fence_generated_at + fence_assort_lifetime < current_time) {
         this.fence_generated_at = current_time;
         logger.logInfo("We are regenerating Fence's assort.");
-        generateFenceAssort();
+        TraderUtils.generateFenceAssort();
       }
     }
 
@@ -258,7 +112,6 @@ class TraderServer {
 
     // Build what we're going to return.
     let assorts = utility.DeepCopy(baseAssorts);
-    //fileIO.write(`./assorts.json`, assorts);
 
     // Fetch the current trader loyalty level
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
@@ -271,7 +124,7 @@ class TraderServer {
       for (let key in baseAssorts.loyal_level_items) {
         let requiredLevel = baseAssorts.loyal_level_items[key];
         if (requiredLevel > TraderLevel) {
-          assorts = removeItemFromAssort(assorts, key);
+          assorts = TraderUtils.removeItemFromAssort(assorts, key);
           continue;
         }
 
@@ -280,7 +133,7 @@ class TraderServer {
           quest_f.getQuestStatus(pmcData, questassort.started[key]) !==
           "Started"
         ) {
-          assorts = removeItemFromAssort(assorts, key);
+          assorts = TraderUtils.removeItemFromAssort(assorts, key);
           continue;
         }
 
@@ -289,7 +142,7 @@ class TraderServer {
           quest_f.getQuestStatus(pmcData, questassort.success[key]) !==
           "Success"
         ) {
-          assorts = removeItemFromAssort(assorts, key);
+          assorts = TraderUtils.removeItemFromAssort(assorts, key);
           continue;
         }
 
@@ -297,10 +150,9 @@ class TraderServer {
           key in questassort.fail &&
           quest_f.getQuestStatus(pmcData, questassort.fail[key]) !== "Fail"
         ) {
-          assorts = removeItemFromAssort(assorts, key);
+          assorts = TraderUtils.removeItemFromAssort(assorts, key);
         }
       }
-    } else {
     }
     return assorts;
   }
@@ -354,7 +206,7 @@ class TraderServer {
         item._id === pmcData.Inventory.questStashItems ||
         helper_f.isNotSellable(item._tpl) ||
         (trader.sell_category.length > 0 &&
-          traderFilter(trader.sell_category, item._tpl) === false)
+          TraderUtils.traderFilter(trader.sell_category, item._tpl) === false)
       ) {
         continue;
       }
@@ -413,6 +265,135 @@ class TraderServer {
     }
 
     return output;
+  }
+}
+
+class TraderUtils {
+
+  static iterItemChildren(item, item_list) {
+    // Iterates through children of `item` present in `item_list`
+    return item_list.filter((child_item) => child_item.parentId === item._id);
+  }
+
+  static iterItemChildrenRecursively(item, item_list) {
+    // Recursively iterates through children of `item` present in `item_list`
+  
+    let stack = TraderUtils.iterItemChildren(item, item_list);
+    let child_items = [...stack];
+  
+    while (stack.length > 0) {
+      let child = stack.pop();
+      let children_of_child = TraderUtils.iterItemChildren(child, item_list);
+      stack.push(...children_of_child);
+      child_items.push(...children_of_child);
+    }
+  
+    return child_items;
+  }
+
+  static generateItemIds(...items) {
+    const ids_map = {};
+  
+    for (const item of items) {
+      ids_map[item._id] = utility.generateNewItemId();
+    }
+  
+    for (const item of items) {
+      item._id = ids_map[item._id];
+      if (item.parentId in ids_map) {
+        item.parentId = ids_map[item.parentId];
+      }
+    }
+  }
+
+  static generateFenceAssort() {
+    const fenceId = "579dc571d53a0658a154fbec";
+    let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
+  
+    let fence_base_assort = _database.traders[fenceId].base_assort.items;
+    //fileIO.readParsed(db.user.cache.assort_579dc571d53a0658a154fbec).data.items;
+  
+    let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
+  
+    const fence_assort = [];
+    const barter_scheme = {};
+  
+    const FENCE_ASSORT_SIZE = global._database.gameplay.trading.fenceAssortSize;
+    for (let i = 0; i < FENCE_ASSORT_SIZE; i++) {
+      let random_item_index = utility.getRandomInt(
+        0,
+        fence_base_assort_root_items.length - 1
+      );
+      let random_item = fence_base_assort_root_items[random_item_index];
+      let random_item_children = TraderUtils.iterItemChildrenRecursively(
+        random_item,
+        fence_base_assort
+      );
+  
+      TraderUtils.generateItemIds(random_item, ...random_item_children);
+      if (fence_assort.some((el) => el._id === random_item._id)) {
+        continue;
+      } // Prevent duplicate item IDs.
+      fence_assort.push(random_item, ...random_item_children);
+  
+      let item_price = helper_f.getTemplatePrice(random_item._tpl);
+      for (const child_item of random_item_children) {
+        item_price += helper_f.getTemplatePrice(child_item._tpl);
+      }
+  
+      barter_scheme[random_item._id] = [
+        [
+          {
+            count: Math.round(item_price),
+            _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
+          },
+        ],
+      ];
+    }
+  
+    base.items = fence_assort;
+    base.barter_scheme = barter_scheme;
+    global._database.traders[fenceId].assort = base;
+  }
+
+  static removeItemFromAssort(assort, itemID) {
+    let ids_toremove = helper_f.findAndReturnChildrenByItems(
+      assort.items,
+      itemID
+    );
+  
+    delete assort.barter_scheme[itemID];
+    delete assort.loyal_level_items[itemID];
+  
+    for (let i in ids_toremove) {
+      for (let a in assort.items) {
+        if (assort.items[a]._id === ids_toremove[i]) {
+          assort.items.splice(a, 1);
+        }
+      }
+    }
+  
+    return assort;
+  }
+
+  static traderFilter(traderFilters, tplToCheck) {
+    for (let filter of traderFilters) {
+      for (let iaaaaa of helper_f.templatesWithParent(filter)) {
+        if (iaaaaa == tplToCheck) {
+          return true;
+        }
+      }
+  
+      for (let subcateg of helper_f.childrenCategories(filter)) {
+        for (let itemFromSubcateg of helper_f.templatesWithParent(subcateg)) {
+          if (itemFromSubcateg === tplToCheck) {
+            return true;
+          }
+        }
+      }
+    }
+  
+    return false;
   }
 }
 
