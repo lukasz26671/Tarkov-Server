@@ -28,40 +28,62 @@ exports.buyItem = (pmcData, body, sessionID) => {
    * We need a check similarly to helper_f.payMoney when we update the stack
    * 
    */
+  let isValid;
+  for (const traderItem of traderAssort.items) {
+    if (traderItem._id === body.item_id) {
+      let newStackObjects = traderItem.upd.StackObjectsCount - body.count;
+      let buyRestrictionCurrent;
+      if (!global.utility.isUndefined(traderItem.upd.BuyRestrictionCurrent)){
+        buyRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
+      } else {
+        buyRestrictionCurrent = false;
+      }
+      
 
-  for (const item in traderAssort.items) {
-    let itemToBeFound = traderAssort.items[item];
+      for (const ragfairData of ragfairAssort) {
 
-    if (itemToBeFound._id === body.item_id) {
+        for (const ragfairItem of ragfairData.items) {
 
-      itemToBeFound.upd.StackObjectsCount -= body.count;
-      itemToBeFound.upd.BuyRestrictionCurrent += body.count;
-
-      for (const item in ragfairAssort) {
-
-        if (body.item_id === ragfairAssort[item].root) {
-          let itemToBeFoundRagfair = ragfairAssort[item].items;
-
-          for (const properties in itemToBeFoundRagfair) {
-            if (itemToBeFoundRagfair[properties].upd) {
-
-              let itemToBeFoundRagfairUpd = itemToBeFoundRagfair[properties].upd;
-              if ((itemToBeFoundRagfairUpd.BuyRestrictionCurrent + body.count) < ragfairAssort[item].buyRestrictionMax) {
-                itemToBeFoundRagfairUpd.BuyRestrictionCurrent = itemToBeFound.upd.BuyRestrictionCurrent;
-              }
+          if (ragfairItem._id === body.item_id) {
+            if (buyRestrictionCurrent) {
+              if (buyRestrictionCurrent <= ragfairItem.upd.BuyRestrictionMax) {
+                traderItem.upd.StackObjectsCount = newStackObjects;
+                traderItem.upd.buyRestrictionCurrent = buyRestrictionCurrent;
+                ragfairItem.upd.StackObjectsCount = newStackObjects;
+                ragfairItem.upd.BuyRestrictionCurrent = buyRestrictionCurrent;
+                isValid = true;
+              } else {isValid = false;}
+            } else {
+              ragfairItem.upd.StackObjectsCount = newStackObjects;
+              traderItem.upd.StackObjectsCount = newStackObjects;
+              isValid = true;
             }
+            
+            break;
           }
+
+        }
+        if (!global.utility.isUndefined(isValid)) {
+          break;
         }
       }
+
+    }
+    if (!global.utility.isUndefined(isValid)) {
+      break;
     }
   }
-
-  item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
-  let output = item_f.handler.getOutput(sessionID);
-  output.profileChanges[pmcData._id].traderRelations = {
-    [body.tid]: pmcData.TradersInfo[body.tid],
+  if (isValid) {
+    item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
+    let output = item_f.handler.getOutput(sessionID);
+    output.profileChanges[pmcData._id].traderRelations = {
+      [body.tid]: pmcData.TradersInfo[body.tid],
+    }
+    logger.logSuccess(`Bought item: ${body.item_id}`);
+  } else {
+    logger.logError(`You can't buy this item due to stock restriction`);
   }
-  logger.logSuccess(`Bought item: ${body.item_id}`);
+  
 }
 
 // Selling item to trader
