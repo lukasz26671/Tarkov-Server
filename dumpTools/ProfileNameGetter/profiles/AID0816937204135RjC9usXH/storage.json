@@ -1,0 +1,14 @@
+{
+	"err": 0,
+	"errmsg": null,
+	"data": {
+		"_id": "pmcAID0816937204135RjC9usXH",
+		"suites": [
+			"5cde9ec17d6c8b04723cf479",
+			"5cde9e957d6c8b0474535da7",
+			"sanitar_upper_suite",
+			"gluhar_upper_suite",
+			"tagilla_lower_suite"
+		]
+	}
+}

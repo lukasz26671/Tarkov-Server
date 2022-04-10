@@ -1,0 +1,100 @@
+{
+	"54cb50c76803fa8b248b4571": {
+		"_id": "54cb50c76803fa8b248b4571",
+		"messages": [
+			{
+				"_id": "D-ab49ecf3-45f0-4ee2-b6ac-3aa723409804",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 10,
+				"dt": 1642131916.245,
+				"templateId": "5abe61a786f7746ad512da45",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-9180669f-4f65-458c-b001-6849804b51ad",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 2,
+				"dt": 1642133523.542,
+				"templateId": "5a8fd75188a45036844e0aee",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {}
+			},
+			{
+				"_id": "D-e0eed36e-50e1-4774-b61f-8c1b5539de0a",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 2,
+				"dt": 1642135982.339,
+				"templateId": "5a8fd75188a45036844e0af1",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {}
+			},
+			{
+				"_id": "D-777eae3a-144e-4db9-a658-ceb409343d33",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 2,
+				"dt": 1642315951.187,
+				"templateId": "5a8fd75188a45036844e0aee",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {}
+			}
+		],
+		"pinned": false,
+		"new": 1,
+		"attachmentsNew": 0
+	},
+	"54cb57776803fa99248b456e": {
+		"_id": "54cb57776803fa99248b456e",
+		"messages": [
+			{
+				"_id": "D-a64393d2-27c3-49c9-aefb-2a995032c9b6",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1642131918.808,
+				"templateId": "5abe61a786f7746ad512da4e",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"5a7c2eca46aef81a7ca2145d": {
+		"_id": "5a7c2eca46aef81a7ca2145d",
+		"messages": [
+			{
+				"_id": "D-a3c2baea-15c8-4da3-bf91-095ac9c7ba1c",
+				"uid": "5a7c2eca46aef81a7ca2145d",
+				"type": 10,
+				"dt": 1642133827.073,
+				"templateId": "5ac242f286f774138762ee03",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-c2dd1e5b-d1dc-48b5-8b43-d309c133b4cc",
+				"uid": "5a7c2eca46aef81a7ca2145d",
+				"type": 10,
+				"dt": 1642133828.355,
+				"templateId": "5d2496bd86f77425cc4e9478",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"err": 0,
+	"errmsg": null,
+	"data": {
+		"_id": "pmcAID02171008936240utZbPLF",
+		"suites": [
+			"5cde9ec17d6c8b04723cf479",
+			"5cde9e957d6c8b0474535da7",
+			"619bf78a64927e572d0d5855",
+			"619b99d2d8ed4b751d2606c1",
+			"5d1f609d86f7744bca3f1689",
+			"5d1f60ae86f7744bcc04998b",
+			"5f5f471bdf4f3100376a815e",
+			"priest_lower_suite2",
+			"tagilla_lower_suite"
+		]
+	}
+}

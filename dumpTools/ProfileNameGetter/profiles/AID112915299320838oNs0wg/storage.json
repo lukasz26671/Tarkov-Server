@@ -1,0 +1,15 @@
+{
+	"err": 0,
+	"errmsg": null,
+	"data": {
+		"_id": "pmcAID112915299320838oNs0wg",
+		"suites": [
+			"5cde9ec17d6c8b04723cf479",
+			"5cde9e957d6c8b0474535da7",
+			"kojanai_upper_suite",
+			"gluhar_upper_suite",
+			"priest_upper_suite",
+			"5df8e79286f7744a122d6836"
+		]
+	}
+}

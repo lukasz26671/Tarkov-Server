@@ -41,4 +41,4 @@ console.log(ItemsForRagfair);
 console.log("END OF LIST");
 console.log(ItemsForRagfair.length);
 
-Write("RagfairItemList.json", ItemsForRagfair);
+Write("whitelist.json", ItemsForRagfair);

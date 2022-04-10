@@ -1,0 +1,20 @@
+{
+	"54cb50c76803fa8b248b4571": {
+		"_id": "54cb50c76803fa8b248b4571",
+		"messages": [
+			{
+				"_id": "D-d4ef9484-fb53-4baa-b09d-f89130598b7b",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 2,
+				"dt": 1644124824.413,
+				"templateId": "5a8fd75188a45036844e0aee",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {}
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	}
+}
