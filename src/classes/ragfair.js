@@ -385,7 +385,10 @@ function createOffer(template, onlyFunc, usePresets = true) {
     offer.itemsCost = rubPrice;
     offer.requirementsCost = rubPrice;
     offer.summaryCost = rubPrice;
+    // randomize the name
+    offer.user.nickname = global._database.bots.names.normal[global.utility.getRandomInt(0, global._database.bots.names.normal.length - 1)];
     offers.push(offer);
+
   }
 
   return offers;
