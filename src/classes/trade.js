@@ -1,10 +1,7 @@
 "use strict";
 
 exports.buyItem = (pmcData, body, sessionID) => {
-  if (!helper_f.payMoney(pmcData, body, sessionID)) {
-    logger.logError("You've got no sheckels!");
-    return "";
-  }
+  
   const newReq = {
     items: [
       {
@@ -74,6 +71,10 @@ exports.buyItem = (pmcData, body, sessionID) => {
     }
   }
   if (isValid) {
+    if (!helper_f.payMoney(pmcData, body, sessionID)) {
+      logger.logError("You've got no sheckels!");
+      return "";
+    }
     item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
     let output = item_f.handler.getOutput(sessionID);
     output.profileChanges[pmcData._id].traderRelations = {
