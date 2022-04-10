@@ -368,6 +368,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer.items = mods;
       // ~~ = Math.round
       offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
+      // randomize the name
+      offer.user.nickname = global._database.bots.names.normal[global.utility.getRandomInt(0, global._database.bots.names.normal.length - 1)];
       offers.push(offer);
       //console.log("offer:", offer)
     }
