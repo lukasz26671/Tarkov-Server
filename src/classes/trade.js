@@ -22,12 +22,12 @@ exports.buyItem = (pmcData, body, sessionID) => {
   //fileIO.write("traders.json", traderAssort);
 
 
-/**
- * This whole loop below needs to be optimized and more thoroughly tested 
- * I did what I could - King
- * We need a check similarly to helper_f.payMoney when we update the stack
- * 
- */
+  /**
+   * This whole loop below needs to be optimized and more thoroughly tested 
+   * I did what I could - King
+   * We need a check similarly to helper_f.payMoney when we update the stack
+   * 
+   */
 
   for (const item in traderAssort.items) {
     let itemToBeFound = traderAssort.items[item];
@@ -47,7 +47,8 @@ exports.buyItem = (pmcData, body, sessionID) => {
 
               let itemToBeFoundRagfairUpd = itemToBeFoundRagfair[properties].upd;
               if ((itemToBeFoundRagfairUpd.BuyRestrictionCurrent + body.count) < ragfairAssort[item].buyRestrictionMax) {
-              itemToBeFoundRagfairUpd.BuyRestrictionCurrent = itemToBeFound.upd.BuyRestrictionCurrent;
+                itemToBeFoundRagfairUpd.BuyRestrictionCurrent = itemToBeFound.upd.BuyRestrictionCurrent;
+              }
             }
           }
         }
@@ -59,9 +60,9 @@ exports.buyItem = (pmcData, body, sessionID) => {
   let output = item_f.handler.getOutput(sessionID);
   output.profileChanges[pmcData._id].traderRelations = {
     [body.tid]: pmcData.TradersInfo[body.tid],
-  };
+  }
   logger.logSuccess(`Bought item: ${body.item_id}`);
-};
+}
 
 // Selling item to trader
 exports.sellItem = (pmcData, body, sessionID) => {
@@ -102,7 +103,7 @@ exports.sellItem = (pmcData, body, sessionID) => {
   );
 
   return;
-};
+}
 
 // separate is that selling or buying
 exports.confirmTrading = (pmcData, body, sessionID) => {
@@ -117,7 +118,8 @@ exports.confirmTrading = (pmcData, body, sessionID) => {
   }
 
   return "";
-};
+}
+
 
 // Ragfair trading
 exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
@@ -151,4 +153,4 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
   }
 
   return; // output;
-};
+}
