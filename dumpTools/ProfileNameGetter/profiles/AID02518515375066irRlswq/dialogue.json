@@ -1,0 +1,858 @@
+{
+	"54cb50c76803fa8b248b4571": {
+		"_id": "54cb50c76803fa8b248b4571",
+		"messages": [
+			{
+				"_id": "D-cf389add-1345-47b0-a041-2709b753aea0",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 10,
+				"dt": 1643163327.812,
+				"templateId": "5abe61a786f7746ad512da45",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-13e06739-7b08-4e66-9170-c47c8780c2c7",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 12,
+				"dt": 1643174828.203,
+				"templateId": "5ab0f32686f7745dd409f562",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-b56929b6-1a61-44ff-8a96-a7cb1d517cd2",
+					"data": [
+						{
+							"_id": "I-fcd23451-042a-4618-b9c0-bd425d2e77f9",
+							"_tpl": "5448bd6b4bdc2dfc2f8b4569",
+							"parentId": "I-b56929b6-1a61-44ff-8a96-a7cb1d517cd2",
+							"slotId": "main",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							}
+						},
+						{
+							"_id": "I-4dc7414d-492f-4be1-9eca-047b79820e5b",
+							"_tpl": "5448c12b4bdc2d02308b456f",
+							"parentId": "I-fcd23451-042a-4618-b9c0-bd425d2e77f9",
+							"slotId": "mod_magazine",
+							"upd": {
+								"SpawnedInSession": true
+							}
+						},
+						{
+							"_id": "I-27b62645-059b-4d69-8716-67ed6c8ba311",
+							"_tpl": "5448c12b4bdc2d02308b456f",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b56929b6-1a61-44ff-8a96-a7cb1d517cd2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-8f3feb7d-f6c6-4f32-be31-4c008a67740a",
+							"_tpl": "5448c12b4bdc2d02308b456f",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b56929b6-1a61-44ff-8a96-a7cb1d517cd2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-c3b3ba98-41dd-42da-ac0a-299cd3efef60",
+							"_tpl": "5448c12b4bdc2d02308b456f",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b56929b6-1a61-44ff-8a96-a7cb1d517cd2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-5f03b25b-cdf6-43bb-8c94-1d2f8b61245e",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 17250,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b56929b6-1a61-44ff-8a96-a7cb1d517cd2",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-1e94acb3-2bee-40d6-997e-8a0653082107",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 10,
+				"dt": 1643174830.172,
+				"templateId": "5abe61a786f7746ad512da46",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-af3a54d5-8fbd-4bbf-8535-2d389b009028",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 10,
+				"dt": 1643174888.922,
+				"templateId": "5fdb3e50148b192e1a7463e5",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 1
+	},
+	"54cb57776803fa99248b456e": {
+		"_id": "54cb57776803fa99248b456e",
+		"messages": [
+			{
+				"_id": "D-53ce277a-ecef-4dfa-9888-657da9ce94e6",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643163332.094,
+				"templateId": "5abe61a786f7746ad512da4e",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-3e5a8f30-d9ba-48a9-9ffa-8e5a790d5508",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 12,
+				"dt": 1643172629.156,
+				"templateId": "5ab0f32686f7745dd409f56b",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+					"data": [
+						{
+							"_id": "I-33d45a57-ddb4-43b7-8f17-8c20d651b472",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 17250,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-6a0f3fbc-558d-4e5e-815a-51c5492e9388",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-6f05ae1b-3bfd-4846-bf72-ae18905d1076",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-58cd65fb-bb61-4f7f-a1ce-2b3e50831244",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-1675800f-96aa-4721-bfe2-cfbe4ffedbe0",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-b764a15e-cb1a-433c-82ca-af261dd43ae5",
+							"_tpl": "5755356824597772cb798962",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-09dbe847-bb10-40ab-a1c4-2541a6eedb39",
+							"_tpl": "5755356824597772cb798962",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-edff07bc-a451-4a6c-a69a-9f2e409fb1d8",
+							"_tpl": "5755356824597772cb798962",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-ed4179fe-58bc-4a11-8e37-2f74f58f6595",
+							"_tpl": "5755356824597772cb798962",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-b01a119a-839d-486a-a0e3-f62fcd182f51",
+							"_tpl": "544fb3364bdc2d34748b456a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-ce020dcb-a5d6-4668-9422-e9b6a0c4cddc",
+							"_tpl": "544fb3364bdc2d34748b456a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-d1f6d192-212f-4039-90e6-1be43336b8a5",
+							"_tpl": "544fb3364bdc2d34748b456a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-4f28d46b-2517-4e6e-a1b6-8099972c9b46",
+							"_tpl": "544fb3364bdc2d34748b456a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-e8f579fa-0f5f-40a4-bc19-3b00067e79c9",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-8e98e415-dbfe-49af-ad38-2d2b8930e4ad",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643172631.078,
+				"templateId": "5abe61a786f7746ad512da4f",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-5402c81a-5758-4237-8bd6-92ab589fae1d",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643172631.969,
+				"templateId": "5abe61a786f7746ad512da50",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-d2b76090-3c9c-4bd5-a0ad-fa33f2c23b72",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 12,
+				"dt": 1643172769.766,
+				"templateId": "5ab0f32686f7745dd409f56c",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-b336f03e-9da8-4452-95f2-8b8c1f4305a9",
+					"data": [
+						{
+							"_id": "I-8706092a-a26a-4e6a-994d-b33f04a87f1a",
+							"_tpl": "590c661e86f7741e566b646a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b336f03e-9da8-4452-95f2-8b8c1f4305a9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-698911de-7d74-41e0-b2c0-484bbc146d33",
+							"_tpl": "590c661e86f7741e566b646a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b336f03e-9da8-4452-95f2-8b8c1f4305a9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-be278a9f-d92d-4788-a4cb-5b23a3ddf005",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 16100,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-b336f03e-9da8-4452-95f2-8b8c1f4305a9",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-ad9881cd-9c1b-4032-8966-9e9e732d8718",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643172772.437,
+				"templateId": "5abe61a786f7746ad512da57",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-1f7db166-b8e7-4b1d-b5fc-5f6707d1c36d",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 12,
+				"dt": 1643174821.047,
+				"templateId": "5ab0f32686f7745dd409f56d",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+					"data": [
+						{
+							"_id": "I-0c67f309-0b07-4f26-8efa-35a486020e76",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 16100,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-f75cc63b-a962-44f9-aff8-73b403db0b1b",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-0e234213-2d7d-4a7e-9171-8f4ef35406e3",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-1e446be9-5289-4999-891f-d1d7dd02f193",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-901c7f33-13c7-4fff-8165-aea535dc989f",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-598eaf57-5737-4ebc-b743-551282c241e9",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-660f3662-a422-4433-8527-5e500c4a6279",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-4769f633-76ea-4db8-821e-da9253314930",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-368ea3c9-5fe8-44fc-ae98-ed29397b90f6",
+							"_tpl": "5448fee04bdc2dbc018b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-a4cfff97-3f09-45ca-b720-016b18b71398",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-f540ef24-7ef9-41e8-8c5a-9f4cd7edde92",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643174823.344,
+				"templateId": "5abe61a786f7746ad512da51",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-65058117-daa2-453d-8417-fe5b03aae021",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 12,
+				"dt": 1643236050.094,
+				"templateId": "5ab0f32686f7745dd409f576",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-6e2f05f5-225e-427f-b13c-a5ebc520b85f",
+					"data": [
+						{
+							"_id": "I-354a5fa6-a933-414f-b1ac-6ff3e6dba5d2",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 20700,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-6e2f05f5-225e-427f-b13c-a5ebc520b85f",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-fb331683-8d08-47ac-a17e-1a12e2c8d896",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643236052.875,
+				"templateId": "5abe61a786f7746ad512da52",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-9ffbd3c0-25a8-4cce-8bd7-1f3967509f21",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 12,
+				"dt": 1643236074.922,
+				"templateId": "5ab0f32686f7745dd409f56f",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+					"data": [
+						{
+							"_id": "I-0de51420-58bc-479d-9862-476b43b438b7",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 19550,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-97dd6d7b-275f-4aba-a4de-8e93db030b73",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-355e0462-a878-4440-8a1d-dc8a394de028",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-adb693d2-1ae7-401a-9899-7143aa798c3d",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-cc7d1694-98fa-4409-b12a-96d23e96912e",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-89c56f42-65ab-4886-ad89-0013742565dc",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-cec7d0ce-d18d-45aa-ab83-ebe601314287",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-f3deaaf3-767f-42bd-bd7f-9afd9d47d091",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-a87c9c8f-0844-428b-8757-81f37a8418fe",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-a94c8c3c-ff7a-496e-be71-e9f98e57bc1f",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-ec7e75ab-8717-43b4-bcfd-56f1e9714006",
+							"_tpl": "544fb37f4bdc2dee738b4567",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-f8891f6b-7a00-4d34-834c-5925febdbd73",
+							"_tpl": "5d1b3f2d86f774253763b735",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-27004ded-a2e4-4a45-b9d4-308d515dcbb9",
+							"_tpl": "5d1b3f2d86f774253763b735",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-ab413c09-2f21-4bdf-865c-38f71139e34d",
+							"_tpl": "5d1b3f2d86f774253763b735",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-8412f171-7b97-47d7-a80e-a0b4b099d639",
+							"_tpl": "5d1b3f2d86f774253763b735",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-3e2bfd47-72d8-4c53-97ea-1c4fcc8a15dd",
+							"_tpl": "5d1b3f2d86f774253763b735",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-fecaa318-55dd-47ec-a0b1-7f9179eb2ae2",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-52274a05-87f5-48b2-a14a-a04d73de0cfd",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643236078.125,
+				"templateId": "5abe61a786f7746ad512da53",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 4,
+		"attachmentsNew": 2
+	},
+	"58330581ace78e27b8b10cee": {
+		"_id": "58330581ace78e27b8b10cee",
+		"messages": [
+			{
+				"_id": "D-69c14a33-1bb9-43eb-9e9a-92d515e164ca",
+				"uid": "58330581ace78e27b8b10cee",
+				"type": 10,
+				"dt": 1643163336.719,
+				"templateId": "5abe61a886f7746ad512da99",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-684ea649-e667-4b2c-a8a7-41f13f4ced32",
+				"uid": "58330581ace78e27b8b10cee",
+				"type": 12,
+				"dt": 1643172706.891,
+				"templateId": "5ab0f32686f7745dd409f578",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-d8a4626d-708c-4a0e-ba30-677e1122d770",
+					"data": [
+						{
+							"_id": "I-d816fe60-edbf-4690-a9d9-deb4f2a7aed9",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 69000,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-d8a4626d-708c-4a0e-ba30-677e1122d770",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-2280118e-dc13-4f6b-a914-3e5f1c0a8fd7",
+				"uid": "58330581ace78e27b8b10cee",
+				"type": 10,
+				"dt": 1643172708.859,
+				"templateId": "5abe61a786f7746ad512da59",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 1
+	},
+	"5a7c2eca46aef81a7ca2145d": {
+		"_id": "5a7c2eca46aef81a7ca2145d",
+		"messages": [
+			{
+				"_id": "D-dd40d7e7-5c86-4fb2-b57c-9f53fe9b2af7",
+				"uid": "5a7c2eca46aef81a7ca2145d",
+				"type": 10,
+				"dt": 1643163340.625,
+				"templateId": "5ac242f286f774138762ee03",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-808e63d8-ac6e-4644-a1cb-65607ce278ff",
+				"uid": "5a7c2eca46aef81a7ca2145d",
+				"type": 10,
+				"dt": 1643163354.187,
+				"templateId": "5d2496bd86f77425cc4e9478",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"5ac3b934156ae10c4430e83c": {
+		"_id": "5ac3b934156ae10c4430e83c",
+		"messages": [
+			{
+				"_id": "D-a7d9d12e-d9c9-4e12-909f-7819a18e35f1",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643163343.828,
+				"templateId": "5ae44bfe86f7744d733e560f",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-3eef5d78-4b5f-420b-aee4-6af9e5e37d56",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 12,
+				"dt": 1643163345.344,
+				"templateId": "5ae44bfe86f7744d733e560c",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-cf0d2e7f-7762-4318-8356-3e086d49bdf9",
+					"data": [
+						{
+							"_id": "I-6d389f70-eada-4d24-93df-a116b02d65d2",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 15209,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-cf0d2e7f-7762-4318-8356-3e086d49bdf9",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-9146d3ad-dd25-42cd-b565-7d894edf8205",
+							"_tpl": "59e7643b86f7742cbf2c109a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-cf0d2e7f-7762-4318-8356-3e086d49bdf9",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-b540e0ab-d8af-4037-b09a-57ef7d52d70f",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643163347.547,
+				"templateId": "5ae44dd386f7744f1a7eb660",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-22f60335-baec-49fb-b41a-d2a7c1b9bbc4",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643163348.406,
+				"templateId": "5ae44ffe86f774149f15f4ec",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	}
+}

@@ -1,0 +1,87 @@
+{
+	"54cb57776803fa99248b456e": {
+		"_id": "54cb57776803fa99248b456e",
+		"messages": [
+			{
+				"_id": "D-c1c886bd-1998-49f8-8d29-cf824be8c066",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1648641868.49,
+				"templateId": "5abe61a786f7746ad512da4e",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 259200
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"54cb50c76803fa8b248b4571": {
+		"_id": "54cb50c76803fa8b248b4571",
+		"messages": [
+			{
+				"_id": "D-3ce72d12-84b2-42a7-b770-4bc32074e166",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 10,
+				"dt": 1648641873.202,
+				"templateId": "5abe61a786f7746ad512da45",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 259200
+			},
+			{
+				"_id": "D-b2464c4e-ed7a-4b48-8c57-15be9544a705",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 2,
+				"dt": 1648689636.228,
+				"templateId": "5a8fd75188a45036844e0af1",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {}
+			},
+			{
+				"_id": "D-beb7db02-a0c0-4fb9-ad76-4fccb893595d",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 8,
+				"dt": 1648689649.566,
+				"templateId": "5a8fd75188a45036844e0adb",
+				"hasRewards": true,
+				"rewardCollected": true,
+				"items": {
+					"stash": "I-43bf9af5-7a9f-4464-a2ac-59d7885f6818",
+					"data": []
+				},
+				"maxStorageTime": 259200,
+				"systemData": {
+					"date": "2022-03-31",
+					"time": "01-20-36"
+				}
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"579dc571d53a0658a154fbec": {
+		"_id": "579dc571d53a0658a154fbec",
+		"messages": [
+			{
+				"_id": "D-c80ca6ee-ec02-47cd-aade-e260b1cb9020",
+				"uid": "579dc571d53a0658a154fbec",
+				"type": 10,
+				"dt": 1648641877.67,
+				"templateId": "61e7f17906bf9c6af36b2775",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 259200
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	}
+}

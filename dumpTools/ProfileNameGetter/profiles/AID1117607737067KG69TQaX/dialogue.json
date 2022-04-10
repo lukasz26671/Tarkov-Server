@@ -1,0 +1,144 @@
+{
+	"54cb50c76803fa8b248b4571": {
+		"_id": "54cb50c76803fa8b248b4571",
+		"messages": [
+			{
+				"_id": "D-b47dda76-0c23-4f93-91a5-ab89a91608b1",
+				"uid": "54cb50c76803fa8b248b4571",
+				"type": 10,
+				"dt": 1643736293.049,
+				"templateId": "5abe61a786f7746ad512da45",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"54cb57776803fa99248b456e": {
+		"_id": "54cb57776803fa99248b456e",
+		"messages": [
+			{
+				"_id": "D-053f7342-ea57-4e7f-8a44-dc9081f06e06",
+				"uid": "54cb57776803fa99248b456e",
+				"type": 10,
+				"dt": 1643736298.283,
+				"templateId": "5abe61a786f7746ad512da4e",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"58330581ace78e27b8b10cee": {
+		"_id": "58330581ace78e27b8b10cee",
+		"messages": [
+			{
+				"_id": "D-70413d06-aa9d-410a-a44e-c739bba27412",
+				"uid": "58330581ace78e27b8b10cee",
+				"type": 10,
+				"dt": 1643736303.888,
+				"templateId": "5abe61a886f7746ad512da99",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"5a7c2eca46aef81a7ca2145d": {
+		"_id": "5a7c2eca46aef81a7ca2145d",
+		"messages": [
+			{
+				"_id": "D-a0958749-1a11-43cd-a580-2e6a4a11281b",
+				"uid": "5a7c2eca46aef81a7ca2145d",
+				"type": 10,
+				"dt": 1643736312.58,
+				"templateId": "5ac242f286f774138762ee03",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-be002087-7be1-435f-86a1-78734bc7385f",
+				"uid": "5a7c2eca46aef81a7ca2145d",
+				"type": 10,
+				"dt": 1643736313.719,
+				"templateId": "5d2496bd86f77425cc4e9478",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	},
+	"5ac3b934156ae10c4430e83c": {
+		"_id": "5ac3b934156ae10c4430e83c",
+		"messages": [
+			{
+				"_id": "D-57754463-6e0c-4ddf-b714-c18bf02e64bb",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643736320.517,
+				"templateId": "5ae44bfe86f7744d733e560f",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-2a76f07c-b044-4407-9e49-1d8db9f8b974",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 12,
+				"dt": 1643736322.338,
+				"templateId": "5ae44bfe86f7744d733e560c",
+				"hasRewards": true,
+				"rewardCollected": true,
+				"items": {
+					"stash": "I-5e57fa26-66e5-49ce-8fe0-cf049c4eb152",
+					"data": []
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-b9a4b113-1a8a-4912-a350-5ee3e4fa57cd",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643737353.87,
+				"templateId": "5ae44dd386f7744f1a7eb660",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-c915fe69-f562-4455-a8b1-1da083b3e87d",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643737355.885,
+				"templateId": "5ae44ffe86f774149f15f4ec",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	}
+}

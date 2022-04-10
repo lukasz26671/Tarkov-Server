@@ -1,0 +1,46 @@
+{
+	"5ac3b934156ae10c4430e83c": {
+		"_id": "5ac3b934156ae10c4430e83c",
+		"messages": [
+			{
+				"_id": "D-4d5ffb46-ec34-4586-9dd6-0e950c783c15",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643147817.297,
+				"templateId": "5ae44bfe86f7744d733e560f",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-bfdc9c0c-4c38-4e24-8e31-6fedbad3d03f",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 12,
+				"dt": 1643147819.25,
+				"templateId": "5ae44bfe86f7744d733e560c",
+				"hasRewards": true,
+				"rewardCollected": true,
+				"items": {
+					"stash": "I-af6171d9-e82f-4978-b5fe-03649cf0ad22",
+					"data": [
+						{
+							"_id": "I-a488851d-6eb1-4cb4-bd47-384d662d92bf",
+							"_tpl": "59e7643b86f7742cbf2c109a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-af6171d9-e82f-4978-b5fe-03649cf0ad22",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 0,
+		"attachmentsNew": 0
+	}
+}

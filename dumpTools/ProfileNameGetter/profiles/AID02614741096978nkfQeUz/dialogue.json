@@ -1,0 +1,78 @@
+{
+	"5ac3b934156ae10c4430e83c": {
+		"_id": "5ac3b934156ae10c4430e83c",
+		"messages": [
+			{
+				"_id": "D-d7341e65-cd57-42d9-8216-4c1d2602ee6d",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643238082.233,
+				"templateId": "5ae44bfe86f7744d733e560f",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-69b4c944-ac70-4997-bb64-307e80a48817",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 12,
+				"dt": 1643238083.374,
+				"templateId": "5ae44bfe86f7744d733e560c",
+				"hasRewards": true,
+				"rewardCollected": false,
+				"items": {
+					"stash": "I-de33996a-e98f-4015-bcdb-c5471a82ef87",
+					"data": [
+						{
+							"_id": "I-a9d315cd-83b5-481f-b8ba-d6540212bed5",
+							"_tpl": "5449016a4bdc2d6f028b456f",
+							"upd": {
+								"StackObjectsCount": 17490,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-de33996a-e98f-4015-bcdb-c5471a82ef87",
+							"slotId": "main"
+						},
+						{
+							"_id": "I-cedc4570-24f5-4546-8dec-522a98e034d5",
+							"_tpl": "59e7643b86f7742cbf2c109a",
+							"upd": {
+								"StackObjectsCount": 1,
+								"SpawnedInSession": true
+							},
+							"parentId": "I-de33996a-e98f-4015-bcdb-c5471a82ef87",
+							"slotId": "main"
+						}
+					]
+				},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-c22e9033-df43-4692-93a2-159dc4ec10c6",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643238088.811,
+				"templateId": "5ae44dd386f7744f1a7eb660",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			},
+			{
+				"_id": "D-db7b2dfd-ac08-4efc-8736-57945d02ece9",
+				"uid": "5ac3b934156ae10c4430e83c",
+				"type": 10,
+				"dt": 1643238089.952,
+				"templateId": "5ae44ffe86f774149f15f4ec",
+				"hasRewards": false,
+				"rewardCollected": false,
+				"items": {},
+				"maxStorageTime": 172800
+			}
+		],
+		"pinned": false,
+		"new": 4,
+		"attachmentsNew": 1
+	}
+}

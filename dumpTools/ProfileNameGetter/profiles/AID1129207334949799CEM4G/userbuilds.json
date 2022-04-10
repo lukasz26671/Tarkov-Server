@@ -1,0 +1,162 @@
+{
+	"Test": {
+		"id": "I-c394fdeb-3495-48ff-b74e-694d5b24ba1a",
+		"name": "Test",
+		"root": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+		"items": [
+			{
+				"_id": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"_tpl": "5ac4cd105acfc40016339859",
+				"upd": {
+					"Repairable": {
+						"MaxDurability": 100,
+						"Durability": 94.8722839
+					},
+					"Foldable": {
+						"Folded": false
+					},
+					"FireMode": {
+						"FireMode": "single"
+					}
+				}
+			},
+			{
+				"_id": "I-84bdba46-6d43-42c6-8c2d-93af970b6d90",
+				"_tpl": "59c6633186f7740cf0493bb9",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_gas_block"
+			},
+			{
+				"_id": "I-1a831c4e-c49d-4b37-bbc2-f0e66baf9a9b",
+				"_tpl": "5649ab884bdc2ded0b8b457f",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_muzzle",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-569b4df5-e7ed-4cc5-b5e4-59362f476cc3",
+				"_tpl": "6087e663132d4d12c81fd96b",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_pistol_grip",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-130c4826-88d1-437f-acd4-4c3194ff557a",
+				"_tpl": "5d2c772c48f0355d95672c25",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_reciever",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-ceb0f3d7-288b-466a-8c64-f258388211da",
+				"_tpl": "5ac78eaf5acfc4001926317a",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_stock",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-a5def666-e15e-48d4-bbb4-5b9305bb4069",
+				"_tpl": "55d482194bdc2d1d4e8b456b",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_magazine",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-c6df6bd7-b8a7-45f8-8f3c-bec4ba9d74a2",
+				"_tpl": "6130ca3fd92c473c77020dbd",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "mod_charge",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-f0b1a2ed-4172-414c-ab94-d499ad55a1ec",
+				"_tpl": "5c0d5e4486f77478390952fe",
+				"parentId": "I-7555e457-de5d-4e2d-b12b-1129905ef023",
+				"slotId": "patron_in_weapon",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-acf89122-603a-4a92-b8fe-17bebcee6a05",
+				"_tpl": "5efaf417aeb21837e749c7f2",
+				"parentId": "I-84bdba46-6d43-42c6-8c2d-93af970b6d90",
+				"slotId": "mod_handguard",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-6a87cdfb-5e3f-45ac-a38a-2dc2aa4864c9",
+				"_tpl": "58491f3324597764bc48fa02",
+				"parentId": "I-130c4826-88d1-437f-acd4-4c3194ff557a",
+				"slotId": "mod_scope",
+				"upd": {
+					"Sight": {
+						"ScopesCurrentCalibPointIndexes": [
+							0
+						],
+						"ScopesSelectedModes": [
+							0
+						],
+						"SelectedScope": 0
+					}
+				}
+			},
+			{
+				"_id": "I-09c6a674-874b-4d95-8993-4b14b23453da",
+				"_tpl": "59ecc3dd86f7746dc827481c",
+				"parentId": "I-ceb0f3d7-288b-466a-8c64-f258388211da",
+				"slotId": "mod_stock",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-a23a02b5-7d2f-4bee-9754-523d24e07021",
+				"_tpl": "5c0d5e4486f77478390952fe",
+				"parentId": "I-a5def666-e15e-48d4-bbb4-5b9305bb4069",
+				"slotId": "cartridges",
+				"location": 0,
+				"upd": {
+					"StackObjectsCount": 60,
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-76f41cf7-5e99-4b86-ad87-c9c885ade1a3",
+				"_tpl": "5c1bc4812e22164bef5cfde7",
+				"parentId": "I-acf89122-603a-4a92-b8fe-17bebcee6a05",
+				"slotId": "mod_foregrip",
+				"upd": {
+					"SpawnedInSession": true
+				}
+			},
+			{
+				"_id": "I-17b20f28-946a-4e03-a8c6-31aba4517409",
+				"_tpl": "5d2369418abbc306c62e0c80",
+				"parentId": "I-acf89122-603a-4a92-b8fe-17bebcee6a05",
+				"slotId": "mod_tactical_001",
+				"upd": {
+					"SpawnedInSession": true,
+					"Light": {
+						"IsActive": true,
+						"SelectedMode": 4
+					}
+				}
+			}
+		]
+	}
+}
