@@ -88,7 +88,7 @@ class Controller {
 
         break;
 
-      case "followerkojany":
+      case "followerkojaniy":
       case "followertest":
         //console.log(role, "role")
         name = utility.getArrayValue(name_database.followerkojany);
@@ -103,7 +103,9 @@ class Controller {
         name = utility.getArrayValue(name_database.followergluhar);
         //console.log(name, "name")
         break;
-
+      case "bosskojaniy":
+        name = utility.getArrayValue(name_database.bosskojany);
+        break;
       case "marksman":
       case "playerscav":
       case "cursedassault":
@@ -115,11 +117,12 @@ class Controller {
         break;
 
       default:
-          name = utility.getArrayValue(name_database[role]);
-          if(!name) {
-            logger.logError(`Bot ${role} name not found in name list, could be a typo, send help pls.`);
-            name = utility.getArrayValue(name_database.scav);
-          }
+        console.log(role)
+        name = utility.getArrayValue(name_database[role]);
+        if(!name) {
+          logger.logError(`Bot ${role} name not found in name list, could be a typo, send help pls.`);
+          name = utility.getArrayValue(name_database.scav);
+        }
         break;
     }
     return name;
