@@ -26,54 +26,62 @@ exports.buyItem = (pmcData, body, sessionID) => {
    * 
    */
   let isValid;
-  for (const traderItem of traderAssort.items) {
-    if (traderItem._id === body.item_id) {
-      let newStackObjects = traderItem.upd.StackObjectsCount - body.count;
-      let buyRestrictionCurrent;
-      if (!global.utility.isUndefined(traderItem.upd.BuyRestrictionCurrent)){
-        buyRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
-      } else {
-        buyRestrictionCurrent = false;
-      }
-      
-
-      for (const ragfairData of ragfairAssort) {
-
-        for (const ragfairItem of ragfairData.items) {
-
-          if (ragfairItem._id === body.item_id) {
-            if (buyRestrictionCurrent) {
-              if (buyRestrictionCurrent <= ragfairItem.upd.BuyRestrictionMax) {
-                traderItem.upd.StackObjectsCount = newStackObjects;
-                traderItem.upd.buyRestrictionCurrent = buyRestrictionCurrent;
-                ragfairItem.upd.StackObjectsCount = newStackObjects;
-                ragfairItem.upd.BuyRestrictionCurrent = buyRestrictionCurrent;
-                isValid = true;
-              } else {isValid = false;}
-            } else {
-              ragfairItem.upd.StackObjectsCount = newStackObjects;
-              traderItem.upd.StackObjectsCount = newStackObjects;
-              isValid = true;
-            }
-            
-            break;
-          }
-
-        }
-        if (!global.utility.isUndefined(isValid)) {
+  if (body.tid === "ragfair") {
+    for (const traderItem of traderAssort.items) {
+      if (traderItem._id === body.item_id) {
+        let newStackObjects = traderItem.upd.StackObjectsCount - body.count;
+        if (newStackObjects < 0) {
+          logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
+          isValid = false;
+          break;
+        } else {
+          isValid = true;
+          traderItem.upd.StackObjectsCount = newStackObjects;
           break;
         }
       }
-
     }
-    if (!global.utility.isUndefined(isValid)) {
-      break;
+  } else {
+    for (const traderItem of traderAssort.items) {
+      if (traderItem._id === body.item_id) {
+        for (const ragfairData of ragfairAssort) {
+          for (const ragfairItem of ragfairData.items) {
+            if (ragfairItem._id === body.item_id) {
+              let newStackObjects = ragfairItem.upd.StackObjectsCount - body.count;
+              let buyRestrictionCurrent = ragfairItem.upd.BuyRestrictionCurrent + body.count;
+              if (newStackObjects < 0) {
+                logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
+                isValid = false;
+                break;
+              } else {
+                if (buyRestrictionCurrent <= ragfairItem.upd.BuyRestrictionMax) {
+                  traderItem.upd.StackObjectsCount = newStackObjects;
+                  traderItem.upd.buyRestrictionCurrent = buyRestrictionCurrent;
+                  ragfairItem.upd.StackObjectsCount = newStackObjects;
+                  ragfairItem.upd.BuyRestrictionCurrent = buyRestrictionCurrent;
+                  isValid = true;
+                } else {isValid = false;}
+              }
+            }
+          }
+          if (!global.utility.isUndefined(isValid)) {
+            break;
+          }
+        }
+        if (!global.utility.isUndefined(isValid)) {
+          break;
+        } 
+      }
+      if (!global.utility.isUndefined(isValid)) {
+        break;
+      }
     }
   }
+
   if (isValid) {
     if (!helper_f.payMoney(pmcData, body, sessionID)) {
-      logger.logError("You've got no sheckels!");
-      return "";
+      logger.logError("WHERE IS THE MONEY LEBOWSKI ?!");
+      return
     }
     item_f.handler.setOutput(move_f.addItem(pmcData, newReq, sessionID));
     let output = item_f.handler.getOutput(sessionID);
@@ -83,8 +91,9 @@ exports.buyItem = (pmcData, body, sessionID) => {
     logger.logSuccess(`Bought item: ${body.item_id}`);
   } else {
     logger.logError(`You can't buy this item due to stock restriction`);
+    return
   }
-  
+
 }
 
 // Selling item to trader
@@ -169,7 +178,6 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
         break;
       }
     }
-
 
     //output =
     this.confirmTrading(pmcData, body, sessionID);
