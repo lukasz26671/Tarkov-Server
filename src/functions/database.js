@@ -600,6 +600,14 @@ function GenerateRagfairOffersCache() {
             break;
           }
         }
+        
+        // Base items can't have parentId or slotId properties or the client will report errors
+        if (typeof itemsToSell[0].parentId != 'undefined') {
+          delete itemsToSell[0].parentId;
+        }
+        if (typeof itemsToSell[0].slotId != 'undefined') {
+          delete itemsToSell[0].slotId;
+        }
 
         response.offers.push(convertToRagfairAssort(itemsToSell, barter_scheme, loyal_level, trader, counter));
         counter += 1;
