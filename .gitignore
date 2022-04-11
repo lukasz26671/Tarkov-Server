@@ -29,3 +29,4 @@ user/configs/mods.json
 _startServer.cmd
 package-lock.json
 user/configs/mods.json
+dumpTools/ProfileNameGetter/playerNames.json

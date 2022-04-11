@@ -11,22 +11,6 @@ const ReadDir = (dirpath) => {
   return fs.readdirSync(dirpath);
 }
 
-
-/* const DatabasePath = "../../db/";
-const Ragfair = DatabasePath + "traders/ragfair";
-const ItemsDir = DatabasePath + "items";
-const itemNodeFiles = ReadDir(ItemsDir);
-let ItemsData = {};
-for (let file in itemNodeFiles) {
-  for (let items of ReadParsed(ItemsDir + "/" + itemNodeFiles[file])) {
-    if (items._id == undefined) {
-      logger.logWarning(`[Loading ItemsDB] file: ${file} looks to contain corrupted data`)
-      continue;
-    }
-    ItemsData[items._id] = items;
-  }
-} */
-
 const profilesPath = "./profiles/";
 const readDir = ReadDir(profilesPath);
 let profileData = [];
@@ -48,18 +32,10 @@ const nameFile = ReadParsed(basePath + "botNames.json").normal;
 let newNames = [];
 
 for (let name = 0; name < profileData.length; name++) {
-  if (nameFile.includes(profileData[`${name}`])) { continue; } else {
+  if (nameFile.includes(profileData[name])) { continue; } else {
     newNames.push(profileData[name]);
   }
 }
-
-
-
-/* for (const name in profileData) {
-  if (typeof nameFile.find(name => name === profileData[name]) != "undefined") continue;
-  newNames.push(profileData[name]);
-} */
-//Write(nameFile.push(newNames));
 
 
 console.log("START OF LIST");
@@ -67,4 +43,4 @@ console.log(newNames);
 console.log("END OF LIST");
 console.log(newNames.length);
 
-Write("./playerNames.json", profileData);
+Write("./playerNames.json", newNames);
