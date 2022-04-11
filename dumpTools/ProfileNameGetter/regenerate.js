@@ -33,11 +33,12 @@ let profileData = [];
 
 for (const dir in readDir) {
   let profilePath = profilesPath + readDir[dir];
-  if (!profilePath + "/character.json") { continue; }
-  let character = ReadParsed(profilePath + "/character.json");
-  if (character.hasOwnProperty("Info")) {
-    profileData.push(character.Info.Nickname);
-  }
+  if (fs.existsSync(profilePath + "/character.json")) {
+    let character = ReadParsed(profilePath + "/character.json");
+    if (character.hasOwnProperty("Info")) {
+      profileData.push(character.Info.Nickname);
+    }
+  } else { continue; }
 }
 
 const DatabasePath = "../../db/";
@@ -45,26 +46,25 @@ const basePath = DatabasePath + "base/";
 const nameFile = ReadParsed(basePath + "botNames.json").normal;
 
 let newNames = [];
-for (const name in profileData) {
-  if (profileData.indexOf(nameFile)) continue;
-  newNames.push(profileData[name]);
+
+for (let name = 0; name < profileData.length; name++) {
+  if (nameFile.includes(profileData[`${name}`])) { continue; } else {
+    newNames.push(profileData[name]);
+  }
 }
 
 
 
-
-/* let ItemsForRagfair = [];
-for (let itemId in ItemsData) {
-  if (ItemsData[itemId].hasOwnProperty("_props")) {
-    if (ItemsData[itemId]._props.hasOwnProperty("CanSellOnRagfair")) {
-      ItemsForRagfair.push(ItemsData[itemId]._id);
-    }
-  }
+/* for (const name in profileData) {
+  if (typeof nameFile.find(name => name === profileData[name]) != "undefined") continue;
+  newNames.push(profileData[name]);
 } */
+//Write(nameFile.push(newNames));
+
 
 console.log("START OF LIST");
-console.log(profileData);
+console.log(newNames);
 console.log("END OF LIST");
-console.log(profileData.length);
+console.log(newNames.length);
 
-Write("playerNames.json", profileData);
+Write("./playerNames.json", profileData);
