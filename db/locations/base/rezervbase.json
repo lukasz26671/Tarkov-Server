@@ -246,6 +246,7 @@
   "users_summon_seconds": 0,
   "sav_summon_seconds": 60,
   "matching_min_seconds": 60,
+  "GenerateLocalLootCache": true,
   "MinMaxBots": [],
   "BotLocationModifier": {
     "AccuracySpeed": 0.6,

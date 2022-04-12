@@ -5730,6 +5730,7 @@
   "filter_ex": [],
   "limits": [],
   "matching_min_seconds": 60,
+  "GenerateLocalLootCache": true,
   "maxItemCountInLocation": [],
   "sav_summon_seconds": 60,
   "tmp_location_field_remove_me": 0,
