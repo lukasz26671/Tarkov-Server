@@ -378,7 +378,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
       offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
-      //delete offer.buyRestrictionMax
+      delete offer.buyRestrictionMax
       // ~~ = Math.round
       offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
       // randomize the name
@@ -401,7 +401,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
     offer.itemsCost = rubPrice;
     offer.requirementsCost = rubPrice;
     offer.summaryCost = rubPrice;
-    //delete offer.buyRestrictionMax
+    delete offer.buyRestrictionMax
     // randomize the name
     offer.user.nickname = global.utility.getArrayValue(global._database.bots.names.normal);
     offers.push(offer);
