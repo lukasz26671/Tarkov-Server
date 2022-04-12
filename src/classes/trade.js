@@ -27,7 +27,10 @@ exports.buyItem = (pmcData, body, sessionID) => {
    */
 
   if (trade_f.updateTraderAssort(traderAssort, body)) {
-    trade_f.updateRagfairAssort(ragfairAssort, body);
+    if (body.tid === "ragfair"){
+      trade_f.updateRagfairAssort(ragfairAssort, body);
+    }
+    
   } else {
     return
   }
@@ -143,9 +146,9 @@ exports.updateTraderAssort = (traderAssort, body) => {
         return false
       }
 
-      if (traderItem.upd.buyRestrictionMax) {
+      if (traderItem.upd.BuyRestrictionMax) {
         const updatedCurrentRestriction = traderItem.upd.BuyRestrictionCurrent + body.count;
-        if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
+        if (updatedCurrentRestriction <= traderItem.upd.BuyRestrictionMax){
           traderItem.upd.StackObjectsCount = updatedStackObjectCount;
           traderItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
           return true
@@ -168,20 +171,20 @@ exports.updateRagfairAssort = (ragfairAssort, body) => {
         const updatedStackObjectCount = item.upd.StackObjectsCount - body.count;
         if (updatedStackObjectCount < 0) {
           logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
-          return
+          return false
         }
 
-        if (item.upd.buyRestrictionMax) {
+        if (item.upd.BuyRestrictionMax) {
           const updatedCurrentRestriction = item.upd.BuyRestrictionCurrent + body.count;
-          if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
+          if (updatedCurrentRestriction <= item.upd.BuyRestrictionMax){
             item.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
-            return
+            return true
           } else {
             logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
-            return
+            return false
           }
         } else {
-          return
+          return true
         }
       }
     }
