@@ -112,6 +112,13 @@ class ItemPresets {
 
         return "";
     }
+
+    findPresetByParent(parentId) {
+        let presetIndex = global._database.globals.ItemPresets.findIndex(p => p._parent === parentId);
+        if (presetIndex) { 
+            return global._database.globals.ItemPresets[p]._id; 
+        }
+    }
 }
 
 module.exports.handler = new ItemPresets();
