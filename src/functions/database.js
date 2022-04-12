@@ -1,24 +1,24 @@
 "use strict";
 
-function _load_Globals() {
+function loadGlobals() {
   _database.globals = fileIO.readParsed("./" + db.base.globals);
   //allow to use file with {data:{}} as well as {}
   if (typeof _database.globals.data != "undefined") _database.globals = _database.globals.data;
 }
 
-function _load_ClusterConfig() {
+function loadClusterConfig() {
   _database.clusterConfig = fileIO.readParsed("./" + db.user.configs.cluster);
 }
 
-function _load_GameplayConfig() {
+function loadGameplayConfig() {
   global._database.gameplay = fileIO.readParsed("./user/configs/gameplay.json");
 }
 
-function _load_BlacklistConfig() {
+function loadBlacklistConfig() {
   _database.blacklist = fileIO.readParsed("./" + db.user.configs.blacklist);
 }
 
-function _load_BotsData() {
+function loadBotsData() {
   _database.bots = {};
   for (let botType in db.bots) {
     _database.bots[botType] = {};
@@ -51,7 +51,7 @@ function _load_BotsData() {
   _database.bots.names = fileIO.readParsed("./" + db.base.botNames);
 }
 
-function _load_CoreData() {
+function loadCoreData() {
   _database.core = {};
   _database.core.botBase = fileIO.readParsed("./" + db.base.botBase);
   _database.core.botCore = fileIO.readParsed("./" + db.base.botCore);
@@ -59,7 +59,7 @@ function _load_CoreData() {
   _database.core.matchMetrics = fileIO.readParsed("./" + db.base.matchMetrics);
 }
 
-function _load_ItemsData() {
+function loadItemsData() {
 
   global._database.items = {};
   let itemNodeFiles = db.items;
@@ -84,7 +84,7 @@ function _load_ItemsData() {
   }
 }
 
-function _load_HideoutData() {
+function loadHideoutData() {
 
   _database.hideout = { settings: {}, areas: [], production: [], scavcase: [] };
 
@@ -123,7 +123,7 @@ function _load_HideoutData() {
   }
 }
 
-function _load_QuestsData() {
+function loadQuestsData() {
   _database.quests = fileIO.readParsed("./" + db.quests.quests);
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
 
@@ -147,10 +147,7 @@ function _load_QuestsData() {
     } */
 }
 
-function _load_CustomizationData() {
-  /*  _database.customization = fileIO.readParsed("./" + db.user.cache.customization);
-   if (typeof _database.customization.data != "undefined") _database.customization = _database.customization.data; 
-   */
+function loadCustomizationData() {
 
   _database.customization = {};
   for (let file in db.customization) {
@@ -167,7 +164,7 @@ function _load_CustomizationData() {
   }
 }
 
-function _load_LocaleData() {
+function loadLocaleData() {
   /*
    folder structure must be always like this
  
@@ -195,7 +192,6 @@ function _load_LocaleData() {
     const languages = fileIO.readParsed(db.locales[lang][lang]);
     _database.languages.push(languages);
 
-    //_database.languages.push(fileIO.readParsed("./" + db.locales[langTag][langTag]));
     _database.locales.menu[lang] = fileIO.readParsed("./" + db.locales[lang].menu);
     if (typeof _database.locales.menu[lang].data != "undefined") {
       _database.locales.menu[lang] = _database.locales.menu[lang].data;
@@ -205,24 +201,6 @@ function _load_LocaleData() {
       _database.locales.global[lang] = _database.locales.global[lang].data;
     }
   }
-  //fileIO.write("./database_locales.json", )
-
-  //original code
-  /*   _database.languages = fileIO.readParsed("./" + db.user.cache.languages);
-    _database.locales = { menu: {}, global: {} };
-    for (let lang in db.locales) {
-      let menuFile = fileIO.exist(db.user.cache["locale_menu_" + lang.toLowerCase()]) ? db.user.cache["locale_menu_" + lang.toLowerCase()] : db.locales[lang].menu;
-  
-      _database.locales.menu[lang] = fileIO.readParsed("./" + menuFile);
-      if (typeof _database.locales.menu[lang].data != "undefined") {
-        _database.locales.menu[lang] = _database.locales.menu[lang].data;
-      }
-  
-      _database.locales.global[lang] = fileIO.readParsed("./" + db.user.cache["locale_" + lang.toLowerCase()]);
-      if (typeof _database.locales.global[lang].data != "undefined") {
-        _database.locales.global[lang] = _database.locales.global[lang].data;
-      }
-    } */
 }
 
 //needs to be worked to consolidate functions below
@@ -271,7 +249,7 @@ function _load_LocaleData() {
   return structure;
 } */
 
-function Create_ForcedDynamicStruct(item_data) {
+function createForcedDynamicStruct(item_data) {
   let isStatic = false;
   let useGravity = false;
   let randomRotation = false;
@@ -313,7 +291,7 @@ function Create_ForcedDynamicStruct(item_data) {
     Items: item_data.Items,
   };
 }
-function Create_StaticMountedStruct(item_data) {
+function createStaticMountedStruct(item_data) {
   let isStatic = false;
   let useGravity = false;
   let randomRotation = false;
@@ -361,7 +339,7 @@ function Create_StaticMountedStruct(item_data) {
   };
 }
 
-function _load_LocationData() {
+function loadLocationData() {
   _database.locations = {};
   for (let name in db.locations.base) {
     let _location = { "base": {}, "loot": {} };
@@ -372,10 +350,10 @@ function _load_LocationData() {
       for (let type in loot_data) {
         for (let item of loot_data[type]) {
           if (type == "static" || type == "mounted") {
-            _location.loot[type].push(Create_StaticMountedStruct(item));
+            _location.loot[type].push(createStaticMountedStruct(item));
             continue;
           }
-          _location.loot[type].push(Create_ForcedDynamicStruct(item));
+          _location.loot[type].push(createForcedDynamicStruct(item));
         }
         /*         for (let item of loot_data[type]) {
                   _location.loot[type].push(Create_LootGameUsableStruct(item))
@@ -401,7 +379,7 @@ function _load_LocationData() {
    */
 }
 
-const LoadTraderAssort = (traderId) => {
+const loadTraderAssort = (traderId) => {
   let base = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
   const assort = fileIO.readParsed(db.traders[traderId].assort);
 
@@ -422,19 +400,24 @@ const LoadTraderAssort = (traderId) => {
           items[0]["upd"] = Object.assign({}, items[0].upd);
         }
 
+        items[0].upd.UnlimitedCount = false;
         if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
           items[0].upd["UnlimitedCount"] = false;
         }
 
-        if (items[0].upd.BuyRestrictionMax){
-          if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
-            items[0].upd["BuyRestrictionCurrent"] = 0;
-          }
-        }
-
+        items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
         if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
           items[0].upd["StackObjectsCount"] = assort[item].default.stack;
         }
+
+        if (utility.isUndefined(items[0].upd.BuyRestrictionMax)) {
+          items[0].upd["BuyRestrictionMax"] = items[0].upd.StackObjectsCount;
+        } else { items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax; }
+
+
+        if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
+          items[0].upd["BuyRestrictionCurrent"] = 0;
+        } else { items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent; }
 
       }
     } else {
@@ -459,7 +442,7 @@ const LoadTraderAssort = (traderId) => {
   return base;
 }
 
-function _load_TradersData() {
+function loadTradersData() {
   global._database.traders = {};
   for (let traderID in db.traders) {
     global._database.traders[traderID] = { base: {}, assort: {}, categories: {} };
@@ -469,10 +452,10 @@ function _load_TradersData() {
 
     // Loading Assort depending if its Fence or not
     if (traderID == "579dc571d53a0658a154fbec") {
-      global._database.traders[traderID].base_assort = LoadTraderAssort(traderID);
+      global._database.traders[traderID].base_assort = loadTraderAssort(traderID);
       global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
     } else {
-      global._database.traders[traderID].assort = LoadTraderAssort(traderID);
+      global._database.traders[traderID].assort = loadTraderAssort(traderID);
     }
     // Loading Player Customizations For Buying
     if ("suits" in db.traders[traderID]) {
@@ -506,7 +489,7 @@ function _load_TradersData() {
   }
 }
 
-function _load_WeatherData() {
+function loadWeatherData() {
   _database.weather = [];
   let i = 0;
   for (let file in db.weather) {
@@ -518,7 +501,7 @@ function _load_WeatherData() {
   }
 }
 
-function GenerateRagfairOffersCache() {
+function loadRagfair() {
 
   const findChildren = (itemIdToFind, assort) => {
     let Array = [];
@@ -532,8 +515,6 @@ function GenerateRagfairOffersCache() {
   }
   const fleaOfferTemplate = global._database.core.fleaOffer;
   const convertToRagfairAssort = (itemsToSell, barter_scheme, loyal_level, trader, counter = 911) => {
-
-    //console.log(OFFER_BASE, "OFFER_BASE");
 
     let offer = utility.DeepCopy(fleaOfferTemplate);
     const traderObj = global._database.traders[trader].base;
@@ -551,12 +532,6 @@ function GenerateRagfairOffersCache() {
     offer.items = itemsToSell;
     offer.requirements = barter_scheme;
 
-    /**
-     * offer.buyRestrictionMax is not populating properly from the fleaOfferTemplate
-     * I have no idea how to get it to work properly
-     * Okay, I can hardcode it to 1 so we might be onto something
-     * 
-     */
     if (utility.isUndefined(offer.buyRestrictionMax)) { console.log("offer.buyRestrictionMax - undefined"); }
     offer.buyRestrictionMax = itemsToSell[0].upd.BuyRestrictionMax
 
@@ -595,6 +570,14 @@ function GenerateRagfairOffersCache() {
           }
         }
 
+        /*         // Base items can't have parentId or slotId properties or the client will report errors
+                if (typeof itemsToSell[0].parentId != 'undefined') {
+                  delete itemsToSell[0].parentId;
+                }
+                if (typeof itemsToSell[0].slotId != 'undefined') {
+                  delete itemsToSell[0].slotId;
+                } */
+
         response.offers.push(convertToRagfairAssort(itemsToSell, barter_scheme, loyal_level, trader, counter));
         counter += 1;
       }
@@ -606,34 +589,34 @@ function GenerateRagfairOffersCache() {
 
 exports.load = () => {
   logger.logDebug("Load: 'Core'");
-  _load_CoreData();
+  loadCoreData();
   logger.logDebug("Load: 'Globals'");
-  _load_Globals();
+  loadGlobals();
   logger.logDebug("Load: 'Cluster Config'")
-  _load_ClusterConfig();
+  loadClusterConfig();
   logger.logDebug("Load: 'Blacklist'")
-  _load_BlacklistConfig();
+  loadBlacklistConfig();
   logger.logDebug("Load: 'Gameplay'");
-  _load_GameplayConfig();
+  loadGameplayConfig();
   logger.logDebug("Load: 'Bots'");
-  _load_BotsData();
+  loadBotsData();
   logger.logDebug("Load: 'Hideout'");
-  _load_HideoutData();
+  loadHideoutData();
   logger.logDebug("Load: 'Quests'");
-  _load_QuestsData();
+  loadQuestsData();
   logger.logDebug("Load: 'Items'");
-  _load_ItemsData();
+  loadItemsData();
   logger.logDebug("Load: 'Customizations'");
-  _load_CustomizationData();
+  loadCustomizationData();
   logger.logDebug("Load: 'Locales'");
-  _load_LocaleData();
+  loadLocaleData();
   logger.logDebug("Load: 'Locations'");
-  _load_LocationData();
+  loadLocationData();
   logger.logDebug("Load: 'Traders'");
-  _load_TradersData();
+  loadTradersData();
   logger.logDebug("Load: 'Flea Market'");
-  GenerateRagfairOffersCache();
+  loadRagfair();
   logger.logDebug("Load: 'Weather'");
-  _load_WeatherData();
+  loadWeatherData();
   logger.logInfo("Database loaded");
 };
