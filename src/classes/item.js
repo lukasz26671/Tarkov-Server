@@ -1,5 +1,7 @@
 "use strict";
 
+const { tradeHandler } = require("./trade");
+
 class ItemServer {
   constructor() {
     this.output = "";
@@ -45,7 +47,7 @@ class ItemServer {
       QuestComplete: quest_f.completeQuest,
       QuestHandover: quest_f.handoverQuest,
       RagFairAddOffer: ragfair_f.ragFairAddOffer,
-      RagFairBuyOffer: trade_f.confirmRagfairTrading,
+      RagFairBuyOffer: trade_f.TradeHandler.confirmRagfairTrading,
       ReadEncyclopedia: status_f.readEncyclopedia,
       Remove: move_f.discardItem,
       RemoveBuild: weaponbuilds_f.removeBuild,
@@ -56,7 +58,7 @@ class ItemServer {
       Swap: move_f.swapItem,
       Tag: status_f.tagItem,
       Toggle: status_f.toggleItem,
-      TradingConfirm: trade_f.confirmTrading,
+      TradingConfirm: trade_f.TradeHandler.confirmTrading,
       Transfer: move_f.transferItem,
     };
   }
