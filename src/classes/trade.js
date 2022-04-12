@@ -143,9 +143,9 @@ exports.updateTraderAssort = (traderAssort, body) => {
         return false
       }
 
-      if (traderItem.upd.buyRestrictionMax) {
+      if (traderItem.upd.BuyRestrictionMax) {
         const updatedCurrentRestriction = traderItem.upd.BuyRestrictionCurrent + body.count;
-        if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
+        if (updatedCurrentRestriction <= traderItem.upd.BuyRestrictionMax){
           traderItem.upd.StackObjectsCount = updatedStackObjectCount;
           traderItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
           return true
@@ -171,9 +171,9 @@ exports.updateRagfairAssort = (ragfairAssort, body) => {
           return
         }
 
-        if (item.upd.buyRestrictionMax) {
+        if (item.upd.BuyRestrictionMax) {
           const updatedCurrentRestriction = item.upd.BuyRestrictionCurrent + body.count;
-          if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
+          if (updatedCurrentRestriction <= traderItem.upd.BuyRestrictionMax){
             item.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
             return
           } else {
