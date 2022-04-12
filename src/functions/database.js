@@ -427,19 +427,19 @@ const LoadTraderAssort = (traderId) => {
           items[0].upd["UnlimitedCount"] = false;
         }
 
+        items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
+        if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
+          items[0].upd["StackObjectsCount"] = assort[item].default.stack;
+        }
+
         if (utility.isUndefined(items[0].upd.BuyRestrictionMax)) {
-          items[0].upd["BuyRestrictionMax"] = 5;
+          items[0].upd["BuyRestrictionMax"] = items[0].upd.StackObjectsCount;
         } else { items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax; }
 
 
         if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
           items[0].upd["BuyRestrictionCurrent"] = 0;
         } else { items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent; }
-
-        items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
-        if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
-          items[0].upd["StackObjectsCount"] = assort[item].default.stack;
-        }
 
       }
     } else {
@@ -600,7 +600,7 @@ function GenerateRagfairOffersCache() {
             break;
           }
         }
-        
+
         // Base items can't have parentId or slotId properties or the client will report errors
         if (typeof itemsToSell[0].parentId != 'undefined') {
           delete itemsToSell[0].parentId;

@@ -130,7 +130,6 @@ function countCategories(response) {
 
 function getOffers(sessionID, request) {
 
-
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
   let itemsToAdd = [];
   let offers = [];
@@ -169,6 +168,9 @@ function getOffers(sessionID, request) {
 
   for (let item of itemsToAdd) {
     offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
+/*     if (request.offerOwnerType === 0) {
+        delete offers.buyRestrictionMax;
+    } */
   }
 
   // merge trader offers with player offers display offers is set to 'ALL'
@@ -231,12 +233,13 @@ function getOffersFromTraders(sessionID, request) {
       if (jsonToReturn.offers[offer].items[0]._tpl == tplTokeep) {
         jsonToReturn.offers[offer].summaryCost = calculateCost(jsonToReturn.offers[offer].requirements);
         // check if offer is really available, removes any quest locked items not in current assort of a trader
-        let tmpOffer = jsonToReturn.offers[offer];
-        let traderId = tmpOffer.user.id;
-        let traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
+        const tmpOffer = jsonToReturn.offers[offer];
+        const traderId = tmpOffer.user.id;
+        const traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
         let keepItem = false; // for testing
         for (let item of traderAssort) {
           if (item._id === tmpOffer.root) {
+            jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = (tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
             offersToKeep.push(jsonToReturn.offers[offer]);
             keepItem = true;
             break;
@@ -328,7 +331,16 @@ function getCategoryList(handbookId) {
 
   return result;
 }
-
+/** Create a list of offers
+ * Notes:
+ * offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
+ * We need to create a maxInt for categories to avoid too many offers
+ * 
+ * @param {*} template - ItemID
+ * @param {*} onlyFunc - filter function
+ * @param {*} usePresets - use presets
+ * @returns 
+ */
 function createOffer(template, onlyFunc, usePresets = true) {
   //console.log("createOffer is called")
   // Some slot filters reference bad items
@@ -336,6 +348,7 @@ function createOffer(template, onlyFunc, usePresets = true) {
     logger.logWarning(`Item ${template} does not exist`);
     return [];
   }
+
 
   // Remove items that don't exist in assort
   if (Object.values(global._database.traders.ragfair.assort.items).filter(tItem => tItem._tpl == template || tItem._id == template).length == 0) {
@@ -366,6 +379,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
+      offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
+      delete offer.buyRestrictionMax
       // ~~ = Math.round
       offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
       // randomize the name
@@ -383,10 +398,12 @@ function createOffer(template, onlyFunc, usePresets = true) {
     let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplay.trading.ragfairMultiplier);
     offer._id = template;
     offer.items[0]._tpl = template;
+    offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
     offer.requirements[0].count = rubPrice;
     offer.itemsCost = rubPrice;
     offer.requirementsCost = rubPrice;
     offer.summaryCost = rubPrice;
+    delete offer.buyRestrictionMax
     // randomize the name
     offer.user.nickname = global.utility.getArrayValue(global._database.bots.names.normal);
     offers.push(offer);
