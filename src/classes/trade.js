@@ -166,18 +166,18 @@ exports.updateTraderAssort = (traderAssort, body) => {
 
 exports.updateRagfairAssort = (ragfairAssort, body) => {
   for (const ragfairData of ragfairAssort) {
-    for (const item of ragfairData.items) {
-      if (item._id === body.item_id) {
-        const updatedStackObjectCount = item.upd.StackObjectsCount - body.count;
+    for (const ragfairItem of ragfairData.items) {
+      if (ragfairItem._id === body.item_id) {
+        const updatedStackObjectCount = ragfairItem.upd.StackObjectsCount - body.count;
         if (updatedStackObjectCount < 0) {
           logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
           return false
         }
 
-        if (item.upd.BuyRestrictionMax) {
-          const updatedCurrentRestriction = item.upd.BuyRestrictionCurrent + body.count;
-          if (updatedCurrentRestriction <= item.upd.BuyRestrictionMax){
-            item.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
+        if (ragfairItem.upd.BuyRestrictionMax) {
+          const updatedCurrentRestriction = ragfairItem.upd.BuyRestrictionCurrent + body.count;
+          if (updatedCurrentRestriction <= ragfairItem.upd.BuyRestrictionMax){
+            ragfairItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
             return true
           } else {
             logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
