@@ -85,6 +85,12 @@ function routeDatabaseAndResources() { // populate global.db and global.res with
 		},
 		events: {
 			schedule: "user/events/schedule.json"
+		},
+		profiles: {
+			character: "user/profiles/__REPLACEME__/character.json",
+			dialogue: "user/profiles/__REPLACEME__/dialogue.json",
+			storage: "user/profiles/__REPLACEME__/storage.json",
+			userbuilds: "user/profiles/__REPLACEME__/userbuilds.json"
 		}
 	}
 	fileIO.write("user/cache/db.json", db);

@@ -405,19 +405,10 @@ const loadTraderAssort = (traderId) => {
           items[0].upd["UnlimitedCount"] = false;
         }
 
-        items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
-        if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
-          items[0].upd["StackObjectsCount"] = assort[item].default.stack;
-        }
 
-        if (utility.isUndefined(items[0].upd.BuyRestrictionMax)) {
-          items[0].upd["BuyRestrictionMax"] = items[0].upd.StackObjectsCount;
-        } else { items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax; }
-
-
-        if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
-          items[0].upd["BuyRestrictionCurrent"] = 0;
-        } else { items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent; }
+        if (items[0].upd.StackObjectsCount) items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
+        if (items[0].upd.BuyRestrictionMax) items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax;
+        if (items[0].upd.BuyRestrictionCurrent) items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent;
 
       }
     } else {

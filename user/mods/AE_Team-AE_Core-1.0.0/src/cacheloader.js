@@ -3,56 +3,35 @@ exports.mod = (mod_data) => {
   let ModFolderName = `${mod_data.author}-${mod_data.name}-${mod_data.version}`;
   let ModFileNames = mod_data.filenames;
   let config = mod_data.settings;
-  let PathResolver = global.internal.path.resolve;
 
-  const cacheLoad = function (filepath) {
-    return global.fileIO.readParsed(PathResolver(filepath));
-  };
   logger.logInfo(`—————————————————————————————————————————`);
   logger.logInfo(`\x1b[91m[CACHE CORE] ${mod_data.name} Started\x1b[40m`);
   logger.logInfo(`—————————————————————————————————————————`);
 
   //START ------- BIG VARIABLE LOAD
-  let items = cacheLoad("user/cache/items.json");
+  let items = global._database.items;
 
-  let assort_ragfair = cacheLoad("user/cache/assort_ragfair.json");
-  let locale_en = cacheLoad("user/cache/locale_en.json");
-  let locale_fr = cacheLoad(
-    `user/mods/${ModFolderName}/src/Languages/Original/fr/locale.json`,
-  );
-  let locale_ge = cacheLoad(
-    `user/mods/${ModFolderName}/src/Languages/Original/ge/locale.json`,
-  );
-  let locale_ru = cacheLoad("user/cache/locale_ru.json");
-  let templates = cacheLoad("user/cache/templates.json");
-  let assortPrapor = cacheLoad(
-    "user/cache/assort_54cb50c76803fa8b248b4571.json",
-  );
-  let assortTherapist = cacheLoad(
-    "user/cache/assort_54cb57776803fa99248b456e.json",
-  );
-  let assortFence = cacheLoad(
-    "user/cache/assort_579dc571d53a0658a154fbec.json",
-  );
-  let assortSkier = cacheLoad(
-    "user/cache/assort_58330581ace78e27b8b10cee.json",
-  );
-  let assortPeacekeeper = cacheLoad(
-    "user/cache/assort_5935c25fb3acc3127c3d8cd9.json",
-  );
-  let assortMechanic = cacheLoad(
-    "user/cache/assort_5a7c2eca46aef81a7ca2145d.json",
-  );
-  let assortRagman = cacheLoad(
-    "user/cache/assort_5ac3b934156ae10c4430e83c.json",
-  );
-  let assortJaeger = cacheLoad(
-    "user/cache/assort_5c0647fdd443bc2504c2d371.json",
-  );
-  let suitsGlobal = cacheLoad("user/cache/customization.json");
-  let suitsRagman = cacheLoad(
-    "user/cache/customization_5ac3b934156ae10c4430e83c.json",
-  );
+
+  let locale_en = _database.locales.global["en"];
+  let locale_fr = _database.locales.global["fr"];
+  let locale_ge = _database.locales.global["ge"];
+  let locale_ru = _database.locales.global["ru"];
+
+  let templates = global._database.templates.Items;
+
+  let assortPrapor = global._database.traders["54cb50c76803fa8b248b4571"].assort;
+  let assortTherapist = global._database.traders["54cb57776803fa99248b456e"].assort;
+  let assortFence = global._database.traders["579dc571d53a0658a154fbec"].assort;
+  let assortSkier = global._database.traders["58330581ace78e27b8b10cee"].assort;
+  let assortPeacekeeper = global._database.traders["5935c25fb3acc3127c3d8cd9"].assort;
+  let assortMechanic = global._database.traders["5a7c2eca46aef81a7ca2145d"].assort;
+  let assortRagman = global._database.traders["5ac3b934156ae10c4430e83c"].assort;
+  let assortJaeger = global._database.traders["5c0647fdd443bc2504c2d371"].assort;
+  let assort_ragfair = global._database.traders["ragfair"].assort;
+
+  let suitsGlobal = _database.customization;
+  let suitsRagman = global._database.traders["5ac3b934156ae10c4430e83c"].suits
+
   //END ------- BIG VARIABLE LOAD
 
   // Checking for no FileNames
@@ -838,7 +817,7 @@ exports.mod = (mod_data) => {
   }
 
   // Writing to file
-  fileIO.write(PathResolver("user/cache/items.json"), items, true);
+/*   fileIO.write(PathResolver("user/cache/items.json"), items, true);
 
   if (config.databasesEnabled == true) {
     fileIO.write(
@@ -913,7 +892,7 @@ exports.mod = (mod_data) => {
       suitsRagman,
       true,
     );
-  }
+  } */
 
   // Logging success on modload
   logger.logInfo(`—————————————————————————————————————————`);
