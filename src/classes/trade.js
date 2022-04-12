@@ -104,20 +104,66 @@ class TradeHandler{
     return;
   }
 
+<<<<<<< HEAD
   static updateAssort(traderAssort, body){
     for (const traderItem of traderAssort.items) {
       if (traderItem._id === body.item_id) {
         const updatedStackObjectCount = traderItem.upd.StackObjectsCount - body.count;
+=======
+  return; // output;
+}
+
+exports.updateTraderAssort = (traderAssort, body) => {
+  for (const traderItem of traderAssort.items) {
+    if (traderItem._id === body.item_id) {
+      const updatedStackObjectCount = traderItem.upd.StackObjectsCount - body.count;
+      if (updatedStackObjectCount < 0) {
+        logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
+        return false
+      }
+
+      if (traderItem.upd.BuyRestrictionMax) {
+        const updatedCurrentRestriction = traderItem.upd.BuyRestrictionCurrent + body.count;
+        if (updatedCurrentRestriction <= traderItem.upd.BuyRestrictionMax){
+          traderItem.upd.StackObjectsCount = updatedStackObjectCount;
+          traderItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
+          return true
+        } else {
+          logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
+          return false
+        }
+      } else {
+        traderItem.upd.StackObjectsCount = updatedStackObjectCount;
+        return true
+      }
+    }
+  }
+}
+
+exports.updateRagfairAssort = (ragfairAssort, body) => {
+  for (const ragfairData of ragfairAssort) {
+    for (const ragfairItem of ragfairData.items) {
+      if (ragfairItem._id === body.item_id) {
+        const updatedStackObjectCount = ragfairItem.upd.StackObjectsCount - body.count;
+>>>>>>> 2a2b80b3550d18ee999361fe60a70b23b01d5c3b
         if (updatedStackObjectCount < 0) {
           logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
           return false
         }
+<<<<<<< HEAD
   
         if (traderItem.upd.BuyRestrictionMax) {
           const updatedCurrentRestriction = traderItem.upd.BuyRestrictionCurrent + body.count;
           if (updatedCurrentRestriction <= traderItem.upd.BuyRestrictionMax){
             traderItem.upd.StackObjectsCount = updatedStackObjectCount;
             traderItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
+=======
+
+        if (ragfairItem.upd.BuyRestrictionMax) {
+          const updatedCurrentRestriction = ragfairItem.upd.BuyRestrictionCurrent + body.count;
+          if (updatedCurrentRestriction <= ragfairItem.upd.BuyRestrictionMax){
+            ragfairItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
+>>>>>>> 2a2b80b3550d18ee999361fe60a70b23b01d5c3b
             return true
           } else {
             logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
