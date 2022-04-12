@@ -28,26 +28,22 @@ exports.buyItem = (pmcData, body, sessionID) => {
 
 
   for (const traderItem of traderAssort.items) {
-    /**
-     * BuyRestrictionCurrent will only need to update the traderItem because 
-     * the ragfairItem has a StackObjectsCount equal to the BuyRestrictionCurrent
-     * of the traderItem
-     */
 
-    if (traderItem.hasOwnProperty("upd")) {
-      console.log("has upd");
-      if (traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
-        console.log("has upd BuyRestrictionCurrent");
-        let newRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
-        console.log(newRestrictionCurrent, "newRestrictionCurrent");
-      }
-    }
+    if (body.tid === "ragfair") {
+      if (traderItem.id === body.item_id) {
 
-    if (traderItem.id === body.item_id) {
-      let traderStackObjects = traderItem.upd.StackObjectsCount - body.count;
+        if (traderItem.hasOwnProperty("upd")) {
+          console.log("has upd");
 
-      if (body.tid === "ragfair") {
+          if (traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
+            console.log("has upd BuyRestrictionCurrent");
+            let newRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
 
+          } // end if has upd BuyRestrictionCurrent
+        } // end if traderItem.hasOwnProperty("upd")
+
+
+        let traderStackObjects = traderItem.upd.StackObjectsCount - body.count;
         if (traderStackObjects < 0) {
           logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
           break;
@@ -59,40 +55,40 @@ exports.buyItem = (pmcData, body, sessionID) => {
 
           } // end of if BuyRestrictionCurrent
         } // end of if traderStackObjects < 0
-      } // end of if (body.tid === "ragfair")
-
-    } // end of if (traderItem.id === body.item_id)
+      } // end of if traderItem.id === body.item_id
+    } // end of if body.tid === "ragfair"
     else {
       for (const ragfairData of ragfairAssort) {
         for (const item in ragfairData.items) {
           if (ragfairData.items[item]._id === body.item_id) {
             let ragfairItem = ragfairData.items[item];
-            let ragfairStackObjects = ragfairItem.upd.StackObjectsCount - body.count;
 
             if (traderItem.hasOwnProperty("upd")) {
               let traderStackObjects = traderItem.upd.StackObjectsCount - body.count;
+              traderItem.upd.StackObjectsCount = traderStackObjects;
 
               if (traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
                 let newRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
 
-                if (ragfairStackObjects < ragfairData.buyRestrictionMax) {
+                if (newRestrictionCurrent < ragfairData.buyRestrictionMax) {
                   traderItem.upd.RestrictionCurrent = newRestrictionCurrent;
-                  traderItem.upd.StackObjectsCount = traderStackObjects;
 
                 }
-                if (ragfairItem.hasOwnProperty("upd")) {
-                  ragfairItem.upd.StackObjectsCount = ragfairStackObjects;
+              }
+            }
+            if (ragfairItem.hasOwnProperty("upd")) {
+              let ragfairStackObjects = ragfairItem.upd.StackObjectsCount - body.count;
+              ragfairItem.upd.StackObjectsCount = ragfairStackObjects;
 
-                  if (ragfairItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
-                    ragfairItem.upd.BuyRestrictionCurrent = newRestrictionCurrent;
+              if (ragfairItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
+                ragfairItem.upd.BuyRestrictionCurrent = ragfairStackObjects;
 
-                  } // end of if ragfairItem.upd.hasOwnProperty("BuyRestrictionCurrent")
-                } // end of if ragfairItem.hasOwnProperty("upd")
-              } // end of if traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")
-            } // end of if traderItem.hasOwnProperty("upd")
-          } // end of if ragfairData.items[item]._id === body.item_id
+              } // end of if (ragfairItem.upd.hasOwnProperty("BuyRestrictionCurrent")
+            } // end of if (ragfairItem.hasOwnProperty("upd"))
+
+          } // end of if (ragfairData.items[item]._id === body.item_id)
         } // end of for item in ragfairData.items
-      } // end of for ragfairData in ragfairAssort
+      } // end of for ragfairData of ragfairAssort
     } // end of else if traderItem.id === body.item_id
   } // end of for traderItem in traderAssort.items
 
