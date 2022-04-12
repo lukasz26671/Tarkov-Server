@@ -422,24 +422,19 @@ const LoadTraderAssort = (traderId) => {
           items[0]["upd"] = Object.assign({}, items[0].upd);
         }
 
-        items[0].upd.UnlimitedCount = false;
         if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
           items[0].upd["UnlimitedCount"] = false;
         }
 
-        items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
+        if (items[0].upd.BuyRestrictionMax){
+          if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
+            items[0].upd["BuyRestrictionCurrent"] = 0;
+          }
+        }
+
         if (utility.isUndefined(items[0].upd.StackObjectsCount)) {
           items[0].upd["StackObjectsCount"] = assort[item].default.stack;
         }
-
-        if (utility.isUndefined(items[0].upd.BuyRestrictionMax)) {
-          items[0].upd["BuyRestrictionMax"] = items[0].upd.StackObjectsCount;
-        } else { items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax; }
-
-
-        if (utility.isUndefined(items[0].upd.BuyRestrictionCurrent)) {
-          items[0].upd["BuyRestrictionCurrent"] = 0;
-        } else { items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent; }
 
       }
     } else {
@@ -509,7 +504,6 @@ function _load_TradersData() {
       global._database.traders[traderID].base.repair.price_rate = -100;
     }
   }
-  //fileIO.write("./traders.json", global._database.traders);
 }
 
 function _load_WeatherData() {
@@ -599,14 +593,6 @@ function GenerateRagfairOffersCache() {
             loyal_level = allAssort.loyal_level_items[loyal_levelFromAssort];
             break;
           }
-        }
-
-        // Base items can't have parentId or slotId properties or the client will report errors
-        if (typeof itemsToSell[0].parentId != 'undefined') {
-          delete itemsToSell[0].parentId;
-        }
-        if (typeof itemsToSell[0].slotId != 'undefined') {
-          delete itemsToSell[0].slotId;
         }
 
         response.offers.push(convertToRagfairAssort(itemsToSell, barter_scheme, loyal_level, trader, counter));
