@@ -26,134 +26,11 @@ exports.buyItem = (pmcData, body, sessionID) => {
    * 
    */
 
-
-  for (const traderItem of traderAssort.items) {
-
-    if (body.tid === "ragfair") {
-      if (traderItem.id === body.item_id) {
-
-        if (traderItem.hasOwnProperty("upd")) {
-          console.log("has upd");
-
-          if (traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
-            console.log("has upd BuyRestrictionCurrent");
-            let newRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
-
-          } // end if has upd BuyRestrictionCurrent
-        } // end if traderItem.hasOwnProperty("upd")
-
-
-        let traderStackObjects = traderItem.upd.StackObjectsCount - body.count;
-        if (traderStackObjects < 0) {
-          logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
-          break;
-
-        } else {
-          traderItem.upd.StackObjectsCount = traderStackObjects;
-          if (traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
-            traderItem.upd.RestrictionCurrent = newRestrictionCurrent;
-
-          } // end of if BuyRestrictionCurrent
-        } // end of if traderStackObjects < 0
-      } // end of if traderItem.id === body.item_id
-    } // end of if body.tid === "ragfair"
-    else {
-      for (const ragfairData of ragfairAssort) {
-        for (const item in ragfairData.items) {
-          if (ragfairData.items[item]._id === body.item_id) {
-            let ragfairItem = ragfairData.items[item];
-
-            if (traderItem.hasOwnProperty("upd")) {
-              let traderStackObjects = traderItem.upd.StackObjectsCount - body.count;
-              traderItem.upd.StackObjectsCount = traderStackObjects;
-
-              if (traderItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
-                let newRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
-
-                if (newRestrictionCurrent < ragfairData.buyRestrictionMax) {
-                  traderItem.upd.RestrictionCurrent = newRestrictionCurrent;
-
-                }
-              }
-            }
-            if (ragfairItem.hasOwnProperty("upd")) {
-              let ragfairStackObjects = ragfairItem.upd.StackObjectsCount - body.count;
-              ragfairItem.upd.StackObjectsCount = ragfairStackObjects;
-
-              if (ragfairItem.upd.hasOwnProperty("BuyRestrictionCurrent")) {
-                ragfairItem.upd.BuyRestrictionCurrent = ragfairStackObjects;
-
-              } // end of if (ragfairItem.upd.hasOwnProperty("BuyRestrictionCurrent")
-            } // end of if (ragfairItem.hasOwnProperty("upd"))
-
-          } // end of if (ragfairData.items[item]._id === body.item_id)
-        } // end of for item in ragfairData.items
-      } // end of for ragfairData of ragfairAssort
-    } // end of else if traderItem.id === body.item_id
-  } // end of for traderItem in traderAssort.items
-
-
-
-
-  /* 
-    let isValid;
-    if (body.tid === "ragfair") {
-      for (const traderItem of traderAssort.items) {
-        if (traderItem._id === body.item_id) {
-          const newStackObjects = traderItem.upd.StackObjectsCount - body.count;
-          const newRestrictionCurrent = traderItem.upd.BuyRestrictionCurrent + body.count;
-          if (newStackObjects < 0) {
-            logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
-            isValid = false;
-            break;
-          } else {
-            isValid = true;
-            traderItem.upd.StackObjectsCount = newStackObjects;
-            traderItem.upd.BuyRestrictionCurrent = newRestrictionCurrent;
-            break;
-          }
-        }
-      }
-    } else {
-      for (const traderItem of traderAssort.items) {
-        if (traderItem._id === body.item_id) {
-          for (const ragfairData of ragfairAssort) {
-            for (const ragfairItem of ragfairData.items) {
-              if (ragfairItem._id === body.item_id) {
-                let newStackObjects = ragfairItem.upd.StackObjectsCount - body.count;
-                if (ragfairItem.upd.hasOwnProperty("BuyRestrictionMax")) {
-   
-                  let buyRestrictionCurrent = ragfairItem.upd.BuyRestrictionCurrent + body.count;
-                  if (newStackObjects < 0) {
-                    logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
-                    isValid = false;
-                    break;
-                  } else {
-                    if (buyRestrictionCurrent <= ragfairItem.buyRestrictionMax) {
-                      traderItem.upd.StackObjectsCount = newStackObjects;
-                      traderItem.upd.buyRestrictionCurrent = buyRestrictionCurrent;
-                      ragfairItem.upd.StackObjectsCount = newStackObjects;
-                      //ragfairItem.upd.BuyRestrictionCurrent = buyRestrictionCurrent;
-                      isValid = true;
-                    } else { isValid = false; }
-                  }
-                }
-              }
-            }
-            if (!global.utility.isUndefined(isValid)) {
-              break;
-            }
-          }
-          if (!global.utility.isUndefined(isValid)) {
-            break;
-          }
-        }
-        if (!global.utility.isUndefined(isValid)) {
-          break;
-        }
-      }
-    } */
-
+  if (trade_f.updateTraderAssort(traderAssort, body)) {
+    trade_f.updateRagfairAssort(ragfairAssort, body);
+  } else {
+    return
+  }
 
   if (!helper_f.payMoney(pmcData, body, sessionID)) {
     logger.logError("WHERE IS THE MONEY LEBOWSKI ?!");
@@ -255,4 +132,58 @@ exports.confirmRagfairTrading = (pmcData, body, sessionID) => {
   }
 
   return; // output;
+}
+
+exports.updateTraderAssort = (traderAssort, body) => {
+  for (const traderItem of traderAssort.items) {
+    if (traderItem._id === body.item_id) {
+      const updatedStackObjectCount = traderItem.upd.StackObjectsCount - body.count;
+      if (updatedStackObjectCount < 0) {
+        logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
+        return false
+      }
+
+      if (traderItem.upd.buyRestrictionMax) {
+        const updatedCurrentRestriction = traderItem.upd.BuyRestrictionCurrent + body.count;
+        if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
+          traderItem.upd.StackObjectsCount = updatedStackObjectCount;
+          traderItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
+          return true
+        } else {
+          logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
+          return false
+        }
+      } else {
+        traderItem.upd.StackObjectsCount = updatedStackObjectCount;
+        return true
+      }
+    }
+  }
+}
+
+exports.updateRagfairAssort = (ragfairAssort, body) => {
+  for (const ragfairData of ragfairAssort) {
+    for (const item of ragfairData.items) {
+      if (item._id === body.item_id) {
+        const updatedStackObjectCount = item.upd.StackObjectsCount - body.count;
+        if (updatedStackObjectCount < 0) {
+          logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
+          return false
+        }
+
+        if (item.upd.buyRestrictionMax) {
+          const updatedCurrentRestriction = item.upd.BuyRestrictionCurrent + body.count;
+          if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
+            item.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
+            return true
+          } else {
+            logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
+            return false
+          }
+        } else {
+          return true
+        }
+      }
+    }
+  }
 }
