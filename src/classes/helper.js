@@ -37,6 +37,12 @@ function tplLookup() {
   return tplLookup.lookup;
 }
 
+/** Get template price
+ * Explore using itemPriceTable to get price instead of using tplLookup()
+ * 
+ * @param {string} x  Item ID to get price for
+ * @returns  Price of the item
+ */
 function getTemplatePrice(x) {
   return x in tplLookup().items.byId ? tplLookup().items.byId[x] : 1;
 }
@@ -122,7 +128,7 @@ function getCurrency(currency) {
  * output: value after conversion
  */
 function inRUB(value, currency) {
-  return ~~ (value * getTemplatePrice(currency));
+  return ~~(value * getTemplatePrice(currency));
 }
 
 /* Gets Ruble to Currency conversion Value
@@ -130,7 +136,7 @@ function inRUB(value, currency) {
  * output: value after conversion
  * */
 function fromRUB(value, currency) {
-  return ~~ (value / getTemplatePrice(currency));
+  return ~~(value / getTemplatePrice(currency));
 }
 
 /* take money and insert items into return to server request
