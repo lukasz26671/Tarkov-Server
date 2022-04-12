@@ -238,7 +238,7 @@ function getOffersFromTraders(sessionID, request) {
         const traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
         for (let item of traderAssort) {
           if (item._id === tmpOffer.root) {
-            //jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = (tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
+            jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = (tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
             offersToKeep.push(jsonToReturn.offers[offer]);
             break;
           }
