@@ -168,20 +168,20 @@ exports.updateRagfairAssort = (ragfairAssort, body) => {
         const updatedStackObjectCount = item.upd.StackObjectsCount - body.count;
         if (updatedStackObjectCount < 0) {
           logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
-          return false
+          return
         }
 
         if (item.upd.buyRestrictionMax) {
           const updatedCurrentRestriction = item.upd.BuyRestrictionCurrent + body.count;
           if (updatedCurrentRestriction <= traderItem.upd.buyRestrictionMax){
             item.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
-            return true
+            return
           } else {
             logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
-            return false
+            return
           }
         } else {
-          return true
+          return
         }
       }
     }
