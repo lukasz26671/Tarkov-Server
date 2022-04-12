@@ -444,7 +444,7 @@ class Responses {
     return response_f.getBody(global._database.items);
   }
   clientItemsPrices(url, info, sessionID) {
-    return response_f.nullResponse();
+    return response_f.getBody(global._database.itemPriceTable);
   }
   clientLanguages(url, info, sessionID) {
     return response_f.getBody(locale_f.handler.getLanguages());

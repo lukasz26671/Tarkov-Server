@@ -79,7 +79,7 @@ function loadItemsData() {
 
   const itemHandbook = _database.templates.Items;
   _database.itemPriceTable = {};
-  for (let item in itemHandbook) {
+  for (let item of itemHandbook) {
     _database.itemPriceTable[item.Id] = item.Price;
   }
 }
