@@ -366,17 +366,6 @@ function loadLocationData() {
   _database.locationConfigs = {};
   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
-
-  /*  var _locations = fileIO.readParsed("./" + db.user.cache.locations);
-   _database.locations = {};
-   for (let _location in _locations) {
-     _database.locations[_location] = _locations[_location]; 
-   }
-   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
-   _database.locationConfigs = {};
-   _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
-   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
-   */
 }
 
 const loadTraderAssort = (traderId) => {
@@ -400,15 +389,9 @@ const loadTraderAssort = (traderId) => {
           items[0]["upd"] = Object.assign({}, items[0].upd);
         }
 
-        items[0].upd.UnlimitedCount = false;
         if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
           items[0].upd["UnlimitedCount"] = false;
         }
-
-
-        if (items[0].upd.StackObjectsCount) items[0].upd.StackObjectsCount = items[0].upd.StackObjectsCount;
-        if (items[0].upd.BuyRestrictionMax) items[0].upd.BuyRestrictionMax = items[0].upd.BuyRestrictionMax;
-        if (items[0].upd.BuyRestrictionCurrent) items[0].upd.BuyRestrictionCurrent = items[0].upd.BuyRestrictionCurrent;
 
       }
     } else {
