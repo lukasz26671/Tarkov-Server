@@ -43,8 +43,15 @@ class ScheduledEventHandler {
 					logger.logInfo(`[CLUSTER] Schedules were saved.`);
 				}			
 			} else {
-				// As the file on disk was changed, reload the file from disk instead of overwriting it.
-				this.scheduledEvents = fileIO.readParsed(db.user.events.schedule);
+				// Read the current events into a variable.
+				let currentEvents = this.scheduledEvents;
+				// Read the events from disk into a variable.
+				let savedEvents = fileIO.readParsed(db.user.events.schedule);
+				// Merge events and write them into memory.
+				this.scheduledEvents = Object.assign(currentEvents,savedEvents);
+				// Write the events to disk.
+				fileIO.write(db.user.events.schedule, this.scheduledEvents);
+				logger.logInfo(`[CLUSTER] Schedules were merged and saved to disk.`);
 			}
 		} else {
 			// Save events to disk.
@@ -94,6 +101,8 @@ class ScheduledEventHandler {
 	addToSchedule(event) {
 		this.scheduledEvents.push(event);
 		this.scheduledEvents.sort(compareEvent);
+
+		this.saveToDisk();
 	}
 
 	removeFromSchedule(event) {
@@ -103,6 +112,7 @@ class ScheduledEventHandler {
 			return this.scheduledEvents.splice(index, 1);
 		}
 
+		this.saveToDisk();
 		return false;
 	}
 

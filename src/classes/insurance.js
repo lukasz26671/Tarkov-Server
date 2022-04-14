@@ -19,7 +19,7 @@ class InsuranceServer {
 
             if (event.type === "insuranceReturn" && event.scheduledTime <= now) {
                 events.scheduledEventHandler.processEvent(event);
-                scheduledEvents.splice(count, 1);
+                events.scheduledEventHandler.removeFromSchedule(event);
             }
         }
     }
