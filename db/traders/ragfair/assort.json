@@ -1,4 +1,116 @@
 {
+  "624c3074dbbd335e8e6becf3": {
+    "default": {
+      "unlimited": true,
+      "stack": 999999999
+    },
+    "currentStack": 999999998,
+    "loyalty": 2,
+    "barter_scheme": [
+      [
+        {
+          "count": 60000,
+          "_tpl": "5449016a4bdc2d6f028b456f"
+        }
+      ]
+    ],
+    "items": [
+      {
+        "_id": "624c3074dbbd335e8e6becf3",
+        "_tpl": "624c3074dbbd335e8e6becf3",
+        "parentId": "hideout",
+        "slotId": "hideout",
+        "upd": {
+          "UnlimitedCount": true,
+          "StackObjectsCount": 99999999
+        }
+      }
+    ]
+  },
+  "61a4cda622af7f4f6a3ce617": {
+    "default": {
+      "unlimited": true,
+      "stack": 999999999
+    },
+    "currentStack": 999999998,
+    "loyalty": 2,
+    "barter_scheme": [
+      [
+        {
+          "count": 60000,
+          "_tpl": "5449016a4bdc2d6f028b456f"
+        }
+      ]
+    ],
+    "items": [
+      {
+        "_id": "61a4cda622af7f4f6a3ce617",
+        "_tpl": "61a4cda622af7f4f6a3ce617",
+        "parentId": "hideout",
+        "slotId": "hideout",
+        "upd": {
+          "UnlimitedCount": true,
+          "StackObjectsCount": 99999999
+        }
+      }
+    ]
+  },
+  "6241c2c2117ad530666a5108": {
+    "default": {
+      "unlimited": true,
+      "stack": 999999999
+    },
+    "currentStack": 999999998,
+    "loyalty": 2,
+    "barter_scheme": [
+      [
+        {
+          "count": 60000,
+          "_tpl": "5449016a4bdc2d6f028b456f"
+        }
+      ]
+    ],
+    "items": [
+      {
+        "_id": "6241c2c2117ad530666a5108",
+        "_tpl": "6241c2c2117ad530666a5108",
+        "parentId": "hideout",
+        "slotId": "hideout",
+        "upd": {
+          "UnlimitedCount": true,
+          "StackObjectsCount": 99999999
+        }
+      }
+    ]
+  },
+  "5910968f86f77425cf569c32": {
+    "default": {
+      "unlimited": true,
+      "stack": 999999999
+    },
+    "currentStack": 999999998,
+    "loyalty": 2,
+    "barter_scheme": [
+      [
+        {
+          "count": 60000,
+          "_tpl": "5449016a4bdc2d6f028b456f"
+        }
+      ]
+    ],
+    "items": [
+      {
+        "_id": "5910968f86f77425cf569c32",
+        "_tpl": "5910968f86f77425cf569c32",
+        "parentId": "hideout",
+        "slotId": "hideout",
+        "upd": {
+          "UnlimitedCount": true,
+          "StackObjectsCount": 99999999
+        }
+      }
+    ]
+  },
   "619f4bffd25cbd424731fb97": {
     "default": {
       "unlimited": true,

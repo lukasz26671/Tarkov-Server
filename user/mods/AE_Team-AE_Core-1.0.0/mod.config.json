@@ -136,73 +136,73 @@
 
       "pistolRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
-        "verticalRecoil": 0.4,
-        "horizontalRecoil": 0.2,
+        "cameraSnap": 0.4,
+        "verticalRecoil": 0.5,
+        "horizontalRecoil": 0.5,
         "convergence": 0.575,
         "dispersion": 0.35
       },
   
       "smgRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.25,
-        "convergence": 2.5,
+        "horizontalRecoil": 0.15,
+        "convergence": 3.5,
         "dispersion": 0.25
       },
   
       "shotgunRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.35,
-        "convergence": 2.0,
+        "horizontalRecoil": 0.15,
+        "convergence": 2.5,
         "dispersion": 0.25
       },
   
       "assaultRifleRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.25,
-        "convergence": 2.75,
+        "horizontalRecoil": 0.15,
+        "convergence": 3.5,
         "dispersion": 0.25
       },
   
       "assaultCarbineRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.25,
-        "convergence": 2.75,
+        "horizontalRecoil": 0.15,
+        "convergence": 3.5,
         "dispersion": 0.25
       },
   
       "machinegunRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.25,
-        "convergence": 2.5,
+        "horizontalRecoil": 0.15,
+        "convergence": 3.5,
         "dispersion": 0.25
       },
   
       "marksmanRifleRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 0.75,
-        "horizontalRecoil": 0.35,
-        "convergence": 2.0,
+        "horizontalRecoil": 0.15,
+        "convergence": 3.0,
         "dispersion": 0.25
       },
   
       "sniperRifleRecoil": { 
         "cameraRecoil": 0.4,
-        "cameraSnap": 0.2,
+        "cameraSnap": 0.4,
         "verticalRecoil": 1.0,
         "horizontalRecoil": 0.5,
-        "convergence": 1.5,
+        "convergence": 2.5,
         "dispersion": 0.25
       }
     },

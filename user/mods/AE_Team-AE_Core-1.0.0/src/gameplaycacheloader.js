@@ -10,9 +10,9 @@ exports.mod = (mod_data) => {
   logger.logInfo(`—————————————————————————————————————————`);
 
   //START ------- BIG VARIABLE LOAD
-  let items = global._database.items;
+  let items = utility.DeepCopy(global._database.items);
   if (utility.isUndefined(items)) console.log("items is undefined");
-  let locations = global._database.locations;
+  let locations = utility.DeepCopy(global._database.locations);
   if (utility.isUndefined(locations)) console.log("locations is undefined");
   //END ------- BIG VARIABLE LOAD
 
@@ -206,12 +206,14 @@ exports.mod = (mod_data) => {
     }
     //END ------- Hearing Tweaks
   }
+  global._database.items = items;
+  global._database.locations = locations;
   //END ------- Based Item Loop
 
   // Writing to file
-  fileIO.write(PathResolver("user/cache/items.json"), items, true, false);
+/*   fileIO.write(PathResolver("user/cache/items.json"), items, true, false);
 
-  fileIO.write(PathResolver("user/cache/locations.json"), locations, true, false)
+  fileIO.write(PathResolver("user/cache/locations.json"), locations, true, false) */
 
   // Logging success on modload
   logger.logInfo(`—————————————————————————————————————————`);
