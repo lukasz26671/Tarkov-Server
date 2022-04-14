@@ -30,7 +30,6 @@ class LocaleServer {
   }
 
   getGlobal(lang, url, sessionID) {
-    console.log(lang, "currentGlobalLang");
     let currentLang;
     if (url) {
       currentLang = url.replace("/client/locale/", "");
