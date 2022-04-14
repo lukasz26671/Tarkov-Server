@@ -495,17 +495,16 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         baseItem.item_id = presetItems[0]._id; //push preset
         break;
 
-      case (move_f.handler.getPresetByParent(baseItem.item_id) in global._database.globals.ItemPresets): //if item is in ItemPresets
+      /* case (move_f.handler.getPresetByParent(baseItem.item_id) in global._database.globals.ItemPresets): //if item is in ItemPresets
         const parToPreset = move_f.handler.getPresetByParent(baseItem.item_id)
         console.log(parToPreset)
         const parentPreset = utility.DeepCopy(global._database.globals.ItemPresets[parToPreset]._items);
         itemLib.push(...parentPreset);
         baseItem.isPreset = true;
         baseItem.item_id = parentPreset[0]._id; //push preset
-        break;
+        break; */
 
       case (helper_f.isMoneyTpl(baseItem.item_id) || (body.tid == "")): //if item_id is money, or tid is empty?
-        console.log(body.tid, "body.tid", baseItem.item_id, "baseItem.item_id")
         itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });
         break;
 
