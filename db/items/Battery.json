@@ -118,22 +118,22 @@
 		"_proto": "5672cb304bdc2dc2088b456a"
 	},
 	{
-		"_id": "5733279d245977289b77ec24",
-		"_name": "car_battery",
+		"_id": "5e2aedd986f7746d404f3aa4",
+		"_name": "item_barter_energy_greenbat",
 		"_parent": "57864ee62459775490116fc1",
 		"_type": "Item",
 		"_props": {
-			"Name": "Auto battery",
-			"ShortName": "A Battery",
-			"Description": "Automobile battery",
-			"Weight": 12,
-			"BackgroundColor": "blue",
-			"Width": 3,
-			"Height": 2,
+			"Name": "item_barter_energy_greenbat",
+			"ShortName": "item_barter_energy_greenbat",
+			"Description": "item_barter_energy_greenbat",
+			"Weight": 0.043,
+			"BackgroundColor": "violet",
+			"Width": 1,
+			"Height": 1,
 			"StackMaxSize": 1,
-			"ItemSound": "spec_armorrep",
+			"ItemSound": "generic",
 			"Prefab": {
-				"path": "assets/content/items/barter/car_battery/item_car_battery.bundle",
+				"path": "assets/content/items/barter/item_barter_energy_greenbat/item_barter_energy_greenbat.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -150,7 +150,7 @@
 			"IsUngivable": false,
 			"IsLockedafterEquip": false,
 			"QuestItem": false,
-			"LootExperience": 25,
+			"LootExperience": 20,
 			"ExamineExperience": 10,
 			"HideEntrails": false,
 			"RepairCost": 0,
@@ -174,7 +174,7 @@
 			"MaxResource": 0,
 			"Resource": 0
 		},
-		"_proto": "56742c324bdc2d150f8b456d"
+		"_proto": "5672cb124bdc2d1a0f8b4568"
 	},
 	{
 		"_id": "5d03794386f77420415576f5",
@@ -236,22 +236,22 @@
 		"_proto": "5734779624597737e04bf329"
 	},
 	{
-		"_id": "5e2aedd986f7746d404f3aa4",
-		"_name": "item_barter_energy_greenbat",
+		"_id": "5672cb124bdc2d1a0f8b4568",
+		"_name": "item_battery_aa",
 		"_parent": "57864ee62459775490116fc1",
 		"_type": "Item",
 		"_props": {
-			"Name": "item_barter_energy_greenbat",
-			"ShortName": "item_barter_energy_greenbat",
-			"Description": "item_barter_energy_greenbat",
-			"Weight": 0.043,
-			"BackgroundColor": "violet",
+			"Name": "AA Battery",
+			"ShortName": "AA Battery",
+			"Description": "AA Battery",
+			"Weight": 0.01,
+			"BackgroundColor": "blue",
 			"Width": 1,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "generic",
 			"Prefab": {
-				"path": "assets/content/items/barter/item_barter_energy_greenbat/item_barter_energy_greenbat.bundle",
+				"path": "assets/content/items/barter/battery_aa/item_battery_aa.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -260,7 +260,7 @@
 			},
 			"StackObjectsCount": 1,
 			"NotShownInSlot": false,
-			"ExaminedByDefault": false,
+			"ExaminedByDefault": true,
 			"ExamineTime": 1,
 			"IsUndiscardable": false,
 			"IsUnsaleable": false,
@@ -291,8 +291,7 @@
 			"IsAlwaysAvailableForInsurance": false,
 			"MaxResource": 0,
 			"Resource": 0
-		},
-		"_proto": "5672cb124bdc2d1a0f8b4568"
+		}
 	},
 	{
 		"_id": "5e2aee0a86f774755a234b62",
@@ -412,22 +411,22 @@
 		}
 	},
 	{
-		"_id": "5672cb124bdc2d1a0f8b4568",
-		"_name": "item_battery_aa",
+		"_id": "5733279d245977289b77ec24",
+		"_name": "car_battery",
 		"_parent": "57864ee62459775490116fc1",
 		"_type": "Item",
 		"_props": {
-			"Name": "AA Battery",
-			"ShortName": "AA Battery",
-			"Description": "AA Battery",
-			"Weight": 0.01,
+			"Name": "Auto battery",
+			"ShortName": "A Battery",
+			"Description": "Automobile battery",
+			"Weight": 12,
 			"BackgroundColor": "blue",
-			"Width": 1,
-			"Height": 1,
+			"Width": 3,
+			"Height": 2,
 			"StackMaxSize": 1,
-			"ItemSound": "generic",
+			"ItemSound": "spec_armorrep",
 			"Prefab": {
-				"path": "assets/content/items/barter/battery_aa/item_battery_aa.bundle",
+				"path": "assets/content/items/barter/car_battery/item_car_battery.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -436,7 +435,7 @@
 			},
 			"StackObjectsCount": 1,
 			"NotShownInSlot": false,
-			"ExaminedByDefault": true,
+			"ExaminedByDefault": false,
 			"ExamineTime": 1,
 			"IsUndiscardable": false,
 			"IsUnsaleable": false,
@@ -444,7 +443,7 @@
 			"IsUngivable": false,
 			"IsLockedafterEquip": false,
 			"QuestItem": false,
-			"LootExperience": 20,
+			"LootExperience": 25,
 			"ExamineExperience": 10,
 			"HideEntrails": false,
 			"RepairCost": 0,
@@ -467,6 +466,7 @@
 			"IsAlwaysAvailableForInsurance": false,
 			"MaxResource": 0,
 			"Resource": 0
-		}
+		},
+		"_proto": "56742c324bdc2d150f8b456d"
 	}
 ]

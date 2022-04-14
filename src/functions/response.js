@@ -269,6 +269,33 @@ class Responses {
     });
   }
   clientGameBotGenerate(url, info, sessionID) {
+    // bot/generate response format:
+    /*     {
+          "conditions": [
+              {
+                  "Role": "assault",
+                  "Limit": 16,
+                  "Difficulty": "normal"
+              },
+              {
+                  "Role": "assault",
+                  "Limit": 14,
+                  "Difficulty": "hard"
+              },
+              {
+                  "Role": "assault",
+                  "Limit": 7,
+                  "Difficulty": "easy"
+              },
+              {
+                  "Role": "bossKilla",
+                  "Limit": 1,
+                  "Difficulty": "normal"
+              }
+          ]
+      } */
+
+
     return response_f.getBody(bots_f.generate(info, sessionID));
   }
   clientGameConfig(url, info, sessionID) {
@@ -526,6 +553,32 @@ class Responses {
     return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
   }
   clientMatchOfflineStart(url, info, sessionID) {
+
+    //how offline/start request is formatted
+    /*     {
+          "locationName": "Interchange",
+          "entryPoint": "MallNW",
+          "startTime": 1649941648.0,
+          "dateTime": "CURR",
+          "gameSettings": {
+              "timeAndWeatherSettings": {
+                  "isRandomTime": false,
+                  "isRandomWeather": false
+              },
+              "botsSettings": {
+                  "isEnabled": true,
+                  "isScavWars": false,
+                  "botAmount": "AsOnline"
+              },
+              "wavesSettings": {
+                  "botDifficulty": "AsOnline",
+                  "isBosses": true,
+                  "isTaggedAndCursed": false,
+                  "wavesBotAmount": "AsOnline"
+              }
+          }
+      } */
+
     offraid_f.handler.addPlayer(sessionID, {
       Location: info.locationName,
       Time: info.dateTime,

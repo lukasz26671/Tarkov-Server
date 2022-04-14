@@ -1,21 +1,21 @@
 [
 	{
-		"_id": "5c0696830db834001d23f5da",
-		"_name": "nvg_alfa_pnv-10t",
+		"_id": "5c066e3a0db834001b7353f0",
+		"_name": "nvg_armasight_n-15",
 		"_parent": "5a2c3a9486f774688b05e574",
 		"_type": "Item",
 		"_props": {
-			"Name": "nvg_alfa_pnv-10t",
-			"ShortName": "nvg_alfa_pnv-10t",
-			"Description": "nvg_alfa_pnv-10t",
-			"Weight": 0.8,
+			"Name": "nvg_armasight_n-15",
+			"ShortName": "nvg_armasight_n-15",
+			"Description": "nvg_armasight_n-15",
+			"Weight": 0.755,
 			"BackgroundColor": "default",
 			"Width": 2,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "gear_goggles",
 			"Prefab": {
-				"path": "assets/content/items/equipment/customizable/nvg_alfa_pnv-10t/nvg_alfa_pnv-10t.bundle",
+				"path": "assets/content/items/equipment/customizable/nvg_armasight_n-15/nvg_armasight_n-15.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -51,11 +51,7 @@
 			],
 			"Unlootable": false,
 			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [
-				"Bear",
-				"Usec",
-				"Savage"
-			],
+			"UnlootableFromSide": [],
 			"AnimationVariantsNumber": 0,
 			"DiscardingBlock": false,
 			"RagFairCommissionModifier": 1,
@@ -111,18 +107,18 @@
 					200
 				]
 			],
-			"Intensity": 2,
+			"Intensity": 1.8,
 			"Mask": "Binocular",
-			"MaskSize": 0.97,
-			"NoiseIntensity": 0.05,
-			"NoiseScale": 1,
+			"MaskSize": 0.95,
+			"NoiseIntensity": 0.04,
+			"NoiseScale": 2,
 			"Color": {
 				"r": 0,
 				"g": 255,
-				"b": 32,
+				"b": 243,
 				"a": 254
 			},
-			"DiffuseIntensity": 0.02,
+			"DiffuseIntensity": 0.021,
 			"HasHinge": true
 		},
 		"_proto": "557ff21e4bdc2d89578b4586"
@@ -379,22 +375,22 @@
 		"_proto": "557ff21e4bdc2d89578b4586"
 	},
 	{
-		"_id": "5c066e3a0db834001b7353f0",
-		"_name": "nvg_armasight_n-15",
+		"_id": "5c0696830db834001d23f5da",
+		"_name": "nvg_alfa_pnv-10t",
 		"_parent": "5a2c3a9486f774688b05e574",
 		"_type": "Item",
 		"_props": {
-			"Name": "nvg_armasight_n-15",
-			"ShortName": "nvg_armasight_n-15",
-			"Description": "nvg_armasight_n-15",
-			"Weight": 0.755,
+			"Name": "nvg_alfa_pnv-10t",
+			"ShortName": "nvg_alfa_pnv-10t",
+			"Description": "nvg_alfa_pnv-10t",
+			"Weight": 0.8,
 			"BackgroundColor": "default",
 			"Width": 2,
 			"Height": 1,
 			"StackMaxSize": 1,
 			"ItemSound": "gear_goggles",
 			"Prefab": {
-				"path": "assets/content/items/equipment/customizable/nvg_armasight_n-15/nvg_armasight_n-15.bundle",
+				"path": "assets/content/items/equipment/customizable/nvg_alfa_pnv-10t/nvg_alfa_pnv-10t.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
@@ -430,7 +426,11 @@
 			],
 			"Unlootable": false,
 			"UnlootableFromSlot": "FirstPrimaryWeapon",
-			"UnlootableFromSide": [],
+			"UnlootableFromSide": [
+				"Bear",
+				"Usec",
+				"Savage"
+			],
 			"AnimationVariantsNumber": 0,
 			"DiscardingBlock": false,
 			"RagFairCommissionModifier": 1,
@@ -486,18 +486,18 @@
 					200
 				]
 			],
-			"Intensity": 1.8,
+			"Intensity": 2,
 			"Mask": "Binocular",
-			"MaskSize": 0.95,
-			"NoiseIntensity": 0.04,
-			"NoiseScale": 2,
+			"MaskSize": 0.97,
+			"NoiseIntensity": 0.05,
+			"NoiseScale": 1,
 			"Color": {
 				"r": 0,
 				"g": 255,
-				"b": 243,
+				"b": 32,
 				"a": 254
 			},
-			"DiffuseIntensity": 0.021,
+			"DiffuseIntensity": 0.02,
 			"HasHinge": true
 		},
 		"_proto": "557ff21e4bdc2d89578b4586"

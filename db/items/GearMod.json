@@ -1,13 +1,10 @@
 [
 	{
-		"_id": "55818b224bdc2dde698b456f",
-		"_name": "Mount",
+		"_id": "55818b014bdc2ddc698b456b",
+		"_name": "Launcher",
 		"_parent": "55802f3e4bdc2de7118b4584",
 		"_type": "Node",
-		"_props": {
-			"HeatFactor": 1,
-			"CoolFactor": 1
-		}
+		"_props": {}
 	},
 	{
 		"_id": "55818a594bdc2db9688b456a",
@@ -22,6 +19,16 @@
 			"HeatFactor": 1,
 			"CoolFactor": 1,
 			"DurabilityBurnModificator": 1
+		}
+	},
+	{
+		"_id": "55818b224bdc2dde698b456f",
+		"_name": "Mount",
+		"_parent": "55802f3e4bdc2de7118b4584",
+		"_type": "Node",
+		"_props": {
+			"HeatFactor": 1,
+			"CoolFactor": 1
 		}
 	},
 	{
@@ -51,13 +58,6 @@
 			"TagColor": 0,
 			"TagName": ""
 		}
-	},
-	{
-		"_id": "55818b014bdc2ddc698b456b",
-		"_name": "Launcher",
-		"_parent": "55802f3e4bdc2de7118b4584",
-		"_type": "Node",
-		"_props": {}
 	},
 	{
 		"_id": "55818a6f4bdc2db9688b456b",

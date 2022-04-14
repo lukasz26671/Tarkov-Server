@@ -1,22 +1,13 @@
 [
 	{
-		"_id": "61605ddea09d851a0a0c1bbc",
-		"_name": "PortableRangeFinder",
-		"_parent": "5447e0e74bdc2d3c308b4567",
-		"_type": "Node",
-		"_props": {
-			"MaxOpticZoom": 0
-		}
-	},
-	{
-		"_id": "5b4391a586f7745321235ab2",
-		"_name": "item_spec_ipcamera",
+		"_id": "5ac78a9b86f7741cca0bbd8d",
+		"_name": "item_quest_signal_jammer",
 		"_parent": "5447e0e74bdc2d3c308b4567",
 		"_type": "Item",
 		"_props": {
-			"Name": "item_spec_ipcamera",
-			"ShortName": "item_spec_ipcamera",
-			"Description": "item_spec_ipcamera",
+			"Name": "item_quest_signal_jammer",
+			"ShortName": "item_quest_signal_jammer",
+			"Description": "item_quest_signal_jammer",
 			"Weight": 0.5,
 			"BackgroundColor": "orange",
 			"Width": 1,
@@ -24,11 +15,11 @@
 			"StackMaxSize": 1,
 			"ItemSound": "generic",
 			"Prefab": {
-				"path": "assets/content/items/spec/item_spec_ipcamera/item_spec_ipcamera.bundle",
+				"path": "assets/content/items/spec/item_spec_jammer/item_spec_jammer.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
-				"path": "",
+				"path": "assets/content/weapons/usable_items/item_gsm_gps_jammer/item_gsm_gps_container.bundle",
 				"rcid": ""
 			},
 			"StackObjectsCount": 1,
@@ -66,13 +57,6 @@
 			"krResource": 0
 		},
 		"_proto": "544fb5454bdc2df8738b456a"
-	},
-	{
-		"_id": "5f4fbaaca5573a5ac31db429",
-		"_name": "Compass",
-		"_parent": "5447e0e74bdc2d3c308b4567",
-		"_type": "Node",
-		"_props": {}
 	},
 	{
 		"_id": "544fb5454bdc2df8738b456a",
@@ -192,14 +176,27 @@
 		"_proto": "544fb5454bdc2df8738b456a"
 	},
 	{
-		"_id": "5ac78a9b86f7741cca0bbd8d",
-		"_name": "item_quest_signal_jammer",
+		"_id": "616eb7aea207f41933308f46",
+		"_name": "RepairKits",
+		"_parent": "5447e0e74bdc2d3c308b4567",
+		"_type": "Node",
+		"_props": {
+			"MaxRepairResource": 100,
+			"TargetItemFilter": [],
+			"RepairCost": 1,
+			"RepairQuality": 1,
+			"RepairType": ""
+		}
+	},
+	{
+		"_id": "5b4391a586f7745321235ab2",
+		"_name": "item_spec_ipcamera",
 		"_parent": "5447e0e74bdc2d3c308b4567",
 		"_type": "Item",
 		"_props": {
-			"Name": "item_quest_signal_jammer",
-			"ShortName": "item_quest_signal_jammer",
-			"Description": "item_quest_signal_jammer",
+			"Name": "item_spec_ipcamera",
+			"ShortName": "item_spec_ipcamera",
+			"Description": "item_spec_ipcamera",
 			"Weight": 0.5,
 			"BackgroundColor": "orange",
 			"Width": 1,
@@ -207,11 +204,11 @@
 			"StackMaxSize": 1,
 			"ItemSound": "generic",
 			"Prefab": {
-				"path": "assets/content/items/spec/item_spec_jammer/item_spec_jammer.bundle",
+				"path": "assets/content/items/spec/item_spec_ipcamera/item_spec_ipcamera.bundle",
 				"rcid": ""
 			},
 			"UsePrefab": {
-				"path": "assets/content/weapons/usable_items/item_gsm_gps_jammer/item_gsm_gps_container.bundle",
+				"path": "",
 				"rcid": ""
 			},
 			"StackObjectsCount": 1,
@@ -249,5 +246,21 @@
 			"krResource": 0
 		},
 		"_proto": "544fb5454bdc2df8738b456a"
+	},
+	{
+		"_id": "5f4fbaaca5573a5ac31db429",
+		"_name": "Compass",
+		"_parent": "5447e0e74bdc2d3c308b4567",
+		"_type": "Node",
+		"_props": {}
+	},
+	{
+		"_id": "61605ddea09d851a0a0c1bbc",
+		"_name": "PortableRangeFinder",
+		"_parent": "5447e0e74bdc2d3c308b4567",
+		"_type": "Node",
+		"_props": {
+			"MaxOpticZoom": 0
+		}
 	}
 ]
