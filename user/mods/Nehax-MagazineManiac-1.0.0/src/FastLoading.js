@@ -2,7 +2,7 @@ exports.mod = (mod_data) => {
     logger.logSuccess("[MOD] Magazine Maniac loading...");
     let config = mod_data.settings;
     //let db_globals = fileIO.readParsed(db.base.globals);
-    let db_globals = _database.globals;
+    let db_globals = utility.DeepCopy(_database.globals);
     // set loading to (default/multiplier) if enabled, use default value if not
     if (config.enable){
         logger.logSuccess("[MOD] Magazine Maniac - FastLoading: On - Applying speed multiplier.");  

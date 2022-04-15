@@ -10,12 +10,5 @@ exports.mod = (mod_info) => {
 		}
 	}
 
-/* 	// This will examine them all through the cache, which should work. - kiobu
-	let file = fileIO.readParsed(global.db.user.cache.items)
-	for (let k in file.data) {
-		if (!file.data[k].ExaminedByDefault) { file.data[k]._props.ExaminedByDefault = true; }
-	}
-	fileIO.write(global.db.user.cache.items, file) */
-
 	logger.logSuccess("[MOD] AllItemsExamined; Applied");
 }
