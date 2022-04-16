@@ -329,5 +329,5 @@ for(let map in maps)
 		console.log("Old Static Containers Added : " + count);
 		*/
 	fs.writeFileSync(`./newBase/${maps[map].toLowerCase()}.json`, JSON.stringify(LocationBase));
-	fs.writeFileSync(`./new/${maps[map].toLowerCase()}.json`, JSON.stringify(newLoot));
+	fs.writeFileSync(`./newLoot/${maps[map].toLowerCase()}.json`, JSON.stringify(newLoot));
 }

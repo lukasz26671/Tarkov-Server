@@ -32,7 +32,7 @@
             "slots_max": 0,
             "SpawnPoints": "ZoneBrige",
             "BotSide": "Savage",
-            "BotPreset": "normal",
+            "BotPreset": "easy",
             "WildSpawnType": "assault",
             "isPlayers": false
         },
@@ -44,7 +44,7 @@
             "slots_max": 0,
             "SpawnPoints": "ZoneCrossRoad",
             "BotSide": "Savage",
-            "BotPreset": "normal",
+            "BotPreset": "easy",
             "WildSpawnType": "assault",
             "isPlayers": false
         },
