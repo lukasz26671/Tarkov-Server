@@ -1,0 +1,12 @@
+{
+	"name": "ResetBotsToNormal",
+	"author": "King",
+	"version": "1.0.0",
+	"license": "MIT",
+	"settings": {
+	},
+	"src": {
+		"src/setnormal.js": "TamperModLoad"
+	},
+	"required": []
+}
