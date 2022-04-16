@@ -885,8 +885,8 @@
         "Templates": [
           "60db29ce99594040e04c4a27"
         ],
-        "Level2": 400,
-        "Level3": 800
+        "Level2": 200,
+        "Level3": 400
       },
       {
         "Name": "RHINO",
@@ -894,8 +894,8 @@
           "624c2e8614da335f1e034d8c",
           "61a4c8884f95bc3b2c5dc96f"
         ],
-        "Level2": 400,
-        "Level3": 800
+        "Level2": 200,
+        "Level3": 400
       }
     ],
     "GlobalItemPriceModifier": 1,

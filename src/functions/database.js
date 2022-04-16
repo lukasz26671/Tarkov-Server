@@ -177,20 +177,25 @@ function loadLocaleData() {
    }
    tag of folder need to match the tag in first file
  */
-  _database.languages = [];
+  _database.languages = fileIO.readParsed("./" + db.locales.languages);
+  // provide support for using dumps
+  if (typeof _database.languages.data != "undefined") _database.languages = _database.languages.data;
+
   _database.locales = { menu: {}, global: {} };
 
   for (let lang in db.locales) {
+    if (lang == "languages") { continue; }
+
     lang = lang.toLowerCase(); // make sure its always lower case
 
-    if (typeof db.locales[lang][lang] == "undefined")
+/*    if (typeof db.locales[lang][lang] == "undefined")
       throw "db.locales[" + lang + "][" + lang + "] not found";
 
     if (typeof db.locales[lang][lang] == "object")
       throw "db.locales[" + lang + "][" + lang + "] is not a path";
 
-    const languages = fileIO.readParsed(db.locales[lang][lang]);
-    _database.languages.push(languages);
+     const languages = fileIO.readParsed(db.locales[lang][lang]);
+    _database.languages.push(languages); */
 
     _database.locales.menu[lang] = fileIO.readParsed("./" + db.locales[lang].menu);
     if (typeof _database.locales.menu[lang].data != "undefined") {
