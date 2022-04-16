@@ -23,7 +23,7 @@ class InraidServer {
 			logger.logWarning("Disabling: Remove map key on entering, cause of offraid_f.handler.players[sessionID] is undefined");
 			return;
 		}
-		let map = global._database.locations[MapNameConversion(sessionID)].base;
+		const map = global._database.locations[MapNameConversion(sessionID)].base;
 		let mapKey = map.AccessKeys[0];
 
 		if (!mapKey) {
@@ -127,9 +127,9 @@ function setInventory(pmcData, profile) {
 	// no more duplicates should exist but I'll leave this here untouched bc it's working (CQ)
 	let duplicates = [];
 
-	x: for (let item of profile.Inventory.items) {
-		for (let key in pmcData.Inventory.items) {
-			let currid = pmcData.Inventory.items[key]._id;
+	x: for (const item of profile.Inventory.items) {
+		for (const key in pmcData.Inventory.items) {
+			const currid = pmcData.Inventory.items[key]._id;
 			if (currid == item._id) {
 				duplicates.push(item._id);
 				continue x;
@@ -160,7 +160,7 @@ function setInventory(pmcData, profile) {
 function deleteInventory(pmcData, sessionID) {
 	let toDelete = [];
 
-	for (let item of pmcData.Inventory.items) {
+	for (const item of pmcData.Inventory.items) {
 		// remove normal item
 		if (
 			(item.parentId === pmcData.Inventory.equipment &&
@@ -175,7 +175,7 @@ function deleteInventory(pmcData, sessionID) {
 
 		// remove pocket insides
 		if (item.slotId === "Pockets") {
-			for (let pocket of pmcData.Inventory.items) {
+			for (const pocket of pmcData.Inventory.items) {
 				if (pocket.parentId === item._id) {
 					toDelete.push(pocket._id);
 				}
@@ -184,7 +184,7 @@ function deleteInventory(pmcData, sessionID) {
 	}
 
 	// delete items
-	for (let item of toDelete) {
+	for (const item of toDelete) {
 		move_f.removeItemFromProfile(pmcData, item);
 	}
 
@@ -195,7 +195,6 @@ function deleteInventory(pmcData, sessionID) {
 function MapNameConversion(sessionID) {
 	// change names to thenames of location file names that are loaded like that into the memory
 	let playerRaidData = offraid_f.handler.getPlayer(sessionID);
-	console.log(playerRaidData.Location, "playerRaidData.Location")
 	switch (playerRaidData.Location) {
 		case "Arena":
 			return "develop";
@@ -254,7 +253,7 @@ function getPlayerGear(items) {
 	let inventoryItems = [];
 
 	// Get an array of root player items
-	for (let item of items) {
+	for (const item of items) {
 		if (inventorySlots.includes(item.slotId)) {
 			inventoryItems.push(item);
 		}
@@ -265,9 +264,9 @@ function getPlayerGear(items) {
 	while (newItems.length > 0) {
 		let foundItems = [];
 
-		for (let item of newItems) {
+		for (const item of newItems) {
 			// Find children of this item
-			for (let newItem of items) {
+			for (const newItem of items) {
 				if (newItem.parentId === item._id) {
 					foundItems.push(newItem);
 				}
@@ -291,20 +290,20 @@ function getSecuredContainer(items) {
 	let inventoryItems = [];
 
 	// Get an array of root player items
-	for (let item of items) {
+	for (const item of items) {
 		if (inventorySlots.includes(item.slotId)) {
 			inventoryItems.push(item);
 		}
 	}
 
 	// Loop through these items and get all of their children
-	let newItems = inventoryItems;
+	const newItems = inventoryItems;
 
 	while (newItems.length > 0) {
 		let foundItems = [];
 
-		for (let item of newItems) {
-			for (let newItem of items) {
+		for (const item of newItems) {
+			for (const newItem of items) {
 				if (newItem.parentId === item._id) {
 					foundItems.push(newItem);
 				}
@@ -339,7 +338,7 @@ function saveProgress(offraidData, sessionID) {
 		return;
 	}
 
-	let pmcData = profile_f.handler.getPmcProfile(sessionID);
+	const pmcData = profile_f.handler.getPmcProfile(sessionID);
 
 	if (offraidData.exit === "survived") {
 		// mark found items and replace item ID's if the player survived
@@ -381,7 +380,7 @@ function saveProgress(offraidData, sessionID) {
 				break;
 		}
 		//multiply all our earned points by the multiplier on all skills
-		for (let skill in offraidData.profile.Skills.Common) {
+		for (const skill in offraidData.profile.Skills.Common) {
 			let pointsEarned = offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession * multiplier;
 			offraidData.profile.Skills.Common[skill].Progress += pointsEarned;
 			//in case we go above maximum
@@ -393,7 +392,7 @@ function saveProgress(offraidData, sessionID) {
 
 
 	//remove skill fatigue before applying skill points to profile
-	for (let skill in offraidData.profile.Skills.Common) {
+	for (const skill in offraidData.profile.Skills.Common) {
 		offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession = 0;
 	}
 	pmcData.Skills = offraidData.profile.Skills;
@@ -494,7 +493,7 @@ function removeLooseQuestItemsConditions(profile) {
 function isConditionRelatedToQuestItem(conditionId, questId) {
 	let cachedQuest = undefined;
 	//iterate quests to find the desired quest by questId and save it locally
-	for (let quest of global._database.quests) {
+	for (const quest of global._database.quests) {
 		if (quest._id === questId) {
 			cachedQuest = utility.DeepCopy(quest);
 		}
