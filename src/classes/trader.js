@@ -9,12 +9,9 @@ class TraderServer {
     return global._database.traders[traderID].base;
   }
   saveTrader(traderId) {
-    let inputNodes = fileIO.readParsed(db.traders[traderId].assort);
-    let base = {
-      err: 0,
-      errmsg: null,
-      data: { items: [], barter_scheme: {}, loyal_level_items: {} },
-    };
+    let inputNodes = utility.DeepCopy(global._database.traders[traderId].assort);
+
+    let base = { items: [], barter_scheme: {}, loyal_level_items: {}};
     for (let item in inputNodes) {
       if (typeof inputNodes[item].items[0] != "undefined") {
         let ItemsList = inputNodes[item].items;
@@ -24,13 +21,12 @@ class TraderServer {
         ItemsList[0].upd["StackObjectsCount"] = inputNodes[item].default.stack;
       }
       for (let assort_item in inputNodes[item].items) {
-        base.data.items.push(inputNodes[item].items[assort_item]);
+        base.items.push(inputNodes[item].items[assort_item]);
       }
-      base.data.barter_scheme[item] = inputNodes[item].barter_scheme;
-      base.data.loyal_level_items[item] = inputNodes[item].loyalty;
+      base.barter_scheme[item] = inputNodes[item].barter_scheme;
+      base.loyal_level_items[item] = inputNodes[item].loyalty;
     }
-
-    fileIO.write(`./user/cache/assort_${traderId}.json`, base, true, false);
+    global._database.traders[traderId].assort = base;
   }
 
   setTraderBase(base) {
