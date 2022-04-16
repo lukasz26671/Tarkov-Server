@@ -20,26 +20,25 @@ function getQuestsForPlayer(url, info, sessionID) {
   let quest_database = utility.DeepCopy(global._database.quests);
   const side = _profile.Info.Side;
   let count = 0;
-  for (let q in quest_database) {
-    let quests = quest_database[q];
-
-    //fileIO.write("./quest.json", quests)
+  for (let quests in quest_database) {
+    
+    let quest = quest_database[quests];
     //clear completed quests
-    if (getQuestStatus(_profile, quests._id) == "Success") {
-      quests.conditions.AvailableForStart = [];
-      quests.conditions.AvailableForFinish = [];
-      quests.conditions.Fail = [];
+    if (getQuestStatus(_profile, quest._id) == "Success") {
+      quest.conditions.AvailableForStart = [];
+      quest.conditions.AvailableForFinish = [];
+      quest.conditions.Fail = [];
     }
 
     //check if quest has a side field
-    if (quests.Side) {
+    if(quest.Side){
       //if profile side is not the same side as the quest requires, delete from array
-      if (quests.Side != side) {
+      if(quest.Side != side){
         //logger.logError("ID: "+quests[quest]._id);
         quest_database.splice(count, 1);
       }
     }
-    count++;
+   count++;
   }
   //console.log(quests);
   return quest_database;
@@ -48,7 +47,7 @@ function getQuestsForPlayer(url, info, sessionID) {
 function getCachedQuest(qid) {
   for (let quests in global._database.quests) {
     let quest = global._database.quests[quests];
-    console.log(quest._id)
+    console.log(quest._id === qid, quest._id, qid);
     if (quest._id === qid) {
       return quest;
     }
