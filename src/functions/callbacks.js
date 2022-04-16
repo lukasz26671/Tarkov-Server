@@ -45,7 +45,7 @@ class Callbacks {
 		let imgCategory = "none";
 
 		// get images to look through
-		if (req.url.includes("/quest")) {
+/* 		if (req.url.includes("/quest")) {
 			logger.logInfo(`[IMG.quests]: ${req.url}`);
 			baseNode = res.quest;
 			imgCategory = "quest";
@@ -65,6 +65,39 @@ class Callbacks {
 			logger.logInfo(`[IMG.hideout]: ${req.url}`);
 			baseNode = res.hideout;
 			imgCategory = "hideout";
+		} */
+
+		// get images to look through
+		switch (true) {
+			case req.url.includes("/quest"):
+				logger.logInfo(`[IMG.quests]: ${req.url}`);
+				baseNode = res.quest;
+				imgCategory = "quest";
+				break;
+
+			case req.url.includes("/handbook"):
+				logger.logInfo(`[IMG.handbook]: ${req.url}`);
+				baseNode = res.handbook;
+				imgCategory = "handbook";
+				break;
+
+			case req.url.includes("/avatar"):
+				logger.logInfo(`[IMG.avatar]: ${req.url}`);
+				baseNode = res.trader;
+				imgCategory = "avatar";
+				break;
+
+			case req.url.includes("/banners"):
+				logger.logInfo(`[IMG.banners]: ${req.url}`);
+				baseNode = res.banners;
+				imgCategory = "banner";
+				break;
+
+			default:
+				logger.logInfo(`[IMG.hideout]: ${req.url}`);
+				baseNode = res.hideout;
+				imgCategory = "hideout";
+				break;
 		}
 
 		// if file does not exist

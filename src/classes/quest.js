@@ -17,33 +17,38 @@ const getQuestsCache = () => fileIO.stringify(global._database.quests, true);
 //Fix for new quests where previous quest already required to found in raid items as same ID
 function getQuestsForPlayer(url, info, sessionID) {
   const _profile = profile_f.handler.getPmcProfile(sessionID);
-  let quests = utility.DeepCopy(global._database.quests);
+  let quest_database = utility.DeepCopy(global._database.quests);
   const side = _profile.Info.Side;
   let count = 0;
-  for (let quest in quests) {
+  for (let q in quest_database) {
+    let quests = quest_database[q];
+
+    //fileIO.write("./quest.json", quests)
     //clear completed quests
-    if (getQuestStatus(_profile, quests[quest]._id) == "Success") {
-      quests[quest].conditions.AvailableForStart = [];
-      quests[quest].conditions.AvailableForFinish = [];
-      quests[quest].conditions.Fail = [];
+    if (getQuestStatus(_profile, quests._id) == "Success") {
+      quests.conditions.AvailableForStart = [];
+      quests.conditions.AvailableForFinish = [];
+      quests.conditions.Fail = [];
     }
 
     //check if quest has a side field
-    if(quests[quest].Side){
+    if (quests.Side) {
       //if profile side is not the same side as the quest requires, delete from array
-      if(quests[quest].Side != side){
+      if (quests.Side != side) {
         //logger.logError("ID: "+quests[quest]._id);
-        quests.splice(count, 1);
+        quest_database.splice(count, 1);
       }
     }
-   count++;
+    count++;
   }
   //console.log(quests);
-  return quests;
+  return quest_database;
 }
 
 function getCachedQuest(qid) {
-  for (let quest of global._database.quests) {
+  for (let quests in global._database.quests) {
+    let quest = global._database.quests[quests];
+    console.log(quest._id)
     if (quest._id === qid) {
       return quest;
     }
