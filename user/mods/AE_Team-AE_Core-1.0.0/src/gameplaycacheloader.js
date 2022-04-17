@@ -210,11 +210,6 @@ exports.mod = (mod_data) => {
   global._database.locations = locations;
   //END ------- Based Item Loop
 
-  // Writing to file
-/*   fileIO.write(PathResolver("user/cache/items.json"), items, true, false);
-
-  fileIO.write(PathResolver("user/cache/locations.json"), locations, true, false) */
-
   // Logging success on modload
   logger.logInfo(`—————————————————————————————————————————`);
   logger.logSuccess(`\x1b[91m[GAMEPLAY CACHE CORE] ${mod_data.name} Completed\x1b[40m`);

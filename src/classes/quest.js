@@ -14,31 +14,161 @@
 
 const getQuestsCache = () => fileIO.stringify(global._database.quests, true);
 
+function evaluateLevel(pmcProfile, cond) {
+  const level = pmcProfile.Info.Level;
+  if (cond._parent === "Level") {
+    switch (cond._props.compareMethod) {
+      case ">=":
+        return level >= cond._props.value;
+      default:
+        Logger.debug(`Unrecognised Comparison Method: ${cond._props.compareMethod}`);
+        return false;
+    }
+  }
+}
+module.exports.evaluateLevel = evaluateLevel;
+
+/**
+ * 
+ * @param {*} q "Quest" object
+ * @param {*} questType "Level", "Quest" or "TraderLoyalty"
+ * @returns 
+ */
+function filterConditions(q, questType) {
+  const filteredQuests = q.filter(c => {
+    if (c._parent === questType) {
+
+      return true;
+    }
+    return false;
+  });
+
+  return filteredQuests;
+}
+module.exports.filterConditions = filterConditions;
+
+const questStatus = () => {
+  return {
+    "Locked": 0,
+    "AvailableForStart": 1,
+    "Started": 2,
+    "AvailableForFinish": 3,
+    "Success": 4,
+    "Fail": 5,
+    "FailRestartable": 6,
+    "MarkedAsFailed": 7
+  };
+}
+
 //Fix for new quests where previous quest already required to found in raid items as same ID
 function getQuestsForPlayer(url, info, sessionID) {
+
+  let quests = [];
+
   const _profile = profile_f.handler.getPmcProfile(sessionID);
   let quest_database = utility.DeepCopy(global._database.quests);
   const side = _profile.Info.Side;
+
   let count = 0;
-  for (let quests in quest_database) {
-    
-    let quest = quest_database[quests];
-    //clear completed quests
-    if (getQuestStatus(_profile, quest._id) == "Success") {
-      quest.conditions.AvailableForStart = [];
-      quest.conditions.AvailableForFinish = [];
-      quest.conditions.Fail = [];
+
+  for (const q in quest_database) {
+
+    let quest = quest_database[q];
+
+    if (_profile.Quests.some(q => q.qid == quest._id)) {
+      quests.push(quest);
     }
 
+    const level = filterConditions(quest.conditions.AvailableForStart, "Level");
+    if (level.length) {
+      if (evaluateLevel(_profile, level[0])) {
+        continue;
+      }
+    }
+
+    const questRequirements = filterConditions(quest.conditions.AvailableForStart, "Quest");
+    const loyaltyRequirements = filterConditions(quest.conditions.AvailableForStart, "TraderLoyalty");
+
+    if (questRequirements.length === 0 && loyaltyRequirements.length === 0) {
+      quests.push(quest);
+      continue;
+    }
+
+    let completedPreviousQuest = true;
+    for (const condition of questRequirements) {
+      const previousQuest = _profile.Quests.find(pq => pq.qid == condition._props.target);
+
+      if (!previousQuest) {
+        completedPreviousQuest = false;
+        break;
+      }
+
+      if (previousQuest.status === Object.keys(questStatus)[condition._props.status[0]]) {
+        continue;
+      }
+
+      completedPreviousQuest = false;
+      break;
+    }
+
+    let loyaltyCheck = true;
+    for (const condition of loyaltyRequirements) {
+
+      const result = () => {
+        const requiredLoyalty = condition._props.value;
+        const operator = condition._props.compareMethod;
+        const currentLoyalty = _profile.TraderInfo[condition._props.target].loyaltyLevel;
+
+        switch (operator) {
+          case ">=":
+            return currentLoyalty >= requiredLoyalty;
+          case "<=":
+            return currentLoyalty <= requiredLoyalty;
+          case "==":
+            return currentLoyalty === requiredLoyalty;
+          case "!=":
+            return currentLoyalty !== requiredLoyalty;
+          case ">":
+            return currentLoyalty > requiredLoyalty;
+          case "<":
+            return currentLoyalty < requiredLoyalty;
+        }
+      }
+      if (!result) {
+        loyaltyCheck = false;
+        break;
+      }
+
+      const cleanQuestConditions = (quest) => {
+        quest = utility.DeepCopy(quest);
+        quest.conditions.AvailableForStart = quest.conditions.AvailableForStart.filter(q => q._parent == "Level");
+
+        return quest;
+      }
+
+      if (completedPreviousQuest && loyaltyCheck) {
+        quests.push(cleanQuestConditions(quest));
+      }
+    }
+
+
+
+    /*     //clear completed quests
+        if (getQuestStatus(_profile, quest._id) == "Success") {
+          quest.conditions.AvailableForStart = [];
+          quest.conditions.AvailableForFinish = [];
+          quest.conditions.Fail = [];
+        } 
+
     //check if quest has a side field
-    if(quest.Side){
+    if (quest.Side) {
       //if profile side is not the same side as the quest requires, delete from array
-      if(quest.Side != side){
+      if (quest.Side != side) {
         //logger.logError("ID: "+quests[quest]._id);
         quest_database.splice(count, 1);
       }
-    }
-   count++;
+    }*/
+    count++;
   }
   //console.log(quests);
   return quest_database;
@@ -47,7 +177,6 @@ function getQuestsForPlayer(url, info, sessionID) {
 function getCachedQuest(qid) {
   for (let quests in global._database.quests) {
     let quest = global._database.quests[quests];
-    console.log(quest._id === qid, quest._id, qid);
     if (quest._id === qid) {
       return quest;
     }

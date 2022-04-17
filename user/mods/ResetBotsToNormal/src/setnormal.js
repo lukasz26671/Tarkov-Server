@@ -1,5 +1,4 @@
 exports.mod = (mod_data) => {
-    logger.logSuccess("[MOD] Magazine Maniac loading...");
     let locations = utility.DeepCopy(_database.locations);
 
     // Iterate through and get a location

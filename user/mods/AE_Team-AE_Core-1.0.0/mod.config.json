@@ -238,9 +238,7 @@
     "src/cacheloader.js": "CacheModLoad",
     "src/tamperloader.js": "TamperModLoad",
     "src/gameplaycacheloader.js": "CacheModLoad",
-    "src/gameplaytamperloader.js": "TamperModLoad",
-    "src/punishercacheloader.js": "CacheModLoad",
-    "src/punishertamperloader.js": "TamperModLoad"
+    "src/gameplaytamperloader.js": "TamperModLoad"
   },
   "res": {
     "bundles": {

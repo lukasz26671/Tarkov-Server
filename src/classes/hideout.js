@@ -469,7 +469,7 @@ module.exports.scavCaseProductionStart = (pmcData, body, sessionID) => {
 };
 
 module.exports.takeProduction = (pmcData, body, sessionID) => {
-  let cacheditems = global._database.items; //fileIO.readParsed("./user/cache/items.json");
+  let cacheditems = global._database.items;
 
   let output = item_f.handler.getOutput();
   if (body.recipeId === "5d5c205bd582a50d042a3c0e") {
