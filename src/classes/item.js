@@ -58,6 +58,7 @@ class ItemServer {
       Swap: move_f.swapItem,
       Tag: status_f.tagItem,
       Toggle: status_f.toggleItem,
+      TraderRepair: repair_f.main,
       TradingConfirm: trade_f.TradeHandler.confirmTrading,
       Transfer: move_f.transferItem,
     };
