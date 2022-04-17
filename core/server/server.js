@@ -1,4 +1,6 @@
 "use strict";
+const http  = require('http'); // requires npm install http on the Server
+const WebSocket = require('ws'); // requires npm install ws on the Server
 
 class Server {
   constructor() {
@@ -12,6 +14,67 @@ class Server {
     this.initializeCallbacks();
   }
 
+  static webSockets = {};
+  static mimeTypes = {
+      "css": "text/css",
+      "bin": "application/octet-stream",
+      "html": "text/html",
+      "jpg": "image/jpeg",
+      "js": "text/javascript",
+      "json": "application/json",
+      "png": "image/png",
+      "svg": "image/svg+xml",
+      "txt": "text/plain",
+  };
+
+  static getUrl()
+  {
+      return `${serverConfig.ip}:${serverConfig.port}`;
+  }
+
+  static getHttpsUrl = () => `https://${serverConfig.ip}:${serverConfig.port}`;
+
+
+  static getWebsocketUrl = () => `ws://${Server.getUrl()}`;
+
+  static sendMessage(sessionID, output)
+  {
+      try
+      {
+          if (Server.isConnectionWebSocket(sessionID))
+          {
+              Server.webSockets[sessionID].send(JSON.stringify(output));
+              Logger.debug("WS: message sent");
+          }
+          else
+          {
+              Logger.debug(`WS: Socket not ready for ${sessionID}, message not sent`);
+          }
+      }
+      catch (err)
+      {
+          Logger.error(`WS: sendMessage failed, with error: ${err}`);
+      }
+  }
+
+  static sendFile(resp, file)
+  {
+      let pathSlic = file.split("/");
+      let type = Server.mimeTypes[pathSlic[pathSlic.length - 1].split(".")[1]] || Server.mimeTypes["txt"];
+      let fileStream = fs.createReadStream(file);
+
+      fileStream.on("open", function ()
+      {
+          resp.setHeader("Content-Type", type);
+          fileStream.pipe(resp);
+      });
+  }
+
+  static isConnectionWebSocket(sessionID)
+  {
+      return Server.webSockets[sessionID] !== undefined && Server.webSockets[sessionID].readyState === WebSocket.OPEN;
+  }
+
 
   initializeCallbacks() {
     const callbacks = require(executedDir + "/src/functions/callbacks.js").callbacks;
@@ -22,6 +85,7 @@ class Server {
     logger.logSuccess("Create: Receive Callback");
   }
 
+  
   resetBuffer = (sessionID) => { this.buffers[sessionID] = undefined; }
   getFromBuffer = (sessionID) => (this.buffers[sessionID]) ? this.buffers[sessionID].buffer : "";
   getName = () => this.name;
@@ -29,6 +93,7 @@ class Server {
   getPort = () => this.port;
   getBackendUrl = () => this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
   getVersion = () => global.core.constants.ServerVersion;
+
 
   putInBuffer(sessionID, data, bufLength) {
     if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
@@ -48,8 +113,9 @@ class Server {
 
   sendResponse(sessionID, req, resp, body) {
     let output = "";
+
     //check if page is static html page or requests like 
-    if (this.tarkovSend.sendStaticFile(req, resp))
+    if(this.tarkovSend.sendStaticFile(req, resp))
       return;
 
     // get response
@@ -57,6 +123,7 @@ class Server {
       output = router.getResponse(req, body, sessionID);
     } else {
       output = router.getResponse(req, "", sessionID);
+      // output = router.getResponse(req, body, sessionID);
     }
 
     /* route doesn't exist or response is not properly set up */
@@ -80,7 +147,11 @@ class Server {
     }
   }
 
-  handleAsyncRequest = (req, resp) => new Promise(resolve => { resolve(this.handleRequest(req, resp)); });
+  handleAsyncRequest(req, resp){
+    return new Promise(resolve => {
+      resolve(this.handleRequest(req, resp));
+    });
+  }
 
   // Logs the requests made by users. Also stripped from bullshit requests not important ones.
   requestLog(req, sessionID) {
@@ -104,81 +175,91 @@ class Server {
   }
 
   handleRequest(req, resp) {
-    //console.log(req.method, "req.method");
-    new Promise(resolve => {
-      const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
-      this.requestLog(req, sessionID);
-      switch (req.method) {
-        case "GET":
-          {
-            //console.log("GET - START");
-            server.sendResponse(sessionID, req, resp, "");
-            resolve(true)
-            //console.log("GET - END");
-          }
-          break;
-        case "POST":
-          {
-            //console.log("POST - START");
-            req.on("data", function (data) {
-              if (req.url == "/" || req.url.includes("/server/config")) {
-                let _Data = data.toString();
-                _Data = _Data.split("&");
-                let _newData = {};
-                for (let item in _Data) {
-                  let datas = _Data[item].split("=");
-                  _newData[datas[0]] = datas[1];
-                }
-                server.sendResponse(sessionID, req, resp, _newData);
-                resolve(true);
-                return;
-              }
-              internal.zlib.inflate(data, function (err, body) {
-                const jsonData = body !== undefined && body !== null && body !== "" ? body.toString() : "{}";
-                server.sendResponse(sessionID, req, resp, jsonData);
-                resolve(true);
-                //console.log("POST - END");
-              });
-            });
-          }
-          break;
-        case "PUT":
-          {
-            //console.log("PUT - START");
-            req.on("data", function (data) {
-              // receive data
-              if ("expect" in req.headers) {
+    const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
 
-                const requestLength = parseInt(req.headers["content-length"]);
+    this.requestLog(req, sessionID);
 
-                if (!server.putInBuffer(sessionID, data, requestLength)) {
-                  resp.writeContinue();
-                }
-              }
-            })
-              .on("end", function () {
-                let data = server.getFromBuffer(sessionID);
-                server.resetBuffer(sessionID);
-
-                internal.zlib.inflate(data, function (err, body) {
-                  let jsonData = body !== undefined && body !== null && body !== "" ? body.toString() : "{}";
-                  server.sendResponse(sessionID, req, resp, jsonData);
-                  resolve(true);
-                });
-              });
-            resolve(true);
-            //console.log("PUT - END");
-          }
-          break;
-        default:
-          {
-            //console.log("DEFAULT - START");
-            resolve(true);
-            //console.log("DEFAULT - END");
-          }
-          break;
+    switch(req.method) {
+      case "GET": 
+      {
+        let body = [];
+        req.on('data', (chunk) => {
+          body.push(chunk);
+        }).on('end', () => {
+          // body = Buffer.concat(body).toString();
+          let data = Buffer.concat(body);
+          console.log(data.toString());
+        });
+        server.sendResponse(sessionID, req, resp, "");
+        return true;
       }
-    });
+      //case "GET":
+      //case "PUT":
+      case "POST": 
+      {
+        let body = [];
+        req.on('data', (chunk) => {
+          body.push(chunk);
+        }).on('end', () => {
+          // body = Buffer.concat(body).toString();
+          let data = Buffer.concat(body);
+          // at this point, `body` has the entire request body stored in it as a string
+        // });
+
+        // req.on("data", function (data) {
+          if (req.url == "/" || req.url.includes("/server/config")) {
+            let _Data = data.toString();
+            _Data = _Data.split("&");
+            let _newData = {};
+            for (let item in _Data) {
+              let datas = _Data[item].split("=");
+              _newData[datas[0]] = datas[1];
+            }
+            server.sendResponse(sessionID, req, resp, _newData);
+            return;
+          }
+          // console.log(data);
+          internal.zlib.inflate(data, function (err, body) {
+            // console.log(body);
+            if(body !== undefined) {
+              let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+              server.sendResponse(sessionID, req, resp, jsonData);
+            }
+            else {
+              server.sendResponse(sessionID, req, resp, "{}")
+            }
+          });
+        });
+        return true;
+      }
+      case "PUT": 
+      {
+        req.on("data", function (data) {
+          // receive data
+          if ("expect" in req.headers) {
+            const requestLength = parseInt(req.headers["content-length"]);
+
+            if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+              resp.writeContinue();
+            }
+          }
+        })
+        .on("end", function () {
+          let data = server.getFromBuffer(sessionID);
+          server.resetBuffer(sessionID);
+
+          internal.zlib.inflate(data, function (err, body) {
+            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+            server.sendResponse(sessionID, req, resp, jsonData);
+          });
+        });
+        return true;
+      }
+      default: 
+      {
+        return true;
+      }
+    }
   }
 
   CreateServer() {
@@ -216,16 +297,99 @@ class Server {
       }
     });
 
-    httpsServer.listen(this.port, this.ip, function () {
-      logger.logSuccess(`Server is working at: ${backend}`);
+    this.port = this.normalizePort(process.env.PORT || this.port);
+    this.ip = process.env.IP || this.ip;
+    if(this.ip !== undefined && this.port !== undefined) {
+      // httpsServer.listen(this.port, this.ip, function () {
+      httpsServer.listen(this.port, this.ip, function () {
+        logger.logSuccess(`Server is working at: ${backend}`);
+      });
+    }
+    else {
+      httpsServer.listen(this.port);
+    }
+
+    // Setting up websocket
+    const webSocketServer = new WebSocket.Server({
+      "server": httpsServer
     });
+
+    webSocketServer.addListener("listening", () =>
+    {
+      logger.logSuccess(`WebSocket is working at ${Server.getWebsocketUrl()}`);
+    });
+
+    webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
+
+
+  }
+
+  static websocketPingHandler = null;
+
+  static defaultNotification = {
+    "type": 'ping',
+    "eventId": "ping"
+  };
+
+  static wsOnConnection(ws, req)
+    {
+        // Strip request and break it into sections
+        const splitUrl = req.url.replace(/\?.*$/, "").split("/");
+        const sessionID = splitUrl.pop();
+
+        Logger.info(`[WS] Player: ${sessionID} has connected`);
+
+        ws.on("message", function message(msg)
+        {
+            // doesn't reach here
+            Logger.info(`Received message ${msg} from user ${sessionID}`);
+        });
+
+        Server.webSockets[sessionID] = ws;
+
+        if (Server.websocketPingHandler)
+        {
+            clearInterval(Server.websocketPingHandler);
+        }
+
+        Server.websocketPingHandler = setInterval(() =>
+        {
+            Logger.debug(`[WS] Pinging player: ${sessionID}`);
+
+            if (ws.readyState === WebSocket.OPEN)
+            {
+                ws.send(JSON.stringify(Server.defaultNotification));
+            }
+            else
+            {
+                Logger.debug("[WS] Socket lost, deleting handle");
+                clearInterval(Server.websocketPingHandler);
+                delete Server.webSockets[sessionID];
+            }
+        }, 90000);
+    }
+
+  normalizePort(val) {
+    var port = parseInt(val, 10);
+  
+    if (isNaN(port)) {
+      // named pipe
+      return val;
+    }
+  
+    if (port >= 0) {
+      // port number
+      return port;
+    }
+  
+    return false;
   }
 
   softRestart() {
     logger.logInfo("[SoftRestart]: Reloading Database");
     global.mods_f.ResModLoad();
-/*     const databasePath = "/src/functions/database.js";
-    require(process.cwd() + databasePath).load(); */
+    const databasePath = "/src/functions/database.js";
+    require(process.cwd() + databasePath).load();
     // will not be required if all data is loaded into memory
     logger.logInfo("[SoftRestart]: Re-initializing");
     account_f.handler.initialize();
@@ -239,25 +403,25 @@ class Server {
   }
 
   start() {
-/*     logger.logDebug("Loading Database...");
+    logger.logDebug("Loading Database...");
     const databasePath = "/src/functions/database.js";
     const executedDir = internal.process.cwd();
-    logger.logDebug(`ExecutedDir: ${executedDir}`);
-    require(executedDir + databasePath).load(); */
+    logger.logDebug(executedDir);
+    require(process.cwd() + databasePath).load();
 
     // will not be required if all data is loaded into memory
-    logger.logDebug("Initialize account class...")
+    logger.logDebug("Initialize account...")
     account_f.handler.initialize();
-    logger.logDebug("Initialize save handler class...")
+    logger.logDebug("Initialize save handler...")
     savehandler_f.initialize();
-    logger.logDebug("Initialize locale class...")
+    logger.logDebug("Initialize locale...")
     locale_f.handler.initialize();
-    logger.logDebug("Initialize preset class...")
+    logger.logDebug("Initialize preset...")
     preset_f.handler.initialize();
 
     logger.logDebug("Load Tamper Mods...")
     global.mods_f.TamperModLoad(); // TamperModLoad
-    logger.logDebug("Initialize bundles class...")
+    logger.logDebug("Initialize bundles...")
     bundles_f.handler.initialize();
     logger.logInfo("Starting server...");
     this.CreateServer();
@@ -265,3 +429,5 @@ class Server {
 }
 
 module.exports.server = new Server();
+module.exports.Server = Server;
+
