@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 class Initializer {
   constructor() {
     this.initializeCore();
@@ -42,7 +44,9 @@ class Initializer {
     global.utility = require("./util/utility.js");
     global.logger = require("./util/logger.js").logger;
 
-    global.serverConfig = fileIO.readParsed("user/configs/server.json");
+    this.refreshServerConfigFromBase();
+    this.refreshGameplayConfigFromBase();
+
 
     global.mods = { toLoad: {}, config: {} };
 
@@ -56,6 +60,50 @@ class Initializer {
     global.server = require("./server/server.js").server;
 
   }
+
+  refreshServerConfigFromBase() {
+    const serverConfigBase = JSON.parse(fs.readFileSync("user/configs/server_base.json"));
+    if(!fs.existsSync("user/configs/server.json"))
+      fs.writeFileSync("user/configs/server.json", serverConfigBase);
+
+    if(fs.existsSync("user/configs/server.json"))
+      global.serverConfig = JSON.parse(fs.readFileSync("user/configs/server.json"));
+
+    let changesMade = false;
+    for(let item in serverConfigBase) {
+      if(global.serverConfig[item] === undefined) {
+        global.serverConfig[item] = serverConfigBase[item];
+        logger.logInfo("Adding Config Setting " + item + " to server.json");
+        changesMade = true;
+      }
+    }
+
+    if(changesMade)
+      fs.writeFileSync("user/configs/server.json", JSON.stringify(global.serverConfig));
+  }
+
+  refreshGameplayConfigFromBase() {
+    const configBase = JSON.parse(fs.readFileSync("user/configs/gameplay_base.json"));
+    if(!fs.existsSync("user/configs/gameplay.json"))
+      fs.writeFileSync("user/configs/gameplay.json", configBase);
+
+      let gpjson = {};
+    if(fs.existsSync("user/configs/gameplay.json"))
+      gpjson = JSON.parse(fs.readFileSync("user/configs/gameplay.json"));
+
+    let changesMade = false;
+    for(let item in configBase) {
+      if(gpjson[item] === undefined) {
+        gpjson[item] = configBase[item];
+        logger.logInfo("Adding Config Setting " + item + " to gameplay.json");
+        changesMade = true;
+      }
+    }
+
+    if(changesMade)
+      fs.writeFileSync("user/configs/gameplay.json", JSON.stringify(gpjson));
+  }
+
 
   initializeCacheCallbacks() {
     this.cacheCallback = {};

@@ -1,4 +1,5 @@
-# building for kio since node v15 doesn't work :)
+
+
 
 
 ## JustEmuTarkov - Server
@@ -30,3 +31,9 @@ _startServer.cmd
 package-lock.json
 dumpTools/ProfileNameGetter/playerNames.json
 user/configs/mods.json
+
+# Paulov - You shouldn't be pushing profiles or mods to this repo?
+user/mods
+server.json
+gameplay.json
+# user/profiles - profiles is already being done above
