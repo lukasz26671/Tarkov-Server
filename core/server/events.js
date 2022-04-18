@@ -71,7 +71,7 @@ class ScheduledEventHandler {
 			// Set the file age for the schedule.json.
 			let stats = global.internal.fs.statSync(db.user.events.schedule);
 			this.scheduleFileAge = stats.mtimeMs;
-			logger.logInfo(`[CLUSTER] Schedules were loaded.`);
+			// logger.logInfo(`[CLUSTER] Schedules were loaded.`);
 		} else {
 			// Save events to disk.
 			this.scheduledEvents = [];
