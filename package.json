@@ -1,8 +1,8 @@
 {
-  "name": "JustEmuTarkov",
-  "version": "1.2.0",
+  "name": "AE-Server",
+  "version": "3.0.0",
   "main": "core/main.js",
-  "author": "TheMaoci",
+  "author": "AE-Team, JET Team",
   "license": "MIT",
   "scripts": {
     "start": "node core/main.js",
@@ -23,5 +23,16 @@
     "node-minify": "3.6.0",
     "nodemon": "^2.0.15",
     "upx": "1.0.6"
+  },
+  "bin": "core/main.js",
+  "pkg": {
+    "scripts": [
+      "core/**/*.js",
+      "core/util/*.js"
+    ],
+    "assets": [
+      "core/**/*.js",
+      "core/util/*.js"
+    ]
   }
 }

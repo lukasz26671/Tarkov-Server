@@ -1,4 +1,9 @@
 # Server Readme.md
+
+## Debugging
+- Download and Install [Visual Studio Code](https://code.visualstudio.com/) 
+- Open the Directory (can be done in several ways)
+- Press F5 to Debug
   
 ## Running the server under linux
 - Install node version 16.x either via docker or directly by using `curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -` and `sudo apt-get install -y nodejs`.
@@ -12,6 +17,8 @@ _If you run the server as an user, you might run into issues with using ports be
 
 ### Current Branches:
 [AE-Backend-Server/develop](https://github.com/KovacsAltered-State/AE-Backend-Server/tree/develop): Dedicated server build, primary branch for bugfixes and live testing.
+
+[AE-Backend-Server/develop-paulov](https://github.com/KovacsAltered-State/AE-Backend-Server/tree/develop-paulov): Merge of all Paulov development and fixes from JET to AE. Includes PKG implementation and EXE generation.
 
 [AE-Backend-Server/main](https://github.com/KovacsAltered-State/AE-Backend-Server/tree/main): Main branch only for long-term new feature development and basing release branches.
 

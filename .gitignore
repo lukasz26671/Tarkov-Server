@@ -37,3 +37,7 @@ user/mods
 server.json
 gameplay.json
 # user/profiles - profiles is already being done above
+
+AE-Server-*
+JustEmuTarkov-*
+*.exe
