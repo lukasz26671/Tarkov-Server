@@ -18,7 +18,7 @@ function initialize() {
 	if (_database.clusterConfig.autoSaveInterval > 0) {
 		let id = setInterval(function () {
 			savehandler_f.saveOpenSessions();
-			logger.logInfo(`[CLUSTER] Saving memory to disk. [Interval: ${_database.clusterConfig.autoSaveInterval} seconds]`);
+			// logger.logInfo(`[CLUSTER] Saving memory to disk. [Interval: ${_database.clusterConfig.autoSaveInterval} seconds]`);
 		}, _database.clusterConfig.autoSaveInterval * 1000);
 	}
 }
