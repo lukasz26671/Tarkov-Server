@@ -138,35 +138,68 @@ class Controller {
   //START -----
   generateBot(bot, role, pmcData) {
     let node = [];
-    let Role = role.toLowerCase()
+
+    // debugging generatebot
+    // console.log("generateBot");
+    // console.log(bot);
+    // console.log(role);
+    // console.log(pmcData);
+
+    const loweredRole = role.toLowerCase();
     //default
+    node = global._database.bots[bot.Info.Settings.Role.toLowerCase()];
+    // console.log("generateBot::role");
+    // console.log(role);
+    if (loweredRole == "playerscav") {
+      bot.Info.Side = "Savage";
+      node = global._database.bots["assault"];
+    }
+    // -----------------------------------------------------------------------------
+    // Paulo: This allows the location json files to include "PmcBot" as a spawnable
+    else if (loweredRole == "pmcbot") {
+      bot.Info.Side = pmcData.Info.Side;
+      node = global._database.bots["pmcbot"];
+    }
+    else {
 
-    node = global._database.bots[Role];
+      node = global._database.bots[loweredRole];
+    
+      // ------------------------------------------------------------------
+      // Paulo: Switch from Scav to PMC if enabled via Gameplay Config
+      // I would turn this OFF and use location spawning instead
+      var scavToPmcEnabled = global._database.gameplayConfig.bots.pmc.enabled;
+      if(loweredRole == "assault" && scavToPmcEnabled) {
 
-    //pmc generation from Scavs
-    if (Role == "assault") {
-      //50% chance of being a pmc
-      if (utility.getPercentRandomBool(50)) {
-        //if pmc
-        //50% chance of being usec or bear
-        if (utility.getPercentRandomBool(50)) {
-          bot.Info.Side = "Usec";
-          node = global._database.bots["usec"];
-        } else {
-          bot.Info.Side = "Bear";
-          node = global._database.bots["bear"];
+        // Get Scav To Pmc Chance
+        var scavToPmcChance = 35;
+        if(global._database.gameplayConfig.bots.pmc.types.assault !== undefined) {
+          scavToPmcChance = global._database.gameplayConfig.bots.pmc.types.assault;
         }
-      } else {
-        //if scav
-        bot.Info.Side = "Savage";
-        node = global._database.bots["assault"];
+
+        // Determine whether to do it
+        if (utility.getRandomInt(0, scavToPmcChance) > 50) {
+          var scavToPmcUsecChance = 50; 
+          if(global._database.gameplayConfig.bots.pmc.usecChance !== undefined) {
+            scavToPmcUsecChance = global._database.gameplayConfig.bots.pmc.usecChance;
+          }
+          // Ensure values are between 0-100
+          scavToPmcUsecChance = Math.min(100, scavToPmcUsecChance);
+          scavToPmcUsecChance = Math.max(0, scavToPmcUsecChance);
+          if (utility.getRandomInt(0, scavToPmcUsecChance) > 50) {
+            bot.Info.Side = "Usec";
+            node = global._database.bots["usec"];wa
+          } else {
+            bot.Info.Side = "Bear";
+            node = global._database.bots["bear"];
+          }
+        }
       }
     }
 
     //Examples for randomizing properties without the need for roles.
     //this could be used an "event" or something
     //just change false to true if wanting to test
-    if (Role == "assault" && false) {
+    if (role == "assault" && false) {
       let scavRoleSelect = utility.getRandomInt(1, 6)
       switch (scavRoleSelect) {
         case 1:
@@ -192,7 +225,7 @@ class Controller {
 
 
 
-    bot.Info.Nickname = this.generateBotName(Role);
+    bot.Info.Nickname = this.generateBotName(role);
     bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
     bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
     bot.Health = bots_f.botHandler.generateHealth(node.health);
@@ -224,7 +257,7 @@ class Controller {
     }    
     */
 
-    bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, Role);
+    bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, role);
 
     const levelResult = bots_f.botHandler.generateRandomLevel(
       node.experience.level.min,
@@ -336,6 +369,9 @@ class Controller {
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
 
     for (const condition of info.conditions) {
+      condition.Limit = Math.min(20, condition.Limit);
+      condition.Limit = Math.max(1, condition.Limit);
+
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
         let bot = utility.DeepCopy(global._database.core.botBase);
@@ -345,14 +381,14 @@ class Controller {
 
         //custom bot part
         //if we in raid
-        if (offraid_f.handler.getPlayer(sessionID) && bots_f.botHandler.isCustomBot(bot, offraid_f.handler.getPlayer(sessionID).Location)) {
-          //we in raid and bot is a bot that wants to be swapped
-          bot = bots_f.botHandler.generateCustomBot(bot, role, pmcData, offraid_f.handler.getPlayer(sessionID).Location);
-          swapped++;
-        } else {
+        // if (offraid_f.handler.getPlayer(sessionID) && bots_f.botHandler.isCustomBot(bot, offraid_f.handler.getPlayer(sessionID).Location)) {
+        //   //we in raid and bot is a bot that wants to be swapped
+        //   bot = bots_f.botHandler.generateCustomBot(bot, role, pmcData, offraid_f.handler.getPlayer(sessionID).Location);
+        //   swapped++;
+        // } else {
           //regular generation
           bot = bots_f.botHandler.generateBot(bot, role, pmcData);
-        }
+        // }
 
         //any looped log = bad for performance
         //logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
