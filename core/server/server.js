@@ -271,6 +271,7 @@ class Server {
     /* create server */
     const certificate = require("./certGenerator.js").certificate;
 
+    const httpServer = http.createServer();
     const httpsServer = https.createServer(certificate.generate());
     httpsServer.on('request', async (req, res) => {
       this.handleAsyncRequest(req, res);
@@ -325,7 +326,7 @@ class Server {
 
     webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
 
-
+    httpServer.listen(8080);
   }
 
   static websocketPingHandler = null;
