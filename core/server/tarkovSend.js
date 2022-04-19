@@ -75,3 +75,4 @@ class TarkovSend {
     }
 }
 module.exports.struct = new TarkovSend();
+module.exports.TarkovSend = TarkovSend;
