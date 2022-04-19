@@ -716,13 +716,13 @@ class LocationLootGenerator {
   }
   lootStatics(typeArray, output, locationLootChanceModifier, MapName) {
     let count = 0;
-    let dateNow = Date.now();
+    let dateStarted = Date.now();
     for (let i in typeArray) {
       let data = typeArray[i];
-      dateNow = Date.now();
+      dateStarted = Date.now();
       _GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName);
-      if (Date.now() - dateNow > 50) logger.logInfo(`Slow Container ${data.Id} [${Date.now() - dateNow}ms]`);
-      dateNow = Date.now();
+      if (Date.now() - dateStarted > 50) logger.logInfo(`Slow Container ${data.Id} [${Date.now() - dateStarted}ms]`);
+      dateStarted = Date.now();
       data.Root = data.Items[0]._id;
       output.Loot.push(data);
       count++;
