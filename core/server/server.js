@@ -111,12 +111,14 @@ class Server {
     return buf.written === buf.allocated;
   }
 
+  /*
+  */
   sendResponse(sessionID, req, resp, body) {
     let output = "";
 
     //check if page is static html page or requests like 
-    if(this.tarkovSend.sendStaticFile(req, resp))
-      return;
+    // if(this.tarkovSend.sendStaticFile(req, resp))
+    //   return;
 
     // get response
     if (req.method === "POST" || req.method === "PUT") {
@@ -161,16 +163,16 @@ class Server {
 
     let displaySessID = typeof sessionID != "undefined" ? `[${sessionID}]` : "";
 
-    if (
-      req.url.substr(0, 6) != "/files" &&
-      req.url.substr(0, 6) != "/notif" &&
-      req.url != "/client/game/keepalive" &&
-      req.url != "/player/health/sync" &&
-      !req.url.includes(".css") &&
-      !req.url.includes(".otf") &&
-      !req.url.includes(".ico") &&
-      !req.url.includes("singleplayer/settings/bot/difficulty")
-    )
+    // if (
+    //   req.url.substr(0, 6) != "/files" &&
+    //   req.url.substr(0, 6) != "/notif" &&
+    //   req.url != "/client/game/keepalive" &&
+    //   req.url != "/player/health/sync" &&
+    //   !req.url.includes(".css") &&
+    //   !req.url.includes(".otf") &&
+    //   !req.url.includes(".ico") &&
+    //   !req.url.includes("singleplayer/settings/bot/difficulty")
+    // )
       logger.logRequest(req.url, `${displaySessID}[${IP}] `);
   }
 
@@ -188,9 +190,10 @@ class Server {
         }).on('end', () => {
           // body = Buffer.concat(body).toString();
           let data = Buffer.concat(body);
-          console.log(data.toString());
+          // console.log(data.toString());
         });
-        server.sendResponse(sessionID, req, resp, "");
+        // server.sendResponse(sessionID, req, resp, "");
+        server.sendResponse(sessionID, req, resp, body);
         return true;
       }
       //case "GET":
@@ -207,17 +210,17 @@ class Server {
         // });
 
         // req.on("data", function (data) {
-          if (req.url == "/" || req.url.includes("/server/config")) {
-            let _Data = data.toString();
-            _Data = _Data.split("&");
-            let _newData = {};
-            for (let item in _Data) {
-              let datas = _Data[item].split("=");
-              _newData[datas[0]] = datas[1];
-            }
-            server.sendResponse(sessionID, req, resp, _newData);
-            return;
-          }
+          // if (req.url == "/" || req.url.includes("/server/config")) {
+          //   let _Data = data.toString();
+          //   _Data = _Data.split("&");
+          //   let _newData = {};
+          //   for (let item in _Data) {
+          //     let datas = _Data[item].split("=");
+          //     _newData[datas[0]] = datas[1];
+          //   }
+          //   server.sendResponse(sessionID, req, resp, _newData);
+          //   return;
+          // }
           // console.log(data);
           internal.zlib.inflate(data, function (err, body) {
             // console.log(body);
@@ -226,7 +229,7 @@ class Server {
               server.sendResponse(sessionID, req, resp, jsonData);
             }
             else {
-              server.sendResponse(sessionID, req, resp, "{}")
+              server.sendResponse(sessionID, req, resp, "")
             }
           });
         });
