@@ -52,8 +52,9 @@ class Controller {
     return scavData[0];
   }
   getBotLimit(type) {
-    if (typeof global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type] == "undefined") return 30;
-    return global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type];
+    // if (typeof global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type] == "undefined") return 30;
+    // return global._database.gameplay.bots.limits[type === "cursedAssault" || type === "assaultGroup" ? "assault" : type];
+    return 5;
   }
   getBotDifficulty(type, difficulty) {
     switch (type) {
@@ -162,68 +163,67 @@ class Controller {
     }
     else {
 
+      bot.Info.Side = "Savage";
       node = global._database.bots[loweredRole];
     
       // ------------------------------------------------------------------
       // Paulo: Switch from Scav to PMC if enabled via Gameplay Config
       // I would turn this OFF and use location spawning instead
-      var scavToPmcEnabled = global._database.gameplayConfig.bots.pmc.enabled;
-      if(loweredRole == "assault" && scavToPmcEnabled) {
+      // var scavToPmcEnabled = global._database.gameplayConfig.bots.pmc.enabled;
+      // if(loweredRole == "assault" && scavToPmcEnabled) {
 
-        // Get Scav To Pmc Chance
-        var scavToPmcChance = 35;
-        if(global._database.gameplayConfig.bots.pmc.types.assault !== undefined) {
-          scavToPmcChance = global._database.gameplayConfig.bots.pmc.types.assault;
-        }
+      //   // Get Scav To Pmc Chance
+      //   var scavToPmcChance = 35;
+      //   if(global._database.gameplayConfig.bots.pmc.types.assault !== undefined) {
+      //     scavToPmcChance = global._database.gameplayConfig.bots.pmc.types.assault;
+      //   }
 
-        // Determine whether to do it
-        if (utility.getRandomInt(0, scavToPmcChance) > 50) {
-          var scavToPmcUsecChance = 50; 
-          if(global._database.gameplayConfig.bots.pmc.usecChance !== undefined) {
-            scavToPmcUsecChance = global._database.gameplayConfig.bots.pmc.usecChance;
-          }
-          // Ensure values are between 0-100
-          scavToPmcUsecChance = Math.min(100, scavToPmcUsecChance);
-          scavToPmcUsecChance = Math.max(0, scavToPmcUsecChance);
-          if (utility.getRandomInt(0, scavToPmcUsecChance) > 50) {
-            bot.Info.Side = "Usec";
-            node = global._database.bots["usec"];wa
-          } else {
-            bot.Info.Side = "Bear";
-            node = global._database.bots["bear"];
-          }
-        }
-      }
+      //   // Determine whether to do it
+      //   if (utility.getRandomInt(0, scavToPmcChance) > 50) {
+      //     var scavToPmcUsecChance = 50; 
+      //     if(global._database.gameplayConfig.bots.pmc.usecChance !== undefined) {
+      //       scavToPmcUsecChance = global._database.gameplayConfig.bots.pmc.usecChance;
+      //     }
+      //     // Ensure values are between 0-100
+      //     scavToPmcUsecChance = Math.min(100, scavToPmcUsecChance);
+      //     scavToPmcUsecChance = Math.max(0, scavToPmcUsecChance);
+      //     if (utility.getRandomInt(0, scavToPmcUsecChance) > 50) {
+      //       bot.Info.Side = "Usec";
+      //       node = global._database.bots["usec"];wa
+      //     } else {
+      //       bot.Info.Side = "Bear";
+      //       node = global._database.bots["bear"];
+      //     }
+      //   }
+      // }
     }
 
     //Examples for randomizing properties without the need for roles.
     //this could be used an "event" or something
     //just change false to true if wanting to test
-    if (role == "assault" && false) {
-      let scavRoleSelect = utility.getRandomInt(1, 6)
-      switch (scavRoleSelect) {
-        case 1:
-          node = global._database.bots["followersanitar"];
-          break;
-        case 2:
-          node = global._database.bots["followergluharscout"];
-          break;
-        case 3:
-          node = global._database.bots["followergluharassault"];
-          break;
-        case 4:
-          node = global._database.bots["followergluharsecurity"];
-          break;
-        case 5:
-          node = global._database.bots["followerbully"];
-          break;
-        case 6:
-          node = global._database.bots["sectantwarrior"];
-          break;
-      }
-    }
-
-
+    // if (role == "assault" && false) {
+    //   let scavRoleSelect = utility.getRandomInt(1, 6)
+    //   switch (scavRoleSelect) {
+    //     case 1:
+    //       node = global._database.bots["followersanitar"];
+    //       break;
+    //     case 2:
+    //       node = global._database.bots["followergluharscout"];
+    //       break;
+    //     case 3:
+    //       node = global._database.bots["followergluharassault"];
+    //       break;
+    //     case 4:
+    //       node = global._database.bots["followergluharsecurity"];
+    //       break;
+    //     case 5:
+    //       node = global._database.bots["followerbully"];
+    //       break;
+    //     case 6:
+    //       node = global._database.bots["sectantwarrior"];
+    //       break;
+    //   }
+    // }
 
     bot.Info.Nickname = this.generateBotName(role);
     bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
@@ -375,7 +375,7 @@ class Controller {
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
         let bot = utility.DeepCopy(global._database.core.botBase);
-        bot.Info.Side = "Savage";
+        // bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
 
