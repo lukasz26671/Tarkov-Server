@@ -1,5 +1,6 @@
 "use strict";
 const http  = require('http'); // requires npm install http on the Server
+const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
 
 class Server {
@@ -266,11 +267,11 @@ class Server {
   }
 
   CreateServer() {
-    let backend = this.backendUrl;
+    const backend = this.backendUrl;
     /* create server */
     const certificate = require("./certGenerator.js").certificate;
 
-    let httpsServer = internal.https.createServer(certificate.generate());
+    const httpsServer = https.createServer(certificate.generate());
     httpsServer.on('request', async (req, res) => {
       this.handleAsyncRequest(req, res);
     });
@@ -278,7 +279,7 @@ class Server {
     /* server is already running or program using privileged port without root */
     httpsServer.on("error", function (e) {
       if (internal.process.platform === "linux" && !(internal.process.getuid && internal.process.getuid() === 0) && e.port < 1024) {
-        logger.throwErr("» Non-root processes cannot bind to ports below 1024.", ">> core/server.server.js line 274");
+        logger.throwErr("» Non-root processes cannot bind to ports below 1024.", ">> core/server.server.js");
       } else if (e.code == "EADDRINUSE") {
         internal.psList().then((data) => {
           let cntProc = 0;
@@ -302,14 +303,14 @@ class Server {
 
     this.port = this.normalizePort(process.env.PORT || this.port);
     this.ip = process.env.IP || this.ip;
-    if(this.ip !== undefined && this.port !== undefined) {
+    if(this.ip !== undefined && this.ip !== "" && this.port !== undefined && this.port != "") {
       // httpsServer.listen(this.port, this.ip, function () {
       httpsServer.listen(this.port, this.ip, function () {
         logger.logSuccess(`Server is working at: ${backend}`);
       });
     }
     else {
-      httpsServer.listen(this.port);
+      httpsServer.listen();
     }
 
     // Setting up websocket
