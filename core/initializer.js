@@ -66,8 +66,11 @@ class Initializer {
       throw "Could not find " + process.cwd() + "/user/configs/server_base.json";
 
     const serverConfigBase = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server_base.json"));
+    if(serverConfigBase === undefined)
+      throw "Server Config Base data not found";
+
     if(!fs.existsSync(process.cwd() + "/user/configs/server.json"))
-      fs.writeFileSync(process.cwd() + "/user/configs/server.json", serverConfigBase);
+      fs.writeFileSync(process.cwd() + "/user/configs/server.json", JSON.stringify(serverConfigBase));
 
     if(fs.existsSync(process.cwd() + "/user/configs/server.json"))
       global.serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
@@ -88,7 +91,7 @@ class Initializer {
   refreshGameplayConfigFromBase() {
     const configBase = JSON.parse(fs.readFileSync("user/configs/gameplay_base.json"));
     if(!fs.existsSync("user/configs/gameplay.json"))
-      fs.writeFileSync("user/configs/gameplay.json", configBase);
+      fs.writeFileSync("user/configs/gameplay.json", JSON.stringify(configBase));
 
       let gpjson = {};
     if(fs.existsSync("user/configs/gameplay.json"))
