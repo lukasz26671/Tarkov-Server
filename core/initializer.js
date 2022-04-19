@@ -62,12 +62,15 @@ class Initializer {
   }
 
   refreshServerConfigFromBase() {
-    const serverConfigBase = JSON.parse(fs.readFileSync("user/configs/server_base.json"));
-    if(!fs.existsSync("user/configs/server.json"))
-      fs.writeFileSync("user/configs/server.json", serverConfigBase);
+    if(!fs.existsSync(process.cwd() + "/user/configs/server_base.json"))
+      throw "Could not find " + process.cwd() + "/user/configs/server_base.json";
 
-    if(fs.existsSync("user/configs/server.json"))
-      global.serverConfig = JSON.parse(fs.readFileSync("user/configs/server.json"));
+    const serverConfigBase = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server_base.json"));
+    if(!fs.existsSync(process.cwd() + "/user/configs/server.json"))
+      fs.writeFileSync(process.cwd() + "/user/configs/server.json", serverConfigBase);
+
+    if(fs.existsSync(process.cwd() + "/user/configs/server.json"))
+      global.serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
 
     let changesMade = false;
     for(let item in serverConfigBase) {
@@ -79,7 +82,7 @@ class Initializer {
     }
 
     if(changesMade)
-      fs.writeFileSync("user/configs/server.json", JSON.stringify(global.serverConfig));
+      fs.writeFileSync(process.cwd() + "/user/configs/server.json", JSON.stringify(global.serverConfig));
   }
 
   refreshGameplayConfigFromBase() {
