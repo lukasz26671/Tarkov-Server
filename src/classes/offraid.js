@@ -1,135 +1,131 @@
 "use strict";
 
-const { logger } = require("../../core/util/logger");
-
 class InraidServer {
-	constructor() {
-		// this needs to be saved on drive so if player closes server it can keep it going after restart
-		this.players = {};
-	}
+  constructor() {
+    // this needs to be saved on drive so if player closes server it can keep it going after restart
+    this.players = {};
+  }
 
-	addPlayer(sessionID, info) {
-		this.players[sessionID] = info;
-	}
-	getPlayer(sessionID) {
-		return this.players[sessionID];
-	}
-	removePlayer(sessionID) {
-		delete this.players[sessionID];
-	}
+  addPlayer(sessionID, info) {
+    this.players[sessionID] = info;
+  }
+  getPlayer(sessionID) {
+    return this.players[sessionID];
+  }
+  removePlayer(sessionID) {
+    delete this.players[sessionID];
+  }
 
-	removeMapAccessKey(offraidData, sessionID) {
-		if (typeof offraid_f.handler.getPlayer(sessionID) == "undefined") {
-			logger.logWarning("Disabling: Remove map key on entering, cause of offraid_f.handler.players[sessionID] is undefined");
-			return;
-		}
-		const map = global._database.locations[MapNameConversion(sessionID)].base;
-		let mapKey = map.AccessKeys[0];
+  removeMapAccessKey(offraidData, sessionID) {
+    if (typeof offraid_f.handler.getPlayer(sessionID) == "undefined") {
+      logger.logWarning("Disabling: Remove map key on entering, cause of offraid_f.handler.players[sessionID] is undefined");
+      return;
+    }
+    let map = global._database.locations[MapNameConversion(sessionID)].base;
+    let mapKey = map.AccessKeys[0];
 
-		if (!mapKey) {
-			return;
-		}
+    if (!mapKey) {
+      return;
+    }
 
-		for (let item of offraidData.profile.Inventory.items) {
-			if (item._tpl === mapKey && item.slotId !== "Hideout") {
-				let usages = -1;
+    for (let item of offraidData.profile.Inventory.items) {
+      if (item._tpl === mapKey && item.slotId !== "Hideout") {
+        let usages = -1;
 
-				if (!helper_f.tryGetItem(mapKey)._props.MaximumNumberOfUsage) {
-					usages = 1;
-				} else {
-					usages = "upd" in item && "Key" in item.upd ? item.upd.Key.NumberOfUsages : -1;
-				}
+        if (!helper_f.getItem(mapKey)[1]._props.MaximumNumberOfUsage) {
+          usages = 1;
+        } else {
+          usages = "upd" in item && "Key" in item.upd ? item.upd.Key.NumberOfUsages : -1;
+        }
 
-				if (usages === -1) {
-					item.upd = { Key: { NumberOfUsages: 1 } };
-				} else {
-					item.upd.Key.NumberOfUsages += 1;
-				}
+        if (usages === -1) {
+          item.upd = { Key: { NumberOfUsages: 1 } };
+        } else {
+          item.upd.Key.NumberOfUsages += 1;
+        }
 
-				if (item.upd.Key.NumberOfUsages >= helper_f.tryGetItem(mapKey)._props.MaximumNumberOfUsage) {
-					//do not send offraidData here, because it will not remove the items
-					move_f.removeItemFromProfile(profile_f.handler.getPmcProfile(sessionID), item._id);
-				}
+        if (item.upd.Key.NumberOfUsages >= helper_f.getItem(mapKey)[1]._props.MaximumNumberOfUsage) {
+          move_f.removeItemFromProfile(offraidData.profile, item._id);
+        }
 
-				break;
-			}
-		}
-	}
+        break;
+      }
+    }
+  }
 }
 
 /* adds SpawnedInSession property to items found in a raid */
 function markFoundItems(pmcData, profile, isPlayerScav) {
-	// thanks Mastah Killah#1650
-	// mark items found in raid
-	for (let offraidItem of profile.Inventory.items) {
-		let found = false;
+  // thanks Mastah Killah#1650
+  // mark items found in raid
+  for (let offraidItem of profile.Inventory.items) {
+    let found = false;
 
-		// mark new items for PMC and all items for scavs
-		if (!isPlayerScav) {
-			// check if the item exists in PMC inventory
-			for (let item of pmcData.Inventory.items) {
-				if (offraidItem._id === item._id) {
-					// item found in PMC inventory
-					found = true;
-					// copy item previous FIR status
-					if ("upd" in item && "SpawnedInSession" in item.upd) {
-						// tests if offraidItem has the "upd" property. If it exists it copies the previous FIR status if not it creates a new "upd" property with that FIR status
-						Object.getOwnPropertyDescriptor(offraidItem, "upd") !== undefined
-							? Object.assign(offraidItem.upd, { SpawnedInSession: item.upd.SpawnedInSession })
-							: Object.assign(offraidItem, { upd: { SpawnedInSession: item.upd.SpawnedInSession } }); // overwrite SpawnedInSession value with previous item value or create new value
-					}
-					// FIR status not found - delete offraidItem's SpawnedInSession if it exists
-					else if ("upd" in offraidItem && "SpawnedInSession" in offraidItem.upd) {
-						delete offraidItem.upd.SpawnedInSession;
-					}
-					break;
-				}
-			}
+    // mark new items for PMC and all items for scavs
+    if (!isPlayerScav) {
+      // check if the item exists in PMC inventory
+      for (let item of pmcData.Inventory.items) {
+        if (offraidItem._id === item._id) {
+          // item found in PMC inventory
+          found = true;
+          // copy item previous FIR status
+          if ("upd" in item && "SpawnedInSession" in item.upd) {
+            // tests if offraidItem has the "upd" property. If it exists it copies the previous FIR status if not it creates a new "upd" property with that FIR status
+            Object.getOwnPropertyDescriptor(offraidItem, "upd") !== undefined
+              ? Object.assign(offraidItem.upd, { SpawnedInSession: item.upd.SpawnedInSession })
+              : Object.assign(offraidItem, { upd: { SpawnedInSession: item.upd.SpawnedInSession } }); // overwrite SpawnedInSession value with previous item value or create new value
+          }
+          // FIR status not found - delete offraidItem's SpawnedInSession if it exists
+          else if ("upd" in offraidItem && "SpawnedInSession" in offraidItem.upd) {
+            delete offraidItem.upd.SpawnedInSession;
+          }
+          break;
+        }
+      }
 
-			// skip to next item if found
-			if (found) {
-				continue;
-			}
-		}
+      // skip to next item if found
+      if (found) {
+        continue;
+      }
+    }
 
-		// item not found in PMC inventory, add FIR status to new item
-		// tests if offraidItem has the "upd" property. If it exists it updates the FIR status if not it creates a new "upd" property
-		Object.getOwnPropertyDescriptor(offraidItem, "upd") !== undefined
-			? Object.assign(offraidItem.upd, { SpawnedInSession: true })
-			: Object.assign(offraidItem, { upd: { SpawnedInSession: true } });
-	}
-	return profile;
+    // item not found in PMC inventory, add FIR status to new item
+    // tests if offraidItem has the "upd" property. If it exists it updates the FIR status if not it creates a new "upd" property
+    Object.getOwnPropertyDescriptor(offraidItem, "upd") !== undefined
+      ? Object.assign(offraidItem.upd, { SpawnedInSession: true })
+      : Object.assign(offraidItem, { upd: { SpawnedInSession: true } });
+  }
+  return profile;
 }
 
 function RemoveFoundItems(profile) {
-	for (let offraidItem of profile.Inventory.items) {
-		// Remove the FIR status if the player died and the item marked FIR
-		if ("upd" in offraidItem && "SpawnedInSession" in offraidItem.upd) {
-			delete offraidItem.upd.SpawnedInSession;
-		}
+  for (let offraidItem of profile.Inventory.items) {
+    // Remove the FIR status if the player died and the item marked FIR
+    if ("upd" in offraidItem && "SpawnedInSession" in offraidItem.upd) {
+      delete offraidItem.upd.SpawnedInSession;
+    }
 
-		continue;
-	}
+    continue;
+  }
 
-	return profile;
+  return profile;
 }
 
-function setInventory(pmcData, profile) {
-
+function setInventory(pmcData, profile) {	
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.equipment);
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questRaidItems);
 	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems);
-
+	
 	//fix for duplicate ids in items by creating new ids for item ids created in-raid
 	profile.Inventory = repairInventoryIDs(profile.Inventory, pmcData.aid);
 
 	// Bandaid fix to duplicate IDs being saved to profile after raid. May cause inconsistent item data. (~Kiobu)
 	// no more duplicates should exist but I'll leave this here untouched bc it's working (CQ)
 	let duplicates = [];
-
-	x: for (const item of profile.Inventory.items) {
-		for (const key in pmcData.Inventory.items) {
-			const currid = pmcData.Inventory.items[key]._id;
+	
+	x: for (let item of profile.Inventory.items) {
+		for (let key in pmcData.Inventory.items) {
+			let currid = pmcData.Inventory.items[key]._id;
 			if (currid == item._id) {
 				duplicates.push(item._id);
 				continue x;
@@ -137,12 +133,12 @@ function setInventory(pmcData, profile) {
 		}
 		pmcData.Inventory.items.push(item);
 	}
-
+	
 	pmcData.Inventory.fastPanel = profile.Inventory.fastPanel;
 
-	// Don't count important IDs as errors. Id's used as sorting tables.
+	// Don't count important IDs as errors.
 	const ignoreIDs = [
-		"60de0d80c6b34f52845b4646",		//sorting table
+		"60de0d80c6b34f52845b4646",		//?
 		"61b7367440281631fc83f17f" 		//sorting table
 	];
 
@@ -150,7 +146,7 @@ function setInventory(pmcData, profile) {
 
 	if (duplicates.length > 0) {
 		logger.logWarning(`Duplicate ID(s) encountered in profile after-raid. Found ${duplicates.length} duplicates. Ignoring...`);
-		logger.logWarning(`Duplicates: \n` + JSON.stringify(duplicates, null, 2));
+		logger.logWarning(`Duplicates: \n`+JSON.stringify(duplicates, null, 2));
 		//console.log(duplicates); //this won't be saved in log file, don't use this crap
 	}
 
@@ -158,300 +154,257 @@ function setInventory(pmcData, profile) {
 }
 
 function deleteInventory(pmcData, sessionID) {
-	let toDelete = [];
+  let toDelete = [];
 
-	for (const item of pmcData.Inventory.items) {
-		// remove normal item
-		if (
-			(item.parentId === pmcData.Inventory.equipment &&
-				item.slotId !== "SecuredContainer" &&
-				item.slotId !== "Scabbard" &&
-				item.slotId !== "Pockets" &&
-				item.slotId !== "Compass") ||
-			item.parentId === pmcData.Inventory.questRaidItems
-		) {
-			toDelete.push(item._id);
-		}
+  for (let item of pmcData.Inventory.items) {
+    // remove normal item
+    if (
+      (item.parentId === pmcData.Inventory.equipment &&
+        item.slotId !== "SecuredContainer" &&
+        item.slotId !== "Scabbard" &&
+        item.slotId !== "Pockets" &&
+        item.slotId !== "Compass") ||
+      item.parentId === pmcData.Inventory.questRaidItems
+    ) {
+      toDelete.push(item._id);
+    }
 
-		// remove pocket insides
-		if (item.slotId === "Pockets") {
-			for (const pocket of pmcData.Inventory.items) {
-				if (pocket.parentId === item._id) {
-					toDelete.push(pocket._id);
-				}
-			}
-		}
-	}
+    // remove pocket insides
+    if (item.slotId === "Pockets") {
+      for (let pocket of pmcData.Inventory.items) {
+        if (pocket.parentId === item._id) {
+          toDelete.push(pocket._id);
+        }
+      }
+    }
+  }
 
-	// delete items
-	for (const item of toDelete) {
-		move_f.removeItemFromProfile(pmcData, item);
-	}
+  // delete items
+  for (let item of toDelete) {
+    move_f.removeItemFromProfile(pmcData, item);
+  }
 
-	pmcData.Inventory.fastPanel = {};
-	return pmcData;
+  pmcData.Inventory.fastPanel = {};
+  return pmcData;
 }
 
 function MapNameConversion(sessionID) {
-	// change names to thenames of location file names that are loaded like that into the memory
-	let playerRaidData = offraid_f.handler.getPlayer(sessionID);
-	switch (playerRaidData.Location) {
-		case "Arena":
-			return "develop";
-		case "Customs":
-			return "bigmap";
-		case "Factory":
-			if (playerRaidData.Time == "CURR") return "factory4_day";
-			else return "factory4_night";
-		case "Interchange":
-			return "interchange";
-		case "Laboratory":
-			return "laboratory";
-		case "ReserveBase":
-			return "rezervbase";
-		case "Shoreline":
-			return "shoreline";
-		case "Woods":
-			return "woods";
-		case "Lighthouse":
-			return "lighthouse";
-		case "Private Sector":
-			return "privatearea";
-		case "Suburbs":
-			return "suburbs";
-		case "Terminal":
-			return "terminal";
-		case "Town":
-			return "town";
-		case "Streets of Tarkov":
-			return "tarkovstreets";
-		default:
-			return playerRaidData.Location;
-	}
+  // change names to thenames of location file names that are loaded like that into the memory
+  let playerRaidData = offraid_f.handler.getPlayer(sessionID);
+  switch (playerRaidData.Location) {
+    case "Arena":
+      return "develop";
+    case "Customs":
+      return "bigmap";
+    case "Factory":
+      if (playerRaidData.Time == "CURR") return "factory4_day";
+      else return "factory4_night";
+    case "Interchange":
+      return "interchange";
+    case "Laboratory":
+      return "laboratory";
+    case "ReserveBase":
+      return "rezervbase";
+    case "Shoreline":
+      return "shoreline";
+    case "Woods":
+      return "woods";
+    case "Lighthouse":
+      return "lighthouse";
+    case "Private Sector":
+      return "privatearea";
+    case "Suburbs":
+      return "suburbs";
+    case "Terminal":
+      return "terminal";
+    case "Town":
+      return "town";
+    case "Streets of Tarkov":
+      return "tarkovstreets";
+    default:
+      return playerRaidData.Location;
+  }
 }
 
 function getPlayerGear(items) {
-	// Player Slots we care about
-	const inventorySlots = [
-		"FirstPrimaryWeapon",
-		"SecondPrimaryWeapon",
-		"Holster",
-		"Headwear",
-		"Earpiece",
-		"Eyewear",
-		"FaceCover",
-		"ArmorVest",
-		"TacticalVest",
-		"Backpack",
-		"pocket1",
-		"pocket2",
-		"pocket3",
-		"pocket4",
-		"SecuredContainer",
-	];
+  // Player Slots we care about
+  const inventorySlots = [
+    "FirstPrimaryWeapon",
+    "SecondPrimaryWeapon",
+    "Holster",
+    "Headwear",
+    "Earpiece",
+    "Eyewear",
+    "FaceCover",
+    "ArmorVest",
+    "TacticalVest",
+    "Backpack",
+    "pocket1",
+    "pocket2",
+    "pocket3",
+    "pocket4",
+    "SecuredContainer",
+  ];
 
-	let inventoryItems = [];
+  let inventoryItems = [];
 
-	// Get an array of root player items
-	for (const item of items) {
-		if (inventorySlots.includes(item.slotId)) {
-			inventoryItems.push(item);
-		}
-	}
+  // Get an array of root player items
+  for (let item of items) {
+    if (inventorySlots.includes(item.slotId)) {
+      inventoryItems.push(item);
+    }
+  }
 
-	// Loop through these items and get all of their children
-	let newItems = inventoryItems;
-	while (newItems.length > 0) {
-		let foundItems = [];
+  // Loop through these items and get all of their children
+  let newItems = inventoryItems;
+  while (newItems.length > 0) {
+    let foundItems = [];
 
-		for (const item of newItems) {
-			// Find children of this item
-			for (const newItem of items) {
-				if (newItem.parentId === item._id) {
-					foundItems.push(newItem);
-				}
-			}
-		}
+    for (let item of newItems) {
+      // Find children of this item
+      for (let newItem of items) {
+        if (newItem.parentId === item._id) {
+          foundItems.push(newItem);
+        }
+      }
+    }
 
-		// Add these new found items to our list of inventory items
-		inventoryItems = [...inventoryItems, ...foundItems];
+    // Add these new found items to our list of inventory items
+    inventoryItems = [...inventoryItems, ...foundItems];
 
-		// Now find the children of these items
-		newItems = foundItems;
-	}
+    // Now find the children of these items
+    newItems = foundItems;
+  }
 
-	return inventoryItems;
+  return inventoryItems;
 }
 
 function getSecuredContainer(items) {
-	// Player Slots we care about
-	const inventorySlots = ["SecuredContainer"];
+  // Player Slots we care about
+  const inventorySlots = ["SecuredContainer"];
 
-	let inventoryItems = [];
+  let inventoryItems = [];
 
-	// Get an array of root player items
-	for (const item of items) {
-		if (inventorySlots.includes(item.slotId)) {
-			inventoryItems.push(item);
-		}
-	}
+  // Get an array of root player items
+  for (let item of items) {
+    if (inventorySlots.includes(item.slotId)) {
+      inventoryItems.push(item);
+    }
+  }
 
-	// Loop through these items and get all of their children
-	const newItems = inventoryItems;
+  // Loop through these items and get all of their children
+  let newItems = inventoryItems;
 
-	while (newItems.length > 0) {
-		let foundItems = [];
+  while (newItems.length > 0) {
+    let foundItems = [];
 
-		for (const item of newItems) {
-			for (const newItem of items) {
-				if (newItem.parentId === item._id) {
-					foundItems.push(newItem);
-				}
-			}
-		}
+    for (let item of newItems) {
+      for (let newItem of items) {
+        if (newItem.parentId === item._id) {
+          foundItems.push(newItem);
+        }
+      }
+    }
 
-		// Add these new found items to our list of inventory items
-		inventoryItems = [...inventoryItems, ...foundItems];
+    // Add these new found items to our list of inventory items
+    inventoryItems = [...inventoryItems, ...foundItems];
 
-		// Now find the children of these items
-		newItems = foundItems;
-	}
+    // Now find the children of these items
+    newItems = foundItems;
+  }
 
-	return inventoryItems;
+  return inventoryItems;
 }
 
 function saveProgress(offraidData, sessionID) {
-	if (!global._database.gameplay.inraid.saveLootEnabled) {
-		return;
-	}
-	const isPlayerScav = offraidData.isPlayerScav;
-	// Check for insurance if its enabled on this map
-	if (typeof offraidData == "undefined") {
-		logger.logError("offraidData: undefined");
-		return;
-	}
-	if (typeof offraidData.exit == "undefined" || typeof offraidData.isPlayerScav == "undefined" || typeof offraidData.profile == "undefined") {
-		logger.logError("offraidData: variables are empty... (exit, isPlayerScav, profile)");
-		logger.logError(offraidData.exit);
-		logger.logError(offraidData.isPlayerScav);
-		logger.logError(offraidData.profile);
-		return;
-	}
+  if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
+    return;
+  }
+  const isPlayerScav = offraidData.isPlayerScav;
+  // Check for insurance if its enabled on this map
+  if (typeof offraidData == "undefined") {
+    logger.logError("offraidData: undefined");
+    return;
+  }
+  if (typeof offraidData.exit == "undefined" || typeof offraidData.isPlayerScav == "undefined" || typeof offraidData.profile == "undefined") {
+    logger.logError("offraidData: variables are empty... (exit, isPlayerScav, profile)");
+    logger.logError(offraidData.exit);
+    logger.logError(offraidData.isPlayerScav);
+    logger.logError(offraidData.profile);
+    return;
+  }
 
-	const pmcData = profile_f.handler.getPmcProfile(sessionID);
+  let pmcData = profile_f.handler.getPmcProfile(sessionID);
 
-	if (offraidData.exit === "survived") {
-		// mark found items and replace item ID's if the player survived
-		offraidData.profile = markFoundItems(pmcData, offraidData.profile, isPlayerScav);
-	} else {
-		//Or remove the FIR status if the player havn't survived
-		offraidData.profile = RemoveFoundItems(offraidData.profile);
-	}
+  if (offraidData.exit === "survived") {
+    // mark found items and replace item ID's if the player survived
+    offraidData.profile = markFoundItems(pmcData, offraidData.profile, isPlayerScav);
+  } else {
+    //Or remove the FIR status if the player havn't survived
+    offraidData.profile = RemoveFoundItems(offraidData.profile);
+  }
 
-	if (isPlayerScav) {
-		let scavData = profile_f.handler.getScavProfile(sessionID);
-		scavData = setInventory(scavData, offraidData.profile, sessionID, true);
-		health_f.handler.initializeHealth(sessionID);
-		profile_f.handler.setScavProfile(sessionID, scavData);
-		return;
-		// ENDING HERE IF SCAV PLAYER !!!!
-	}
+  if (isPlayerScav) {
+    let scavData = profile_f.handler.getScavProfile(sessionID);
+    scavData = setInventory(scavData, offraidData.profile, sessionID, true);
+    health_f.handler.initializeHealth(sessionID);
+    profile_f.handler.setScavProfile(sessionID, scavData);
+    return;
+    // ENDING HERE IF SCAV PLAYER !!!!
+  }
 
-	pmcData.Info.Level = offraidData.profile.Info.Level;
+  pmcData.Info.Level = offraidData.profile.Info.Level;
+  pmcData.Skills = offraidData.profile.Skills;
+  pmcData.Stats = offraidData.profile.Stats;
+  pmcData.Encyclopedia = offraidData.profile.Encyclopedia;
+  pmcData.ConditionCounters = offraidData.profile.ConditionCounters;
+  pmcData.Quests = offraidData.profile.Quests;
 
-	//skill points earned mod
-	if (true) {
-		//if mod enabled
-		let multiplier = 1;
-		switch (offraidData.exit.toLowerCase()) {
-			//if survived and got enough xp for green state
-			case "survived":
-				multiplier = 4;
-				break;
+  // For some reason, offraidData seems to drop the latest insured items.
+  // It makes more sense to use pmcData's insured items as the source of truth.
+  offraidData.profile.InsuredItems = pmcData.InsuredItems;
 
-			//if ran through
-			case "runner":
-				multiplier = 0.25;
-				break;
+  // add experience points
+  pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
+  pmcData.Stats.TotalSessionExperience = 0;
 
-			//if death or any other state
-			default:
-				multiplier = 1;
-				break;
-		}
-		//multiply all our earned points by the multiplier on all skills
-		for (const skill in offraidData.profile.Skills.Common) {
-			let pointsEarned = offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession * multiplier;
-			offraidData.profile.Skills.Common[skill].Progress += pointsEarned;
-			//in case we go above maximum
-			if (offraidData.profile.Skills.Common[skill].Progress > 5100) {
-				offraidData.profile.Skills.Common[skill].Progress = 5100;
-			}
-		}
-	}//skill points mod end
+  // Remove the Lab card
 
+  pmcData = setInventory(pmcData, offraidData.profile);
+  health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
 
-	//remove skill fatigue before applying skill points to profile
-	for (const skill in offraidData.profile.Skills.Common) {
-		offraidData.profile.Skills.Common[skill].PointsEarnedDuringSession = 0;
-	}
-	pmcData.Skills = offraidData.profile.Skills;
-	pmcData.Stats = offraidData.profile.Stats;
-	pmcData.Encyclopedia = offraidData.profile.Encyclopedia;
-	pmcData.ConditionCounters = offraidData.profile.ConditionCounters;
-	pmcData.Quests = offraidData.profile.Quests;
-	//pmcData.Hideout = offraidData.profile.Hideout;
+  // remove inventory if player died and send insurance items
+  //TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
+  const systemMapName = MapNameConversion(sessionID);
+  const insuranceEnabled = global._database.locations[systemMapName].base.Insurance;
+  const preRaidGear = getPlayerGear(pmcData.Inventory.items);
 
-	//correctly update hideout production after raid.
-	keepalive_f.updatePlayerHideout(sessionID);
+  if (insuranceEnabled) {
+    insurance_f.handler.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
+  }
+  if (offraidData.exit === "survived") {
+    let exfils = profile_f.handler.getProfileExfilsById(sessionID);
+    exfils[systemMapName] = exfils[systemMapName] + 1;
+    profile_f.handler.setProfileExfilsById(sessionID, exfils);
+  }
+  if (offraidData.exit !== "survived" && offraidData.exit !== "runner") {
+    if (insuranceEnabled) {
+      insurance_f.handler.storeDeadGear(pmcData, offraidData, preRaidGear, sessionID);
+    }
+    pmcData = deleteInventory(pmcData, sessionID);
 
-	// For some reason, offraidData seems to drop the latest insured items.
-	// It makes more sense to use pmcData's insured items as the source of truth.
-	offraidData.profile.InsuredItems = pmcData.InsuredItems;
-
-	// add experience points
-	pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
-	pmcData.Stats.TotalSessionExperience = 0;
-
-	// remove inventory if player died and send insurance items
-	//TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
-	const systemMapName = MapNameConversion(sessionID);
-	const insuranceEnabled = global._database.locations[systemMapName].base.Insurance;
-	const preRaidGear = getPlayerGear(pmcData.Inventory.items);
-
-	//store for insurance, gear that was insured and was lost
-	if (insuranceEnabled) {
-		insurance_f.handler.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
-	}
-	if (offraidData.exit === "survived") {
-		let exfils = profile_f.handler.getProfileExfilsById(sessionID);
-		exfils[systemMapName] = exfils[systemMapName] + 1;
-		profile_f.handler.setProfileExfilsById(sessionID, exfils);
-	}
-	//changed position of this block, because it was fucking up insurance.
-	//setting inventory before sending lostgear (gear that was insured but dropped without dying)
-	//would cause preraid and offraid inventories to be the same.
-	pmcData = setInventory(pmcData, offraidData.profile);
-	health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
-
-	if (offraidData.exit !== "survived" && offraidData.exit !== "runner") {
-		if (insuranceEnabled) {
-			insurance_f.handler.storeDeadGear(pmcData, offraidData, preRaidGear, sessionID);
-		}
-		pmcData = deleteInventory(pmcData, sessionID);
-
-		//remove completed conditions related to QuestItem to avoid causing the item not spawning
+    //remove completed conditions related to QuestItem to avoid causing the item not spawning
 		profile_f.handler.getPmcProfile(sessionID).Quests = removeLooseQuestItemsConditions(profile_f.handler.getPmcProfile(sessionID));
+    
+    //Delete carried quests items
+    offraidData.profile.Stats.CarriedQuestItems = [];
+  }
+  if (insuranceEnabled) {
+    insurance_f.handler.sendInsuredItems(pmcData, sessionID);
+  }
 
-		//Delete carried quests items
-		offraidData.profile.Stats.CarriedQuestItems = [];
-	}
-	if (insuranceEnabled) {
-		insurance_f.handler.sendInsuredItems(pmcData, sessionID);
-	}
-
-	offraid_f.handler.removeMapAccessKey(offraidData, sessionID);
-	offraid_f.handler.removePlayer(sessionID);
+  offraid_f.handler.removeMapAccessKey(offraidData, sessionID);
+  offraid_f.handler.removePlayer(sessionID);
 }
 
 //takes a profile and checks/remove for completed conditions in profile's quests section, that are
@@ -493,12 +446,12 @@ function removeLooseQuestItemsConditions(profile) {
 function isConditionRelatedToQuestItem(conditionId, questId) {
 	let cachedQuest = undefined;
 	//iterate quests to find the desired quest by questId and save it locally
-	for (const quest of global._database.quests) {
+	for (let quest of global._database.quests) {
 		if (quest._id === questId) {
 			cachedQuest = utility.DeepCopy(quest);
 		}
 	}
-	if (cachedQuest) {
+	if(cachedQuest){
 		//iterate quest conditions that are relevant
 		for (let condAFF of cachedQuest.conditions.AvailableForFinish) {
 			if (condAFF._props.id === conditionId) {
@@ -511,10 +464,10 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 				}
 			}
 		}
-	} else {
+	}else{
 		logger.logWarning("isConditionRelatedToQuestItem: No matching quest was found.");
 	}
-
+	
 	return false;
 }
 
@@ -527,22 +480,22 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
  * @param {pmcData.aid} AID The account ID for which the items are being repaired. Used for logging and debugging.
  * @author CQInmanis
  */
-function repairInventoryIDs(pInv, AID) {
+ function repairInventoryIDs(pInv, AID){
 
 	// Don't count important IDs as errors.
 	const ignoreIDs = [
-		"60de0d80c6b34f52845b4646",		//sorting table
+		"60de0d80c6b34f52845b4646",		//?
 		"61b7367440281631fc83f17f" 		//sorting table
 	];
 
 	// from : "", to : ""
 	let repairedIDs = [];
-
+	
 	// repair in-raid created IDs (looking like pmcAID) by creating
 	// new ids and pointing children to the new id
-	for (let item of pInv.items) {
+	for(let item of pInv.items){
 		//if item does not need fixing or is in ignore list, skip.
-		if (!item._id.includes("pmcAID") || ignoreIDs.includes(item._id)) {
+		if(!item._id.includes("pmcAID") || ignoreIDs.includes(item._id)){
 			continue;
 		}
 		//store original id before repairing
@@ -552,20 +505,20 @@ function repairInventoryIDs(pInv, AID) {
 
 		//add to repaired list for debugging purposes.
 		repairedIDs.push({
-			from: ogID,
-			to: item._id
+			from 	: ogID,
+			to		: item._id
 		});
 
 		// check for children whose parentId was the item's original ID
 		// and replace it with the new id
-		for (let iitem of pInv.items) {
-			if (iitem.parentId == ogID) {
+		for(let iitem of pInv.items){
+			if(iitem.parentId == ogID){
 				iitem.parentId = item._id;
 			}
 		}
 	}
-	if (repairedIDs.length > 0) {
-		logger.logWarning("Repaired IDs for " + AID + ":\n" + JSON.stringify(repairedIDs, null, 2));
+	if(repairedIDs.length > 0){
+		logger.logWarning("Repaired IDs for "+AID+":\n"+JSON.stringify(repairedIDs, null, 2));
 	}
 	return pInv;
 }
@@ -574,4 +527,3 @@ module.exports.handler = new InraidServer();
 module.exports.saveProgress = saveProgress;
 module.exports.getSecuredContainer = getSecuredContainer;
 module.exports.getPlayerGear = getPlayerGear;
-module.exports.MapNameConversion = MapNameConversion;
