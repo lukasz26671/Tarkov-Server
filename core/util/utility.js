@@ -119,7 +119,10 @@ exports.getCookies = (req) => {
         for (let cookie of cookies.split(';')) {
             let parts = cookie.split('=');
 
-            found[parts.shift().trim()] = decodeURI(parts.join('='));
+            var partsShift = parts.shift().trim();
+            if(partsShift && found[partsShift] === undefined) {
+                found[partsShift] = decodeURI(parts.join('='));
+            }
         }
     }
     return found;

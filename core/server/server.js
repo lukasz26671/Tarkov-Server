@@ -3,6 +3,7 @@ const http  = require('http');
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
 const fs = require('fs'); // 
+const utility = require('./../util/utility')
 
 class Server {
   constructor() {
@@ -235,7 +236,8 @@ class Server {
    * @returns 
    */
   handleRequest(req, resp) {
-    const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
+    // const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
+    const sessionID = utility.getCookies(req)["PHPSESSID"];
 
     this.requestLog(req, sessionID);
 
