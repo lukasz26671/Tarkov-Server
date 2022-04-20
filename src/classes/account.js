@@ -342,3 +342,4 @@ function getPath(sessionID) {
 
 module.exports.handler = new AccountServer();
 module.exports.getPath = getPath;
+module.exports.AccountServer = AccountServer;
