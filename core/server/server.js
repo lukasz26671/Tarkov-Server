@@ -271,7 +271,6 @@ class Server {
     /* create server */
     const certificate = require("./certGenerator.js").certificate;
 
-    const httpServer = http.createServer();
     const httpsServer = https.createServer(certificate.generate());
     httpsServer.on('request', async (req, res) => {
       this.handleAsyncRequest(req, res);
@@ -326,6 +325,15 @@ class Server {
 
     webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
 
+    /**
+     * Simple Http Server to deal with Azure Web App integration
+     * It could also be used to extend the system. 
+     * Run this seperately to the actual server?
+     */
+    const httpServer = http.createServer(async (req, res) => {
+      res.writeHead(200);
+      res.end('Iya!');
+    });
     httpServer.listen(8080);
   }
 
