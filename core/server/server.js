@@ -115,6 +115,48 @@ class Server {
     return buf.written === buf.allocated;
   }
 
+  static s_sendResponse(sessionID, req, resp, body) {
+    let output = "";
+
+    if (req.url === "/" || req.url === "") {
+      resp.writeHead(200);
+      resp.end('Iya!');
+      return;
+    }
+
+    //check if page is static html page or requests like 
+    // if(this.tarkovSend.sendStaticFile(req, resp))
+    //   return;
+
+    // get response
+    if (req.method === "POST" || req.method === "PUT") {
+      output = router.getResponse(req, body, sessionID);
+    } else {
+      output = router.getResponse(req, "", sessionID);
+      // output = router.getResponse(req, body, sessionID);
+    }
+
+    /* route doesn't exist or response is not properly set up */
+    if (output === "") {
+      logger.logError(`[UNHANDLED][${req.url}]`);
+      logger.logData(body);
+      output = `{"err": 404, "errmsg": "UNHANDLED RESPONSE: ${req.url}", "data": null}`;
+    } else {
+      logger.logDebug(body, true);
+    }
+    // execute data received callback
+    for (let type in this.receiveCallback) {
+      this.receiveCallback[type](sessionID, req, resp, body, output);
+    }
+
+    // send response
+    if (output in this.respondCallback) {
+      this.respondCallback[output](sessionID, req, resp, body);
+    } else {
+      this.tarkovSend.zlibJson(resp, output, sessionID);
+    }
+  }
+
   /*
   */
   sendResponse(sessionID, req, resp, body) {
@@ -208,8 +250,8 @@ class Server {
           let data = Buffer.concat(body);
           // console.log(data.toString());
         });
-        // server.sendResponse(sessionID, req, resp, "");
-        this.sendResponse(sessionID, req, resp, body);
+        server.sendResponse(sessionID, req, resp, "");
+        // Server.s_sendResponse(sessionID, req, resp, "");
         return true;
       }
       //case "GET":
@@ -242,10 +284,14 @@ class Server {
             // console.log(body);
             if(body !== undefined) {
               let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-              this.sendResponse(sessionID, req, resp, jsonData);
+              server.sendResponse(sessionID, req, resp, jsonData);
+        // Server.s_sendResponse(sessionID, req, resp, jsonData);
+
             }
             else {
-              this.sendResponse(sessionID, req, resp, "")
+              server.sendResponse(sessionID, req, resp, "")
+        // Server.s_sendResponse(sessionID, req, resp, "");
+
             }
           });
         });
@@ -269,7 +315,9 @@ class Server {
 
           internal.zlib.inflate(data, function (err, body) {
             let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-            this.sendResponse(sessionID, req, resp, jsonData);
+            server.sendResponse(sessionID, req, resp, jsonData);
+        // Server.s_sendResponse(sessionID, req, resp, jsonData);
+
           });
         });
         return true;
