@@ -1,9 +1,7 @@
 "use strict";
-const http  = require('http');
+const http  = require('http'); // requires npm install http on the Server
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
-const fs = require('fs'); // 
-const utility = require('./../util/utility')
 
 class Server {
   constructor() {
@@ -32,14 +30,12 @@ class Server {
 
   static getUrl()
   {
-    if(serverConfig.port == "0") {
-      serverConfig.port = 443;
-    }
-    return `${serverConfig.ip}:${serverConfig.port}`;
+      return `${serverConfig.ip}:${serverConfig.port}`;
   }
 
-  static getHttpUrl = () => `http://127.0.0.1:8080`;
-  static getHttpsUrl = () => `https://${Server.getUrl()}`;
+  static getHttpsUrl = () => `https://${serverConfig.ip}:${serverConfig.port}`;
+
+
   static getWebsocketUrl = () => `ws://${Server.getUrl()}`;
 
   static sendMessage(sessionID, output)
@@ -116,58 +112,10 @@ class Server {
     return buf.written === buf.allocated;
   }
 
-  static s_sendResponse(sessionID, req, resp, body) {
-    let output = "";
-
-    if (req.url === "/" || req.url === "") {
-      resp.writeHead(200);
-      resp.end('Iya!');
-      return;
-    }
-
-    //check if page is static html page or requests like 
-    // if(this.tarkovSend.sendStaticFile(req, resp))
-    //   return;
-
-    // get response
-    if (req.method === "POST" || req.method === "PUT") {
-      output = router.getResponse(req, body, sessionID);
-    } else {
-      output = router.getResponse(req, "", sessionID);
-      // output = router.getResponse(req, body, sessionID);
-    }
-
-    /* route doesn't exist or response is not properly set up */
-    if (output === "") {
-      logger.logError(`[UNHANDLED][${req.url}]`);
-      logger.logData(body);
-      output = `{"err": 404, "errmsg": "UNHANDLED RESPONSE: ${req.url}", "data": null}`;
-    } else {
-      logger.logDebug(body, true);
-    }
-    // execute data received callback
-    for (let type in this.receiveCallback) {
-      this.receiveCallback[type](sessionID, req, resp, body, output);
-    }
-
-    // send response
-    if (output in this.respondCallback) {
-      this.respondCallback[output](sessionID, req, resp, body);
-    } else {
-      this.tarkovSend.zlibJson(resp, output, sessionID);
-    }
-  }
-
   /*
   */
   sendResponse(sessionID, req, resp, body) {
     let output = "";
-
-    if (req.url === "/" || req.url === "") {
-      resp.writeHead(200);
-      resp.end('Iya!');
-      return;
-    }
 
     //check if page is static html page or requests like 
     // if(this.tarkovSend.sendStaticFile(req, resp))
@@ -229,15 +177,8 @@ class Server {
       logger.logRequest(req.url, `${displaySessID}[${IP}] `);
   }
 
-  /**
-   * 
-   * @param {http.ServerRequest} req 
-   * @param {http.ServerResponse} resp 
-   * @returns 
-   */
   handleRequest(req, resp) {
-    // const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
-    const sessionID = utility.getCookies(req)["PHPSESSID"];
+    const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
 
     this.requestLog(req, sessionID);
 
@@ -252,8 +193,8 @@ class Server {
           let data = Buffer.concat(body);
           // console.log(data.toString());
         });
-        server.sendResponse(sessionID, req, resp, "");
-        // Server.s_sendResponse(sessionID, req, resp, "");
+        // server.sendResponse(sessionID, req, resp, "");
+        server.sendResponse(sessionID, req, resp, body);
         return true;
       }
       //case "GET":
@@ -287,13 +228,9 @@ class Server {
             if(body !== undefined) {
               let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
               server.sendResponse(sessionID, req, resp, jsonData);
-        // Server.s_sendResponse(sessionID, req, resp, jsonData);
-
             }
             else {
               server.sendResponse(sessionID, req, resp, "")
-        // Server.s_sendResponse(sessionID, req, resp, "");
-
             }
           });
         });
@@ -312,14 +249,12 @@ class Server {
           }
         })
         .on("end", function () {
-          let data = this.getFromBuffer(sessionID);
-          this.resetBuffer(sessionID);
+          let data = server.getFromBuffer(sessionID);
+          server.resetBuffer(sessionID);
 
           internal.zlib.inflate(data, function (err, body) {
             let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
             server.sendResponse(sessionID, req, resp, jsonData);
-        // Server.s_sendResponse(sessionID, req, resp, jsonData);
-
           });
         });
         return true;
@@ -368,20 +303,14 @@ class Server {
 
     this.port = this.normalizePort(process.env.PORT || this.port);
     this.ip = process.env.IP || this.ip;
-
-    if(this.ip !== undefined 
-      && this.ip !== "" 
-      && this.port !== undefined 
-      && this.port != ""
-      && this.port != "0") {
+    if(this.ip !== undefined && this.ip !== "" && this.port !== undefined && this.port != "") {
       // httpsServer.listen(this.port, this.ip, function () {
       httpsServer.listen(this.port, this.ip, function () {
-        logger.logSuccess(`Https Server is working at: ${Server.getHttpsUrl()}`);
+        logger.logSuccess(`Server is working at: ${backend}`);
       });
     }
     else {
-      httpsServer.listen(443);
-      logger.logSuccess(`Https Server is working at: ${Server.getHttpsUrl()}`);
+      httpsServer.listen();
     }
 
     // Setting up websocket
@@ -402,32 +331,10 @@ class Server {
      * Run this seperately to the actual server?
      */
     const httpServer = http.createServer(async (req, res) => {
-      // res.writeHead(200);
+      res.writeHead(200);
       // res.end('Iya!');
-      // console.log(req.method);
-      // console.log(req.body);
-      //let data = req.body;
-      // console.log(data);
 
-      // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-      // This would be the "proper" way of handling the re-route!
-      // https.request({
-      //   hostname: this.getIp(),
-      //   port: this.getPort(),
-      //   path: req.url,
-      //   method: req.method,
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Content-Length': data ? data.length : 0
-      //   },
-      //   ca: fs.readFileSync(process.cwd() + "/user/certs/cert.pem")
-      // }, (httpsRes)=>{
-      //   res = httpsRes;         
-      // });
-
-      // Lazy handle of the route
-      this.handleRequest(req, res);
-
+      this.handleRequest(req,res);
     });
     httpServer.listen(8080);
   }
@@ -538,4 +445,3 @@ class Server {
 
 module.exports.server = new Server();
 module.exports.Server = Server;
-
