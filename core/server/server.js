@@ -1,7 +1,8 @@
 "use strict";
-const http  = require('http'); // requires npm install http on the Server
+const http  = require('http');
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
+const fs = require('fs'); // 
 
 class Server {
   constructor() {
@@ -30,12 +31,14 @@ class Server {
 
   static getUrl()
   {
-      return `${serverConfig.ip}:${serverConfig.port}`;
+    if(serverConfig.port == "0") {
+      serverConfig.port = 443;
+    }
+    return `${serverConfig.ip}:${serverConfig.port}`;
   }
 
-  static getHttpsUrl = () => `https://${serverConfig.ip}:${serverConfig.port}`;
-
-
+  static getHttpUrl = () => `http://127.0.0.1:8080`;
+  static getHttpsUrl = () => `https://${Server.getUrl()}`;
   static getWebsocketUrl = () => `ws://${Server.getUrl()}`;
 
   static sendMessage(sessionID, output)
@@ -117,6 +120,12 @@ class Server {
   sendResponse(sessionID, req, resp, body) {
     let output = "";
 
+    if (req.url === "/" || req.url === "") {
+      resp.writeHead(200);
+      resp.end('Iya!');
+      return;
+    }
+
     //check if page is static html page or requests like 
     // if(this.tarkovSend.sendStaticFile(req, resp))
     //   return;
@@ -177,6 +186,12 @@ class Server {
       logger.logRequest(req.url, `${displaySessID}[${IP}] `);
   }
 
+  /**
+   * 
+   * @param {http.ServerRequest} req 
+   * @param {http.ServerResponse} resp 
+   * @returns 
+   */
   handleRequest(req, resp) {
     const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
 
@@ -194,7 +209,7 @@ class Server {
           // console.log(data.toString());
         });
         // server.sendResponse(sessionID, req, resp, "");
-        server.sendResponse(sessionID, req, resp, body);
+        this.sendResponse(sessionID, req, resp, body);
         return true;
       }
       //case "GET":
@@ -227,10 +242,10 @@ class Server {
             // console.log(body);
             if(body !== undefined) {
               let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-              server.sendResponse(sessionID, req, resp, jsonData);
+              this.sendResponse(sessionID, req, resp, jsonData);
             }
             else {
-              server.sendResponse(sessionID, req, resp, "")
+              this.sendResponse(sessionID, req, resp, "")
             }
           });
         });
@@ -249,12 +264,12 @@ class Server {
           }
         })
         .on("end", function () {
-          let data = server.getFromBuffer(sessionID);
-          server.resetBuffer(sessionID);
+          let data = this.getFromBuffer(sessionID);
+          this.resetBuffer(sessionID);
 
           internal.zlib.inflate(data, function (err, body) {
             let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-            server.sendResponse(sessionID, req, resp, jsonData);
+            this.sendResponse(sessionID, req, resp, jsonData);
           });
         });
         return true;
@@ -303,14 +318,20 @@ class Server {
 
     this.port = this.normalizePort(process.env.PORT || this.port);
     this.ip = process.env.IP || this.ip;
-    if(this.ip !== undefined && this.ip !== "" && this.port !== undefined && this.port != "") {
+
+    if(this.ip !== undefined 
+      && this.ip !== "" 
+      && this.port !== undefined 
+      && this.port != ""
+      && this.port != "0") {
       // httpsServer.listen(this.port, this.ip, function () {
       httpsServer.listen(this.port, this.ip, function () {
-        logger.logSuccess(`Server is working at: ${backend}`);
+        logger.logSuccess(`Https Server is working at: ${Server.getHttpsUrl()}`);
       });
     }
     else {
-      httpsServer.listen();
+      httpsServer.listen(443);
+      logger.logSuccess(`Https Server is working at: ${Server.getHttpsUrl()}`);
     }
 
     // Setting up websocket
@@ -331,8 +352,32 @@ class Server {
      * Run this seperately to the actual server?
      */
     const httpServer = http.createServer(async (req, res) => {
-      res.writeHead(200);
-      res.end('Iya!');
+      // res.writeHead(200);
+      // res.end('Iya!');
+      // console.log(req.method);
+      // console.log(req.body);
+      //let data = req.body;
+      // console.log(data);
+
+      // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+      // This would be the "proper" way of handling the re-route!
+      // https.request({
+      //   hostname: this.getIp(),
+      //   port: this.getPort(),
+      //   path: req.url,
+      //   method: req.method,
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Content-Length': data ? data.length : 0
+      //   },
+      //   ca: fs.readFileSync(process.cwd() + "/user/certs/cert.pem")
+      // }, (httpsRes)=>{
+      //   res = httpsRes;         
+      // });
+
+      // Lazy handle of the route
+      this.handleRequest(req, res);
+
     });
     httpServer.listen(8080);
   }
