@@ -45,16 +45,16 @@ class Server {
           if (Server.isConnectionWebSocket(sessionID))
           {
               Server.webSockets[sessionID].send(JSON.stringify(output));
-              Logger.debug("WS: message sent");
+              Logger.logInfo("WS: message sent");
           }
           else
           {
-              Logger.debug(`WS: Socket not ready for ${sessionID}, message not sent`);
+              Logger.logInfo(`WS: Socket not ready for ${sessionID}, message not sent`);
           }
       }
       catch (err)
       {
-          Logger.error(`WS: sendMessage failed, with error: ${err}`);
+          Logger.logInfo(`WS: sendMessage failed, with error: ${err}`);
       }
   }
 
@@ -352,12 +352,12 @@ class Server {
         const splitUrl = req.url.replace(/\?.*$/, "").split("/");
         const sessionID = splitUrl.pop();
 
-        Logger.info(`[WS] Player: ${sessionID} has connected`);
+        Logger.logInfo(`[WS] Player: ${sessionID} has connected`);
 
         ws.on("message", function message(msg)
         {
             // doesn't reach here
-            Logger.info(`Received message ${msg} from user ${sessionID}`);
+            Logger.logInfo(`Received message ${msg} from user ${sessionID}`);
         });
 
         Server.webSockets[sessionID] = ws;
@@ -369,7 +369,7 @@ class Server {
 
         Server.websocketPingHandler = setInterval(() =>
         {
-            Logger.debug(`[WS] Pinging player: ${sessionID}`);
+            Logger.logInfo(`[WS] Pinging player: ${sessionID}`);
 
             if (ws.readyState === WebSocket.OPEN)
             {
@@ -377,7 +377,7 @@ class Server {
             }
             else
             {
-                Logger.debug("[WS] Socket lost, deleting handle");
+                Logger.logInfo("[WS] Socket lost, deleting handle");
                 clearInterval(Server.websocketPingHandler);
                 delete Server.webSockets[sessionID];
             }
