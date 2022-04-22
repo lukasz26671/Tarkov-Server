@@ -5,7 +5,7 @@
 	"eventPollIntervalSec": 60,
 	"rebuildCache": true,
 	"name": "JustEmuTarkov",
-  "testAddition": "test",
+  "runSimpleHttpServer": false,
   "Patches": {
     "RemoveAddOfferButton_Awake": true,
     "RemoveAddOfferButton_Call": true,

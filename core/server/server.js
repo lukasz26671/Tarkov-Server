@@ -1,4 +1,5 @@
 "use strict";
+const fs = require('fs');
 const http  = require('http'); // requires npm install http on the Server
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
@@ -325,18 +326,23 @@ class Server {
 
     webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
 
-    /**
-     * Simple Http Server to deal with Azure Web App integration
-     * It could also be used to extend the system. 
-     * Run this seperately to the actual server?
-     */
-    const httpServer = http.createServer(async (req, res) => {
-      res.writeHead(200);
-      // res.end('Iya!');
+    const serverConfigData = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
+    if(serverConfigData.runSimpleHttpServer && serverConfigData.runSimpleHttpServer === true) {
+      /**
+       * Simple Http Server to deal with Azure Web App integration
+       * It could also be used to extend the system. 
+       * Run this seperately to the actual server?
+       */
+      const httpServer = http.createServer(async (req, res) => {
+        res.writeHead(200);
+        // res.end('Iya!');
 
-      this.handleRequest(req,res);
-    });
-    httpServer.listen(8080);
+        this.handleRequest(req,res);
+      });
+      httpServer.listen(8080);
+      logger.logSuccess(`Simple Http Server running on Port 8080`);
+
+    }
   }
 
   static websocketPingHandler = null;
