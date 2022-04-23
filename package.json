@@ -13,7 +13,7 @@
     "decimal-adjust": "^0.0.0",
     "mocha": "^9.2.2",
     "ps-list": "7.2.0",
-    "selfsigned": "1.10.7",
+    "selfsigned": "^2.0.1",
     "uuid": "^8.3.2",
     "write-json-file": "^4.3.0",
     "ws": "^8.5.0"
