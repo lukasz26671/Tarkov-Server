@@ -14,4 +14,4 @@ class DatabaseController
 DatabaseController.createGlobalDatabase();
 
 
-exports.module.DatabaseController = DatabaseController;
+module.exports.DatabaseController = DatabaseController;

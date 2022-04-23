@@ -3,4 +3,4 @@ class LocationController
 
 }
 
-exports.module.LocationController = LocationController;
+module.exports.LocationController = LocationController;

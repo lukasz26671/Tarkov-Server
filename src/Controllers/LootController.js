@@ -3,4 +3,4 @@ class LootController
 
 }
 
-exports.module.LootController = LootController;
+module.exports.LootController = LootController;

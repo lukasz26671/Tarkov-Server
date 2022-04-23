@@ -3,4 +3,4 @@ class ModsController
 
 }
 
-exports.module.ModsController = ModsController;
+module.exports.ModsController = ModsController;
