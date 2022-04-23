@@ -1,5 +1,8 @@
 const { logger } = require('../../core/util/logger');
 const { AccountServer } = require('../classes/account');
+const utility = require('../../core/util/utility');
+const { AccountController } = require('./AccountController');
+const { FriendRequest } = require('./../EFT/JavaScriptTypes/FriendRequest')
 
 class FriendshipController {
 
@@ -35,6 +38,9 @@ static getFriendRequestInbox(sessionID) {
   if(acc.friendRequestInbox === undefined) {
 	acc.friendRequestInbox = [];
   } 
+  for(const friendR of acc.friendRequestInbox) {
+	console.log(friendR);
+}
 
   return acc.friendRequestInbox.filter(x => x.Date != null);
 }
@@ -45,9 +51,25 @@ static getFriendRequestOutbox(sessionID) {
 	acc.friendRequestOutbox = [];
   } 
 
+  let resultArray = [];
+  /**
+   * friendR is FriendRequest
+   */
+  for(const friendR of acc.friendRequestOutbox) {
+	  console.log(friendR);
+	  const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
+	  resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
+  }
+
   return acc.friendRequestOutbox;
 }
 
+/**
+ * 
+ * @param {*} sessionID 
+ * @param {*} toID 
+ * @returns {object} { requestId, retryAfter, status }
+ */
 	static addFriendRequest(sessionID, toID) {
 		var acc = AccountServer.find(sessionID);
 		var toAcc = AccountServer.find(toID);
@@ -73,17 +95,26 @@ static getFriendRequestOutbox(sessionID) {
 		toAcc.friendRequestInbox = [];
 		}
 
-		// let nFriendRequest = new friendRequest();
+		const friendRequestId = utility.generateNewId();
+		let nFriendRequest = new FriendRequest(friendRequestId, sessionID, toID, new Date().getTime(), sessionID);
+		// nFriendRequest._id = friendRequestId;
+		// nFriendRequest.from = acc;
+		// nFriendRequest.to = toAcc;
+		// nFriendRequest.date = new Date().getTime();
+		// nFriendRequest.profile = acc;
 		// // accFull = getAllAccounts().find(x => x._id == sessionID);
 		// // toAccFull = getAllAccounts().find(x => x._id == toID);
 
 		acc.friendRequestOutbox.push(nFriendRequest);
 		toAcc.friendRequestInbox.push(nFriendRequest);
 
+
 		AccountServer.saveToDisk(sessionID);
 		AccountServer.saveToDisk(toID);
 		// acc.friends.push(toID);
 		// toAcc.friends.push(acc);
+
+		return { requestId: friendRequestId, retryAfter: 30, status: 0 }
 	}
 
 	static addFriend(sessionID, info) {
@@ -95,7 +126,7 @@ static getFriendRequestOutbox(sessionID) {
 	}
 
 	static searchForFriendByNickname() {
-		
+
 	}
 }
 

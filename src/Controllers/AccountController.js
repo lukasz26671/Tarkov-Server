@@ -1,6 +1,15 @@
 const fs = require('fs');
+
+/**
+ * Account Controller. 
+ * This controller should contain everything to handle Account data
+ */
 class AccountController
 {
+    /**
+     * Gets ALL of the account data from every profile in the user/profiles directory
+     * @returns all the Account data neccessary to process accounts in the server & client
+     */
     static getAllAccounts() {
         let fullyLoadedAccounts = [];
       

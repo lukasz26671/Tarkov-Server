@@ -13,10 +13,10 @@ class Responses {
       "/client/chatServer/list": this.clientChatServerList,
       "/client/checkVersion": this.clientCheckVersion,
       "/client/customization": this.clientCustomization,
-      "/client/friend/list": this.clientFriendList,
-      "/client/friend/request/list/inbox": this.clientFriendRequestListInbox,
-      "/client/friend/request/list/outbox": this.clientFriendRequestListOutbox,
-      "/client/friend/request/send": this.clientFriendRequestSend,
+      // "/client/friend/list": this.clientFriendList,
+      // "/client/friend/request/list/inbox": this.clientFriendRequestListInbox,
+      // "/client/friend/request/list/outbox": this.clientFriendRequestListOutbox,
+      // "/client/friend/request/send": this.clientFriendRequestSend,
       "/client/game/bot/generate": this.clientGameBotGenerate,
       "/client/game/config": this.clientGameConfig,
       "/client/game/keepalive": this.clientGameKeepalive,
@@ -29,7 +29,7 @@ class Responses {
       "/client/game/profile/nickname/validate": this.clientGameProfileNicknameValidate,
       "/client/game/profile/savage/regenerate": this.clientGameProfileSavageRegenerate,
       "/client/game/profile/search": this.clientGameProfileSearch,
-      "/client/game/profile/select": this.clientGameProfileSelect,
+      // "/client/game/profile/select": this.clientGameProfileSelect,
       "/client/game/profile/voice/change": this.clientGameProfileVoiceChange,
       "/client/game/start": this.clientGameStart,
       "/client/game/version/validate": this.clientGameVersionValidate,
@@ -254,22 +254,22 @@ class Responses {
   clientCustomization(url, info, sessionID) {
     return response_f.getBody(customization_f.getCustomization());
   }
-  clientFriendList(url, info, sessionID) {
-    return response_f.getBody({ Friends: [], Ignore: [], InIgnoreList: [] });
-  }
-  clientFriendRequestListInbox(url, info, sessionID) {
-    return response_f.emptyArrayResponse();
-  }
-  clientFriendRequestListOutbox(url, info, sessionID) {
-    return response_f.emptyArrayResponse();
-  }
-  clientFriendRequestSend(url, info, sessionID) {
-    return response_f.noBody({
-      requestId: "¯\\_(ツ)_/¯",
-      retryAfter: 0,
-      status: 0,
-    });
-  }
+  // clientFriendList(url, info, sessionID) {
+  //   return response_f.getBody({ Friends: [], Ignore: [], InIgnoreList: [] });
+  // }
+  // clientFriendRequestListInbox(url, info, sessionID) {
+  //   return response_f.emptyArrayResponse();
+  // }
+  // clientFriendRequestListOutbox(url, info, sessionID) {
+  //   return response_f.emptyArrayResponse();
+  // }
+  // clientFriendRequestSend(url, info, sessionID) {
+  //   return response_f.noBody({
+  //     requestId: "¯\\_(ツ)_/¯",
+  //     retryAfter: 0,
+  //     status: 0,
+  //   });
+  // }
   clientGameBotGenerate(url, info, sessionID) {
     // bot/generate response format:
     /*     {
@@ -394,7 +394,7 @@ class Responses {
     return response_f.getBody([profile_f.handler.generateScav(sessionID)]);
   }
   clientGameProfileSearch(url, info, sessionID) {
-    return response_f.getBody(AccountController.getAllAccounts());
+    return response_f.getBody(AccountController.getAllAccounts().filter(x=>x._id != sessionID));
   }
   clientGameProfileSelect(url, info, sessionID) {
     return response_f.getBody({
