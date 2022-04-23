@@ -1,5 +1,6 @@
 const { logger } = require("../../core/util/logger");
 const { AccountServer } = require('../../src/classes/account')
+const { AccountController } = require('../../src/Controllers/AccountController')
 
 class Responses {
   constructor() {
@@ -393,25 +394,7 @@ class Responses {
     return response_f.getBody([profile_f.handler.generateScav(sessionID)]);
   }
   clientGameProfileSearch(url, info, sessionID) {
-    const ids = Object.keys(AccountServer.accounts).filter((x) => x != sessionID);
-    let users = [];
-    for (const i in ids) {
-      let id = ids[i];
-      if (!fileIO.exist(`user/profiles/${id}/character.json`)) continue;
-      const character = fileIO.readParsed(`user/profiles/${id}/character.json`);
-      if (!character.Info.Nickname || !character.Info.Nickname.toLowerCase().includes(info.nickname.toLowerCase())) continue;
-      let obj = { Info: {} };
-      obj._id = character.aid;
-      obj.Info.Nickname = character.Info.Nickname;
-      obj.Info.Side = character.Info.Side;
-      obj.Info.Level = character.Info.Level;
-      obj.Info.MemberCategory = character.Info.MemberCategory;
-      obj.Info.Ignored = false;
-      obj.Info.Banned = false;
-      users.push(obj);
-    }
-
-    return response_f.getBody(users);
+    return response_f.getBody(AccountController.getAllAccounts());
   }
   clientGameProfileSelect(url, info, sessionID) {
     return response_f.getBody({
