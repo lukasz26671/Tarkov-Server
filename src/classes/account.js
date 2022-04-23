@@ -5,17 +5,16 @@
  * loaded during server init.
  */
 class AccountServer {
-  constructor() {
-    this.accounts = {};
-    this.accountFileAge = {};
-  }
+  // constructor() {
+  //   AccountServer.accounts = {};
+  //   AccountServer.accountFileAge = {};
+  // }
 
-  initialize() {
-    // Not needed //
-  }
+  static accounts = {};
+  static accountFileAge = {};
 
-  getList() {
-    return this.accounts;
+  static getList() {
+    return AccountServer.accounts;
   }
 
   /**
@@ -23,24 +22,24 @@ class AccountServer {
    * @param {*} info 
    * @returns user account ID
    */
-  reloadAccountByLogin(info) {
+   static reloadAccountByLogin(info) {
     /**
-     * Read account files from cache that were already loaded by the second part of this function.
+     * Read account files from cache that were already loaded by the second part of AccountServer function.
      * If the file was changed (for example, by another cluster member), the account file gets reloaded from disk.
      */
-    for (let accountID in this.accounts) {
-      let account = this.accounts[accountID];
+    for (let accountID in AccountServer.accounts) {
+      let account = AccountServer.accounts[accountID];
 
       // Does the account information match any cached account?
       if (info.email === account.email && info.password === account.password) {
         // Check if the file was modified by another cluster member using the file age.
         let stats = global.internal.fs.statSync(`./user/profiles/${accountID}/account.json`);
-        if (stats.mtimeMs != this.accountFileAge[accountID]) {
+        if (stats.mtimeMs != AccountServer.accountFileAge[accountID]) {
           logger.logWarning(`[CLUSTER] Account file for account ${accountID} was modified, reloading.`);
           // Reload the account from disk.
-          this.accounts[accountID] = fileIO.readParsed(`./user/profiles/${accountID}/account.json`);
-          // Reset the file age for this users account file.
-          this.accountFileAge[accountID] = stats.mtimeMs;
+          AccountServer.accounts[accountID] = fileIO.readParsed(`./user/profiles/${accountID}/account.json`);
+          // Reset the file age for AccountServer users account file.
+          AccountServer.accountFileAge[accountID] = stats.mtimeMs;
         }
 
         return accountID;
@@ -59,12 +58,12 @@ class AccountServer {
         // Read all account files from disk as we need to compare the login data.
         let account = fileIO.readParsed(`./user/profiles/${profileIDs[id]}/account.json`);
         if (info.email === account.email && info.password === account.password) {
-          // Read the file age for this users account file.
+          // Read the file age for AccountServer users account file.
           let stats = global.internal.fs.statSync(`./user/profiles/${profileIDs[id]}/account.json`);
 
           // Save the account to memory and set the accountFileAge variable.
-          this.accounts[profileIDs[id]] = account
-          this.accountFileAge[profileIDs[id]] = stats.mtimeMs;
+          AccountServer.accounts[profileIDs[id]] = account
+          AccountServer.accountFileAge[profileIDs[id]] = stats.mtimeMs;
           logger.logSuccess(`[CLUSTER] User ${account.email} with ID ${profileIDs[id]} logged in successfully.`);
 
           return profileIDs[id];
@@ -72,7 +71,7 @@ class AccountServer {
       }
     }
 
-    // If the account does not exist, this will allow the launcher to display an error message.
+    // If the account does not exist, AccountServer will allow the launcher to display an error message.
     return "";
   }
 
@@ -80,41 +79,41 @@ class AccountServer {
    * Reloads the account stored in memory for a specific session (aka. accountID), if the file was modified elsewhere.
    * @param {*} sessionID 
    */
-  reloadAccountBySessionID(sessionID) {
+   static  reloadAccountBySessionID(sessionID) {
     if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
       logger.logWarning(`[CLUSTER] Account file for account ${sessionID} does not exist.`);
     } else {
       // Does the session exist?
-      if (!this.accounts[sessionID]) {
+      if (!AccountServer.accounts[sessionID]) {
         logger.logWarning(`[CLUSTER] Tried to load session ${sessionID} but it wasn't cached, loading.`);
         // Reload the account from disk.
-        this.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-        // Set the file age for this users account file.
+        AccountServer.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+        // Set the file age for AccountServer users account file.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-        this.accountFileAge[sessionID] = stats.mtimeMs;
+        AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
       } else {
         // Check if the file was modified by another cluster member using the file age.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-        if (stats.mtimeMs != this.accountFileAge[sessionID]) {
+        if (stats.mtimeMs != AccountServer.accountFileAge[sessionID]) {
           logger.logWarning(`[CLUSTER] Account file for account ${sessionID} was modified, reloading.`);
 
           // Reload the account from disk.
-          this.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-          // Reset the file age for this users account file.
-          this.accountFileAge[sessionID] = stats.mtimeMs;
+          AccountServer.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+          // Reset the file age for AccountServer users account file.
+          AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
         }
       }
     }
   }
 
   /**
-   * Check if the client has a profile. This function will be used by the response "/client/game/start" and determine, if a new profile will be created.
+   * Check if the client has a profile. AccountServer function will be used by the response "/client/game/start" and determine, if a new profile will be created.
    * @param {*} sessionID 
    * @returns If the account exists.
    */
-  clientHasProfile(sessionID) {
-    this.reloadAccountBySessionID(sessionID)
-    let accounts = this.getList();
+   static clientHasProfile(sessionID) {
+    AccountServer.reloadAccountBySessionID(sessionID)
+    let accounts = AccountServer.getList();
     for (let account in accounts) {
       if (account == sessionID) {
         if (!fileIO.exist("user/profiles/" + sessionID + "/character.json")) logger.logSuccess(`[CLUSTER] New account ${sessionID} logged in!`);
@@ -125,28 +124,28 @@ class AccountServer {
   }
 
   /**
-   * If the sessionID is specified, this function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
+   * If the sessionID is specified, AccountServer function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
    * @param {*} sessionID 
    */
-  saveToDisk(sessionID = 0) {
+  static saveToDisk(sessionID = 0) {
     // Should all accounts be saved to disk?
     if (sessionID == 0) {
       // Iterate through all cached accounts.
-      for (let id in this.accounts) {
+      for (let id in AccountServer.accounts) {
         // Check if the file was modified by another cluster member using the file age.
         let stats = global.internal.fs.statSync(`./user/profiles/${id}/account.json`);
-        if (stats.mtimeMs == this.accountFileAge[id]) {
+        if (stats.mtimeMs == AccountServer.accountFileAge[id]) {
 
           // Check if the memory content differs from the content on disk.
-          let currentAccount = this.accounts[id];
+          let currentAccount = AccountServer.accounts[id];
           let savedAccount = fileIO.readParsed(`./user/profiles/${id}/account.json`);
           if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
             // Save memory content to disk.
-            fileIO.write(`./user/profiles/${id}/account.json`, this.accounts[id]);
+            fileIO.write(`./user/profiles/${id}/account.json`, AccountServer.accounts[id]);
 
-            // Update file age to prevent another reload by this server.
+            // Update file age to prevent another reload by AccountServer server.
             let stats = global.internal.fs.statSync(`./user/profiles/${id}/account.json`);
-            this.accountFileAge[id] = stats.mtimeMs;
+            AccountServer.accountFileAge[id] = stats.mtimeMs;
 
             logger.logSuccess(`[CLUSTER] Account file for account ${id} was saved to disk.`);
           }
@@ -154,36 +153,36 @@ class AccountServer {
           logger.logWarning(`[CLUSTER] Account file for account ${id} was modified, reloading.`);
 
           // Reload the account from disk.
-          this.accounts[id] = fileIO.readParsed(`./user/profiles/${id}/account.json`);
-          // Reset the file age for this users account file.
-          this.accountFileAge[id] = stats.mtimeMs;
+          AccountServer.accounts[id] = fileIO.readParsed(`./user/profiles/${id}/account.json`);
+          // Reset the file age for AccountServer users account file.
+          AccountServer.accountFileAge[id] = stats.mtimeMs;
         }
       }
     } else {
       // Does the account file exist? (Required for new accounts)
       if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
         // Save memory content to disk
-        fileIO.write(`./user/profiles/${sessionID}/account.json`, this.accounts[sessionID]);
+        fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
 
-        // Update file age to prevent another reload by this server.
+        // Update file age to prevent another reload by AccountServer server.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-        this.accountFileAge[sessionID] = stats.mtimeMs;
+        AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
 
         logger.logSuccess(`[CLUSTER] New account ${sessionID} registered and was saved to disk.`);
       } else {
         // Check if the file was modified by another cluster member using the file age.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-        if (stats.mtimeMs == this.accountFileAge[sessionID]) {
+        if (stats.mtimeMs == AccountServer.accountFileAge[sessionID]) {
           // Check if the memory content differs from the content on disk.
-          let currentAccount = this.accounts[sessionID];
+          let currentAccount = AccountServer.accounts[sessionID];
           let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
           if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
             // Save memory content to disk
-            fileIO.write(`./user/profiles/${sessionID}/account.json`, this.accounts[sessionID]);
+            fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
 
-            // Update file age to prevent another reload by this server.
+            // Update file age to prevent another reload by AccountServer server.
             let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-            this.accountFileAge[sessionID] = stats.mtimeMs;
+            AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
 
             logger.logSuccess(`[CLUSTER] Account file for account ${sessionID} was saved to disk.`);
           }
@@ -191,9 +190,9 @@ class AccountServer {
           logger.logWarning(`[CLUSTER] Account file for account ${sessionID} was modified, reloading.`);
 
           // Reload the account from disk.
-          this.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-          // Reset the file age for this users account file.
-          this.accountFileAge[sessionID] = stats.mtimeMs;
+          AccountServer.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+          // Reset the file age for AccountServer users account file.
+          AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
         }
       }
     }
@@ -204,11 +203,11 @@ class AccountServer {
  * @param {*} sessionID 
  * @returns Account_data
  */
-  find(sessionID) {
-    // This needs to be at the top to check for changed accounts.
-    this.reloadAccountBySessionID(sessionID);
-    for (let accountID in this.accounts) {
-      let account = this.accounts[accountID];
+   static find(sessionID) {
+    // AccountServer needs to be at the top to check for changed accounts.
+    AccountServer.reloadAccountBySessionID(sessionID);
+    for (let accountID in AccountServer.accounts) {
+      let account = AccountServer.accounts[accountID];
 
       if (account.id === sessionID) {
         return account;
@@ -223,44 +222,44 @@ class AccountServer {
  * @param {string} sessionID 
  * @returns {string} - Account language (en, ru...)
  */
-  getAccountLang(sessionID) {
-    // This needs to be at the top to check for changed accounts.
-    this.reloadAccountBySessionID(sessionID);
-    let account = this.find(sessionID);
+  static getAccountLang(sessionID) {
+    // AccountServer needs to be at the top to check for changed accounts.
+    AccountServer.reloadAccountBySessionID(sessionID);
+    let account = AccountServer.find(sessionID);
     if (typeof account.lang == "undefined") {
       account.lang = "en";
-      this.saveToDisk(sessionID);
+      AccountServer.saveToDisk(sessionID);
     }
     return account.lang;
   }
 
-  isWiped(sessionID) {
-    // This needs to be at the top to check for changed accounts.
-    this.reloadAccountBySessionID(sessionID);
-    return this.accounts[sessionID].wipe;
+  static isWiped(sessionID) {
+    // AccountServer needs to be at the top to check for changed accounts.
+    AccountServer.reloadAccountBySessionID(sessionID);
+    return AccountServer.accounts[sessionID].wipe;
   }
 
-  setWipe(sessionID, state) {
-    // This needs to be at the top to check for changed accounts.
-    this.reloadAccountBySessionID(sessionID);
-    this.accounts[sessionID].wipe = state;
+  static setWipe(sessionID, state) {
+    // AccountServer needs to be at the top to check for changed accounts.
+    AccountServer.reloadAccountBySessionID(sessionID);
+    AccountServer.accounts[sessionID].wipe = state;
   }
 
-  login(info) {
+  static login(info) {
     // Get existing account from memory or cache a new one.
-    return this.reloadAccountByLogin(info);
+    return AccountServer.reloadAccountByLogin(info);
   }
 
-  register(info) {
+  static register(info) {
     // Get existing account from memory or cache a new one.
-    let accountID = this.reloadAccountByLogin(info)
+    let accountID = AccountServer.reloadAccountByLogin(info)
     if (accountID) {
       return accountID
     }
 
     accountID = utility.generateNewAccountId();
 
-    this.accounts[accountID] = {
+    AccountServer.accounts[accountID] = {
       id: accountID,
       email: info.email,
       //nickname: "",
@@ -269,65 +268,65 @@ class AccountServer {
       edition: info.edition,
     };
 
-    this.saveToDisk(accountID);
+    AccountServer.saveToDisk(accountID);
     return "";
   }
 
-  remove(info) {
-    let accountID = this.login(info);
+  static remove(info) {
+    let accountID = AccountServer.login(info);
 
     if (accountID !== "") {
-      delete this.accounts[accountID];
+      delete AccountServer.accounts[accountID];
       utility.removeDir(`user/profiles/${accountID}/`);
-      //this.saveToDisk();
+      //AccountServer.saveToDisk();
     }
 
     return accountID;
   }
 
-  changeEmail(info) {
-    let accountID = this.login(info);
+  static changeEmail(info) {
+    let accountID = AccountServer.login(info);
 
     if (accountID !== "") {
-      this.accounts[accountID].email = info.change;
-      this.saveToDisk(accountID);
+      AccountServer.accounts[accountID].email = info.change;
+      AccountServer.saveToDisk(accountID);
     }
 
     return accountID;
   }
 
-  changePassword(info) {
-    let accountID = this.login(info);
+  static changePassword(info) {
+    let accountID = AccountServer.login(info);
 
     if (accountID !== "") {
-      this.accounts[accountID].password = info.change;
-      this.saveToDisk(accountID);
+      AccountServer.accounts[accountID].password = info.change;
+      AccountServer.saveToDisk(accountID);
     }
 
     return accountID;
   }
 
-  wipe(info) {
-    let accountID = this.login(info);
+  static wipe(info) {
+    let accountID = AccountServer.login(info);
 
     if (accountID !== "") {
-      this.accounts[accountID].edition = info.edition;
-      this.setWipe(accountID, true);
-      this.saveToDisk(accountID);
+      AccountServer.accounts[accountID].edition = info.edition;
+      AccountServer.setWipe(accountID, true);
+      AccountServer.saveToDisk(accountID);
     }
 
     return accountID;
   }
 
-  getReservedNickname(sessionID) {
-    this.reloadAccountBySessionID(sessionID);
+  static getReservedNickname(sessionID) {
+    AccountServer.reloadAccountBySessionID(sessionID);
     return "";
   }
 
-  nicknameTaken(info) {
-    // this will be usefull if you dont want to have same nicknames in accounts info otherwise leave it to always false
-    // for (let accountID in this.accounts) {
-      // if (info.nickname.toLowerCase() === this.accounts[accountID].nickname.toLowerCase()) {
+  static nicknameTaken(info) {
+    // AccountServer will be usefull if you dont want to have same nicknames in accounts info otherwise leave it to always false
+    // for (let accountID in AccountServer.accounts) {
+      // if (info.nickname.toLowerCase() === AccountServer.accounts[accountID].nickname.toLowerCase()) {
         // return true;
       // }
     // }
@@ -340,6 +339,6 @@ function getPath(sessionID) {
   return `user/profiles/${sessionID}/`;
 }
 
-module.exports.handler = new AccountServer();
+// module.exports.handler = new AccountServer();
 module.exports.getPath = getPath;
 module.exports.AccountServer = AccountServer;

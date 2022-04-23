@@ -1,4 +1,6 @@
 ﻿"use strict";
+const { AccountServer } = require('./account')
+
 /*
  * ProfileServer class maintains list of active profiles for each sessionID in memory. All first-time loads and save
  * operations also write to disk.*
@@ -239,7 +241,7 @@ class ProfileServer {
   getCompleteProfile(sessionID) {
     let output = [];
 
-    if (!account_f.handler.isWiped(sessionID)) {
+    if (!AccountServer.isWiped(sessionID)) {
       output.push(profile_f.handler.getScavProfile(sessionID));
       output.push(profile_f.handler.getPmcProfile(sessionID));
     }
@@ -254,7 +256,7 @@ class ProfileServer {
    */
   createProfile(info, sessionID) {
     // Load account data //
-    const account = account_f.handler.find(sessionID);
+    const account = AccountServer.find(sessionID);
 
     // Get profile location //
     const folder = account_f.getPath(account.id);
@@ -302,7 +304,7 @@ class ProfileServer {
     fileIO.write(`${folder}exfiltrations.json`, { bigmap: 0, develop: 0, factory4_day: 0, factory4_night: 0, interchange: 0, laboratory: 0, lighthouse: 0, rezervbase: 0, shoreline: 0, suburbs: 0, tarkovstreets: 0, terminal: 0, town: 0, woods: 0, privatearea: 0 });
 
     // don't wipe profile again //
-    account_f.handler.setWipe(account.id, false);
+    AccountServer.setWipe(account.id, false);
     this.initializeProfile(sessionID);
   }
 
@@ -336,7 +338,7 @@ class ProfileServer {
       return "tooshort";
     }
 
-    if (account_f.handler.nicknameTaken(info)) {
+    if (AccountServer.nicknameTaken(info)) {
       return "taken";
     }
 

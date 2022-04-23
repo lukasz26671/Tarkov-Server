@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 const { logger } = require("../../core/util/logger");
+const { AccountServer } = require('./account')
 
 class LocaleServer {
   initialize() {
@@ -20,7 +21,7 @@ class LocaleServer {
 
   getMenu(lang, url, sessionID) {
     const currentLang = url.replace("/client/locale/", "");
-    const account = account_f.handler.find(sessionID);
+    const account = AccountServer.find(sessionID);
     lang = currentLang;
 
     if (account.lang != lang) account.lang = lang;
@@ -37,14 +38,14 @@ class LocaleServer {
       if (lang) {
         currentLang = lang;
       } else {
-        currentLang = account_f.handler.getLanguages(sessionID);
+        currentLang = AccountServer.getLanguages(sessionID);
       }
     }
     if (!currentLang){
       logger.logError("No language found for global");
     }
     
-    const account = account_f.handler.find(sessionID);
+    const account = AccountServer.find(sessionID);
     lang = currentLang;
     if (account.lang != lang) account.lang = lang;
 

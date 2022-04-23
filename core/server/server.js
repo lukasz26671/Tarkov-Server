@@ -3,6 +3,8 @@ const fs = require('fs');
 const http  = require('http'); // requires npm install http on the Server
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
+const { Account } = require('./../../src/classes/account')
+const { SaveHandler } = require('./../../src/classes/savehandler')
 
 class Server {
   constructor() {
@@ -413,8 +415,8 @@ class Server {
     require(process.cwd() + databasePath).load();
     // will not be required if all data is loaded into memory
     logger.logInfo("[SoftRestart]: Re-initializing");
-    account_f.handler.initialize();
-    savehandler_f.initialize();
+    // account_f.handler.initialize();
+    SaveHandler.initialize();
     locale_f.handler.initialize();
     preset_f.handler.initialize();
     weather_f.handler.initialize();
@@ -431,10 +433,11 @@ class Server {
     require(process.cwd() + databasePath).load();
 
     // will not be required if all data is loaded into memory
-    logger.logDebug("Initialize account...")
-    account_f.handler.initialize();
-    logger.logDebug("Initialize save handler...")
-    savehandler_f.initialize();
+    // logger.logDebug("Initialize account...")
+    // account_f.handler.initialize();
+    // logger.logDebug("Initialize save handler...")
+    // savehandler_f.initialize();
+    SaveHandler.initialize();
     logger.logDebug("Initialize locale...")
     locale_f.handler.initialize();
     logger.logDebug("Initialize preset...")

@@ -1,4 +1,5 @@
 const { logger } = require("../../core/util/logger");
+const { AccountServer } = require('../../src/classes/account')
 
 class Responses {
   constructor() {
@@ -140,7 +141,7 @@ class Responses {
     return response_f.getBody(location_f.handler.get(url.replace("/api/location/", ""), sessionID));
   }
   dynClientLocale(url, info, sessionID) {
-    const lang = account_f.handler.getAccountLang(sessionID);
+    const lang = AccountServer.getAccountLang(sessionID);
     return response_f.getBody(locale_f.handler.getGlobal(lang, url, sessionID));
   }
   dynClientLocationGetLocalloot(url, info, sessionID) {
@@ -155,7 +156,7 @@ class Responses {
     return response_f.getBody(location_f.handler.get(location_name));
   }
   dynClientMenuLocale(url, info, sessionID) {
-    const lang = account_f.handler.getAccountLang(sessionID);
+    const lang = AccountServer.getAccountLang(sessionID);
     return response_f.getBody(locale_f.handler.getMenu(lang, url, sessionID));
   }
   dynClientTradingApiGetTrader(url, info, sessionID) {
@@ -350,7 +351,7 @@ class Responses {
   }
   clientGameProfileList(url, info, sessionID) {
     // the best place to update health because its where profile is updating in client also!!!
-    if (!account_f.handler.isWiped(sessionID) && profile_f.handler.profileAlreadyCreated(sessionID)) {
+    if (!AccountServer.isWiped(sessionID) && profile_f.handler.profileAlreadyCreated(sessionID)) {
       health_f.handler.healOverTime(profile_f.handler.getPmcProfile(sessionID), info, sessionID);
     }
 
@@ -373,7 +374,7 @@ class Responses {
     });
   }
   clientGameProfileNicknameReserved(url, info, sessionID) {
-    return response_f.getBody(account_f.handler.getReservedNickname(sessionID));
+    return response_f.getBody(AccountServer.getReservedNickname(sessionID));
   }
   clientGameProfileNicknameValidate(url, info, sessionID) {
     const output = profile_f.handler.validateNickname(info, sessionID);
@@ -392,7 +393,7 @@ class Responses {
     return response_f.getBody([profile_f.handler.generateScav(sessionID)]);
   }
   clientGameProfileSearch(url, info, sessionID) {
-    const ids = Object.keys(account_f.handler.accounts).filter((x) => x != sessionID);
+    const ids = Object.keys(AccountServer.accounts).filter((x) => x != sessionID);
     let users = [];
     for (const i in ids) {
       let id = ids[i];
@@ -430,7 +431,7 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGameStart(url, info, sessionID) {
-    if (account_f.handler.clientHasProfile(sessionID)) {
+    if (AccountServer.clientHasProfile(sessionID)) {
       return response_f.getBody({ utc_time: Date.now() / 1000 }, 0, null);
     } else {
       return response_f.getBody({ utc_time: Date.now() / 1000 }, 999, "Profile Not Found!!");
@@ -656,33 +657,33 @@ class Responses {
   }
 
   launcherProfileChangeEmail(url, info, sessionID) {
-    let output = account_f.handler.changeEmail(info);
+    let output = AccountServer.changeEmail(info);
     return output === "" ? "FAILED" : "OK";
   }
   launcherProfileChangePassword(url, info, sessionID) {
-    let output = account_f.handler.changePassword(info);
+    let output = AccountServer.changePassword(info);
     return output === "" ? "FAILED" : "OK";
   }
   launcherProfileChangeWipe(url, info, sessionID) {
-    let output = account_f.handler.wipe(info);
+    let output = AccountServer.wipe(info);
     return output === "" ? "FAILED" : "OK";
   }
   launcherProfileGet(url, info, sessionID) {
-    let accountId = account_f.handler.login(info);
-    let output = account_f.handler.find(accountId);
+    let accountId = AccountServer.login(info);
+    let output = AccountServer.find(accountId);
     output['server'] = server.name;
     return fileIO.stringify(output);
   }
   launcherProfileLogin(url, info, sessionID) {
-    let output = account_f.handler.login(info);
+    let output = AccountServer.login(info);
     return output === "" ? "FAILED" : output;
   }
   launcherProfileRegister(url, info, sessionID) {
-    let output = account_f.handler.register(info);
+    let output = AccountServer.register(info);
     return output !== "" ? "FAILED" : "OK";
   }
   launcherProfileRemove(url, info, sessionID) {
-    let output = account_f.handler.remove(info);
+    let output = AccountServer.remove(info);
     return output === "" ? "FAILED" : "OK";
   }
   launcherServerConnect(url, info, sessionID) {
