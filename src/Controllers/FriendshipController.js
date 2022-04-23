@@ -11,19 +11,20 @@ class FriendshipController {
 	let allAccounts = AccountServer.getAllAccounts();
 	let myAccount = AccountServer.find(sessionID);
 	if(myAccount === undefined) { 
-logger.logError("Own Account cannot be found!");
+	  logger.logError("Own Account cannot be found!");
 	  return null;
     }
 
-    // console.log(allAccounts);
-   
 	for (const id of myAccount.friends) {
 
-        console.log(id);
-		// let id = myAccount.friends[i];
 		let acc = allAccounts.find(x => x._id == id);
-
-		friendAccounts.push(acc);
+		if(acc) {
+			friendAccounts.push(acc);
+		}
+		else {
+			logger.logError(`Unable to find friend's account by its Id (${id}), does it still exist? Removing!`);
+			myAccount.friends = myAccount.friends.filter(x=>x._id !== id);
+		}
 	}
 
 	return friendAccounts;
@@ -47,42 +48,42 @@ static getFriendRequestOutbox(sessionID) {
   return acc.friendRequestOutbox;
 }
 
-static addFriendRequest(sessionID, toID) {
-	var acc = AccountServer.find(sessionID);
-	var toAcc = AccountServer.find(toID);
+	static addFriendRequest(sessionID, toID) {
+		var acc = AccountServer.find(sessionID);
+		var toAcc = AccountServer.find(toID);
 
-	console.log("from");
-	console.log(acc);
-	console.log("to");
-	console.log(toAcc);
+		console.log("from");
+		console.log(acc);
+		console.log("to");
+		console.log(toAcc);
 
-	if(acc.friends === undefined) {
-	  acc.friends = [];
-	}
+		if(acc.friends === undefined) {
+		acc.friends = [];
+		}
 
-	if(acc.friendRequestOutbox === undefined) {
-	  acc.friendRequestOutbox = [];
-	}
+		if(acc.friendRequestOutbox === undefined) {
+		acc.friendRequestOutbox = [];
+		}
 
-	if(toAcc.friends === undefined) {
-	  toAcc.friends = [];
-	}
+		if(toAcc.friends === undefined) {
+		toAcc.friends = [];
+		}
 
-	if(toAcc.friendRequestInbox === undefined) {
-	  toAcc.friendRequestInbox = [];
-	}
+		if(toAcc.friendRequestInbox === undefined) {
+		toAcc.friendRequestInbox = [];
+		}
 
-	// let nFriendRequest = new friendRequest();
-	// // accFull = getAllAccounts().find(x => x._id == sessionID);
-	// // toAccFull = getAllAccounts().find(x => x._id == toID);
+		// let nFriendRequest = new friendRequest();
+		// // accFull = getAllAccounts().find(x => x._id == sessionID);
+		// // toAccFull = getAllAccounts().find(x => x._id == toID);
 
-	acc.friendRequestOutbox.push(nFriendRequest);
-	toAcc.friendRequestInbox.push(nFriendRequest);
+		acc.friendRequestOutbox.push(nFriendRequest);
+		toAcc.friendRequestInbox.push(nFriendRequest);
 
-	AccountServer.saveToDisk(sessionID);
-	AccountServer.saveToDisk(toID);
-	// acc.friends.push(toID);
-	// toAcc.friends.push(acc);
+		AccountServer.saveToDisk(sessionID);
+		AccountServer.saveToDisk(toID);
+		// acc.friends.push(toID);
+		// toAcc.friends.push(acc);
 	}
 
 	static addFriend(sessionID, info) {
@@ -91,6 +92,10 @@ static addFriendRequest(sessionID, toID) {
 
 	static deleteFriend(sessionID, friend_id) {
 
+	}
+
+	static searchForFriendByNickname() {
+		
 	}
 }
 
