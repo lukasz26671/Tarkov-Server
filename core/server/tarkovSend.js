@@ -1,3 +1,5 @@
+const { Server } = require("./server");
+
 class TarkovSend {
     constructor() {
         this.mime = {
@@ -11,10 +13,30 @@ class TarkovSend {
         };
     }
 
-    zlibJson(resp, output, sessionID) {
-        let Header = { "Content-Type": this.mime["json"], "Set-Cookie": "PHPSESSID=" + sessionID };
+    static mimeTypes = {
+        "css": "text/css",
+        "bin": "application/octet-stream",
+        "html": "text/html",
+        "jpg": "image/jpeg",
+        "js": "text/javascript",
+        "json": "application/json",
+        "png": "image/png",
+        "svg": "image/svg+xml",
+        "txt": "text/plain",
+        "json": "application/json",
+        "zlib": "application/zlib",
+    };
+
+    static zlibJson(resp, output, sessionID, request) {
+        let Header = { "Content-Type": TarkovSend.mimeTypes["json"], "Set-Cookie": "PHPSESSID=" + sessionID };
+        // let Header = { "Content-Type": TarkovSend.mimeTypes["zlib"], "Set-Cookie": "PHPSESSID=" + sessionID };
         // this should enable content encoding if you ask server from web browser
-        if (typeof sessionID == "undefined") {
+
+        // console.log(request);
+        if (sessionID === undefined 
+            || request.headers["accept-encoding"] === undefined
+            || request.headers["postman-token"] !== undefined
+            ) {
             Header["content-encoding"] = "deflate";
         }
         resp.writeHead(200, "OK", Header);

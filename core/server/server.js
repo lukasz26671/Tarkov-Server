@@ -3,8 +3,12 @@ const fs = require('fs');
 const http  = require('http'); // requires npm install http on the Server
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
-const { Account } = require('./../../src/classes/account')
-const { SaveHandler } = require('./../../src/classes/savehandler')
+const { ResponseController } = require('../../src/Controllers/ResponseController');
+const { logger } = require('../util/logger');
+const { Account } = require('./../../src/classes/account');
+const { SaveHandler } = require('./../../src/classes/savehandler');
+const { TarkovSend } = require('./tarkovSend.js');
+const fastify = require('fastify')({ logger: true });
 
 class Server {
   constructor() {
@@ -12,9 +16,9 @@ class Server {
     this.name = serverConfig.name;
     this.ip = serverConfig.ip;
     this.port = serverConfig.port;
-    this.backendUrl = "https://" + this.ip + ":" + this.port;
+    this.backendUrl = Server.getHttpsUrl(); //"https://" + this.ip + ":" + this.port;
     this.second_backendUrl = "https://" + serverConfig.ip_backend + ":" + this.port;
-    this.buffers = {}; // THIS SEEMS TO FIX THAT FIRST ERROR (Server.putInBuffer)
+    // this.buffers = {};
     this.initializeCallbacks();
   }
 
@@ -29,14 +33,19 @@ class Server {
       "png": "image/png",
       "svg": "image/svg+xml",
       "txt": "text/plain",
+      "json": "application/json",
+      "zlib": "application/zlib",
   };
 
   static getUrl()
   {
       return `${serverConfig.ip}:${serverConfig.port}`;
   }
+  static getPort() {
+    return serverConfig.port;
+  }
 
-  static getHttpsUrl = () => `https://${serverConfig.ip}:${serverConfig.port}`;
+  static getHttpsUrl = () => `https://${Server.getUrl()}`;
 
 
   static getWebsocketUrl = () => `ws://${Server.getUrl()}`;
@@ -48,16 +57,16 @@ class Server {
           if (Server.isConnectionWebSocket(sessionID))
           {
               Server.webSockets[sessionID].send(JSON.stringify(output));
-              Logger.logInfo("WS: message sent");
+              logger.logInfo("WS: message sent");
           }
           else
           {
-              Logger.logInfo(`WS: Socket not ready for ${sessionID}, message not sent`);
+            logger.logInfo(`WS: Socket not ready for ${sessionID}, message not sent`);
           }
       }
       catch (err)
       {
-          Logger.logInfo(`WS: sendMessage failed, with error: ${err}`);
+          logger.logError(`WS: sendMessage failed, with error: ${err}`);
       }
   }
 
@@ -90,8 +99,8 @@ class Server {
   }
 
   
-  resetBuffer = (sessionID) => { this.buffers[sessionID] = undefined; }
-  getFromBuffer = (sessionID) => (this.buffers[sessionID]) ? this.buffers[sessionID].buffer : "";
+  // resetBuffer = (sessionID) => { this.buffers[sessionID] = undefined; }
+  // getFromBuffer = (sessionID) => (this.buffers[sessionID]) ? this.buffers[sessionID].buffer : "";
   getName = () => this.name;
   getIp = () => this.ip;
   getPort = () => this.port;
@@ -99,26 +108,27 @@ class Server {
   getVersion = () => global.core.constants.ServerVersion;
 
 
-  putInBuffer(sessionID, data, bufLength) {
-    if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
-      this.buffers[sessionID] = {
-        written: 0,
-        allocated: bufLength,
-        buffer: Buffer.alloc(bufLength),
-      };
-    }
+  // putInBuffer(sessionID, data, bufLength) {
+  //   if (this.buffers[sessionID] === undefined || this.buffers[sessionID].allocated !== bufLength) {
+  //     this.buffers[sessionID] = {
+  //       written: 0,
+  //       allocated: bufLength,
+  //       buffer: Buffer.alloc(bufLength),
+  //     };
+  //   }
 
-    let buf = this.buffers[sessionID];
+  //   let buf = this.buffers[sessionID];
 
-    data.copy(buf.buffer, buf.written, 0);
-    buf.written += data.length;
-    return buf.written === buf.allocated;
-  }
+  //   data.copy(buf.buffer, buf.written, 0);
+  //   buf.written += data.length;
+  //   return buf.written === buf.allocated;
+  // }
 
   /*
   */
   sendResponse(sessionID, req, resp, body) {
     let output = "";
+
 
     //check if page is static html page or requests like 
     // if(this.tarkovSend.sendStaticFile(req, resp))
@@ -128,8 +138,9 @@ class Server {
     if (req.method === "POST" || req.method === "PUT") {
       output = router.getResponse(req, body, sessionID);
     } else {
-      output = router.getResponse(req, "", sessionID);
-      // output = router.getResponse(req, body, sessionID);
+      // output = router.getResponse(req, "", sessionID);
+      output = router.getResponse(req, body, sessionID);
+
     }
 
     /* route doesn't exist or response is not properly set up */
@@ -141,16 +152,25 @@ class Server {
       logger.logDebug(body, true);
     }
     // execute data received callback
-    for (let type in this.receiveCallback) {
+    for (const type in this.receiveCallback) {
+      // console.log("receiveCallback " + type);
+
       this.receiveCallback[type](sessionID, req, resp, body, output);
     }
 
     // send response
     if (output in this.respondCallback) {
+      //console.log("respondCallback");
       this.respondCallback[output](sessionID, req, resp, body);
     } else {
-      this.tarkovSend.zlibJson(resp, output, sessionID);
+      // console.log("respondCallback Zlib");
+      // console.log(resp);
+
+      // this.tarkovSend.zlibJson(resp, output, sessionID);
+      TarkovSend.zlibJson(resp, output, sessionID, req);
     }
+    // console.log(output);
+    return output;
   }
 
   handleAsyncRequest(req, resp){
@@ -181,6 +201,8 @@ class Server {
   }
 
   handleRequest(req, resp) {
+    
+    let output = {};
     const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
 
     this.requestLog(req, sessionID);
@@ -197,8 +219,9 @@ class Server {
           // console.log(data.toString());
         });
         // server.sendResponse(sessionID, req, resp, "");
-        server.sendResponse(sessionID, req, resp, body);
-        return true;
+        output = server.sendResponse(sessionID, req, resp, body);
+        // console.log(output);
+        return output;
       }
       //case "GET":
       //case "PUT":
@@ -208,32 +231,15 @@ class Server {
         req.on('data', (chunk) => {
           body.push(chunk);
         }).on('end', () => {
-          // body = Buffer.concat(body).toString();
           let data = Buffer.concat(body);
-          // at this point, `body` has the entire request body stored in it as a string
-        // });
-
-        // req.on("data", function (data) {
-          // if (req.url == "/" || req.url.includes("/server/config")) {
-          //   let _Data = data.toString();
-          //   _Data = _Data.split("&");
-          //   let _newData = {};
-          //   for (let item in _Data) {
-          //     let datas = _Data[item].split("=");
-          //     _newData[datas[0]] = datas[1];
-          //   }
-          //   server.sendResponse(sessionID, req, resp, _newData);
-          //   return;
-          // }
-          // console.log(data);
+        
           internal.zlib.inflate(data, function (err, body) {
-            // console.log(body);
             if(body !== undefined) {
               let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-              server.sendResponse(sessionID, req, resp, jsonData);
+              output = server.sendResponse(sessionID, req, resp, jsonData);
             }
             else {
-              server.sendResponse(sessionID, req, resp, "")
+              output = server.sendResponse(sessionID, req, resp, "")
             }
           });
         });
@@ -241,25 +247,25 @@ class Server {
       }
       case "PUT": 
       {
-        req.on("data", function (data) {
-          // receive data
-          if ("expect" in req.headers) {
-            const requestLength = parseInt(req.headers["content-length"]);
+        // req.on("data", function (data) {
+        //   // receive data
+        //   if ("expect" in req.headers) {
+        //     const requestLength = parseInt(req.headers["content-length"]);
 
-            if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
-              resp.writeContinue();
-            }
-          }
-        })
-        .on("end", function () {
-          let data = server.getFromBuffer(sessionID);
-          server.resetBuffer(sessionID);
+        //     if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+        //       resp.writeContinue();
+        //     }
+        //   }
+        // })
+        // .on("end", function () {
+        //   let data = server.getFromBuffer(sessionID);
+        //   server.resetBuffer(sessionID);
 
-          internal.zlib.inflate(data, function (err, body) {
-            let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-            server.sendResponse(sessionID, req, resp, jsonData);
-          });
-        });
+        //   internal.zlib.inflate(data, function (err, body) {
+        //     let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+        //     output = server.sendResponse(sessionID, req, resp, jsonData);
+        //   });
+        // });
         return true;
       }
       default: 
@@ -276,7 +282,7 @@ class Server {
 
     const httpsServer = https.createServer(certificate.generate());
     httpsServer.on('request', async (req, res) => {
-      this.handleAsyncRequest(req, res);
+      await this.handleAsyncRequest(req, res);
     });
 
     /* server is already running or program using privileged port without root */
@@ -318,7 +324,8 @@ class Server {
 
     // Setting up websocket
     const webSocketServer = new WebSocket.Server({
-      "server": httpsServer
+      // "server": httpsServer
+      port: Server.getPort()
     });
 
     webSocketServer.addListener("listening", () =>
@@ -345,6 +352,42 @@ class Server {
       logger.logSuccess(`Simple Http Server running on Port 8080`);
 
     }
+
+    
+    // startFastifyServer();
+  }
+
+  /**
+   * Start a Fastify Server
+   */
+  static createServerFastify() {
+    for(const url in require('../../src/Controllers/ResponseController')) {
+      fastify.get(url, async (request, reply) => {
+        console.log("fastify:" + url);
+
+        console.log(reply.raw);
+        let fastifyReqRaw = { ...request.raw };
+        var fastifyRepRaw = { ...reply.raw };
+        console.log(fastifyReqRaw);
+        console.log(fastifyRepRaw);
+         var output = this.handleRequest(request.raw, fastifyRepRaw);
+        // console.log(output);
+      
+        return {};
+        // return null;
+      })
+    }
+    // Run the server!
+    const start = async () => {
+      try {
+        await fastify.listen(3000)
+      } catch (err) {
+        fastify.log.error(err)
+        process.exit(1)
+      }
+    }
+    start()
+
   }
 
   static websocketPingHandler = null;
