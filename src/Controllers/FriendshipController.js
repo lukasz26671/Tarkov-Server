@@ -34,15 +34,22 @@ class FriendshipController {
 }
 
 static getFriendRequestInbox(sessionID) {
-  var acc = AccountServer.find(sessionID);
-  if(acc.friendRequestInbox === undefined) {
-	acc.friendRequestInbox = [];
-  } 
-  for(const friendR of acc.friendRequestInbox) {
-	console.log(friendR);
-}
-
-  return acc.friendRequestInbox.filter(x => x.Date != null);
+	var acc = AccountServer.find(sessionID);
+	if(acc.friendRequestInbox === undefined) {
+	  acc.friendRequestInbox = [];
+	} 
+  
+	let resultArray = [];
+	/**
+	 * friendR is FriendRequest
+	 */
+	for(const friendR of acc.friendRequestInbox) {
+		console.log(friendR);
+		const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
+		resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
+	}
+  
+	return resultArray;
 }
 
 static getFriendRequestOutbox(sessionID) {
@@ -61,7 +68,7 @@ static getFriendRequestOutbox(sessionID) {
 	  resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
   }
 
-  return acc.friendRequestOutbox;
+  return resultArray;
 }
 
 /**
