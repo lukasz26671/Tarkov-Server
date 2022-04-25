@@ -197,7 +197,7 @@ class Server {
     //   !req.url.includes(".ico") &&
     //   !req.url.includes("singleplayer/settings/bot/difficulty")
     // )
-      logger.logRequest(req.url, `${displaySessID}[${IP}] `);
+      logger.logRequest(req.url, `${displaySessID}[${IP}][${req.method}] `);
   }
 
   handleRequest(req, resp) {
@@ -218,13 +218,13 @@ class Server {
           let data = Buffer.concat(body);
           // console.log(data.toString());
         });
-        // server.sendResponse(sessionID, req, resp, "");
-        output = server.sendResponse(sessionID, req, resp, body);
+        server.sendResponse(sessionID, req, resp, "");
+        // output = server.sendResponse(sessionID, req, resp, body);
         // console.log(output);
         return output;
       }
       //case "GET":
-      //case "PUT":
+      case "PUT":
       case "POST": 
       {
         let body = [];
@@ -245,29 +245,29 @@ class Server {
         });
         return true;
       }
-      case "PUT": 
-      {
-        // req.on("data", function (data) {
-        //   // receive data
-        //   if ("expect" in req.headers) {
-        //     const requestLength = parseInt(req.headers["content-length"]);
+      // case "PUT": 
+      // {
+      //   // req.on("data", function (data) {
+      //   //   // receive data
+      //   //   if ("expect" in req.headers) {
+      //   //     const requestLength = parseInt(req.headers["content-length"]);
 
-        //     if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
-        //       resp.writeContinue();
-        //     }
-        //   }
-        // })
-        // .on("end", function () {
-        //   let data = server.getFromBuffer(sessionID);
-        //   server.resetBuffer(sessionID);
+      //   //     if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+      //   //       resp.writeContinue();
+      //   //     }
+      //   //   }
+      //   // })
+      //   // .on("end", function () {
+      //   //   let data = server.getFromBuffer(sessionID);
+      //   //   server.resetBuffer(sessionID);
 
-        //   internal.zlib.inflate(data, function (err, body) {
-        //     let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-        //     output = server.sendResponse(sessionID, req, resp, jsonData);
-        //   });
-        // });
-        return true;
-      }
+      //   //   internal.zlib.inflate(data, function (err, body) {
+      //   //     let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+      //   //     output = server.sendResponse(sessionID, req, resp, jsonData);
+      //   //   });
+      //   // });
+      //   return true;
+      // }
       default: 
       {
         return true;
