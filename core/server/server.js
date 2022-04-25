@@ -324,7 +324,7 @@ class Server {
 
     // Setting up websocket
     const webSocketServer = new WebSocket.Server({
-      // "server": httpsServer
+      "server": httpsServer,
       port: Server.getPort()
     });
 
