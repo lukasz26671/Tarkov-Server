@@ -70,7 +70,7 @@ class Responses {
       "/client/match/offline/start": this.clientMatchOfflineStart,
       "/client/match/offline/end": this.clientMatchOfflineEnd,
       "/client/match/updatePing": this.clientMatchUpdatePing,
-      "/client/notifier/channel/create": this.clientNotifierChannelCreate,
+      // "/client/notifier/channel/create": this.clientNotifierChannelCreate,
       "/client/profile/status": this.clientProfileStatus,
       "/client/putMetrics": this.clientPutMetrics,
       "/client/quest/list": this.clientQuestList,
@@ -575,16 +575,16 @@ class Responses {
   clientMatchUpdatePing(url, info, sessionID) {
     return response_f.nullResponse();
   }
-  clientNotifierChannelCreate(url, info, sessionID) {
-    return response_f.getBody({
-      notifier: {
-        server: `${server.getBackendUrl()}/`,
-        channel_id: "testChannel",
-        url: `${server.getBackendUrl()}/notifierServer/get/${sessionID}`,
-      },
-      notifierServer: `${server.getBackendUrl()}/notifierServer/get/${sessionID}`,
-    });
-  }
+  // clientNotifierChannelCreate(url, info, sessionID) {
+  //   return response_f.getBody({
+  //     notifier: {
+  //       server: `${server.getBackendUrl()}/`,
+  //       channel_id: "testChannel",
+  //       url: `${server.getBackendUrl()}/notifierServer/get/${sessionID}`,
+  //     },
+  //     notifierServer: `${server.getBackendUrl()}/notifierServer/get/${sessionID}`,
+  //   });
+  // }
   clientProfileStatus(url, info, sessionID) {
     return response_f.getBody([
       {

@@ -76,6 +76,11 @@ module.exports = {
         const result = FriendshipController.getFriendRequestInbox(sessionID);
         return ResponseController.getBody(result);
     },
+    "/client/notifier/channel/create" : (url, info, sessionID) => {
+        const result = NotifierService.getChannel(sessionID);
+        console.log(result);
+        return ResponseController.getBody(result);
+    },
 
 
 }
