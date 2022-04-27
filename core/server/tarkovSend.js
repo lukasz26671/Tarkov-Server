@@ -1,5 +1,3 @@
-const { Server } = require("./server");
-
 class TarkovSend {
     constructor() {
         this.mime = {
@@ -34,8 +32,9 @@ class TarkovSend {
 
         // console.log(request);
         if (sessionID === undefined 
-            || request.headers["accept-encoding"] === undefined
-            || request.headers["postman-token"] !== undefined
+            // || request.headers["accept-encoding"] === undefined
+            || 
+            request.headers["postman-token"] !== undefined
             ) {
             Header["content-encoding"] = "deflate";
         }

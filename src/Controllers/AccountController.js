@@ -31,6 +31,7 @@ class AccountController
       
               obj.Id = character.aid;
               obj._id = character.aid;
+              obj.Nickname = character.Info.Nickname;
               obj.Level = character.Info.Level;
               obj.lookingGroup = false;
               if(character.matching !== undefined) {

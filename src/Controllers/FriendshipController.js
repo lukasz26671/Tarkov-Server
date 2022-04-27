@@ -65,7 +65,7 @@ static getFriendRequestOutbox(sessionID) {
   for(const friendR of acc.friendRequestOutbox) {
 	  console.log(friendR);
 	  const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
-	  resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
+	resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
   }
 
   return resultArray;
@@ -73,8 +73,8 @@ static getFriendRequestOutbox(sessionID) {
 
 /**
  * 
- * @param {*} sessionID 
- * @param {*} toID 
+ * @param {string} sessionID 
+ * @param {string} toID 
  * @returns {object} { requestId, retryAfter, status }
  */
 	static addFriendRequest(sessionID, toID) {
@@ -104,16 +104,12 @@ static getFriendRequestOutbox(sessionID) {
 
 		const friendRequestId = utility.generateNewId();
 		let nFriendRequest = new FriendRequest(friendRequestId, sessionID, toID, new Date().getTime(), sessionID);
-		// nFriendRequest._id = friendRequestId;
-		// nFriendRequest.from = acc;
-		// nFriendRequest.to = toAcc;
-		// nFriendRequest.date = new Date().getTime();
-		// nFriendRequest.profile = acc;
-		// // accFull = getAllAccounts().find(x => x._id == sessionID);
-		// // toAccFull = getAllAccounts().find(x => x._id == toID);
 
+
+		// inbox is a reverse...
+		let nFriendRequestInbox = new FriendRequest(friendRequestId, toID, sessionID, new Date().getTime(), sessionID);
 		acc.friendRequestOutbox.push(nFriendRequest);
-		toAcc.friendRequestInbox.push(nFriendRequest);
+		toAcc.friendRequestInbox.push(nFriendRequestInbox);
 
 
 		AccountServer.saveToDisk(sessionID);
@@ -124,15 +120,76 @@ static getFriendRequestOutbox(sessionID) {
 		return { requestId: friendRequestId, retryAfter: 30, status: 0 }
 	}
 
-	static addFriend(sessionID, info) {
+	/**
+ * 
+ * @param {string} sessionID 
+ * @param {string} toID 
+ * @returns {object} { requestId, retryAfter, status }
+ */
+	 static deleteFriendRequest(sessionID, requestId) {
+		const acc = AccountServer.find(sessionID);
+		// console.log(acc);
+		console.log(requestId);
+
+		var fr_outbox = FriendshipController.getFriendRequestOutbox(sessionID);
+		const frIndex = fr_outbox.indexOf(x=>x._id == requestId);
+		if(frIndex !== -1) {
+			fr_outbox.splice(frIndex, 1);
+			logger.logSuccess("Successfully removed friend request " + requestId);
+		}
+		else {
+			logger.logError("Unable to remove friend request " + requestId);
+		}
+		acc.friendRequestOutbox = fr_outbox;
+		AccountServer.saveToDisk(sessionID);
+
+		return requestId;
+	 }
+
+	static addFriend(sessionID, friend_id) {
+		var acc = AccountServer.find(sessionID);
+		if(acc.friends === undefined) {
+			acc.friends = [];
+		}
+		acc.friends.push(friend_id);
 
 	}
 
 	static deleteFriend(sessionID, friend_id) {
-
+		var acc = AccountServer.find(sessionID);
+		if(acc.friends === undefined) {
+			acc.friends = [];
+		}
+		const indexOfFriend = acc.friends.indexOf(friend_id);
+		if(indexOfFriend !== -1) {
+			acc.friends.splice(indexOfFriend, 1);
+		}
 	}
 
 	static searchForFriendByNickname() {
+
+	}
+
+	/**
+	 * 
+	 * @param {string} sessionID 
+	 */
+	static acceptAllRequests(sessionID) {
+		var acc = AccountServer.find(sessionID);
+		if(acc.friendRequestInbox === undefined) {
+			acc.friendRequestInbox = [];
+		}
+
+		// add friends to friend list
+		for(const frIndex in acc.friendRequestInbox) {
+			const fr = acc.friendRequestInbox[frIndex];
+			if(fr !== undefined) {
+				this.addFriend(sessionID, fr.to);
+			}
+		}
+
+		// clear the list
+		acc.friendRequestInbox = [];
 
 	}
 }

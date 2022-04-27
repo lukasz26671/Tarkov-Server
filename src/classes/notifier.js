@@ -90,7 +90,8 @@ class NotifierService {
 
     static getWebSocketServer(sessionID)
     {
-        return `${Server.getWebsocketUrl()}/${sessionID}`;
+        // return `${Server.getWebsocketUrl()}/${sessionID}`;
+        return `${Server.getWebsocketUrl()}`;
     }
 
     static getChannel(sessionID)

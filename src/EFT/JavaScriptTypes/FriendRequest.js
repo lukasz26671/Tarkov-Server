@@ -60,7 +60,21 @@ class FriendRequest {
 		// console.log("to");
 		// console.log(toAcc);
 
-        return new FriendRequestResponse(friendRequestId, acc, toAcc, new Date().getTime(), acc);
+        let pmcProfile = profile_f.handler.getPmcProfile(this.to);
+
+        let profile = {
+            _id: pmcProfile._id,
+            Info: {
+                Nickname: pmcProfile.Info.Nickname,
+                Side: pmcProfile.Info.Side,
+                Level: pmcProfile.Info.Level,
+                MemberCategory: pmcProfile.Info.MemberCategory,
+            }
+
+
+        }
+
+        return new FriendRequestResponse(friendRequestId, this.from, this.to, new Date().getTime(), profile);
     }
 
 }

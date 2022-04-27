@@ -1,3 +1,4 @@
+const { Server } = require("../../core/server/server");
 const { logger } = require("../../core/util/logger");
 const { AccountServer } = require('../../src/classes/account')
 const { AccountController } = require('../../src/Controllers/AccountController')
@@ -18,7 +19,7 @@ class Responses {
       // "/client/friend/request/list/outbox": this.clientFriendRequestListOutbox,
       // "/client/friend/request/send": this.clientFriendRequestSend,
       "/client/game/bot/generate": this.clientGameBotGenerate,
-      "/client/game/config": this.clientGameConfig,
+      // "/client/game/config": this.clientGameConfig,
       "/client/game/keepalive": this.clientGameKeepalive,
       "/client/game/logout": this.clientGameLogout,
       "/client/game/profile/create": this.clientGameProfileCreate,
@@ -28,7 +29,7 @@ class Responses {
       "/client/game/profile/nickname/reserved": this.clientGameProfileNicknameReserved,
       "/client/game/profile/nickname/validate": this.clientGameProfileNicknameValidate,
       "/client/game/profile/savage/regenerate": this.clientGameProfileSavageRegenerate,
-      "/client/game/profile/search": this.clientGameProfileSearch,
+      //"/client/game/profile/search": this.clientGameProfileSearch,
       // "/client/game/profile/select": this.clientGameProfileSelect,
       "/client/game/profile/voice/change": this.clientGameProfileVoiceChange,
       "/client/game/start": this.clientGameStart,
@@ -301,33 +302,55 @@ class Responses {
     return response_f.getBody(bots_f.generate(info, sessionID));
   }
   clientGameConfig(url, info, sessionID) {
+    /*
+    public bool queued;
+	public double banTime;
+	public string hash;
+	public string lang;
+	public string aid;
+	public string token;
+	public string taxonomy;
+	public string activeProfileId;
+	public string nickname;
+	public double utc_time;
+	public GClass1009 backend;
+	public long totalInGame;
+	public bool reportAvailable;
+    */
     let obj = {
       queued: false,
       banTime: 0,
       hash: "BAN0",
       lang: "en",
-      ndaFree: false,
-      reportAvailable: true,
-      languages: {},
       aid: sessionID,
       token: sessionID,
       taxonomy: 6,
       activeProfileId: "pmc" + sessionID,
       nickname: "user",
-      backend: {
-        Trading: server.getBackendUrl(),
-        Messaging: server.getBackendUrl(),
-        Main: server.getBackendUrl(),
-        RagFair: server.getBackendUrl(),
-      },
-      totalInGame: 0,
       utc_time: utility.getTimestamp(),
+      backend: {
+        Trading: Server.getHttpsUrl(),// server.getBackendUrl(),
+        Messaging: Server.getHttpsUrl(),//server.getBackendUrl(),
+        Main: Server.getHttpsUrl(),//server.getBackendUrl(),
+        RagFair: Server.getHttpsUrl(),//server.getBackendUrl(),
+      },
+      totalInGame: 1000,
+      reportAvailable: true,
     };
-    const languages = locale_f.handler.getLanguages().data;
-    for (let index in languages) {
-      let lang = languages[index];
-      obj.languages[lang.ShortName] = lang.Name;
-    }
+
+    // const languages = locale_f.handler.getLanguages().data;
+    // if(languages !== undefined) {
+    //   for (let index in languages) {
+    //     let lang = languages[index];
+    //     obj.languages[lang.ShortName] = lang.Name;
+    //   }
+    // }
+    // else {
+    //   obj.languages["en"] = "English";
+    // }
+
+    
+
     return response_f.getBody(obj);
   }
   clientGameKeepalive(url, info, sessionID) {
@@ -394,6 +417,9 @@ class Responses {
     return response_f.getBody([profile_f.handler.generateScav(sessionID)]);
   }
   clientGameProfileSearch(url, info, sessionID) {
+    console.log(url);
+    console.log(info);
+    console.log(sessionID);
     return response_f.getBody(AccountController.getAllAccounts().filter(x=>x._id != sessionID));
   }
   clientGameProfileSelect(url, info, sessionID) {

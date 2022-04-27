@@ -2,6 +2,7 @@ const { NotifierService } = require('./../classes/notifier');
 const { FriendshipController } = require('./FriendshipController');
 const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
+const { Server } = require('./../../core/server/server');
 
 class ResponseController
 {
@@ -55,16 +56,10 @@ module.exports = {
      * @param {*} url 
      * @param {*} info 
      * @param {*} sessionID 
-     * @returns { requestId, retryAfter, status }
+     * @returns {*} { requestId, retryAfter, status }
      */
     "/client/friend/request/send" : (url, info, sessionID) => {
-
         const result = FriendshipController.addFriendRequest(sessionID, info.to);
-        // const myAccount = AccountServer.find(sessionID);
-        // console.log(info);
-        // console.log(sessionID);
-        // return { requestId: 12112312, retryAfter: 0, status: 0 }
-
         return ResponseController.getBody(result);
     },
     "/client/friend/request/list/outbox" : (url, info, sessionID) => {
@@ -76,10 +71,83 @@ module.exports = {
         const result = FriendshipController.getFriendRequestInbox(sessionID);
         return ResponseController.getBody(result);
     },
+    /**
+     * Expects requestId, retryAfter, status
+     * @param {*} url 
+     * @param {*} info 
+     * @param {*} sessionID 
+     * @returns {*} { requestId, retryAfter, status }
+     */
+     "/client/friend/request/cancel" : (url, info, sessionID) => {
+         console.log(info);
+         console.log(sessionID);
+        const result = FriendshipController.deleteFriendRequest(sessionID, info.requestId);
+        return ResponseController.getBody(result);
+    },
+    /**
+     * Expects requestId, retryAfter, status
+     * @param {string} url 
+     * @param {object} info 
+     * @param {string} sessionID 
+     * @returns {object} { requestId, retryAfter, status }
+     */
+     "/client/friend/request/accept-all" : (url, info, sessionID) => {
+        FriendshipController.acceptAllRequests(sessionID);
+        return ResponseController.getBody("OK");
+    },
+    /**
+     * 
+     * @param {string} url 
+     * @param {object} info 
+     * @param {string} sessionID 
+     * @returns {object} 
+     */
     "/client/notifier/channel/create" : (url, info, sessionID) => {
         const result = NotifierService.getChannel(sessionID);
         console.log(result);
         return ResponseController.getBody(result);
+    },
+    /**
+     * 
+     * @param {string} url 
+     * @param {object} info 
+     * @param {string} sessionID 
+     * @returns {object}
+     */
+    "/client/game/config" : (url, info, sessionID) => {
+        let obj = {
+            queued: false,
+            banTime: 0,
+            hash: "BAN0",
+            lang: "en",
+            aid: sessionID,
+            token: sessionID,
+            taxonomy: 6,
+            activeProfileId: "pmc" + sessionID,
+            nickname: "user",
+            utc_time: utility.getTimestamp(),
+            backend: {
+              Trading: Server.getHttpsUrl(),// server.getBackendUrl(),
+              Messaging: Server.getHttpsUrl(),//server.getBackendUrl(),
+              Main: Server.getHttpsUrl(),//server.getBackendUrl(),
+              RagFair: Server.getHttpsUrl(),//server.getBackendUrl(),
+            },
+            totalInGame: 1000,
+            reportAvailable: true,
+          };
+          return ResponseController.getBody(obj);
+    },
+    "/client/game/profile/search" : (url, data, sessionID) => {
+        console.log(data.nickname);
+        console.log(sessionID);
+
+        const foundAccounts = AccountController
+        .getAllAccounts()
+        .filter(x=>x._id != sessionID 
+            && x.Info.Nickname.toLowerCase().indexOf(data.nickname.toLowerCase()) !== -1
+             );
+
+        return response_f.getBody(foundAccounts);
     },
 
 
