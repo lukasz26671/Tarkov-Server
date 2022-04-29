@@ -39,6 +39,7 @@ gameplay.json
 # user/profiles - profiles is already being done above
 
 AE-Server-*
+Server-*
 JustEmuTarkov-*
 *.exe
 dumpTools

@@ -1,8 +1,8 @@
 {
-  "name": "AE-Server",
+  "name": "Server",
   "version": "3.0.0",
   "main": "core/main.js",
-  "author": "AE-Team, JET Team",
+  "author": "AE-Team, JET Team, Paulov",
   "license": "MIT",
   "scripts": {
     "start": "node core/main.js",
