@@ -51,6 +51,12 @@ class FriendRequest {
     toFriendRequestResponse(friendRequestId) {
         if(!friendRequestId)
             friendRequestId = utility.generateNewId();
+        
+        if(this.to === undefined)
+            return undefined;
+
+        if(this.from === undefined)
+            return undefined;
 
         var acc = AccountServer.find(this.from);
 		var toAcc = AccountServer.find(this.to);

@@ -44,9 +44,11 @@ static getFriendRequestInbox(sessionID) {
 	 * friendR is FriendRequest
 	 */
 	for(const friendR of acc.friendRequestInbox) {
-		console.log(friendR);
-		const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
-		resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
+		if(friendR._id !== null) {
+			console.log(friendR);
+			const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
+			resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
+		}
 	}
   
 	return resultArray;
