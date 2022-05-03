@@ -1,9 +1,22 @@
 "use strict";
+const fs = require('fs');
+
+const watermarkStuff = {};
+watermarkStuff["serverConfigBase"] = JSON.parse(fs.readFileSync("./user/configs/server_base.json"));
+if(fs.existsSync("./user/configs/server.json")) {
+	watermarkStuff["serverConfig"] = JSON.parse(fs.readFileSync("./user/configs/server.json"));
+}
+console.log(watermarkStuff);
 
 const textTable = [
 	"JustEmuTarkov " + server.getVersion(),
-	"« discord.gg/T66tGKa »"
+	"",
+	""
 ];
+
+textTable[0] = watermarkStuff["serverConfig"] !== undefined ? watermarkStuff["serverConfig"].name : watermarkStuff["serverConfigBase"].name;
+textTable[1] = watermarkStuff["serverConfig"] !== undefined ? watermarkStuff["serverConfig"].discord : watermarkStuff["serverConfigBase"].discord;
+textTable[2] = watermarkStuff["serverConfig"] !== undefined ? watermarkStuff["serverConfig"].website : watermarkStuff["serverConfigBase"].website;
 
 /* Calculate Box Sizes - START */
 var longestTextTableIndex = 0;
@@ -16,7 +29,7 @@ function getBoxSpacing(isUpper = 0, text = "") {
 		}
 	} else { // isUpper [0 => "", 1 => "▄", 2 => "▀"]; text [(== "")]
 		for (let i = 0; i < textTable[longestTextTableIndex].length; i++) {
-			box_spacing_between += (isUpper == 0) ? " " : "─";//(isUpper == 1)?"─":(isUpper == 0)?" ":"─";
+			box_spacing_between += (isUpper == 0) ? " " : "─";
 		}
 	}
 	return box_spacing_between;
