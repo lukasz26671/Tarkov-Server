@@ -6,7 +6,7 @@ watermarkStuff["serverConfigBase"] = JSON.parse(fs.readFileSync("./user/configs/
 if(fs.existsSync("./user/configs/server.json")) {
 	watermarkStuff["serverConfig"] = JSON.parse(fs.readFileSync("./user/configs/server.json"));
 }
-console.log(watermarkStuff);
+// console.log(watermarkStuff);
 
 const textTable = [
 	"JustEmuTarkov " + server.getVersion(),
