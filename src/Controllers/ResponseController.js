@@ -3,6 +3,7 @@ const { FriendshipController } = require('./FriendshipController');
 const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
 const { Server } = require('./../../core/server/server');
+const utility = require('./../../core/util/utility')
 
 class ResponseController
 {
@@ -27,11 +28,33 @@ class ResponseController
         return this.getBody([]);
     }
 
-}
+    static Routes = 
+    [
+        {
+            url: "/client/game/profile/select",
+            action: (url, info, sessionID) => {
+                return ResponseController.getBody({
+                    "status": "ok",
+                    "notifier": NotifierService.getChannel(sessionID),
+                    "notifierServer": NotifierService.getServer(sessionID)
+                });
+            }
+        }
+    ]
+
+    static getRoute = (url,info,sessionID) => {
+        var foundRoute = ResponseController.Routes.find(y=>y.url === url);
+        if(foundRoute !== undefined) {
+            return foundRoute.action;
+        }
+        
+        return undefined;
+    }
+
+};
 
 module.exports.ResponseController = ResponseController;
-
-module.exports = {
+module.exports.Routes = {
 
     "/client/game/profile/select": (url, info, sessionID) => {
         return ResponseController.getBody({
@@ -138,6 +161,23 @@ module.exports = {
           return ResponseController.getBody(obj);
     },
     "/client/game/profile/search" : (url, data, sessionID) => {
+
+        console.log(url);
+        console.log(data);
+        console.log(sessionID);
+
+        if(sessionID === undefined) {
+            throw "SESSION ID is not defined!";
+        }
+
+        if(data === undefined) {
+            throw "data is not defined!";
+        }
+
+        if(data.nickname === undefined) {
+            throw "nickname is not defined!";
+        }
+
         console.log(data.nickname);
         console.log(sessionID);
 

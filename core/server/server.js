@@ -3,6 +3,7 @@ const fs = require('fs');
 const http  = require('http'); // requires npm install http on the Server
 const https  = require('https');
 const WebSocket = require('ws'); // requires npm install ws on the Server
+const utility = require('./../util/utility')
 const { ResponseController } = require('../../src/Controllers/ResponseController');
 const { logger } = require('../util/logger');
 const { Account } = require('./../../src/classes/account');
@@ -135,13 +136,14 @@ class Server {
     //   return;
 
     // get response
-    if (req.method === "POST" || req.method === "PUT") {
-      output = router.getResponse(req, body, sessionID);
-    } else {
-      // output = router.getResponse(req, "", sessionID);
-      output = router.getResponse(req, body, sessionID);
+    // if (req.method === "POST" || req.method === "PUT") {
+    //   output = router.getResponse(req, body, sessionID);
+    // } else {
+    //   // output = router.getResponse(req, "", sessionID);
+    //   output = router.getResponse(req, body, sessionID);
 
-    }
+    // }
+    output = router.getResponse(req, body, sessionID);
 
     /* route doesn't exist or response is not properly set up */
     if (output === "") {
@@ -227,23 +229,47 @@ class Server {
       case "PUT":
       case "POST": 
       {
-        let body = [];
+
         req.on('data', (chunk) => {
-          body.push(chunk);
+
+          if(req.requestBody === undefined) {
+            req.requestBody = chunk;
+          }
+          else {
+            req.requestBody = Buffer.concat([req.requestBody, chunk], req.requestBody.length + chunk.length);
+          }
+
         }).on('end', () => {
-          let data = Buffer.concat(body);
-        
-          internal.zlib.inflate(data, function (err, body) {
-            if(body !== undefined) {
-              let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-              output = server.sendResponse(sessionID, req, resp, jsonData);
-            }
-            else {
-              output = server.sendResponse(sessionID, req, resp, "")
-            }
-          });
+
+            // console.log(req.requestBody);
+            internal.zlib.inflate(req.requestBody, function (err, body) {
+              if(body !== undefined) {
+                let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+                output = server.sendResponse(sessionID, req, resp, jsonData);
+              }
+              else {
+                output = server.sendResponse(sessionID, req, resp, "")
+              }
+            });
+
         });
-        return true;
+        // let body = [];
+        // req.on('data', (chunk) => {
+        //   body.push(chunk);
+        // }).on('end', () => {
+        //   let data = Buffer.concat(body);
+        
+        //   internal.zlib.inflate(data, function (err, body) {
+        //     if(body !== undefined) {
+        //       let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+        //       output = server.sendResponse(sessionID, req, resp, jsonData);
+        //     }
+        //     else {
+        //       output = server.sendResponse(sessionID, req, resp, "")
+        //     }
+        //   });
+        // });
+        // return true;
       }
       // case "PUT": 
       // {
@@ -335,23 +361,29 @@ class Server {
 
     webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
 
-    const serverConfigData = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
-    if(serverConfigData.runSimpleHttpServer && serverConfigData.runSimpleHttpServer === true) {
+    // const serverConfigData = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
+    // if(serverConfigData.runSimpleHttpServer && serverConfigData.runSimpleHttpServer === true) {
       /**
        * Simple Http Server to deal with Azure Web App integration
        * It could also be used to extend the system. 
        * Run this seperately to the actual server?
        */
-      const httpServer = http.createServer(async (req, res) => {
-        res.writeHead(200);
-        // res.end('Iya!');
+      // const httpServer = http.createServer(async (req, res) => {
+      //   res.writeHead(200);
+      //   res.end('Iya!');
+      //   // this.handleRequest(req,res);
+      // });
+      // httpServer.on('error', (err) => { logger.logError(err); })
+      // httpServer.on('listening', () => { 
+      //   var addr = httpServer.address();
+      //   var bind = typeof addr === 'string'
+      //     ? 'pipe ' + addr
+      //     : 'port ' + addr.port;
+      //   logger.logSuccess("Http Server listening " + addr.address); })
+      // // httpServer.on('request', (request) => { logger.logInfo("http server request"); })
+      // httpServer.listen(process.env.PORT || '3000');
 
-        this.handleRequest(req,res);
-      });
-      httpServer.listen(8080);
-      logger.logSuccess(`Simple Http Server running on Port 8080`);
-
-    }
+    // }
 
     
     // startFastifyServer();

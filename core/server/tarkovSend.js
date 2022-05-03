@@ -29,19 +29,24 @@ class TarkovSend {
         let Header = { "Content-Type": TarkovSend.mimeTypes["json"], "Set-Cookie": "PHPSESSID=" + sessionID };
         // let Header = { "Content-Type": TarkovSend.mimeTypes["zlib"], "Set-Cookie": "PHPSESSID=" + sessionID };
         // this should enable content encoding if you ask server from web browser
-
         // console.log(request);
-        if (sessionID === undefined 
+        if (
+            (sessionID === undefined 
             // || request.headers["accept-encoding"] === undefined
             || 
             request.headers["postman-token"] !== undefined
+            )
+            && output != null
             ) {
             Header["content-encoding"] = "deflate";
+            // console.log(resp);
         }
         resp.writeHead(200, "OK", Header);
         internal.zlib.deflate(output, function (err, buf) {
             resp.end(buf);
+            return true;
         });
+
     }
 
     txtJson(resp, output) {

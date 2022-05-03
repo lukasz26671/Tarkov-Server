@@ -1,12 +1,12 @@
 "use strict";
-const Routes1 = require("../../src/Controllers/ResponseController");
+const ResponseController = require("../../src/Controllers/ResponseController").ResponseController;
+const Routes = require("../../src/Controllers/ResponseController").Routes;
 
 class Router {
   constructor() {
     this.responseClass = require(executedDir + "/src/functions/response.js").responses;
   }
 
-  static Routes = require("../../src/Controllers/ResponseController");
 
   getResponse(req, body, sessionID) {
     let output = "";
@@ -30,8 +30,13 @@ class Router {
     /* route request */
 
     // This is the new system
-    if(Router.Routes[url]) {
-      output = Router.Routes[url](url, info, sessionID);
+
+    if(ResponseController.getRoute(url, info, sessionID) !== undefined) {
+      output = ResponseController.getRoute(url, info, sessionID)(url, info, sessionID);
+    }
+    else 
+    if(Routes[url]) {
+      output = Routes[url](url, info, sessionID);
     }
     // This is the old system for backup
     else {

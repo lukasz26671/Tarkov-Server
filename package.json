@@ -1,16 +1,19 @@
 {
   "name": "Server",
   "version": "3.0.0",
-  "main": "core/main.js",
   "author": "AE-Team, JET Team, Paulov",
   "license": "MIT",
   "scripts": {
-    "start": "node core/main.js",
-    "watch": "nodemon --config nodemon.json ./core/main.js"
+    "start": "node bin/www.js",
+    "watch": "nodemon --config nodemon.json ./bin/www.js"
   },
   "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "decimal-adjust": "^0.0.0",
+    "ejs": "^3.1.7",
+    "express": "^4.18.1",
     "fastify": "^3.28.0",
     "mocha": "^9.2.2",
     "ps-list": "7.2.0",
@@ -26,7 +29,7 @@
     "nodemon": "^2.0.15",
     "upx": "1.0.6"
   },
-  "bin": "core/main.js",
+  "bin": "bin/www.js",
   "pkg": {
     "scripts": [
       "core/**/*.js",
@@ -35,6 +38,9 @@
     "assets": [
       "core/**/*.js",
       "core/util/*.js"
+    ],
+    "targets": [
+      "node16-win"
     ]
   }
 }

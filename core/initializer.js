@@ -11,7 +11,7 @@ class Initializer {
     // start watermark and server
     require("./watermark.js").run();
     global.consoleResponse = require("./console.js").consoleResponse;
-    server.start();
+    // server.start();
   }
 
   /* load core functionality */

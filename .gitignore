@@ -44,3 +44,5 @@ JustEmuTarkov-*
 *.exe
 dumpTools
 docs
+
+Build/

@@ -5,6 +5,8 @@
 	"eventPollIntervalSec": 60,
 	"rebuildCache": true,
 	"name": "JustEmuTarkov",
+	"discord": "",
+	"website": "",
   "runSimpleHttpServer": false,
   "Patches": {
     "RemoveAddOfferButton_Awake": true,
