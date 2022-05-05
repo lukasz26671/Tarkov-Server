@@ -154,26 +154,30 @@ class TraderServer {
   }
 
   getCustomization(traderID, sessionID) {
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    // console.log(traderID);
+    // let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
-    //let suitArray = utility.DeepCopy(_database.customization);
-    //had to bring this back until we have some time to edit the whole tree
-    //of things to make it work in memory (database.js, cache creation and more)
-    let suitArray = global._database.traders[traderID].suits;
+    // console.log(allSuits);
+
+    // //let suitArray = utility.DeepCopy(_database.customization);
+    // //had to bring this back until we have some time to edit the whole tree
+    // //of things to make it work in memory (database.js, cache creation and more)
+    // let suitArray = global._database.traders[traderID].suits;
     let suitList = [];
 
-    for (let suit in suitArray) {
-      if (suitArray[suit].suiteId in allSuits) {
-        for (var i = 0; i < allSuits[suitArray[suit].suiteId]._props.Side.length; i++) {
-          let side = allSuits[suitArray[suit].suiteId]._props.Side[i];
-          if (side === pmcData.Info.Side) {
-            suitList.push(suitArray[suit]);
-          }
-        }
-      }
-    }
+    // for (let suit in suitArray) {
+    //   if (suitArray[suit].suiteId in allSuits) {
+    //     for (var i = 0; i < allSuits[suitArray[suit].suiteId]._props.Side.length; i++) {
+    //       let side = allSuits[suitArray[suit].suiteId]._props.Side[i];
+    //       if (side === pmcData.Info.Side) {
+    //         suitList.push(suitArray[suit]);
+    //       }
+    //     }
+    //   }
+    // }
 
-    return suitList;
+    // return suitList;
+    return allSuits;
   }
   getAllCustomization(sessionID) {
     let output = [];

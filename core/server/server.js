@@ -523,7 +523,7 @@ class Server {
     logger.logDebug("Initialize bundles...")
     bundles_f.handler.initialize();
     logger.logInfo("Starting server...");
-    this.CreateServer();
+    // this.CreateServer();
   }
 }
 

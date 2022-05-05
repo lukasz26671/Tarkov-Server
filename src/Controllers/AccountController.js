@@ -55,7 +55,7 @@ class AccountController
       
           // console.log(fullyLoadedAccounts);
           return fullyLoadedAccounts;
-      }
+        }
 }
 
 module.exports.AccountController = AccountController;
