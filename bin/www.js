@@ -25,7 +25,8 @@ const serverBaseConfig = fs.readFileSync(process.cwd() + "/user/configs/server.j
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '7777');
+// var port = normalizePort(process.env.PORT || '7777');
+var port = normalizePort('7777');
 app.set('port', port);
 
 
@@ -75,19 +76,19 @@ var httpsServer = https.createServer({
 /** ======================================================================================================
  * Https Server running on whatever port determined by outcome above
  */
-if(serverConfig.runSimpleHttpServer === true) {
+// if(serverConfig.runSimpleHttpServer === true) {
   server.on('listening', () => {
-    console.log(">> HTTP << server listening on " + port);
+    console.log(">> HTTP << server listening on " + 8080);
   })
-  server.listen(port, ()=>{
+  server.listen(8080, ()=>{
   });
-}
-else {
+// }
+// else {
   httpsServer.on('error', onError);
   httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().port) });
   httpsServer.listen(port, ()=>{
   });
-}
+// }
 
 
 

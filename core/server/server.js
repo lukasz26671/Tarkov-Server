@@ -9,7 +9,7 @@ const { logger } = require('../util/logger');
 const { Account } = require('./../../src/classes/account');
 const { SaveHandler } = require('./../../src/classes/savehandler');
 const { TarkovSend } = require('./tarkovSend.js');
-const fastify = require('fastify')({ logger: true });
+// const fastify = require('fastify')({ logger: true });
 
 class Server {
   constructor() {
