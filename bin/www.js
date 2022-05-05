@@ -16,6 +16,11 @@ const { certificate } = require('./../core/server/certGenerator');
 var serverIp = "127.0.0.1";
 const serverBaseConfig = fs.readFileSync(process.cwd() + "/user/configs/server.json");
 
+/** ======================================================================================================
+ * Read in the Server Config as to whether to spin up the Http Server for NodeJS running on Cloud Services
+ */
+ const serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
+
 /**
  * Get port from environment and store in Express.
  */
@@ -28,12 +33,12 @@ app.set('port', port);
 //  * Create HTTP server.
 //  */
 const certs = certificate.generate(serverIp);
-const server = http.createServer();
+
+const server = http.createServer(app);
+
 var httpsServer = https.createServer({
   key: certs.key,
   cert: certs.cert
-  // key: fs.readFileSync(process.cwd() + "/user/certs/key.pem"),
-  // cert: fs.readFileSync(process.cwd() + "/user/certs/cert.pem"),
 },app);
 
 // /**
@@ -44,8 +49,7 @@ var httpsServer = https.createServer({
 // server.on('error', onError);
 // server.on('listening', onListening);
 
-httpsServer.on('error', onError);
-httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().port) });
+
 // Set up a headless websocket server
 // const wsServer = new ws.WebSocketServer({ server: httpsServer }, ()=>{console.log("ws server created"); })
 // wsServer.on('connection', socket => {
@@ -66,43 +70,26 @@ httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + h
 // });
 
 
-/** ======================================================================================================
- * Read in the Server Config as to whether to spin up the Http Server for NodeJS running on Cloud Services
- */
-const serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
 
-
-/** ======================================================================================================
- *  Determine whether the Https Server needs to run on a different port
- */
-if(serverConfig.runSimpleHttpServer === true) port = port + 1;
 
 /** ======================================================================================================
  * Https Server running on whatever port determined by outcome above
  */
-httpsServer.listen(port, ()=>{
-});
-
 if(serverConfig.runSimpleHttpServer === true) {
-  server.addListener('request', (req, res) => {
-    // var fullUrl = req.protocol + "s" + '://' + req.get('host') + req.originalUrl;
-    // http.request(fullUrl, (resp) => { res = resp; });
-    var host = req.headers['host'];
-    // console.log(host);
-    const ip = host.split(':')[0];
-    const redirectLocation = "https://" + ip + ":" + port;
-    console.log("redirected to ->>" + redirectLocation + req.url);
-    res.writeHead(301, { "Location": redirectLocation + req.url });
-    res.end();
-  });
-  const httpPort = port - 1;
-  console.log("Starting >> HTTP << server on " + httpPort);
   server.on('listening', () => {
-    console.log(">> HTTP << server listening on " + httpPort);
+    console.log(">> HTTP << server listening on " + port);
   })
-  server.listen(httpPort, ()=>{
+  server.listen(port, ()=>{
   });
 }
+else {
+  httpsServer.on('error', onError);
+  httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().port) });
+  httpsServer.listen(port, ()=>{
+  });
+}
+
+
 
 
 

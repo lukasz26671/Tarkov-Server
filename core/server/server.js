@@ -522,7 +522,7 @@ class Server {
     global.mods_f.TamperModLoad(); // TamperModLoad
     logger.logDebug("Initialize bundles...")
     bundles_f.handler.initialize();
-    logger.logInfo("Starting server...");
+    // logger.logInfo("Starting server...");
     // this.CreateServer();
   }
 }
