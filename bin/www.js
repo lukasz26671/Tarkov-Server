@@ -13,7 +13,15 @@ const https = require('https');
 const fs = require('fs');
 const ws = require('ws');
 const { certificate } = require('./../core/server/certGenerator');
+const { ConfigController } = require('./../src/Controllers/ConfigController')
 var serverIp = "127.0.0.1";
+
+/**
+ * Rebuild / Build configs
+*/
+ConfigController.rebuildFromBaseConfigs();
+
+
 const serverBaseConfig = fs.readFileSync(process.cwd() + "/user/configs/server.json");
 
 /** ======================================================================================================
@@ -26,7 +34,8 @@ const serverBaseConfig = fs.readFileSync(process.cwd() + "/user/configs/server.j
  */
 
 // var port = normalizePort(process.env.PORT || '7777');
-var port = normalizePort('7777');
+// var port = normalizePort('7777');
+var port = normalizePort(serverConfig.port);
 app.set('port', port);
 
 
