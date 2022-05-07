@@ -40,6 +40,8 @@ app.use(cookieParser());
  */
 function inflateRequestBody(req, res, next, done) {
 
+  // console.log(req.body);
+
   const stringifiedBody =
     typeof(req.body) === "object" ? JSON.stringify(req.body) : null;
 

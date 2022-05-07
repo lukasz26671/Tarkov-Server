@@ -684,16 +684,17 @@ class Responses {
     return fileIO.stringify(output);
   }
   launcherProfileLogin(url, info, sessionID) {
-    let output = AccountServer.login(info);
-    return output === "" ? "FAILED" : output;
+    // let output = AccountServer.login(info);
+    let output = AccountController.login(info);
+    return output === undefined || output === null || output === "" ? "FAILED" : output;
   }
   launcherProfileRegister(url, info, sessionID) {
     let output = AccountServer.register(info);
-    return output !== "" ? "FAILED" : "OK";
+    return output === undefined || output === null || output === "" ? "FAILED" : output;
   }
   launcherProfileRemove(url, info, sessionID) {
     let output = AccountServer.remove(info);
-    return output === "" ? "FAILED" : "OK";
+    return output === undefined || output === null || output === "" ? "FAILED" : "OK";
   }
   launcherServerConnect(url, info, sessionID) {
     return fileIO.stringify({

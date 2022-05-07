@@ -1,4 +1,5 @@
 const fs = require('fs');
+const {AccountServer} = require('./../classes/account')
 
 /**
  * Account Controller. 
@@ -56,6 +57,46 @@ class AccountController
           // console.log(fullyLoadedAccounts);
           return fullyLoadedAccounts;
         }
+
+
+    static findAccountIdByUsernameAndPassword(username, password) {
+        const profileFolders = fs.readdirSync(`user/profiles/`);
+          for (const id of profileFolders) {
+              if (!fileIO.exist(`user/profiles/${id}/character.json`)) continue;
+              let account = JSON.parse(fs.readFileSync(`user/profiles/${id}/account.json`));
+              if(account.email == username && account.password == password)
+                return id;
+          }
+        return undefined;
+    }
+    /**
+     * 
+     * @param {object} info 
+     */
+    static login(info) {
+        return AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
+    }
+
+    static register(info) {
+        // Get existing account from memory or cache a new one.
+        let accountID = AccountServer.reloadAccountByLogin(info)
+        if (accountID) {
+          return accountID
+        }
+    
+        accountID = utility.generateNewAccountId();
+    
+        AccountServer.accounts[accountID] = {
+          id: accountID,
+          email: info.email,
+          password: info.password,
+          wipe: true,
+          edition: info.edition,
+        };
+    
+        AccountServer.saveToDisk(accountID);
+        return accountID;
+      }
 }
 
 module.exports.AccountController = AccountController;
