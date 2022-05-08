@@ -10,6 +10,7 @@ const zlib = require('zlib');
 var compression = require('compression');
 
 const responseClass = require("./../src/functions/response").responses;
+const legacyCallbacks = require("./../src/functions/callbacks.js").callbacks
 
 const cookieParser = require('cookie-parser');
 const { truncate } = require('fs');
@@ -154,6 +155,8 @@ app.use(function(req, res, next) {
       }
     }
 
+    
+
     next();
 
 
@@ -194,17 +197,32 @@ function handleRoute(req, res, Route) {
   if(routedData != null && routedData != undefined ) {
     // const deflateData = zlib.deflateSync(routedData, {});
 
-    zlib.deflate(routedData, (err, deflateData) => {
+        // console.log(routedData);
 
-      // console.log(deflateData);
-      if(req.headers["postman-token"] !== undefined)
-        res.setHeader("content-encoding", "deflate");
+    let _responseCallbackOccurred = false;
+    const responseCallbacks = legacyCallbacks.getRespondCallbacks();
+    for(const r in responseCallbacks) {
+      if(r === routedData) {
+        // console.log(routedData);
+        // console.log(r);
+        responseCallbacks[r](PHPSESSID, req, res, routedData);
+        _responseCallbackOccurred = true;
+      }
+    }
 
-      res.setHeader("content-type", "application/json");
+    if(!_responseCallbackOccurred) {
+      zlib.deflate(routedData, (err, deflateData) => {
 
-      res.send(deflateData);
+        // console.log(deflateData);
+        if(req.headers["postman-token"] !== undefined)
+          res.setHeader("content-encoding", "deflate");
 
-    });
+        res.setHeader("content-type", "application/json");
+
+        res.send(deflateData);
+
+      });
+    }
 
    
   }
