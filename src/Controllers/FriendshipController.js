@@ -7,31 +7,38 @@ const { FriendRequest } = require('./../EFT/JavaScriptTypes/FriendRequest')
 class FriendshipController {
 
     
-    static getFriends(sessionID) {
-	// console.log("getFriends");
-	let friendAccounts = [];
+	static getFriends(sessionID) {
+		// console.log("getFriends");
+		let friendAccounts = [];
 
-	let allAccounts = AccountServer.getAllAccounts();
-	let myAccount = AccountServer.find(sessionID);
-	if(myAccount === undefined) { 
-	  logger.logError("Own Account cannot be found!");
-	  return null;
-    }
+		let allAccounts = AccountServer.getAllAccounts();
+		let myAccount = AccountServer.find(sessionID);
+		if(myAccount === undefined) { 
+		logger.logError("Own Account cannot be found!");
+		return null;
+		}
 
-	for (const id of myAccount.friends) {
-
-		let acc = allAccounts.find(x => x._id == id);
-		if(acc) {
-			friendAccounts.push(acc);
+		if(myAccount.friends === undefined) {
+			myAccount.friends = [];
+			AccountServer.saveToDisk(sessionID);
+			return [];
 		}
 		else {
-			logger.logError(`Unable to find friend's account by its Id (${id}), does it still exist? Removing!`);
-			myAccount.friends = myAccount.friends.filter(x=>x._id !== id);
-		}
-	}
+			for (const id of myAccount.friends) {
 
-	return friendAccounts;
-}
+				let acc = allAccounts.find(x => x._id == id);
+				if(acc) {
+					friendAccounts.push(acc);
+				}
+				else {
+					logger.logError(`Unable to find friend's account by its Id (${id}), does it still exist? Removing!`);
+					myAccount.friends = myAccount.friends.filter(x=>x._id !== id);
+				}
+			}
+		}
+
+		return friendAccounts;
+	}
 
 static getFriendRequestInbox(sessionID) {
 	var acc = AccountServer.find(sessionID);

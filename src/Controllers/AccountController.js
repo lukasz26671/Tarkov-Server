@@ -62,7 +62,7 @@ class AccountController
     static findAccountIdByUsernameAndPassword(username, password) {
         const profileFolders = fs.readdirSync(`user/profiles/`);
           for (const id of profileFolders) {
-              if (!fileIO.exist(`user/profiles/${id}/character.json`)) continue;
+              if (!fileIO.exist(`user/profiles/${id}/account.json`)) continue;
               let account = JSON.parse(fs.readFileSync(`user/profiles/${id}/account.json`));
               if(account.email == username && account.password == password)
                 return id;

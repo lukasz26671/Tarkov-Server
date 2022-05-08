@@ -1,5 +1,6 @@
 ﻿"use strict";
-const { AccountServer } = require('./account')
+const { AccountServer } = require('./account');
+const fs = require('fs');
 
 /*
  * ProfileServer class maintains list of active profiles for each sessionID in memory. All first-time loads and save
@@ -268,7 +269,9 @@ class ProfileServer {
     const ChosenSideCapital = ChosenSide.charAt(0).toUpperCase() + ChosenSide.slice(1);
 
     // Get the profile template for the chosen faction //
-    let pmcData = fileIO.readParsed(db.profile[account.edition]["character_" + ChosenSide]);
+    // let pmcData = fileIO.readParsed(db.profile[account.edition]["character_" + ChosenSide]);
+    // let pmcData = JSON.parse(fs.readFileSync(process.cwd() + "/db/profile/Edge Of Darkness/character_usec.json"));
+    let pmcData = JSON.parse(fs.readFileSync(process.cwd() + `/db/profile/Edge Of Darkness/character_${ChosenSide}.json`));
 
     // Initialize the clothing object //
     let storage = { _id: "", suites: [] };
