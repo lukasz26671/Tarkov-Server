@@ -1,20 +1,31 @@
 const fs = require('fs');
 
 class ConfigController {
-    
+    constructor() {
+        ConfigController.rebuildFromBaseConfigs();
+    }
+
+    static Instance = new ConfigController();
+    static Configs = {};
+
     static rebuildFromBaseConfigs() {
+        if(ConfigController.Configs === undefined)
+            ConfigController.Configs = {};
+
         this.refreshGameplayConfigFromBase();
         this.refreshServerConfigFromBase();
 
         const files = fs.readdirSync(`user/configs/`);
       
         for (const f of files) {
-            ConfigController.Configs[f.replace(".json", "")] = JSON.parse(fs.readFileSync(`user/configs/${f}`));
+            const dataRaw = fs.readFileSync(`user/configs/${f}`);
+            if(dataRaw !== undefined) {
+                ConfigController.Configs[f.replace(".json", "")] = JSON.parse(dataRaw);
+            }
         }
 
     }
 
-    static Configs = {};
 
     /**
      * 
@@ -22,6 +33,12 @@ class ConfigController {
      * @param {object} globalVariable Expects the exact object variable e.g. global.serverConfig
      */
     static rebuildFromBaseConfig(configFileName, globalVariable) {
+
+        if(configFileName === undefined)
+            return;
+        
+        if(globalVariable === undefined)
+            return;
 
         const baseFileLocation = process.cwd() + `/user/configs/${configFileName}_base.json`; 
 
@@ -103,3 +120,4 @@ class ConfigController {
 }
 
 module.exports.ConfigController = ConfigController;
+module.exports.ConfigControllerInstance = ConfigController.Instance;
