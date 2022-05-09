@@ -51,6 +51,19 @@ class ResponseController
         return undefined;
     }
 
+    /**
+     * 
+     * @param {string} url 
+     * @param {function} action 
+     */
+    static addRoute = (url, action) => {
+        ResponseController.Routes.push({ url: url, action: action })
+    }
+
+    static RoutesToNotLog = [
+        "/jpg"
+    ];
+
 };
 
 module.exports.ResponseController = ResponseController;
