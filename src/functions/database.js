@@ -353,7 +353,11 @@ function loadLocationData() {
 }
 
 const loadTraderAssort = (traderId) => {
+
   let base = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
+  if(traderId == "579dc571d53a0658a154fbec")
+    return base;
+
   const assort = fileIO.readParsed(db.traders[traderId].assort);
 
   for (let item in assort) {
