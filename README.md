@@ -25,5 +25,10 @@ Zip the following folders & files
 - user
 - Server.exe
 
-## How to host this server to others
-- Open
+## How to host this server to others (this may change soon)
+- Open port 7777 on your router
+- Open user/configs/server.json and change port value to 7777 (this can anything but this is a good easily memorable open one to use)
+- Open user/configs/server.json and change ip value to your internal IP (google to find out how to find it)
+- Open user/configs/server.json and change ip_backend value to your external IP (google to find out how to find it)
+- Run the Server
+- Provide your friends with your external IP address and port
