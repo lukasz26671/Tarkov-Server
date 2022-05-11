@@ -1,5 +1,7 @@
 "use strict";
 
+const { TradingController } = require("../Controllers/TradingController");
+
 /* TraderServer class maintains list of traders for each sessionID in memory. */
 class TraderServer {
   constructor() {
@@ -307,53 +309,55 @@ class TraderUtils {
   }
 
   static generateFenceAssort() {
-    const fenceId = "579dc571d53a0658a154fbec";
-    let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
+
+    TradingController.generateFenceAssort();
+    // const fenceId = "579dc571d53a0658a154fbec";
+    // let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
   
-    let fence_base_assort = _database.traders[fenceId].base_assort.items;
-    //fileIO.readParsed(db.user.cache.assort_579dc571d53a0658a154fbec).data.items;
+    // let fence_base_assort = _database.traders[fenceId].base_assort.items;
+    // //fileIO.readParsed(db.user.cache.assort_579dc571d53a0658a154fbec).data.items;
   
-    let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
+    // let fence_base_assort_root_items = fence_base_assort.filter((item) => item.parentId === "hideout");
   
-    const fence_assort = [];
-    const barter_scheme = {};
+    // const fence_assort = [];
+    // const barter_scheme = {};
   
-    const FENCE_ASSORT_SIZE = global._database.gameplay.trading.fenceAssortSize;
-    for (let i = 0; i < FENCE_ASSORT_SIZE; i++) {
-      let random_item_index = utility.getRandomInt(
-        0,
-        fence_base_assort_root_items.length - 1
-      );
-      let random_item = fence_base_assort_root_items[random_item_index];
-      let random_item_children = TraderUtils.iterItemChildrenRecursively(
-        random_item,
-        fence_base_assort
-      );
+    // const FENCE_ASSORT_SIZE = global._database.gameplay.trading.fenceAssortSize;
+    // for (let i = 0; i < FENCE_ASSORT_SIZE; i++) {
+    //   let random_item_index = utility.getRandomInt(
+    //     0,
+    //     fence_base_assort_root_items.length - 1
+    //   );
+    //   let random_item = fence_base_assort_root_items[random_item_index];
+    //   let random_item_children = TraderUtils.iterItemChildrenRecursively(
+    //     random_item,
+    //     fence_base_assort
+    //   );
   
-      TraderUtils.generateItemIds(random_item, ...random_item_children);
-      if (fence_assort.some((el) => el._id === random_item._id)) {
-        continue;
-      } // Prevent duplicate item IDs.
-      fence_assort.push(random_item, ...random_item_children);
+    //   TraderUtils.generateItemIds(random_item, ...random_item_children);
+    //   if (fence_assort.some((el) => el._id === random_item._id)) {
+    //     continue;
+    //   } // Prevent duplicate item IDs.
+    //   fence_assort.push(random_item, ...random_item_children);
   
-      let item_price = helper_f.getTemplatePrice(random_item._tpl);
-      for (const child_item of random_item_children) {
-        item_price += helper_f.getTemplatePrice(child_item._tpl);
-      }
+    //   let item_price = helper_f.getTemplatePrice(random_item._tpl);
+    //   for (const child_item of random_item_children) {
+    //     item_price += helper_f.getTemplatePrice(child_item._tpl);
+    //   }
   
-      barter_scheme[random_item._id] = [
-        [
-          {
-            count: Math.round(item_price),
-            _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
-          },
-        ],
-      ];
-    }
+    //   barter_scheme[random_item._id] = [
+    //     [
+    //       {
+    //         count: Math.round(item_price),
+    //         _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
+    //       },
+    //     ],
+    //   ];
+    // }
   
-    base.items = fence_assort;
-    base.barter_scheme = barter_scheme;
-    global._database.traders[fenceId].assort = base;
+    // base.items = fence_assort;
+    // base.barter_scheme = barter_scheme;
+    // global._database.traders[fenceId].assort = base;
   }
 
   static removeItemFromAssort(assort, itemID) {
