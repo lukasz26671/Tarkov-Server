@@ -165,65 +165,10 @@ class Controller {
 
       bot.Info.Side = "Savage";
       node = global._database.bots[loweredRole];
+      // console.log(node);
+      // console.log(bot);
     
-      // ------------------------------------------------------------------
-      // Paulo: Switch from Scav to PMC if enabled via Gameplay Config
-      // I would turn this OFF and use location spawning instead
-      // var scavToPmcEnabled = global._database.gameplayConfig.bots.pmc.enabled;
-      // if(loweredRole == "assault" && scavToPmcEnabled) {
-
-      //   // Get Scav To Pmc Chance
-      //   var scavToPmcChance = 35;
-      //   if(global._database.gameplayConfig.bots.pmc.types.assault !== undefined) {
-      //     scavToPmcChance = global._database.gameplayConfig.bots.pmc.types.assault;
-      //   }
-
-      //   // Determine whether to do it
-      //   if (utility.getRandomInt(0, scavToPmcChance) > 50) {
-      //     var scavToPmcUsecChance = 50; 
-      //     if(global._database.gameplayConfig.bots.pmc.usecChance !== undefined) {
-      //       scavToPmcUsecChance = global._database.gameplayConfig.bots.pmc.usecChance;
-      //     }
-      //     // Ensure values are between 0-100
-      //     scavToPmcUsecChance = Math.min(100, scavToPmcUsecChance);
-      //     scavToPmcUsecChance = Math.max(0, scavToPmcUsecChance);
-      //     if (utility.getRandomInt(0, scavToPmcUsecChance) > 50) {
-      //       bot.Info.Side = "Usec";
-      //       node = global._database.bots["usec"];wa
-      //     } else {
-      //       bot.Info.Side = "Bear";
-      //       node = global._database.bots["bear"];
-      //     }
-      //   }
-      // }
     }
-
-    //Examples for randomizing properties without the need for roles.
-    //this could be used an "event" or something
-    //just change false to true if wanting to test
-    // if (role == "assault" && false) {
-    //   let scavRoleSelect = utility.getRandomInt(1, 6)
-    //   switch (scavRoleSelect) {
-    //     case 1:
-    //       node = global._database.bots["followersanitar"];
-    //       break;
-    //     case 2:
-    //       node = global._database.bots["followergluharscout"];
-    //       break;
-    //     case 3:
-    //       node = global._database.bots["followergluharassault"];
-    //       break;
-    //     case 4:
-    //       node = global._database.bots["followergluharsecurity"];
-    //       break;
-    //     case 5:
-    //       node = global._database.bots["followerbully"];
-    //       break;
-    //     case 6:
-    //       node = global._database.bots["sectantwarrior"];
-    //       break;
-    //   }
-    // }
 
     bot.Info.Nickname = this.generateBotName(role);
     bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
@@ -358,13 +303,15 @@ class Controller {
     return false;
   }
 
-  //if bots generated correctly, then this method should only be called once per raid.
-  //IF IT GETS CALLED MORE THAN ONCE PER RAID, IT MEANS SOMETHING IS WRONG EITHER IN
-  //THE MAP JSON OR IN THE BOT GENERATION. DO NOT HANDLE BOT CUSTOMIZATION/MODDING IN BOT GENERATION CODE!!!!
+  /**
+   * 
+   * @param {*} info 
+   * @param {*} sessionID 
+   * @returns 
+   */
   generate(info, sessionID) {
     let dateNow = Date.now();
     let count = 0;
-    let swapped = 0;
     let output = [];
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
 
@@ -374,25 +321,11 @@ class Controller {
 
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
-        let bot = utility.DeepCopy(global._database.core.botBase);
+        let bot = JSON.parse(JSON.stringify(global._database.core.botBase));
         // bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
-
-        //custom bot part
-        //if we in raid
-        // if (offraid_f.handler.getPlayer(sessionID) && bots_f.botHandler.isCustomBot(bot, offraid_f.handler.getPlayer(sessionID).Location)) {
-        //   //we in raid and bot is a bot that wants to be swapped
-        //   bot = bots_f.botHandler.generateCustomBot(bot, role, pmcData, offraid_f.handler.getPlayer(sessionID).Location);
-        //   swapped++;
-        // } else {
-          //regular generation
-          bot = bots_f.botHandler.generateBot(bot, role, pmcData);
-        // }
-
-        //any looped log = bad for performance
-        //logger.logInfo(`Generated: Nickname:${bot.Info.Nickname}, Side:${bot.Info.Side}, Role:${bot.Info.Settings.Role}, Difficulty:${bot.Info.Settings.BotDifficulty}`);
-
+        bot = bots_f.botHandler.generateBot(bot, role, pmcData);
         output.unshift(bot);
         count++;
       }
@@ -403,11 +336,6 @@ class Controller {
       logger.logSuccess(
         "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map. (" + (Date.now() - dateNow) + "ms)"
       );
-      if (swapped > 0) {
-        logger.logSuccess("\u001b[32;1mSwapped " + swapped + " bot(s).");
-      }
-      //logger.logWarning("\u001b[35;1mIF YOU SEE THIS MORE THAN ONCE PER RAID, PLEASE REPORT ON ALTERED ESCAPE DISCORD OR TO CQINMANIS#4068.");
-      logger.logWarning("\u001b[35;1mIf you see this more than once per raid, please report on AE Discord.");
     }
     return output;
   }
