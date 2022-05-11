@@ -32,6 +32,15 @@ app.set('view engine', 'ejs');
 app.use(express.raw({ type: "application/json" }));
 app.use(cookieParser());
 
+app.use(function(req, res, next) {
+  const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
+
+  if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
+    logger.logInfo(`${PHPSESSID}::${req.method}::${req.url}`);
+
+  next();
+});
+
 /**
  * 
  * @param {Http.IncomingMessage} req 
@@ -51,70 +60,38 @@ function inflateRequestBody(req, res, next, done) {
     return;
   }
 
-    // console.log(typeof(req.body));
-
-    // console.log(req.body.toString !== undefined && req.body.toString('utf-8').charAt(0) == "{");
-
     let isJson = req.body.toString !== undefined 
       && req.body.toString('utf-8').charAt(0) == "{";
-  // if(req.url === "/raid/profile/save") {
-
-  //   console.log(typeof(req.body));
-  //   console.log(req.body);
-  //   var reqBodyString = req.body.toString('utf-8');
-
-  //   if(reqBodyString.charAt(0) == "{") {
-  //     isJson = true;
-  //   }
-  // }
-
-  // console.log(req);
+ 
   if(
     (!isJson || (req.headers["content-encoding"] !== undefined && req.headers["content-encoding"] == "deflate"))
     &&
     ((req.headers["user-agent"] !== undefined && req.headers["user-agent"].includes("Unity"))
     && req.body["toJSON"] !== undefined)
     ) {
-    // console.log("accept-encoding")
-    // console.log("inflating data...");
-
-    // TODO:FIXME: Paulov - I wrote this and accept shitness.
-    // THIS IS A SHIT WAY OF GETTING AROUND THE INFLATION CRAP, NEED TO FIND A BETTER WAY
+    
     try {
-      // zlib.inflate(req.body, function(err, result) { 
+      zlib.inflate(req.body, function(err, result) { 
 
-      //   if(!err && result !== undefined) {
+        if(!err && result !== undefined) {
 
-      //     var asyncInflatedString = result.toString('utf-8');
-      //     console.log(asyncInflatedString);
-      //     if(asyncInflatedString.length > 0) {
-      //       req.body = JSON.parse(asyncInflatedString);
-      //     }
-      //     done(req.body);
-      //   }
-      //   else {
-      //     done(req.body);
-      //   }
+          var asyncInflatedString = result.toString('utf-8');
+          // console.log(asyncInflatedString);
+          if(asyncInflatedString.length > 0) {
+            req.body = JSON.parse(asyncInflatedString);
+          }
+          done(req.body);
+          return;
+
+        }
+        else {
+          done(req.body);
+          return;
+
+        }
 
 
-      // });;
-      const inflateData = zlib.inflateSync(req.body, { limit: 9999999 });
-      // console.log(inflateData);
-      // console.log(inflatedString);
-      // console.log(inflatedJSON);
-      // console.log(inflateData.toString('utf-8'));
-      if(inflateData.length > 0) {
-        var inflatedString = inflateData.toString('utf-8');
-        var inflatedJSON = inflateData.toJSON();
-        req.body = JSON.parse(inflatedString);
-        done(req.body);
-        return;
-      }
-      else {
-        done(req.body);
-        return;
-
-      }
+      });
 
     }
     catch (error) { 
@@ -143,7 +120,7 @@ app.use(function(req, res, next) {
 
   inflateRequestBody(req, res, next, () => {
 
-    console.log(req.url);
+    // console.log(req.url);
     for(const r in responseClass.dynamicResponses) {
       if (req.url.includes(r)) {
         // console.log("found dynamic route!");
@@ -227,12 +204,12 @@ function handleRoute(req, res, Route) {
    
   }
   else {
-    res.send("EXPRESS Tarkov API up and running! " + r);
+    res.send("EXPRESS Tarkov API up and running! ");
   }
 }
 
 for(const r of ResponseController.Routes) {
-  // console.log(r);
+  console.log(r);
   app.all(r.url, (req, res) => {
     console.log("ResponseController.Routes:" + r);
     handleRoute(req,res, r.action);
