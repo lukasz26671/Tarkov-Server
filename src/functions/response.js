@@ -89,7 +89,7 @@ class Responses {
       "/launcher/profile/change/wipe": this.launcherProfileChangeWipe,
       "/launcher/profile/get": this.launcherProfileGet,
       "/launcher/profile/login": this.launcherProfileLogin,
-      "/launcher/profile/register": this.launcherProfileRegister,
+      // "/launcher/profile/register": this.launcherProfileRegister,
       "/launcher/profile/remove": this.launcherProfileRemove,
       "/launcher/server/connect": this.launcherServerConnect,
       "/mode/offline": this.modeOfflinePatches,
@@ -688,10 +688,10 @@ class Responses {
     let output = AccountController.login(info);
     return output === undefined || output === null || output === "" ? "FAILED" : output;
   }
-  launcherProfileRegister(url, info, sessionID) {
-    let output = AccountServer.register(info);
-    return output === undefined || output === null || output === "" ? "FAILED" : output;
-  }
+  // launcherProfileRegister(url, info, sessionID) {
+  //   let output = AccountServer.register(info);
+  //   return output === undefined || output === null || output === "" ? "FAILED" : output;
+  // }
   launcherProfileRemove(url, info, sessionID) {
     let output = AccountServer.remove(info);
     return output === undefined || output === null || output === "" ? "FAILED" : "OK";

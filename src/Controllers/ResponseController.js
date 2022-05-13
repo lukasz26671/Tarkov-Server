@@ -39,6 +39,14 @@ class ResponseController
                     "notifierServer": NotifierService.getServer(sessionID)
                 });
             }
+        },
+        {
+            url: "/launcher/profile/register",
+            action: (url, info, sessionID) => {
+                let output = AccountController.register(info);
+                return output === undefined || output === null || output === "" ? "FAILED" : output;
+            }
+            
         }
     ]
 

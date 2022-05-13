@@ -69,6 +69,20 @@ class AccountController
           }
         return undefined;
     }
+
+    static isEmailAlreadyInUse(username) {
+
+      const profileFolders = fs.readdirSync(`user/profiles/`);
+          for (const id of profileFolders) {
+              if (!fileIO.exist(`user/profiles/${id}/account.json`)) continue;
+              let account = JSON.parse(fs.readFileSync(`user/profiles/${id}/account.json`));
+              if(account.email == username)
+                return true;
+          }
+
+      return false;
+    }
+
     /**
      * 
      * @param {object} info 
@@ -80,22 +94,28 @@ class AccountController
     static register(info) {
         // Get existing account from memory or cache a new one.
         let accountID = AccountServer.reloadAccountByLogin(info)
-        if (accountID) {
+        if (accountID !== undefined) {
           return accountID
         }
-    
-        accountID = utility.generateNewAccountId();
-    
-        AccountServer.accounts[accountID] = {
-          id: accountID,
-          email: info.email,
-          password: info.password,
-          wipe: true,
-          edition: info.edition,
-        };
-    
-        AccountServer.saveToDisk(accountID);
-        return accountID;
+
+        if(this.isEmailAlreadyInUse(info.username)) {
+          return "ALREADY_IN_USE";
+        }
+
+        if(accountID === undefined) {
+          accountID = utility.generateNewAccountId();
+      
+          AccountServer.accounts[accountID] = {
+            id: accountID,
+            email: info.email,
+            password: info.password,
+            wipe: true,
+            edition: info.edition,
+          };
+      
+          AccountServer.saveToDisk(accountID);
+          return accountID;
+        }
       }
 }
 

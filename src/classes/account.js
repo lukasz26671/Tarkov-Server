@@ -72,7 +72,7 @@ class AccountServer {
     }
 
     // If the account does not exist, AccountServer will allow the launcher to display an error message.
-    return "";
+    return undefined;
   }
 
   /**
@@ -245,32 +245,32 @@ class AccountServer {
     AccountServer.accounts[sessionID].wipe = state;
   }
 
-  static login(info) {
-    // Get existing account from memory or cache a new one.
-    return AccountServer.reloadAccountByLogin(info);
-  }
+  // static login(info) {
+  //   // Get existing account from memory or cache a new one.
+  //   return AccountServer.reloadAccountByLogin(info);
+  // }
 
-  static register(info) {
-    // Get existing account from memory or cache a new one.
-    let accountID = AccountServer.reloadAccountByLogin(info)
-    if (accountID) {
-      return accountID
-    }
+  // static register(info) {
+  //   // Get existing account from memory or cache a new one.
+  //   let accountID = AccountServer.reloadAccountByLogin(info)
+  //   if (accountID !== undefined) {
+  //     return accountID
+  //   }
 
-    accountID = utility.generateNewAccountId();
+  //   if(accountID === undefined) {
+  //     accountID = utility.generateNewAccountId();
+  //     AccountServer.accounts[accountID] = {
+  //       id: accountID,
+  //       email: info.email,
+  //       password: info.password,
+  //       wipe: true,
+  //       edition: info.edition,
+  //     };
 
-    AccountServer.accounts[accountID] = {
-      id: accountID,
-      email: info.email,
-      //nickname: "",
-      password: info.password,
-      wipe: true,
-      edition: info.edition,
-    };
-
-    AccountServer.saveToDisk(accountID);
-    return "";
-  }
+  //     AccountServer.saveToDisk(accountID);
+  //     return accountID;
+  //   }
+  // }
 
   static remove(info) {
     let accountID = AccountServer.login(info);
