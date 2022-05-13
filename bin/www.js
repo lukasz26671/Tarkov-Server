@@ -46,10 +46,14 @@ const certs = certificate.generate(serverIp);
 
 const server = http.createServer(app);
 
-var httpsServer = https.createServer({
+const httpsServer = https.createServer({
   key: certs.key,
   cert: certs.cert
 },app);
+
+const io = require('socket.io')(server,{
+  perMessageDeflate :false
+});
 
 // /**
 //  * Listen on provided port, on all network interfaces.

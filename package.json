@@ -4,8 +4,7 @@
   "author": "AE-Team, JET Team, Paulov",
   "license": "MIT",
   "scripts": {
-    "start": "node bin/www.js",
-    "watch": "nodemon --config nodemon.json ./bin/www.js"
+    "start": "node bin/www.js"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -16,22 +15,17 @@
     "express": "^4.18.1",
     "ps-list": "7.2.0",
     "selfsigned": "^2.0.1",
+    "socket.io": "^4.5.0",
     "uuid": "^8.3.2",
     "write-json-file": "^4.3.0",
     "ws": "^8.5.0"
-  },
-  "devDependencies": {
-    "child_process": "1.0.2",
-    "nexe": "3.3.3",
-    "node-minify": "3.6.0",
-    "nodemon": "^2.0.15",
-    "upx": "1.0.6"
   },
   "bin": "bin/www.js",
   "pkg": {
     "scripts": [
       "core/**/*.js",
-      "core/util/*.js"
+      "core/util/*.js",
+      "./src/*.js"
     ],
     "assets": [
       "core/**/*.js",

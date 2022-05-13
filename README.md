@@ -1,7 +1,7 @@
 # Server Readme.md
 
 ## Current Tarkov Version (working)
-- 0.12.12.15.17686
+- 0.12.12.15.17861
 
 ## Debugging
 - Download and Install [Visual Studio Code](https://code.visualstudio.com/) 
@@ -32,3 +32,4 @@ Zip the following folders & files
 - Open user/configs/server.json and change ip_backend value to your external IP (google to find out how to find it)
 - Run the Server
 - Provide your friends with your external IP address and port
+ 

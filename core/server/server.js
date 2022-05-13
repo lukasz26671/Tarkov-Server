@@ -9,18 +9,19 @@ const { logger } = require('../util/logger');
 const { Account } = require('./../../src/classes/account');
 const { SaveHandler } = require('./../../src/classes/savehandler');
 const { TarkovSend } = require('./tarkovSend.js');
+const database = require('./../../src/functions/database')
 // const fastify = require('fastify')({ logger: true });
 
 class Server {
   constructor() {
-    this.tarkovSend = require("./tarkovSend.js").struct;
+    // this.tarkovSend = require("./tarkovSend.js").struct;
     this.name = serverConfig.name;
     this.ip = serverConfig.ip;
     this.port = serverConfig.port;
     this.backendUrl = Server.getHttpsUrl(); //"https://" + this.ip + ":" + this.port;
     this.second_backendUrl = "https://" + serverConfig.ip_backend + ":" + this.port;
     // this.buffers = {};
-    this.initializeCallbacks();
+    // this.initializeCallbacks();
   }
 
   static webSockets = {};
@@ -90,14 +91,14 @@ class Server {
   }
 
 
-  initializeCallbacks() {
-    const callbacks = require(executedDir + "/src/functions/callbacks.js").callbacks;
+  // initializeCallbacks() {
+  //   const callbacks = require(executedDir + "/src/functions/callbacks.js").callbacks;
 
-    this.receiveCallback = callbacks.getReceiveCallbacks();
-    this.respondCallback = callbacks.getRespondCallbacks();
+  //   this.receiveCallback = callbacks.getReceiveCallbacks();
+  //   this.respondCallback = callbacks.getRespondCallbacks();
 
-    logger.logSuccess("Create: Receive Callback");
-  }
+  //   logger.logSuccess("Create: Receive Callback");
+  // }
 
   
   // resetBuffer = (sessionID) => { this.buffers[sessionID] = undefined; }
@@ -301,126 +302,126 @@ class Server {
     }
   }
 
-  CreateServer() {
-    const backend = this.backendUrl;
-    /* create server */
-    const certificate = require("./certGenerator.js").certificate;
+  // CreateServer() {
+  //   const backend = this.backendUrl;
+  //   /* create server */
+  //   const certificate = require("./certGenerator.js").certificate;
 
-    const httpsServer = https.createServer(certificate.generate());
-    httpsServer.on('request', async (req, res) => {
-      await this.handleAsyncRequest(req, res);
-    });
+  //   const httpsServer = https.createServer(certificate.generate());
+  //   httpsServer.on('request', async (req, res) => {
+  //     await this.handleAsyncRequest(req, res);
+  //   });
 
-    /* server is already running or program using privileged port without root */
-    httpsServer.on("error", function (e) {
-      if (internal.process.platform === "linux" && !(internal.process.getuid && internal.process.getuid() === 0) && e.port < 1024) {
-        logger.throwErr("» Non-root processes cannot bind to ports below 1024.", ">> core/server.server.js");
-      } else if (e.code == "EADDRINUSE") {
-        internal.psList().then((data) => {
-          let cntProc = 0;
-          for (let proc of data) {
-            let procName = proc.name.toLowerCase();
-            if (
-              (procName.indexOf("node") != -1 || procName.indexOf("server") != -1 || procName.indexOf("emu") != -1 || procName.indexOf("justemu") != -1) &&
-              proc.pid != internal.process.pid
-            ) {
-              logger.logWarning(`ProcessID: ${proc.pid} - Name: ${proc.name}`);
-              cntProc++;
-            }
-          }
-          if (cntProc > 0) logger.logError("Please close this process'es before starting this server.");
-        });
-        logger.throwErr(`» Port ${e.port} is already in use`, "");
-      } else {
-        throw e;
-      }
-    });
+  //   /* server is already running or program using privileged port without root */
+  //   httpsServer.on("error", function (e) {
+  //     if (internal.process.platform === "linux" && !(internal.process.getuid && internal.process.getuid() === 0) && e.port < 1024) {
+  //       logger.throwErr("» Non-root processes cannot bind to ports below 1024.", ">> core/server.server.js");
+  //     } else if (e.code == "EADDRINUSE") {
+  //       internal.psList().then((data) => {
+  //         let cntProc = 0;
+  //         for (let proc of data) {
+  //           let procName = proc.name.toLowerCase();
+  //           if (
+  //             (procName.indexOf("node") != -1 || procName.indexOf("server") != -1 || procName.indexOf("emu") != -1 || procName.indexOf("justemu") != -1) &&
+  //             proc.pid != internal.process.pid
+  //           ) {
+  //             logger.logWarning(`ProcessID: ${proc.pid} - Name: ${proc.name}`);
+  //             cntProc++;
+  //           }
+  //         }
+  //         if (cntProc > 0) logger.logError("Please close this process'es before starting this server.");
+  //       });
+  //       logger.throwErr(`» Port ${e.port} is already in use`, "");
+  //     } else {
+  //       throw e;
+  //     }
+  //   });
 
-    this.port = this.normalizePort(process.env.PORT || this.port);
-    this.ip = process.env.IP || this.ip;
-    if(this.ip !== undefined && this.ip !== "" && this.port !== undefined && this.port != "") {
-      // httpsServer.listen(this.port, this.ip, function () {
-      httpsServer.listen(this.port, this.ip, function () {
-        logger.logSuccess(`Server is working at: ${backend}`);
-      });
-    }
-    else {
-      httpsServer.listen();
-    }
+  //   this.port = this.normalizePort(process.env.PORT || this.port);
+  //   this.ip = process.env.IP || this.ip;
+  //   if(this.ip !== undefined && this.ip !== "" && this.port !== undefined && this.port != "") {
+  //     // httpsServer.listen(this.port, this.ip, function () {
+  //     httpsServer.listen(this.port, this.ip, function () {
+  //       logger.logSuccess(`Server is working at: ${backend}`);
+  //     });
+  //   }
+  //   else {
+  //     httpsServer.listen();
+  //   }
 
-    // Setting up websocket
-    const webSocketServer = new WebSocket.Server({
-      // "server": httpsServer,
-      port: Server.getPort()
-    });
+  //   // Setting up websocket
+  //   const webSocketServer = new WebSocket.Server({
+  //     // "server": httpsServer,
+  //     port: Server.getPort()
+  //   });
 
-    webSocketServer.addListener("listening", () =>
-    {
-      logger.logSuccess(`WebSocket is working at ${Server.getWebsocketUrl()}`);
-    });
+  //   webSocketServer.addListener("listening", () =>
+  //   {
+  //     logger.logSuccess(`WebSocket is working at ${Server.getWebsocketUrl()}`);
+  //   });
 
-    webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
+  //   webSocketServer.addListener("connection", Server.wsOnConnection.bind(this));
 
-    // const serverConfigData = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
-    // if(serverConfigData.runSimpleHttpServer && serverConfigData.runSimpleHttpServer === true) {
-      /**
-       * Simple Http Server to deal with Azure Web App integration
-       * It could also be used to extend the system. 
-       * Run this seperately to the actual server?
-       */
-      // const httpServer = http.createServer(async (req, res) => {
-      //   res.writeHead(200);
-      //   res.end('Iya!');
-      //   // this.handleRequest(req,res);
-      // });
-      // httpServer.on('error', (err) => { logger.logError(err); })
-      // httpServer.on('listening', () => { 
-      //   var addr = httpServer.address();
-      //   var bind = typeof addr === 'string'
-      //     ? 'pipe ' + addr
-      //     : 'port ' + addr.port;
-      //   logger.logSuccess("Http Server listening " + addr.address); })
-      // // httpServer.on('request', (request) => { logger.logInfo("http server request"); })
-      // httpServer.listen(process.env.PORT || '3000');
+  //   // const serverConfigData = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
+  //   // if(serverConfigData.runSimpleHttpServer && serverConfigData.runSimpleHttpServer === true) {
+  //     /**
+  //      * Simple Http Server to deal with Azure Web App integration
+  //      * It could also be used to extend the system. 
+  //      * Run this seperately to the actual server?
+  //      */
+  //     // const httpServer = http.createServer(async (req, res) => {
+  //     //   res.writeHead(200);
+  //     //   res.end('Iya!');
+  //     //   // this.handleRequest(req,res);
+  //     // });
+  //     // httpServer.on('error', (err) => { logger.logError(err); })
+  //     // httpServer.on('listening', () => { 
+  //     //   var addr = httpServer.address();
+  //     //   var bind = typeof addr === 'string'
+  //     //     ? 'pipe ' + addr
+  //     //     : 'port ' + addr.port;
+  //     //   logger.logSuccess("Http Server listening " + addr.address); })
+  //     // // httpServer.on('request', (request) => { logger.logInfo("http server request"); })
+  //     // httpServer.listen(process.env.PORT || '3000');
 
-    // }
+  //   // }
 
     
-    // startFastifyServer();
-  }
+  //   // startFastifyServer();
+  // }
 
   /**
    * Start a Fastify Server
    */
-  static createServerFastify() {
-    for(const url in require('../../src/Controllers/ResponseController')) {
-      fastify.get(url, async (request, reply) => {
-        console.log("fastify:" + url);
+  // static createServerFastify() {
+  //   for(const url in require('../../src/Controllers/ResponseController')) {
+  //     fastify.get(url, async (request, reply) => {
+  //       console.log("fastify:" + url);
 
-        console.log(reply.raw);
-        let fastifyReqRaw = { ...request.raw };
-        var fastifyRepRaw = { ...reply.raw };
-        console.log(fastifyReqRaw);
-        console.log(fastifyRepRaw);
-         var output = this.handleRequest(request.raw, fastifyRepRaw);
-        // console.log(output);
+  //       console.log(reply.raw);
+  //       let fastifyReqRaw = { ...request.raw };
+  //       var fastifyRepRaw = { ...reply.raw };
+  //       console.log(fastifyReqRaw);
+  //       console.log(fastifyRepRaw);
+  //        var output = this.handleRequest(request.raw, fastifyRepRaw);
+  //       // console.log(output);
       
-        return {};
-        // return null;
-      })
-    }
-    // Run the server!
-    const start = async () => {
-      try {
-        await fastify.listen(3000)
-      } catch (err) {
-        fastify.log.error(err)
-        process.exit(1)
-      }
-    }
-    start()
+  //       return {};
+  //       // return null;
+  //     })
+  //   }
+  //   // Run the server!
+  //   const start = async () => {
+  //     try {
+  //       await fastify.listen(3000)
+  //     } catch (err) {
+  //       fastify.log.error(err)
+  //       process.exit(1)
+  //     }
+  //   }
+  //   start()
 
-  }
+  // }
 
   static websocketPingHandler = null;
 
@@ -486,8 +487,9 @@ class Server {
   softRestart() {
     logger.logInfo("[SoftRestart]: Reloading Database");
     global.mods_f.ResModLoad();
-    const databasePath = "/src/functions/database.js";
-    require(process.cwd() + databasePath).load();
+    // const databasePath = "/src/functions/database.js";
+    // require(process.cwd() + databasePath).load();
+    database.load();
     // will not be required if all data is loaded into memory
     logger.logInfo("[SoftRestart]: Re-initializing");
     // account_f.handler.initialize();
@@ -502,10 +504,11 @@ class Server {
 
   start() {
     logger.logDebug("Loading Database...");
-    const databasePath = "/src/functions/database.js";
-    const executedDir = internal.process.cwd();
-    logger.logDebug(executedDir);
-    require(process.cwd() + databasePath).load();
+    // const databasePath = "/src/functions/database.js";
+    // const executedDir = internal.process.cwd();
+    // logger.logDebug(executedDir);
+    // require(process.cwd() + databasePath).load();
+    database.load();
 
     // will not be required if all data is loaded into memory
     // logger.logDebug("Initialize account...")

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const database = require('./../src/functions/database')
 
 class Initializer {
   constructor() {
@@ -118,7 +119,8 @@ class Initializer {
     const databasePath = "/src/functions/database.js";
     const executedDir = internal.process.cwd();
     logger.logDebug(`ExecutedDir: ${executedDir}`);
-    require(executedDir + databasePath).load();
+    // require(executedDir + databasePath).load();
+    database.load();
 
 
 // let path = "./src/cache";
