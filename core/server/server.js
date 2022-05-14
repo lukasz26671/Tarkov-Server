@@ -10,6 +10,7 @@ const { Account } = require('./../../src/classes/account');
 const { SaveHandler } = require('./../../src/classes/savehandler');
 const { TarkovSend } = require('./tarkovSend.js');
 const database = require('./../../src/functions/database')
+const { ConfigController } = require('./../../src/Controllers/ConfigController')
 // const fastify = require('fastify')({ logger: true });
 
 class Server {
@@ -41,10 +42,15 @@ class Server {
 
   static getUrl()
   {
-      return `${serverConfig.ip}:${serverConfig.port}`;
+      ConfigController.rebuildFromBaseConfigs();
+      var ip = ConfigController.Configs["server"].ip;
+      var port = ConfigController.Configs["server"].port;
+      return `${ip}:${port}`;
   }
   static getPort() {
-    return serverConfig.port;
+      ConfigController.rebuildFromBaseConfigs();
+      var port = ConfigController.Configs["server"].port;
+      return port;
   }
 
   static getHttpsUrl = () => `https://${Server.getUrl()}`;
@@ -530,5 +536,5 @@ class Server {
   }
 }
 
-module.exports.server = new Server();
 module.exports.Server = Server;
+module.exports.server = new Server();

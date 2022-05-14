@@ -23,7 +23,7 @@ class ConfigController {
                 ConfigController.Configs[f.replace(".json", "")] = JSON.parse(dataRaw);
             }
         }
-
+        
     }
 
 

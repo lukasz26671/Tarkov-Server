@@ -1,12 +1,59 @@
+const { Server, server } = require('./../../core/server/server');
 const { NotifierService } = require('./../classes/notifier');
 const { FriendshipController } = require('./FriendshipController');
 const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
-const { Server } = require('./../../core/server/server');
-const utility = require('./../../core/util/utility')
+const { ConfigController } = require('./ConfigController');
+const utility = require('./../../core/util/utility');
 
 class ResponseController
 {
+    static getUrl()
+  {
+      ConfigController.rebuildFromBaseConfigs();
+      var ip = ConfigController.Configs["server"].ip;
+      var port = ConfigController.Configs["server"].port;
+      return `${ip}:${port}`;
+  }
+
+  static getMainUrl() {
+    ConfigController.rebuildFromBaseConfigs();
+    var ip = ConfigController.Configs["server"].ip;
+    var port = ConfigController.Configs["server"].port;
+    return `${ip}:${port}`;
+  }
+
+  static getTradingUrl() {
+    ConfigController.rebuildFromBaseConfigs();
+    var ip = ConfigController.Configs["server"].ip;
+    var port = ConfigController.Configs["server"].port;
+    return `${ip}:${port}`;
+  }
+
+  static getRagfairUrl() {
+    ConfigController.rebuildFromBaseConfigs();
+    var ip = ConfigController.Configs["server"].ip;
+    var port = ConfigController.Configs["server"].port;
+    return `${ip}:${port}`;
+  }
+
+  static getMessagingUrl() {
+    ConfigController.rebuildFromBaseConfigs();
+    var ip = ConfigController.Configs["server"].ip;
+    var port = ConfigController.Configs["server"].port;
+    return `${ip}:${port}`;
+  }
+
+  static getPort() {
+      ConfigController.rebuildFromBaseConfigs();
+      var port = ConfigController.Configs["server"].port;
+      return port;
+  }
+
+  static getHttpsUrl = () => `https://${ResponseController.getUrl()}`;
+
+
+  static getWebsocketUrl = () => `ws://${ResponseController.getUrl()}`;
     // noBody
     static noBody = (data) => {
         return utility.clearString(fileIO.stringify(data));
@@ -35,8 +82,8 @@ class ResponseController
             action: (url, info, sessionID) => {
                 return ResponseController.getBody({
                     "status": "ok",
-                    "notifier": NotifierService.getChannel(sessionID),
-                    "notifierServer": NotifierService.getServer(sessionID)
+                    // "notifier": NotifierService.getChannel(sessionID),
+                    // "notifierServer": NotifierService.getServer(sessionID)
                 });
             }
         },
@@ -47,7 +94,36 @@ class ResponseController
                 return output === undefined || output === null || output === "" ? "FAILED" : output;
             }
             
-        }
+        },
+      
+    {
+     url: "/client/game/config", action: (url, info, sessionID) => {
+
+        var mainUrl = ResponseController.getHttpsUrl();
+
+        let obj = {
+            queued: false,
+            banTime: 0,
+            hash: "BAN0",
+            lang: "en",
+            aid: sessionID,
+            token: sessionID,
+            taxonomy: 6,
+            activeProfileId: "pmc" + sessionID,
+            nickname: "user",
+            utc_time: utility.getTimestamp(),
+            backend: {
+              Trading: mainUrl,// server.getBackendUrl(),
+              Messaging: mainUrl,//server.getBackendUrl(),
+              Main: mainUrl,//server.getBackendUrl(),
+              RagFair: mainUrl,//server.getBackendUrl(),
+            },
+            totalInGame: 1000,
+            reportAvailable: true,
+          };
+          return ResponseController.getBody(obj);
+    }
+}
     ]
 
     static getRoute = (url,info,sessionID) => {
@@ -147,40 +223,11 @@ module.exports.Routes = {
      * @returns {object} 
      */
     "/client/notifier/channel/create" : (url, info, sessionID) => {
-        const result = NotifierService.getChannel(sessionID);
+        const result = {};// NotifierService.getChannel(sessionID);
         console.log(result);
         return ResponseController.getBody(result);
     },
-    /**
-     * 
-     * @param {string} url 
-     * @param {object} info 
-     * @param {string} sessionID 
-     * @returns {object}
-     */
-    "/client/game/config" : (url, info, sessionID) => {
-        let obj = {
-            queued: false,
-            banTime: 0,
-            hash: "BAN0",
-            lang: "en",
-            aid: sessionID,
-            token: sessionID,
-            taxonomy: 6,
-            activeProfileId: "pmc" + sessionID,
-            nickname: "user",
-            utc_time: utility.getTimestamp(),
-            backend: {
-              Trading: Server.getHttpsUrl(),// server.getBackendUrl(),
-              Messaging: Server.getHttpsUrl(),//server.getBackendUrl(),
-              Main: Server.getHttpsUrl(),//server.getBackendUrl(),
-              RagFair: Server.getHttpsUrl(),//server.getBackendUrl(),
-            },
-            totalInGame: 1000,
-            reportAvailable: true,
-          };
-          return ResponseController.getBody(obj);
-    },
+
     "/client/game/profile/search" : (url, data, sessionID) => {
 
         console.log(url);

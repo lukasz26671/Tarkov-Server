@@ -97,7 +97,7 @@ class NotifierService {
     static getChannel(sessionID)
     {
         return {
-            "server": Server.getHttpsUrl(),
+            "server": server.getHttpsUrl(),
             "channel_id": sessionID,
             "url": NotifierService.getServer(sessionID),
             "notifierServer": NotifierService.getServer(sessionID),
