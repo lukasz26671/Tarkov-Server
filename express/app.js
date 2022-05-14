@@ -29,7 +29,9 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(express.raw({ type: "application/json" }));
+app.use(express.raw({ type: "application/json", limit: '50mb',
+parameterLimit: 100000,
+extended: true  }));
 app.use(cookieParser());
 
 app.use(function(req, res, next) {
