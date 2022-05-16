@@ -1,4 +1,5 @@
 "use strict";
+const { AkiModLoader } = require('../../src/AkiModSupport/AkiModLoader')
 
 function scanRecursiveMod(filepath, baseNode, modNode) {
 	if (typeof modNode === "string") {
@@ -159,16 +160,18 @@ class ModLoader { // handles loading mods
 	modsFileNotFound() { // Not Found File mods.json - loop through folders and load all mods that are correct
 		const modsFolder = fileIO.readDir("user/mods").filter(dir => fileIO.lstatSync("user/mods/" + dir).isDirectory());
 		for (const modFolder of modsFolder) {
+			if (fileIO.exist(`user/mods/${modFolder}/package.json`) && fileIO.exist(`user/mods/${modFolder}/package.js`)) {
+				// logger.logWarning(`Invalid mod: this mod structure is incorrect (its AKI mod). Skipping loading mod: ${modFolder}`);
+				AkiModLoader.loadMod(modFolder, `user/mods/${modFolder}/package.json`);
+				continue;
+			}
 			if (!fileIO.exist(`user/mods/${modFolder}/mod.config.json`)) {
 				logger.logWarning(`Missing file: mod.config.json. Skipping loading mod: ${modFolder}`);
 			}
-			if (fileIO.exist(`user/mods/${modFolder}/package.json`) && fileIO.exist(`user/mods/${modFolder}/package.js`)) {
-				logger.logWarning(`Invalid mod: this mod structure is incorrect (its AKI mod). Skipping loading mod: ${modFolder}`);
-			}
 			const modConfig = fileIO.readParsed(`user/mods/${modFolder}/mod.config.json`);
-			if (typeof modConfig.name != "undefined" && typeof modConfig.name == "string") {
-				if (typeof modConfig.author != "undefined" && typeof modConfig.author == "string") {
-					if (typeof modConfig.version != "undefined" && typeof modConfig.version == "string") {
+			if (modConfig.name !== undefined && typeof modConfig.name == "string") {
+				if (modConfig.author !== undefined && typeof modConfig.author == "string") {
+					if (modConfig.version !== undefined && typeof modConfig.version == "string") {
 						if (typeof modConfig.required != "undefined" && typeof modConfig.required == "object") {
 							if (typeof modConfig.src != "undefined" && typeof modConfig.src == "object") {
 								const modUniqueID = `${modConfig.name}-${modConfig.version}_${modConfig.author}`;
@@ -353,19 +356,19 @@ class ModLoader { // handles loading mods
 
 	loadModsData() { // Loading Mods - Core function
 		// Loading mods (without execute)
-		let emptyModsConfig = false;
-		if (!fileIO.exist("user/configs/mods.json") || serverConfig.rebuildCache) {
-			fileIO.write("user/configs/mods.json", {});
-			emptyModsConfig = true;
-		}
+		// let emptyModsConfig = false;
+		// if (!fileIO.exist("user/configs/mods.json") || serverConfig.rebuildCache) {
+		// 	fileIO.write("user/configs/mods.json", {});
+		// 	emptyModsConfig = true;
+		// }
 		// -- need to be mored to functions later on !!!
 
-
-		if (emptyModsConfig) {
-			this.modsFileNotFound();
-		} else {
-			this.modsFileFound();
-		}
+		this.modsFileNotFound();
+		// if (emptyModsConfig) {
+		// 	this.modsFileNotFound();
+		// } else {
+		// 	this.modsFileFound();
+		// }
 		// save full config in: globals mods config
 		global.mods.config = this.modsConfig;
 
