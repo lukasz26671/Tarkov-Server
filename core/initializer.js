@@ -36,7 +36,7 @@ class Initializer {
     global.internal.zlib = require("zlib");
     global.internal.https = require("https");
     global.internal.selfsigned = require("selfsigned");
-    global.internal.psList = require("ps-list");
+    // global.internal.psList = require("ps-list");
     global.internal.process = require("process");
     global.executedDir = internal.process.cwd();
 
