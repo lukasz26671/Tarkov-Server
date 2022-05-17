@@ -1,4 +1,7 @@
+const { Server } = require("../../core/server/server");
+const { TarkovSend } = require("../../core/server/tarkovSend");
 const { logger } = require("../../core/util/logger");
+const fs = require('fs');
 
 
 class Callbacks {
@@ -44,28 +47,9 @@ class Callbacks {
 		let baseNode = {};
 		let imgCategory = "none";
 
-		// get images to look through
-/* 		if (req.url.includes("/quest")) {
-			logger.logInfo(`[IMG.quests]: ${req.url}`);
-			baseNode = res.quest;
-			imgCategory = "quest";
-		} else if (req.url.includes("/handbook")) {
-			logger.logInfo(`[IMG.handbook]: ${req.url}`);
-			baseNode = res.handbook;
-			imgCategory = "handbook";
-		} else if (req.url.includes("/avatar")) {
-			logger.logInfo(`[IMG.trader]: ${req.url}`);
-			baseNode = res.trader;
-			imgCategory = "avatar";
-		} else if (req.url.includes("/banners")) {
-			logger.logInfo(`[IMG.banners]: ${req.url}`);
-			baseNode = res.banners;
-			imgCategory = "banners";
-		} else {
-			logger.logInfo(`[IMG.hideout]: ${req.url}`);
-			baseNode = res.hideout;
-			imgCategory = "hideout";
-		} */
+		
+
+		
 
 		// get images to look through
 		switch (true) {
@@ -100,14 +84,25 @@ class Callbacks {
 				break;
 		}
 
+		// console.log(baseNode);
+		// console.log(baseNode[fileName]);
+		// if(req.url.indexOf("/files") !== -1 && !fs.existsSync(process.cwd() + req.url)) {
+		// 	// req.url = 
+
+		// }
+		// console.log(req.url);
+		// console.log(fileName);
+
 		// if file does not exist
 		if (!baseNode[fileName]) {
 			logger.logError("Image not found! Sending backup image.");
 			baseNode[fileName] = "res/noimage/" + imgCategory + ".png";
-			server.tarkovSend.file(resp, baseNode[fileName]);
+			TarkovSend.sendFile(resp, baseNode[fileName]);
+			// server.tarkovSend.file(resp, baseNode[fileName]);
 		} else {
 			// send image
-			server.tarkovSend.file(resp, baseNode[fileName]);
+			TarkovSend.sendFile(resp, baseNode[fileName]);
+			// server.tarkovSend.file(resp, baseNode[fileName]);
 		}
 	}
 	respondNotify(sessionID, req, resp, data) {

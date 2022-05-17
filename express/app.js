@@ -213,7 +213,7 @@ function handleRoute(req, res, Route) {
 for(const r of ResponseController.Routes) {
   console.log(r);
   app.all(r.url, (req, res) => {
-    console.log("ResponseController.Routes:" + r);
+    // console.log("ResponseController.Routes:" + r);
     handleRoute(req,res, r.action);
 
   });

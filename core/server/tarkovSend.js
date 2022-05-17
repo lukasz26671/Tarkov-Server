@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 class TarkovSend {
     constructor() {
         this.mime = {
@@ -63,6 +65,28 @@ class TarkovSend {
         const _split = file.split(".");
         let type = this.mime[_split[_split.length - 1]] || this.mime["txt"];
         let fileStream = fileIO.createReadStream(file);
+
+        fileStream.on("open", function () {
+            resp.setHeader("Content-Type", type);
+            fileStream.pipe(resp);
+        });
+    }
+
+    /**
+     * 
+     * @param {*} resp 
+     * @param {string} file 
+     */
+    static sendFile(resp, file) {
+        console.log(file);
+        const _split = file.split(".");
+        let type = TarkovSend.mimeTypes[_split[_split.length - 1]] || TarkovSend.mimeTypes["txt"];
+        
+        // Post 0.12.12.15.17975, it now gets stuff from files not res
+        if(file.indexOf("/files/") !== -1 && !fs.existsSync(process.cwd() + file))
+            file = file.replace("/files/", "/res/");
+
+        let fileStream = fs.createReadStream(file);
 
         fileStream.on("open", function () {
             resp.setHeader("Content-Type", type);

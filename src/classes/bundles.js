@@ -28,6 +28,8 @@ class BundlesServer {
         if (path.endsWith(".bundle")) this.loadBundle(path);
       }
     }
+    console.log(this.bundles);
+    console.log(this.bundleBykey);
   }
 
   loadBundle(itemPath) {
@@ -57,10 +59,14 @@ class BundlesServer {
     logger.logInfo(`Load bundle manifest: ${bundle.key}`);
     this.bundles.push(bundle);
     this.bundleBykey[bundle.key] = bundle;
+
+    console.log(this.bundles);
+    console.log(this.bundleBykey);
   }
 
   getBundles(local) {
     let bundles = utility.DeepCopy(this.bundles);
+    console.log(bundles);
     for (const bundle of bundles) {
       if (local) {
         bundle.path = bundle.filePath;
@@ -71,12 +77,17 @@ class BundlesServer {
   }
 
   getBundleByKey(key, local) {
+    console.log(key);
+    console.log(local);
     let bundle = utility.DeepCopy(this.bundleBykey[key]);
-    if (local) {
-      bundle.path = bundle.filePath;
+    if(bundle) {
+      if (local) {
+        bundle.path = bundle.filePath;
+      }
+      delete bundle.filePath;
+      return bundle;
     }
-    delete bundle.filePath;
-    return bundle;
+    return undefined;
   }
 
   getHttpPath(key) {
