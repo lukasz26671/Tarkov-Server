@@ -89,13 +89,13 @@ function loadItemsData() {
 
         const item = global._database.items[itemVar];
         if(item["_props"] !== undefined && item["_props"]["CameraRecoil"] !== undefined) {
-          item["_props"]["CameraRecoil"] *= (gameplayConfig["cameraRecoil"] / 100)
+          item["_props"]["CameraRecoil"] *= (gameplayConfig["weapons"]["cameraRecoil"] / 100)
         }
         if(item["_props"] !== undefined && item["_props"]["RecoilForceUp"] !== undefined) {
-          item["_props"]["RecoilForceUp"] *= (gameplayConfig["verticalRecoil"] / 100)
+          // item["_props"]["RecoilForceUp"] *= (gameplayConfig["weapons"]["verticalRecoil"] / 100)
         }
         if(item["_props"] !== undefined && item["_props"]["RecoilForceBack"] !== undefined) {
-          item["_props"]["RecoilForceBack"] *= (gameplayConfig["horizontalRecoil"] / 100)
+          // item["_props"]["RecoilForceBack"] *= (gameplayConfig["weapons"]["horizontalRecoil"] / 100)
         }
         global._database.items[itemVar] = item;
       }
