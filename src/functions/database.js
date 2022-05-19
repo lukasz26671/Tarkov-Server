@@ -1,5 +1,7 @@
 "use strict";
 
+const { ConfigController } = require("../Controllers/ConfigController");
+
 function loadGlobals() {
   _database.globals = fileIO.readParsed("./" + db.base.globals);
   //allow to use file with {data:{}} as well as {}
@@ -61,10 +63,13 @@ function loadCoreData() {
 
 function loadItemsData() {
 
+  var gameplayConfig = ConfigController.Configs["gameplay"];
   global._database.items = {};
-  let itemNodeFiles = db.items;
-  for (let file in itemNodeFiles) {
-    for (let items of fileIO.readParsed(itemNodeFiles[file])) {
+
+  // gather all items into memory db
+  const itemNodeFiles = db.items;
+  for (const file in itemNodeFiles) {
+    for (const items of fileIO.readParsed(itemNodeFiles[file])) {
       if (items._id == undefined) {
         logger.logWarning(`[Loading ItemsDB] file: ${file} looks to contain corrupted data`)
         continue;
@@ -72,6 +77,31 @@ function loadItemsData() {
       global._database.items[items._id] = items;
     }
   }
+
+  // -------------------------------------------------------
+  // adjust weapon recoil by GP file
+  if(
+    gameplayConfig["weapons"]["cameraRecoil"] !== undefined
+    && gameplayConfig["weapons"]["verticalRecoil"] !== undefined
+    && gameplayConfig["weapons"]["horizontalRecoil"] !== undefined
+    ) {
+      for (const itemVar in global._database.items) {
+
+        const item = global._database.items[itemVar];
+        if(item["_props"] !== undefined && item["_props"]["CameraRecoil"] !== undefined) {
+          item["_props"]["CameraRecoil"] *= (gameplayConfig["cameraRecoil"] / 100)
+        }
+        if(item["_props"] !== undefined && item["_props"]["RecoilForceUp"] !== undefined) {
+          item["_props"]["RecoilForceUp"] *= (gameplayConfig["verticalRecoil"] / 100)
+        }
+        if(item["_props"] !== undefined && item["_props"]["RecoilForceBack"] !== undefined) {
+          item["_props"]["RecoilForceBack"] *= (gameplayConfig["horizontalRecoil"] / 100)
+        }
+        global._database.items[itemVar] = item;
+      }
+  }
+  // -------------------------------------------------------
+
 
   global._database.templates = {};
   global._database.templates.Categories = fileIO.readParsed(db.templates.categories)

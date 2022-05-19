@@ -108,5 +108,13 @@
   },
   "match": {
     "enabled": true
-  }
+  },
+  "weapons": {
+    "cameraRecoilDesc": "Adjust Camera Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 2 = double recoil",
+    "cameraRecoil" : 100,
+    "verticalRecoilDesc": "Adjust Vertical Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 2 = double recoil",
+    "verticalRecoil" : 100,
+    "horizontalRecoilDesc": "Adjust Horizontal Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 2 = double recoil",
+    "horizontalRecoil" : 100
+  } 
 }
