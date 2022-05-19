@@ -62,18 +62,19 @@ function scanRecursiveRoute(filepath, deep = false) { // recursively scans given
 }
 
 function routeDatabaseAndResources() { // populate global.db and global.res with folders data
-	logger.logInfo("Rebuilding cache: route database");
+	// logger.logInfo("Rebuilding cache: route database");
 	global.db = scanRecursiveRoute("db/");
-	logger.logInfo("Rebuilding cache: route resources");
+	// logger.logInfo("Rebuilding cache: route resources");
 	global.res = scanRecursiveRoute("res/");
+	global.files = scanRecursiveRoute("files/");
 
 	// populate res/bundles
 	res.bundles = { files: [], folders: [] };
-	var path = 'res/bundles';
-	var results = fileIO.readDir(path, true);
-	var bundles = results.filter(x => x.toLowerCase().endswith('.bundle'));
-	var bundlePaths = bundles.map(x => internal.path.resolve(path, x));
-	res.bundles.files = res.bundles.files.concat(bundlePaths);
+	// var path = 'res/bundles';
+	// var results = fileIO.readDir(path, true);
+	// var bundles = results.filter(x => x.toLowerCase().endswith('.bundle'));
+	// var bundlePaths = bundles.map(x => internal.path.resolve(path, x));
+	// res.bundles.files = res.bundles.files.concat(bundlePaths);
 
 	/* add important server paths */
 	db.user = {
@@ -393,10 +394,10 @@ exports.load = () => {
 	if (!fileIO.exist("user/mods/")) {
 		fileIO.mkDir("user/mods/");
 	}
-	if (!fileIO.exist("./user/cache") || fileIO.readDir("./user/cache").length < 28) { // health number of cache file count is 28 as for now ;)
-		logger.logWarning("Missing files! [<28] Rebuilding cache required!");
+	// if (!fileIO.exist("./user/cache") || fileIO.readDir("./user/cache").length < 28) { // health number of cache file count is 28 as for now ;)
+	// 	logger.logWarning("Missing files! [<28] Rebuilding cache required!");
 		serverConfig.rebuildCache = true;
-	}
+	// }
 	let modLoader = new ModLoader();
 	// Loading mods data and set them in order
 	modLoader.loadModsData();
@@ -409,7 +410,7 @@ exports.load = () => {
 
 	// rebuild db
 	if (serverConfig.rebuildCache) {
-		logger.logWarning("Rebuilding cache...");
+		// logger.logWarning("Rebuilding cache...");
 		routeDatabaseAndResources();
 	} else {
 		db = fileIO.readParsed("user/cache/db.json");

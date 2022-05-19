@@ -458,7 +458,7 @@ function loadWeatherData() {
     let filePath = db.weather[file];
     let fileData = fileIO.readParsed(filePath);
 
-    logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + file.replace(".json", ""));
+    // logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + file.replace(".json", ""));
     _database.weather.push(fileData);
   }
 }
@@ -580,5 +580,5 @@ exports.load = () => {
   loadRagfair();
   logger.logDebug("Load: 'Weather'");
   loadWeatherData();
-  logger.logInfo("Database loaded");
+  // logger.logInfo("Database loaded");
 };

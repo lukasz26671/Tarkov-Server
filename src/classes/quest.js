@@ -1,4 +1,5 @@
 "use strict";
+const { QuestEvent } = require('../Controllers/QuestController')
 
 /*
  * Quest status values
@@ -345,6 +346,8 @@ function acceptQuest(pmcData, body, sessionID) {
   }
   dialogue_f.handler.addDialogueMessage(quest.traderId, messageContent, sessionID, questRewards);
 
+  QuestEvent.emit('accepted', quest);
+
   return item_f.handler.getOutput(sessionID);
 }
 
@@ -413,6 +416,9 @@ function completeQuest(pmcData, body, sessionID) {
   //output.profileChanges[pmcData._id].quests[0]["status"] = "Success"; // there is no other way to finish quest for now (if there will be then it need ot be changed to proper status)
   item_f.handler.setOutput(output);
   dialogue_f.handler.addDialogueMessage(quest.traderId, messageContent, sessionID, questRewards);
+
+  QuestEvent.emit('completed', quest);
+
   return output;
 }
 

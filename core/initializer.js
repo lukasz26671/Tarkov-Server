@@ -153,7 +153,7 @@ class Initializer {
 
   /* load loadorder from cache */
   initializeItemRoute() {
-    logger.logSuccess("Create: Item Action Callbacks");
+    // logger.logSuccess("Create: Item Action Callbacks");
     // Load Item Route's
     // move this later to other file or something like that :)
     item_f.handler.updateRouteStruct();
@@ -162,12 +162,12 @@ class Initializer {
       itemHandlers += iRoute + ", ";
       item_f.handler.addRoute(iRoute, item_f.handler.routeStructure[iRoute]);
     }
-    logger.logInfo("[Actions] " + itemHandlers.slice(0, -2));
+    // logger.logInfo("[Actions] " + itemHandlers.slice(0, -2));
   }
 
   /* load classes */
   initializeClasses() {
-    logger.logSuccess("Create: Classes as global variables");
+    // logger.logSuccess("Create: Classes as global variables");
     //let path = global.executedDir + "/src/classes/";
     //let files = fileIO.readDir(path);
     let loadedModules = "";
@@ -211,7 +211,7 @@ class Initializer {
       let name = file.replace(".js", "").toLowerCase() + "_f"; // fixes the weaponbuilds.js file bug ... lol
       global[name] = require(process.cwd() + "/src/classes/" + file);
     }
-    logger.logInfo("[Modules] " + loadedModules.slice(0, -2));
+    // logger.logInfo("[Modules] " + loadedModules.slice(0, -2));
   }
 }
 

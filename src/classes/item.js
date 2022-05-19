@@ -92,7 +92,7 @@ class ItemServer {
 
   resetOutput(sessionID) {
     if (sessionID == "" || typeof sessionID == "undefined") {
-      logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
+      // logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
       return;
     }
     let _profile = profile_f.handler.getPmcProfile(sessionID);
