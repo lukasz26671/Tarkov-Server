@@ -175,7 +175,9 @@ function removeItemFromProfile(pmcData, itemId, sessionID) {
   let ids_toremove = helper_f.findAndReturnChildren(pmcData, itemId);
   let output;
 
-  if (typeof sessionID != "undefined") {
+  if(sessionID === undefined)
+    return;
+
     output = item_f.handler.getOutput(sessionID);
 
     if (typeof output.profileChanges[pmcData._id].items == "undefined") {
@@ -185,18 +187,17 @@ function removeItemFromProfile(pmcData, itemId, sessionID) {
     //remove one by one all related items and itself
     const toRemoveLast = ids_toremove[ids_toremove.length - 1];
     for (let a in pmcData.Inventory.items) {
-      if (pmcData.Inventory.items[a]._id === toRemoveLast) {
+      if (pmcData.Inventory.items[a]._id.includes(toRemoveLast)) {
         if (typeof output.profileChanges != "undefined" && output != "") {
           if (typeof output.profileChanges[pmcData._id].items.del == "undefined") output.profileChanges[pmcData._id].items.del = [];
           output.profileChanges[pmcData._id].items.del.push(pmcData.Inventory.items[a]);
         }
       }
     }
-  }
 
   for (let i in ids_toremove) {
     for (let a in pmcData.Inventory.items) {
-      if (pmcData.Inventory.items[a]._id === ids_toremove[i]) {
+      if (pmcData.Inventory.items[a]._id.includes(ids_toremove[i])) {
         pmcData.Inventory.items.splice(a, 1);
       }
     }

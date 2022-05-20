@@ -45,7 +45,7 @@ class TradeHandler{
           checkID = checkID.substr(0, isThereSpace);
         }
         // item found
-        if (item._id === checkID) {
+        if (item._id.includes(checkID)) {
           logger.logInfo(`Selling: ${checkID}`);
           // remove item
           insurance_f.handler.remove(pmcData, checkID, sessionID);
