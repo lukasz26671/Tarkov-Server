@@ -126,7 +126,7 @@ function setInventory(pmcData, profile) {
 	x: for (let item of profile.Inventory.items) {
 		for (let key in pmcData.Inventory.items) {
 			let currid = pmcData.Inventory.items[key]._id;
-			if (currid == item._id) {
+			if (currid.includes(item._id)) {
 				duplicates.push(item._id);
 				continue x;
 			}
@@ -371,7 +371,8 @@ function saveProgress(offraidData, sessionID) {
   // Remove the Lab card
 
   pmcData = setInventory(pmcData, offraidData.profile);
-  health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
+  if(offraidData.health !== undefined && offraidData.health !== null)
+    health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
 
   // remove inventory if player died and send insurance items
   //TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
@@ -512,7 +513,7 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 		// check for children whose parentId was the item's original ID
 		// and replace it with the new id
 		for(let iitem of pInv.items){
-			if(iitem.parentId == ogID){
+			if(iitem.parentId.includes(ogID)){
 				iitem.parentId = item._id;
 			}
 		}
