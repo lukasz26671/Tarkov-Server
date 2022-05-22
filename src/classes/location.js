@@ -951,7 +951,7 @@ class LocationServer {
     }
 
     // Deep copy so the variable contents can be edited non-destructively
-    let forced = DeepCopy(_location.loot.forced);
+    let forced = JSON.parse(JSON.stringify(_location.loot.forced));
     for(let i = 0; i < forced.length; i++) {
       forced[i].IsForced = true;
     }
@@ -967,7 +967,7 @@ class LocationServer {
     for(let i = 0; i < dynamic.length; i++) {
       dynamic[i].IsDynamic = true;
     }
-    logger.logInfo(`State Prepare, TimeElapsed: ${Date.now() - dateNow}ms`);
+    // logger.logInfo(`State Prepare, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
     output.Loot = [];
@@ -975,7 +975,7 @@ class LocationServer {
     let counters = [];
 
     count = this.lootGenerator.lootMounted(mounted, output);
-    logger.logInfo(`State Mounted, TimeElapsed: ${Date.now() - dateNow}ms`);
+    // logger.logInfo(`State Mounted, TimeElapsed: ${Date.now() - dateNow}ms`);
    
     dateNow = Date.now();
 
@@ -987,6 +987,7 @@ class LocationServer {
     // ------------------------------------------------------
     // Handle any Forced Static Loot - i.e. Unknown Key
     // 
+    logger.logInfo(`Forced Static Loot: ${forced.length}`);
     for(let iForced in forced) {
       let forcedItem = forced[iForced];
       forcedItem.IsForced = true;
@@ -1028,7 +1029,7 @@ class LocationServer {
     //
     // ------------------------------------------------------
   
-    logger.logInfo(`State Forced, TimeElapsed: ${Date.now() - dateNow}ms`);
+    // logger.logInfo(`State Forced, TimeElapsed: ${Date.now() - dateNow}ms`);
 
     dateNow = Date.now();
 
@@ -1036,7 +1037,7 @@ class LocationServer {
     count = 0;
     count = this.lootGenerator.lootStatics(statics, output, _location.base.GlobalLootChanceModifier, name);
    
-    logger.logInfo(`State Containers, TimeElapsed: ${Date.now() - dateNow}ms`);
+    // logger.logInfo(`State Containers, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
     counters.push(count);
@@ -1045,7 +1046,7 @@ class LocationServer {
     count = 0;
     count = this.lootGenerator.lootDynamic(dynamic, output, _location.base.GlobalLootChanceModifier, name);
    
-    logger.logInfo(`State Dynamic, TimeElapsed: ${Date.now() - dateNow}ms`);
+    // logger.logInfo(`State Dynamic, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
     counters.push(count);

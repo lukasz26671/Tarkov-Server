@@ -1,4 +1,6 @@
 "use strict";
+const { logger } = require('../../core/util/logger');
+const utility = require('./../../core/util/utility');
 
 class InraidServer {
   constructor() {
@@ -45,7 +47,7 @@ class InraidServer {
         }
 
         if (item.upd.Key.NumberOfUsages >= helper_f.getItem(mapKey)[1]._props.MaximumNumberOfUsage) {
-          move_f.removeItemFromProfile(offraidData.profile, item._id);
+          move_f.removeItemFromProfile(offraidData.profile, item._id, sessionID);
         }
 
         break;
@@ -112,43 +114,42 @@ function RemoveFoundItems(profile) {
 }
 
 function setInventory(pmcData, profile) {	
-	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.equipment);
-	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questRaidItems);
-	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems);
+	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.equipment, profile.id);
+	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questRaidItems, profile.id);
+	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems, profile.id);
 	
 	//fix for duplicate ids in items by creating new ids for item ids created in-raid
 	profile.Inventory = repairInventoryIDs(profile.Inventory, pmcData.aid);
 
 	// Bandaid fix to duplicate IDs being saved to profile after raid. May cause inconsistent item data. (~Kiobu)
 	// no more duplicates should exist but I'll leave this here untouched bc it's working (CQ)
-	let duplicates = [];
+	// let duplicates = [];
 	
 	x: for (let item of profile.Inventory.items) {
 		for (let key in pmcData.Inventory.items) {
 			let currid = pmcData.Inventory.items[key]._id;
 			if (currid.includes(item._id)) {
-				duplicates.push(item._id);
+				// duplicates.push(item._id);
 				continue x;
 			}
 		}
 		pmcData.Inventory.items.push(item);
 	}
-	
 	pmcData.Inventory.fastPanel = profile.Inventory.fastPanel;
 
 	// Don't count important IDs as errors.
-	const ignoreIDs = [
-		"60de0d80c6b34f52845b4646",		//?
-		"61b7367440281631fc83f17f" 		//sorting table
-	];
+	// const ignoreIDs = [
+	// 	"60de0d80c6b34f52845b4646",		//?
+	// 	"61b7367440281631fc83f17f" 		//sorting table
+	// ];
 
-	duplicates = duplicates.filter((x) => !ignoreIDs.includes(x));
+	// duplicates = duplicates.filter((x) => !ignoreIDs.includes(x));
 
-	if (duplicates.length > 0) {
-		logger.logWarning(`Duplicate ID(s) encountered in profile after-raid. Found ${duplicates.length} duplicates. Ignoring...`);
-		logger.logWarning(`Duplicates: \n`+JSON.stringify(duplicates, null, 2));
-		//console.log(duplicates); //this won't be saved in log file, don't use this crap
-	}
+	// if (duplicates.length > 0) {
+	// 	logger.logWarning(`Duplicate ID(s) encountered in profile after-raid. Found ${duplicates.length} duplicates. Ignoring...`);
+	// 	logger.logWarning(`Duplicates: \n`+JSON.stringify(duplicates, null, 2));
+	// 	//console.log(duplicates); //this won't be saved in log file, don't use this crap
+	// }
 
 	return pmcData;
 }
@@ -179,9 +180,14 @@ function deleteInventory(pmcData, sessionID) {
     }
   }
 
+  if(toDelete.length === 0)
+  {
+    logger.logError("offraid.js:deleteInventory: found no items to delete!");
+  }
+
   // delete items
   for (let item of toDelete) {
-    move_f.removeItemFromProfile(pmcData, item);
+    move_f.removeItemFromProfile(pmcData, item, sessionID);
   }
 
   pmcData.Inventory.fastPanel = {};
@@ -317,22 +323,24 @@ function getSecuredContainer(items) {
 }
 
 function saveProgress(offraidData, sessionID) {
-  if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
-    return;
-  }
+  // if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
+  //   return;
+  // }
   const isPlayerScav = offraidData.isPlayerScav;
   // Check for insurance if its enabled on this map
-  if (typeof offraidData == "undefined") {
+  if (offraidData === undefined) {
     logger.logError("offraidData: undefined");
     return;
   }
-  if (typeof offraidData.exit == "undefined" || typeof offraidData.isPlayerScav == "undefined" || typeof offraidData.profile == "undefined") {
+  if (offraidData.exit === undefined || offraidData.isPlayerScav === undefined || offraidData.profile === undefined) {
     logger.logError("offraidData: variables are empty... (exit, isPlayerScav, profile)");
     logger.logError(offraidData.exit);
     logger.logError(offraidData.isPlayerScav);
     logger.logError(offraidData.profile);
     return;
   }
+  if(offraidData.health === null || offraidData.health === undefined)
+    return;
 
   let pmcData = profile_f.handler.getPmcProfile(sessionID);
 
@@ -502,7 +510,8 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 		//store original id before repairing
 		let ogID = item._id;
 		//repair ID
-		item._id = utility.generateNewItemId();
+		// item._id = utility.generateNewItemId();
+		item._id = utility.generateNewId("", 3);
 
 		//add to repaired list for debugging purposes.
 		repairedIDs.push({
@@ -512,10 +521,13 @@ function isConditionRelatedToQuestItem(conditionId, questId) {
 
 		// check for children whose parentId was the item's original ID
 		// and replace it with the new id
-		for(let iitem of pInv.items){
-			if(iitem.parentId.includes(ogID)){
+		for(let iitem of pInv.items) {
+			if(iitem.parentId !== undefined && iitem.parentId.includes(ogID)){
 				iitem.parentId = item._id;
 			}
+      // else if(iitem.parentId === undefined) {
+			// 	iitem.parentId = item._id;
+      // }
 		}
 	}
 	if(repairedIDs.length > 0){

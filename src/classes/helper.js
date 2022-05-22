@@ -552,7 +552,7 @@ function findAndReturnChildrenByItems(items, itemID) {
   let list = [];
 
   for (let childitem of items) {
-    if (childitem.parentId === itemID) {
+    if (childitem.parentId !== undefined && childitem.parentId.includes(itemID)) {
       list.push.apply(list, findAndReturnChildrenByItems(items, childitem._id));
     }
   }
