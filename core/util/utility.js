@@ -1,4 +1,5 @@
 "use strict";
+const crypto = require('crypto');
 
 /* START NEW DEEPCOPY CODE */
 
@@ -287,22 +288,83 @@ exports.generateNewDialogueId = () => {
 const { v4: uuidv4 } = require('uuid')
 
 // generateNewId
-exports.generateNewId = (prefix = "", useOld = false) => {
+// exports.generateNewId = (prefix = "", useOld = false) => {
+//     let getTime = new Date();
+//     let retVal = ""
+//     if (useOld) {
+//         retVal = prefix
+//         retVal += getTime.getMonth().toString();
+//         retVal += getTime.getDate().toString();
+//         retVal += getTime.getHours().toString();
+//         retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
+//         retVal += this.getRandomInt(1000000, 9999999).toString();
+//         retVal += this.makeSign(24 - retVal.length).toString();
+//     } else {
+//         retVal = `${prefix}-${uuidv4()}`
+//     }
+//     return retVal;
+// }
+exports.generateNewId = (prefix = "", version = 2) => {
     let getTime = new Date();
     let retVal = ""
-    if (useOld) {
-        retVal = prefix
-        retVal += getTime.getMonth().toString();
-        retVal += getTime.getDate().toString();
-        retVal += getTime.getHours().toString();
-        retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
-        retVal += this.getRandomInt(1000000, 9999999).toString();
-        retVal += this.makeSign(24 - retVal.length).toString();
-    } else {
-        retVal = `${prefix}-${uuidv4()}`
+    switch(version)
+    {
+        case 1:
+        {
+            retVal = prefix
+            retVal += getTime.getMonth().toString();
+            retVal += getTime.getDate().toString();
+            retVal += getTime.getHours().toString();
+            retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
+            retVal += this.getRandomInt(1000000, 9999999).toString();
+            retVal += this.makeSign(24 - retVal.length).toString();
+            break;
+        }
+        case 2:
+            retVal = `${prefix}-${uuidv4()}`;
+            break;
+        case 3:
+        {
+            const dateNow = Date.now();
+            const objectIdBinary = Buffer.alloc(12);
+            const randomBytes = crypto.randomBytes(5);
+
+            objectIdBinary[3] = dateNow & 0xff;
+            objectIdBinary[2] = (dateNow >> 8) & 0xff;
+            objectIdBinary[1] = (dateNow >> 16) & 0xff;
+            objectIdBinary[0] = (dateNow >> 24) & 0xff;
+            objectIdBinary[4] = randomBytes[0];
+            objectIdBinary[5] = randomBytes[1];
+            objectIdBinary[6] = randomBytes[2];
+            objectIdBinary[7] = randomBytes[3];
+            objectIdBinary[8] = randomBytes[4];
+            objectIdBinary[9] = (dateNow >> 16) & 0xff;
+            objectIdBinary[10] = (dateNow >> 8) & 0xff;
+            objectIdBinary[11] = dateNow & 0xff;
+            retVal = this.toHexString(objectIdBinary);
+            break;
+        }
     }
+
+
     return retVal;
 }
+
+/**
+ * 
+ * @param {Buffer} byteArray 
+ * @returns 
+ */
+exports.toHexString = (byteArray) =>
+{
+    let hexString = "";
+    for (let i = 0; i < byteArray.length; i++)
+    {
+        hexString += ("0" + (byteArray[i] & 0xFF).toString(16)).slice(-2);
+    }
+    return hexString;
+}
+
 // secondsToTime
 exports.secondsToTime = (timestamp) => {
     timestamp = ~~(timestamp);
