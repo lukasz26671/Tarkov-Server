@@ -1,5 +1,6 @@
 "use strict";
 const { QuestEvent } = require('../Controllers/QuestController')
+const {AccountServer} = require('./account')
 
 /*
  * Quest status values
@@ -323,7 +324,7 @@ function acceptQuest(pmcData, body, sessionID) {
   // Create a dialog message for starting the quest.
   // Note that for starting quests, the correct locale field is "description", not "startedMessageText".
   const quest = getCachedQuest(body.qid);
-  const accountLang = account_f.handler.getAccountLang(sessionID)
+  const accountLang = AccountServer.getAccountLang(sessionID)
 
   const globalLocales = locale_f.handler.getGlobal(accountLang, false, sessionID);
   let questLocale = globalLocales.quest;
@@ -389,7 +390,7 @@ function completeQuest(pmcData, body, sessionID) {
 
   // give reward
   const quest = getCachedQuest(body.qid);
-  const locale = account_f.handler.getAccountLang(sessionID);
+  const locale = AccountServer.getAccountLang(sessionID);
 
   if (intelCenterBonus > 0) {
     quest = applyMoneyBoost(quest, intelCenterBonus); //money = money + (money*intelCenterBonus/100)
