@@ -114,42 +114,22 @@ function RemoveFoundItems(profile) {
 }
 
 function setInventory(pmcData, profile) {	
-	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.equipment, profile.id);
-	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questRaidItems, profile.id);
-	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems, profile.id);
+	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.equipment, profile.aid);
+	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questRaidItems, profile.aid);
+	move_f.removeItemFromProfile(pmcData, pmcData.Inventory.questStashItems, profile.aid);
 	
-	//fix for duplicate ids in items by creating new ids for item ids created in-raid
 	profile.Inventory = repairInventoryIDs(profile.Inventory, pmcData.aid);
 
-	// Bandaid fix to duplicate IDs being saved to profile after raid. May cause inconsistent item data. (~Kiobu)
-	// no more duplicates should exist but I'll leave this here untouched bc it's working (CQ)
-	// let duplicates = [];
-	
 	x: for (let item of profile.Inventory.items) {
 		for (let key in pmcData.Inventory.items) {
 			let currid = pmcData.Inventory.items[key]._id;
 			if (currid.includes(item._id)) {
-				// duplicates.push(item._id);
 				continue x;
 			}
 		}
 		pmcData.Inventory.items.push(item);
 	}
 	pmcData.Inventory.fastPanel = profile.Inventory.fastPanel;
-
-	// Don't count important IDs as errors.
-	// const ignoreIDs = [
-	// 	"60de0d80c6b34f52845b4646",		//?
-	// 	"61b7367440281631fc83f17f" 		//sorting table
-	// ];
-
-	// duplicates = duplicates.filter((x) => !ignoreIDs.includes(x));
-
-	// if (duplicates.length > 0) {
-	// 	logger.logWarning(`Duplicate ID(s) encountered in profile after-raid. Found ${duplicates.length} duplicates. Ignoring...`);
-	// 	logger.logWarning(`Duplicates: \n`+JSON.stringify(duplicates, null, 2));
-	// 	//console.log(duplicates); //this won't be saved in log file, don't use this crap
-	// }
 
 	return pmcData;
 }
@@ -323,6 +303,10 @@ function getSecuredContainer(items) {
 }
 
 function saveProgress(offraidData, sessionID) {
+
+  console.log(offraidData);
+
+
   // if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
   //   return;
   // }
@@ -339,10 +323,27 @@ function saveProgress(offraidData, sessionID) {
     logger.logError(offraidData.profile);
     return;
   }
-  if(offraidData.health === null || offraidData.health === undefined)
-    return;
 
+  if(offraidData.health === null || offraidData.health === undefined) {
+    logger.logError("offraidData: health is undefined");
+    return;
+  }
+  
   let pmcData = profile_f.handler.getPmcProfile(sessionID);
+
+  if(offraidData.health.Energy < 0 || offraidData.health.Hydration < 0) {
+    logger.logError("offraidData: health is fucked. working around it.");
+
+    console.log(pmcData);
+    for(const bpHealthNode in pmcData.Health.BodyParts) {
+      pmcData.Health.BodyParts[bpHealthNode].Health.Maximum - offraidData.health.Health[bpHealthNode].Current;
+    }
+
+    pmcData.Health.Energy += offraidData.health.Energy;
+    pmcData.Health.Hydration += offraidData.health.Hydration;
+  }
+
+
 
   if (offraidData.exit === "survived") {
     // mark found items and replace item ID's if the player survived
