@@ -188,13 +188,19 @@ function removeItemFromProfile(pmcData, itemId, sessionID) {
 
   output = item_f.handler.getOutput(sessionID);
 
+  if(output.profileChanges === undefined)
+    output.profileChanges = {};
+
+  if(output.profileChanges[pmcData._id] === undefined)
+    output.profileChanges[pmcData._id] = {};
+
   if (output.profileChanges[pmcData._id].items === undefined) {
     output.profileChanges[pmcData._id].items = {};
   }
 
   //remove one by one all related items and itself
   const toRemoveLast = ids_toremove[ids_toremove.length - 1];
-  for (let a in pmcData.Inventory.items) {
+  for (const a in pmcData.Inventory.items) {
     if (pmcData.Inventory.items[a]._id.includes(toRemoveLast)) {
       if (typeof output.profileChanges != "undefined" && output != "") {
         if (typeof output.profileChanges[pmcData._id].items.del == "undefined") output.profileChanges[pmcData._id].items.del = [];
