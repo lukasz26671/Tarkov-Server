@@ -1,7 +1,7 @@
-# Server Readme.md
+# Tarkov Emulated Central Server
 
-## Current Tarkov Version (working)
-- 0.12.12.15.17861
+## Current known working Tarkov Version
+- 0.12.12.15.*
 
 ## Debugging
 - Download and Install [Visual Studio Code](https://code.visualstudio.com/) 
@@ -25,6 +25,11 @@ Zip the following folders & files
 - user
 - Server.exe
 
+## How to use (if not compiling yourself or using a release)
+- Download the latest release
+- Ensure the code and the Server.exe are in the same folder
+- Run Server.exe
+
 ## How to host this server to others (this may change soon)
 - Open port 7777 on your router
 - Open user/configs/server.json and change port value to 7777 (this can anything but this is a good easily memorable open one to use)
@@ -32,4 +37,7 @@ Zip the following folders & files
 - Open user/configs/server.json and change ip_backend value to your external IP (google to find out how to find it)
 - Run the Server
 - Provide your friends with your external IP address and port
+
+## Known usable mods
+- [SIT M4](https://github.com/paulov-t/SIT-Mod-M4) - Makes the M4 actually useful and good mod to show how to make changes of your own.
  

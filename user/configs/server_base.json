@@ -4,7 +4,7 @@
 	"port": 443,
 	"eventPollIntervalSec": 60,
 	"rebuildCache": true,
-	"name": "JustEmuTarkov",
+	"name": "JET Server (SIT Fork)",
 	"discord": "",
 	"website": "",
   "runSimpleHttpServer": false,

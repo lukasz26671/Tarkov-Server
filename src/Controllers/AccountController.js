@@ -1,5 +1,6 @@
 const fs = require('fs');
-const {AccountServer} = require('./../classes/account')
+const {AccountServer} = require('./../classes/account');
+const utility = require('./../../core/util/utility');
 
 /**
  * Account Controller. 
@@ -7,12 +8,22 @@ const {AccountServer} = require('./../classes/account')
  */
 class AccountController
 {
+
+  static Instance = new AccountController();
+   constructor() {
+    if(!fs.existsSync(`user/profiles/`)) {
+      fs.mkdirSync(`user/profiles/`);
+    }
+  }
     /**
      * Gets ALL of the account data from every profile in the user/profiles directory
      * @returns all the Account data neccessary to process accounts in the server & client
      */
     static getAllAccounts() {
         let fullyLoadedAccounts = [];
+        if(!fs.existsSync(`user/profiles/`)) {
+          fs.mkdirSync(`user/profiles/`);
+        }
       
           const profileFolders = fs.readdirSync(`user/profiles/`);
       // console.log(profileFolders);
@@ -60,17 +71,24 @@ class AccountController
 
 
     static findAccountIdByUsernameAndPassword(username, password) {
-        const profileFolders = fs.readdirSync(`user/profiles/`);
-          for (const id of profileFolders) {
-              if (!fileIO.exist(`user/profiles/${id}/account.json`)) continue;
-              let account = JSON.parse(fs.readFileSync(`user/profiles/${id}/account.json`));
-              if(account.email == username && account.password == password)
-                return id;
-          }
-        return undefined;
+      if(!fs.existsSync(`user/profiles/`)) {
+        fs.mkdirSync(`user/profiles/`);
+      }
+
+      const profileFolders = fs.readdirSync(`user/profiles/`);
+        for (const id of profileFolders) {
+            if (!fileIO.exist(`user/profiles/${id}/account.json`)) continue;
+            let account = JSON.parse(fs.readFileSync(`user/profiles/${id}/account.json`));
+            if(account.email == username && account.password == password)
+              return id;
+        }
+      return undefined;
     }
 
     static isEmailAlreadyInUse(username) {
+      if(!fs.existsSync(`user/profiles/`)) {
+        fs.mkdirSync(`user/profiles/`);
+      }
 
       const profileFolders = fs.readdirSync(`user/profiles/`);
           for (const id of profileFolders) {
@@ -92,6 +110,10 @@ class AccountController
     }
 
     static register(info) {
+      if(!fs.existsSync(`user/profiles/`)) {
+        fs.mkdirSync(`user/profiles/`);
+      }
+
         // Get existing account from memory or cache a new one.
         let accountID = AccountServer.reloadAccountByLogin(info)
         if (accountID !== undefined) {
@@ -104,6 +126,9 @@ class AccountController
 
         if(accountID === undefined) {
           accountID = utility.generateNewAccountId();
+          if(accountID === undefined || accountID === "") {
+            return "FAILED";
+          }
       
           AccountServer.accounts[accountID] = {
             id: accountID,

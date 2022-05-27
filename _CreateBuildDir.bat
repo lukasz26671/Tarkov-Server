@@ -1,3 +1,4 @@
+rmdir Build /s/q
 mkdir Build
 
 copy "Server.exe" "Build/Server.exe"
@@ -8,14 +9,13 @@ xcopy "src" "Build/src/" /s/i/y
 xcopy "user" "Build/user/" /s/i/y
 
 
-del "Build/user/cache/" /s/q
-del "Build/user/certs/" /s/q
-del "Build/user/logs/" /s/q
+rmdir "Build/user/cache/" /s/q
+rmdir "Build/user/events/" /s/q
+rmdir "Build/user/logs/" /s/q
 rmdir "Build/user/profiles/" /s/q
-mkdir "Build/user/profiles/" /q
 rmdir "Build/user/mods" /s/q
 
-del "Build/user/config/gameplay.json" /q
-del "Build/user/config/server.json" /q
+del "Build\user\configs\gameplay.json" /q
+del "Build\user\configs\server.json" /q
 
 pause
