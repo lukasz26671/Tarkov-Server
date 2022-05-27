@@ -1,4 +1,6 @@
 "use strict";
+const fs = require('fs');
+const { logger } = require('./../../core/util/logger');
 
 /**
  * AccountServer class maintains list of accounts in memory. All account information should be
@@ -128,8 +130,13 @@ class AccountServer {
    * @param {*} sessionID 
    */
   static saveToDisk(sessionID = 0) {
+
+    if(!fs.existsSync(`user/profiles/`)) {
+      fs.mkdirSync(`user/profiles/`);
+    }
+
     // Should all accounts be saved to disk?
-    if (sessionID == 0) {
+    if (sessionID == 0 || sessionID === undefined) {
       // Iterate through all cached accounts.
       for (let id in AccountServer.accounts) {
         // Check if the file was modified by another cluster member using the file age.
@@ -147,10 +154,10 @@ class AccountServer {
             let stats = global.internal.fs.statSync(`./user/profiles/${id}/account.json`);
             AccountServer.accountFileAge[id] = stats.mtimeMs;
 
-            logger.logSuccess(`[CLUSTER] Account file for account ${id} was saved to disk.`);
+            logger.logSuccess(`Account file for account ${id} was saved to disk.`);
           }
         } else {
-          logger.logWarning(`[CLUSTER] Account file for account ${id} was modified, reloading.`);
+          logger.logWarning(`Account file for account ${id} was modified, reloading.`);
 
           // Reload the account from disk.
           AccountServer.accounts[id] = fileIO.readParsed(`./user/profiles/${id}/account.json`);
@@ -162,13 +169,17 @@ class AccountServer {
       // Does the account file exist? (Required for new accounts)
       if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
         // Save memory content to disk
+
+        logger.logInfo(`Registering New account ${sessionID}.`);
+        
+
         fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
 
         // Update file age to prevent another reload by AccountServer server.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
         AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
 
-        logger.logSuccess(`[CLUSTER] New account ${sessionID} registered and was saved to disk.`);
+        logger.logSuccess(`New account ${sessionID} registered and was saved to disk.`);
       } else {
         // Check if the file was modified by another cluster member using the file age.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);

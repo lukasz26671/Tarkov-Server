@@ -274,7 +274,7 @@ exports.makeSign = (Length) => {
 }
 // generateNewAccountId
 exports.generateNewAccountId = () => {
-    return this.generateNewId("AID", true);
+    return this.generateNewId("AID", 3);
 }
 // generateNewItemId
 exports.generateNewItemId = () => {
@@ -342,6 +342,9 @@ exports.generateNewId = (prefix = "", version = 2) => {
             objectIdBinary[10] = (dateNow >> 8) & 0xff;
             objectIdBinary[11] = dateNow & 0xff;
             retVal = this.toHexString(objectIdBinary);
+            if(prefix !== undefined && prefix !== "") {
+                retVal = prefix + retVal;
+            }
             break;
         }
     }
