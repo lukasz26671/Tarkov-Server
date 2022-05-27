@@ -16,18 +16,24 @@ const { certificate } = require('./../core/server/certGenerator');
 const { ConfigController } = require('./../src/Controllers/ConfigController')
 var serverIp = "127.0.0.1";
 
+for(let i = 0; i < process.argv.length; ++i) {
+  console.log(`index ${i} argument -> ${process.argv[i]}`);
+}
+
 /**
  * Rebuild / Build configs
 */
 ConfigController.rebuildFromBaseConfigs();
 
 
-const serverBaseConfig = fs.readFileSync(process.cwd() + "/user/configs/server.json");
+// const serverBaseConfig = fs.readFileSync(process.cwd() + "/user/configs/server.json");
+const serverBaseConfig = ConfigController.Configs["server_base"];
 
 /** ======================================================================================================
  * Read in the Server Config as to whether to spin up the Http Server for NodeJS running on Cloud Services
  */
- const serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
+//  const serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
+const serverConfig = ConfigController.Configs["server"];
 
 /**
  * Get port from environment and store in Express.
@@ -44,7 +50,6 @@ app.set('port', port);
 //  */
 const certs = certificate.generate(serverIp);
 
-const server = http.createServer(app);
 
 const httpsServer = https.createServer({
   key: certs.key,
@@ -55,47 +60,18 @@ const io = require('socket.io')(server,{
   perMessageDeflate :false
 });
 
-// /**
-//  * Listen on provided port, on all network interfaces.
-//  */
-
-// server.listen(port);
-// server.on('error', onError);
-// server.on('listening', onListening);
-
-
-// Set up a headless websocket server
-// const wsServer = new ws.WebSocketServer({ server: httpsServer }, ()=>{console.log("ws server created"); })
-// wsServer.on('connection', socket => {
-//   socket.on('message', message => console.log(message));
-// });
-// httpsServer.on('connect', (req, socket, head) => {
-//   console.log("connect");
-// }
-// );
-// httpsServer.on('newSession', (sessionID, sessionData, callback) => {
-//   console.log("newSession :: sessionID :: " + sessionID.toString('utf-8'));
-//   // console.log("newSession :: sessionData :: " + sessionData.toString());
-// });
-// httpsServer.on('upgrade', (request, socket, head) => {
-//   wsServer.handleUpgrade(request, socket, head, socket => {
-//     wsServer.emit('connection', socket, request);
-//   });
-// });
-
-
-
-
 /** ======================================================================================================
  * Https Server running on whatever port determined by outcome above
  */
-// if(serverConfig.runSimpleHttpServer === true) {
+if(serverConfig.runSimpleHttpServer === true) {
+  const server = http.createServer(app);
+
   server.on('listening', () => {
     console.log(">> HTTP << server listening on " + 8080);
   })
   server.listen(8080, ()=>{
   });
-// }
+}
 // else {
   httpsServer.on('error', onError);
   httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().port) });
