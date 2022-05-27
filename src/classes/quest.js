@@ -324,11 +324,22 @@ function acceptQuest(pmcData, body, sessionID) {
   // Create a dialog message for starting the quest.
   // Note that for starting quests, the correct locale field is "description", not "startedMessageText".
   const quest = getCachedQuest(body.qid);
+  if(quest === undefined)
+    return item_f.handler.getOutput(sessionID);
+
   const accountLang = AccountServer.getAccountLang(sessionID)
 
   const globalLocales = locale_f.handler.getGlobal(accountLang, false, sessionID);
+  
   let questLocale = globalLocales.quest;
+
+  if(questLocale === undefined)
+    return item_f.handler.getOutput(sessionID);
+
   questLocale = questLocale[body.qid];
+
+  if(questLocale === undefined)
+    return item_f.handler.getOutput(sessionID);
 
   const questRewards = getQuestRewards(quest, state, pmcData, sessionID);
 
