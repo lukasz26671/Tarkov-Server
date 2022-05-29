@@ -35,20 +35,13 @@ const serverBaseConfig = ConfigController.Configs["server_base"];
 //  const serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
 const serverConfig = ConfigController.Configs["server"];
 
-/**
- * Get port from environment and store in Express.
- */
-
-// var port = normalizePort(process.env.PORT || '7777');
-// var port = normalizePort('7777');
 var port = normalizePort(serverConfig.port);
 app.set('port', port);
-
 
 // /**
 //  * Create HTTP server.
 //  */
-const certs = certificate.generate(serverIp);
+const certs = certificate.generate(serverConfig.ip);
 
 
 const httpsServer = https.createServer({

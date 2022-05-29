@@ -33,8 +33,8 @@ class AccountController
           for (const id of profileFolders) {
               // let id = ids[i];
               if (!fileIO.exist(`user/profiles/${id}/character.json`)) continue;
-              let character = fileIO.readParsed(`user/profiles/${id}/character.json`);
-              
+              const character = fileIO.readParsed(`user/profiles/${id}/character.json`);
+
               let obj = {
                   Info: {}
               };
@@ -136,6 +136,13 @@ class AccountController
             password: info.password,
             wipe: true,
             edition: info.edition,
+            lang: "en",
+	          friends: [],
+	          Matching: {
+              "LookingForGroup": false
+            },
+	          friendRequestInbox: [],
+	          friendRequestOutbox: []
           };
       
           AccountServer.saveToDisk(accountID);

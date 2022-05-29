@@ -123,7 +123,34 @@ class ResponseController
           };
           return ResponseController.getBody(obj);
     }
+},
+{
+url: "/launcher/profile/login",
+action: (url, info, sessionID) => {
+    // let output = AccountServer.login(info);
+    let output = AccountController.login(info);
+    return output === undefined || output === null || output === "" ? "FAILED" : output;
+  }
+},
+{
+    url: "/launcher/profile/get",
+    action: (url, info, sessionID) => {
+        let accountId = AccountServer.login(info);
+        let output = AccountServer.find(accountId);
+        output['server'] = server.name;
+        return fileIO.stringify(output);
+      }
+},
+{
+    url: "/client/game/logout",
+    action: (url, info, sessionID) => {
+        const account = AccountServer.find(sessionID);
+        account.wipe = false;
+        AccountServer.saveToDisk(sessionID);
+    }
 }
+
+
     ]
 
     static getRoute = (url,info,sessionID) => {

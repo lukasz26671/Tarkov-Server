@@ -21,7 +21,7 @@ class Responses {
       "/client/game/bot/generate": this.clientGameBotGenerate,
       // "/client/game/config": this.clientGameConfig,
       "/client/game/keepalive": this.clientGameKeepalive,
-      "/client/game/logout": this.clientGameLogout,
+      // "/client/game/logout": this.clientGameLogout,
       "/client/game/profile/create": this.clientGameProfileCreate,
       "/client/game/profile/items/moving": this.clientGameProfileItemsMoving,
       "/client/game/profile/list": this.clientGameProfileList,
@@ -87,8 +87,8 @@ class Responses {
       "/launcher/profile/change/email": this.launcherProfileChangeEmail,
       "/launcher/profile/change/password": this.launcherProfileChangePassword,
       "/launcher/profile/change/wipe": this.launcherProfileChangeWipe,
-      "/launcher/profile/get": this.launcherProfileGet,
-      "/launcher/profile/login": this.launcherProfileLogin,
+      // "/launcher/profile/get": this.launcherProfileGet,
+      // "/launcher/profile/login": this.launcherProfileLogin,
       // "/launcher/profile/register": this.launcherProfileRegister,
       "/launcher/profile/remove": this.launcherProfileRemove,
       "/launcher/server/connect": this.launcherServerConnect,
@@ -677,17 +677,17 @@ class Responses {
     let output = AccountServer.wipe(info);
     return output === "" ? "FAILED" : "OK";
   }
-  launcherProfileGet(url, info, sessionID) {
-    let accountId = AccountServer.login(info);
-    let output = AccountServer.find(accountId);
-    output['server'] = server.name;
-    return fileIO.stringify(output);
-  }
-  launcherProfileLogin(url, info, sessionID) {
-    // let output = AccountServer.login(info);
-    let output = AccountController.login(info);
-    return output === undefined || output === null || output === "" ? "FAILED" : output;
-  }
+  // launcherProfileGet(url, info, sessionID) {
+  //   let accountId = AccountServer.login(info);
+  //   let output = AccountServer.find(accountId);
+  //   output['server'] = server.name;
+  //   return fileIO.stringify(output);
+  // }
+  // launcherProfileLogin(url, info, sessionID) {
+  //   // let output = AccountServer.login(info);
+  //   let output = AccountController.login(info);
+  //   return output === undefined || output === null || output === "" ? "FAILED" : output;
+  // }
   // launcherProfileRegister(url, info, sessionID) {
   //   let output = AccountServer.register(info);
   //   return output === undefined || output === null || output === "" ? "FAILED" : output;
