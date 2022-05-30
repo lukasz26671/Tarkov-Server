@@ -84,6 +84,131 @@
     "mounted": [],
     "static": [
         {
+            "id": "container_woods_Scripts_00000",
+            "IsStatic": true,
+            "useGravity": true,
+            "randomRotation": false,
+            "Position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "Rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "IsGroupPosition": false,
+            "GroupPositions": [],
+            "Root": null,
+            "Items": [
+                {
+                "_id": "618940000000000000000015",
+                "_tpl": "61a89e5445a2672acf66c877"
+                }
+            ]
+        },
+        {
+            "Id": "container_shoreline_scripts_00002",
+            "IsStatic": true,
+            "useGravity": true,
+            "randomRotation": false,
+            "Position": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "Rotation": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "IsGroupPosition": false,
+            "GroupPositions": [],
+            "Root": null,
+            "Items": [
+             {
+              "_id": "618940000000000000000014",
+              "_tpl": "61a89e5445a2672acf66c877"
+             }
+            ]
+        },
+        {
+            "Id": "container_shoreline_scripts_00003",
+            "IsStatic": true,
+            "useGravity": true,
+            "randomRotation": false,
+            "Position": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "Rotation": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "IsGroupPosition": false,
+            "GroupPositions": [],
+            "Root": null,
+            "Items": [
+             {
+              "_id": "618940000000000000000013",
+              "_tpl": "61a89e5445a2672acf66c877"
+             }
+            ]
+        },
+        {
+            "Id": "container_shoreline_scripts_00004",
+            "IsStatic": true,
+            "useGravity": true,
+            "randomRotation": false,
+            "Position": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "Rotation": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "IsGroupPosition": false,
+            "GroupPositions": [],
+            "Root": null,
+            "Items": [
+             {
+              "_id": "618940000000000000000012",
+              "_tpl": "61a89e5445a2672acf66c877"
+             }
+            ]
+           },
+           {
+            "id": "container_shoreline_scripts_00005",
+            "IsStatic": true,
+            "useGravity": true,
+            "randomRotation": false,
+            "Position": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "Rotation": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "IsGroupPosition": false,
+            "GroupPositions": [],
+            "Root": null,
+            "Items": [
+             {
+              "_id": "618940000000000000000011",
+              "_tpl": "61a89e5445a2672acf66c877"
+             }
+            ]
+        },
+        {
             "id": "woods_combined_00095",
             "Position": 0,
             "Rotation": 0,
@@ -228,16 +353,28 @@
         },
         {
             "id": "woods_combined_00000",
-            "Position": 0,
-            "Rotation": 0,
+            "IsStatic": true,
+            "useGravity": true,
+            "randomRotation": false,
+            "Position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+            },
+            "Rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+            },
+            "IsGroupPosition": false,
+            "GroupPositions": [],
+            "Root": null,
             "Items": [
                 {
                     "_id": "618940492ec84622b6357bac",
                     "_tpl": "578f8778245977358849a9b5"
                 }
-            ],
-            "IsStatic": true,
-            "useGravity": true
+            ]
         },
         {
             "id": "woods_combined_00082",
