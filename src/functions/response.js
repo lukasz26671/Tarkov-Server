@@ -447,7 +447,14 @@ class Responses {
     }
   }
   clientGameVersionValidate(url, info, sessionID) {
-    logger.logInfo("User connected with client version " + info.version.major);
+    const account = AccountServer.find(sessionID);
+    if(account !== undefined) {
+      console.log(account);
+      logger.logInfo(`User ${sessionID} connected with client version ${info.version.major}`);
+    }
+    else {
+      logger.logInfo("Unknown User connected with client version " + info.version.major);
+    }
     return response_f.nullResponse();
   }
   clientGetMetricsConfig(url, info, sessionID) {
