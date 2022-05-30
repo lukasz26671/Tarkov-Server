@@ -1,4 +1,6 @@
 "use strict";
+const utility = require('../../core/util/utility');
+const { LootController } = require('../Controllers/LootController');
 
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
@@ -212,6 +214,7 @@ function GetLootModifiers()
     , modifierCommon: modifierCommon
    }
 }
+
 function GetItemRarityType(itemTemplate) {
 
   if(LootRarities[itemTemplate._props.Name] === undefined) {
@@ -270,8 +273,8 @@ function FilterItemByRarity(
     const modifierUnCommon = LootModifiers.modifierUnCommon;
     const modifierCommon = LootModifiers.modifierCommon;
 
-    if(in_additionalLootModifier == undefined)
-      in_additionalLootModifier = 1.0;
+    if(in_additionalLootModifier === undefined)
+      in_additionalLootModifier = 1.0 * LocationLootChanceModifierFromFile;
     
     if(out_itemsRemoved == undefined)
       out_itemsRemoved = {};
@@ -292,7 +295,12 @@ function FilterItemByRarity(
     if(itemTemplate._props.QuestItem == true)
       return true;
 
+    // If roubles (cash registers), always return true
+    if(itemTemplate._id === "5449016a4bdc2d6f028b456f") 
+      return true;
+
     const itemRarityType = GetItemRarityType(itemTemplate);
+
 
     // logger.logInfo(itemRarityType + " - " + itemTemplate._props.Name);
 
@@ -358,9 +366,11 @@ function GenerateLootList(containerId) {
     // --------------------------------------------
     // Paulo: Filter out by Loot Rarity
     // TODO: Move this to an Array filter function
-    if(!itemTemplate.QuestItem && !FilterItemByRarity(itemTemplate
-    // if(!FilterItemByRarity(itemTemplate
-      , itemsRemoved)) 
+    if(
+      ItemList.SpawnList.length > 1 // More than 2 items to spawn
+      && !itemTemplate.QuestItem // Is not a quest item
+      && (!FilterItemByRarity(itemTemplate, itemsRemoved)) // Filtered by "Rarity"
+      ) 
       {
         numberOfItemsRemoved++;
         continue; // If returned False then ignore this item
@@ -461,17 +471,25 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
       return;
     }
   }
+
   let LootListItems = GenerateLootList(ContainerId);
   let LootListAttempts = 10;
+  
   // If empty, try 1 more time
   while(LootListItems.length == 0 && LootListAttempts > 0) {
     LootListItems = GenerateLootList(ContainerId);
     LootListAttempts--;
   }
 
-  const parentId = _items[0]._id;
+  let parentId = _items[0]._id;
+  if(parentId == null) {
+    parentId = utility.generateNewItemId();
+  }
   const idPrefix = parentId.substring(0, parentId.length - 4);
   let idSuffix = parseInt(parentId.substring(parentId.length - 4), 16) + 1;
+
+  // const parentId = utility.generateNewId(undefined, 3);
+
   const ContainerTemplate = global._database.items[ContainerId];
   let container2D = Array(ContainerTemplate._props.Grids[0]._props.cellsV)
     .fill()
@@ -480,7 +498,7 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
   let addedPresets = [];
 
   // roll a maximum number of items  to spawn in the container between 0 and max slot count
-  const minCount = _RollMaxItemsToSpawn(ContainerTemplate);
+  const minCount = Math.max(1, _RollMaxItemsToSpawn(ContainerTemplate));
   //const rollSpawnChance = utility.getRandomInt(0, 10000); // roll between 0.00 and 100.00
   //let LootListItems = Object.keys(LootList);
   //logger.logInfo(`SpawnItemInContainer: ${rollSpawnChance} | ${Object.keys(LootList).length}`)
@@ -512,11 +530,11 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
         continue;
       }
       let result = { success: false };
-      // let maxAttempts =
-      //   global._database.gameplayConfig.locationloot.containers.AttemptsToPlaceLoot > 10 ? 1 : global._database.gameplayConfig.locationloot.containers.AttemptsToPlaceLoot;
+      let maxAttempts =
+        global._database.gameplayConfig.locationloot.containers.AttemptsToPlaceLoot > 10 ? 1 : global._database.gameplayConfig.locationloot.containers.AttemptsToPlaceLoot;
 
       // attempt to add item x times
-      // while (!result.success && maxAttempts) {
+      while (!result.success && maxAttempts) {
         //let currentTotal = 0;
         // get basic width and height of the item
         itemWidth = rolledRandomItemToPlace._props.Width;
@@ -536,8 +554,8 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
           itemHeight = size[1];
         }
         result = helper_f.findSlotForItem(container2D, itemWidth, itemHeight);
-        // maxAttempts--;
-      // }
+        maxAttempts--;
+      }
       // finished attempting to insert item into container
 
       // if we weren't able to find an item to fit after x tries then container is probably full
@@ -545,7 +563,7 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
 
       // ----------------------------------------------------------------------------------------------------
       // Paulo: Remove all duplicate items in same container. You never get dups on Live. So done it here too
-      if(usedLootItems.find(item => item._props.Name == rolledRandomItemToPlace._props.Name) == undefined) {
+      if(usedLootItems.find(item => item._props.Name == rolledRandomItemToPlace._props.Name) === undefined) {
         usedLootItems.push(rolledRandomItemToPlace);
       }
       else {
@@ -588,6 +606,7 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
 
       containerItem = {
         _id: idPrefix + idSuffix.toString(16),
+        // _id: utility.generateNewId(undefined, 3),
         _tpl: rolledRandomItemToPlace._id,
         parentId: parentId,
         slotId: "main",
@@ -604,7 +623,8 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
         idSuffix++;
 
         cartridges = {
-          _id: idPrefix + idSuffix.toString(16),
+          // _id: idPrefix + idSuffix.toString(16),
+          _id: utility.generateNewId(undefined, 3),
           _tpl: rolledRandomItemToPlace._props.StackSlots[0]._props.filters[0].Filter[0],
           parentId: containerItem._id,
           slotId: "cartridges",
@@ -615,6 +635,7 @@ function _GenerateContainerLoot(_items, locationLootChanceModifier, MapName) {
         idSuffix++;
         cartridges = {
           _id: idPrefix + idSuffix.toString(16),
+          // _id: utility.generateNewId(undefined, 3),
           _tpl: rolledRandomItemToPlace._props.Cartridges[0]._props.filters[0].Filter[0],
           parentId: parentId,
           slotId: "cartridges",
@@ -688,7 +709,7 @@ class LocationLootGenerator {
       let data = DeepCopy(typeArray[i]);
       let newItemsData = [];
       // forced loot should be only contain 1 item... (there shouldnt be any weapon in there...)
-      const newId = utility.generateNewItemId();
+      const newId = utility.generateNewId(undefined, 3);
 
 
       let createEndLootData = {
@@ -720,12 +741,21 @@ class LocationLootGenerator {
     for (let i in typeArray) {
       let data = typeArray[i];
       dateStarted = Date.now();
-      _GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName);
+      // _GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName);
+      // count++;
+      if(LootController.GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName))
+        count++;
+
+
+
+
+
+
       if (Date.now() - dateStarted > 50) logger.logInfo(`Slow Container ${data.Id} [${Date.now() - dateStarted}ms]`);
       dateStarted = Date.now();
       data.Root = data.Items[0]._id;
       output.Loot.push(data);
-      count++;
+      // count++;
     }
     return count;
   }
@@ -870,24 +900,21 @@ class LocationLootGenerator {
 
       let actualItem = helper_f.getItem(createdItem._tpl)[1];
       if(actualItem !== undefined) {
-        let actualItemLootExperience 
+        const actualItemLootExperience 
         = actualItem["_props"]["LootExperience"] + actualItem["_props"]["ExamineExperience"];
-        let isUnbuyable = actualItem["_props"]["Unbuyable"];
-        let isQuestItem = actualItem["_props"]["QuestItem"];
-        const randomNumber2 = utility.getRandomInt(4, actualItemLootExperience * 4);
+        const isUnbuyable = actualItem["_props"]["Unbuyable"];
+        const isQuestItem = actualItem["_props"]["QuestItem"];
       
         let filterByRarityOutput = {};
-        if(!isQuestItem && !FilterItemByRarity(actualItem, filterByRarityOutput, 1.75))
+        if(!isQuestItem 
+          && !isUnbuyable 
+          && !FilterItemByRarity(actualItem, filterByRarityOutput, 2))
           continue;
-
-        // randomNumber = Math.min(99, Math.max(4, randomNumber * locationLootChanceModifier * 2));
-        // if (randomNumber >= randomNumber2 || isQuestItem) {
 
           count++;
           output.Loot.push(createEndLootData);
           currentUsedPositions.push(createEndLootData.Position);
           currentUsedItems.push(createEndLootData);
-        // }
       }
     }
     return count;
@@ -926,21 +953,21 @@ class LocationServer {
     if(global._database.gameplayConfig === undefined && global._database.gameplay !== undefined)
       global._database.gameplayConfig = global._database.gameplay;
 
-    if (global._database.gameplayConfig.locationloot.useDynamicLootMultiplier) {
-      if (sessionID != "" && typeof sessionID != "undefined") {
-        let exfilData = profile_f.handler.getProfileExfilsById(sessionID);
+    // if (global._database.gameplayConfig.locationloot.useDynamicLootMultiplier) {
+    //   if (sessionID != "" && typeof sessionID != "undefined") {
+    //     let exfilData = profile_f.handler.getProfileExfilsById(sessionID);
 
-        let sumExfils = 0;
-        for (const key in exfilData) {
-          sumExfils += exfilData[key];
-        }
-        if (sumExfils != 0) {
-          _location.base.GlobalLootChanceModifier = sumExfils / (sumExfils + exfilData[name]);
-        } else {
-          _location.base.GlobalLootChanceModifier = 1;
-        }
-      }
-    }
+    //     let sumExfils = 0;
+    //     for (const key in exfilData) {
+    //       sumExfils += exfilData[key];
+    //     }
+    //     if (sumExfils != 0) {
+    //       _location.base.GlobalLootChanceModifier = sumExfils / (sumExfils + exfilData[name]);
+    //     } else {
+    //       _location.base.GlobalLootChanceModifier = 1;
+    //     }
+    //   }
+    // }
 
     let output = _location.base;
     let ids = {};
@@ -959,11 +986,11 @@ class LocationServer {
     for(let i = 0; i < mounted.length; i++) {
       mounted[i].IsMounted = true;
     }
-    let statics = DeepCopy(_location.loot.static);
+    const statics = DeepCopy(_location.loot.static);
     for(let i = 0; i < statics.length; i++) {
       statics[i].IsStatic = true;
     }
-    let dynamic = DeepCopy(_location.loot.dynamic);
+    const dynamic = DeepCopy(_location.loot.dynamic);
     for(let i = 0; i < dynamic.length; i++) {
       dynamic[i].IsDynamic = true;
     }
@@ -987,11 +1014,11 @@ class LocationServer {
     // ------------------------------------------------------
     // Handle any Forced Static Loot - i.e. Unknown Key
     // 
-    logger.logInfo(`Forced Static Loot: ${forced.length}`);
+    logger.logInfo(`Forced Loot Count: ${forced.length}`);
+    let numberOfForcedStaticLootAdded = 0;
     for(let iForced in forced) {
       let forcedItem = forced[iForced];
       forcedItem.IsForced = true;
-      let numberOfForcedStaticLootAdded = 0;
       if(forcedItem.IsStatic) {
           let newId = utility.generateNewItemId();
           forcedItem.Root = newId;
@@ -1022,9 +1049,9 @@ class LocationServer {
           output.Loot.push(forcedItem);
           numberOfForcedStaticLootAdded++;
       }
-
+    }
+    if(numberOfForcedStaticLootAdded > 0) {
       logger.logSuccess(`Added ${numberOfForcedStaticLootAdded} Forced Static Loot`);
-
     }
     //
     // ------------------------------------------------------
