@@ -9,6 +9,20 @@
         "path": "maps/woods_preset.bundle",
         "rcid": "woods.scenespreset.asset"
     },
+    "AirdropParameters": [
+        {
+          "AirdropPointDeactivateDistance": 50,
+          "MinPlayersCountToSpawnAirdrop": 6,
+          "PlaneAirdropChance": 1.0,
+          "PlaneAirdropCooldownMax": 900,
+          "PlaneAirdropCooldownMin": 600,
+          "PlaneAirdropEnd": 1200,
+          "PlaneAirdropMax": 1,
+          "PlaneAirdropStartMax": 900,
+          "PlaneAirdropStartMin": 300,
+          "UnsuccessfulTryPenalty": 600
+        }
+      ],
     "Area": 0,
     "RequiredPlayerLevel": 0,
     "MinPlayers": 8,
