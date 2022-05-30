@@ -278,11 +278,11 @@ exports.generateNewAccountId = () => {
 }
 // generateNewItemId
 exports.generateNewItemId = () => {
-    return this.generateNewId("I");
+    return this.generateNewId("I", 2);
 }
 // generateNewDialogueId
 exports.generateNewDialogueId = () => {
-    return this.generateNewId("D");
+    return this.generateNewId("D", 2);
 }
 
 const { v4: uuidv4 } = require('uuid')
@@ -326,6 +326,7 @@ exports.generateNewId = (prefix = "", version = 2) => {
         case 3:
         {
             const dateNow = Date.now();
+            const dateNow2 = Date.now() * 2;
             const objectIdBinary = Buffer.alloc(12);
             const randomBytes = crypto.randomBytes(5);
 
@@ -338,9 +339,9 @@ exports.generateNewId = (prefix = "", version = 2) => {
             objectIdBinary[6] = randomBytes[2];
             objectIdBinary[7] = randomBytes[3];
             objectIdBinary[8] = randomBytes[4];
-            objectIdBinary[9] = (dateNow >> 16) & 0xff;
-            objectIdBinary[10] = (dateNow >> 8) & 0xff;
-            objectIdBinary[11] = dateNow & 0xff;
+            objectIdBinary[9] = (dateNow2 >> 4) & 0xff;
+            objectIdBinary[10] = (dateNow2 >> 8) & 0xff;
+            objectIdBinary[11] = dateNow2 & 0xff;
             retVal = this.toHexString(objectIdBinary);
             if(prefix !== undefined && prefix !== "") {
                 retVal = prefix + retVal;
