@@ -222,7 +222,7 @@ for(const r of ResponseController.Routes) {
 for(const r in Routes) {
   app.all(r, (req, res) => {
     
-    console.log("Routes:" + r);
+    // console.log("Routes:" + r);
     handleRoute(req,res, Routes[r]);
     // console.log(req.cookies);
   
@@ -265,7 +265,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  console.log(err);
+  console.error(err);
   // render the error page
   res.status(err.status || 500);
   res.render('error');

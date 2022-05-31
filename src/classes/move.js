@@ -451,7 +451,6 @@ function fillAmmoBox(itemToAdd, pmcData, toDo, output) {
   // If this is an ammobox, add cartridges to it.
   // Damaged ammo box are not loaded.
   const itemInfo = helper_f.tryGetItem(itemToAdd._tpl);
-  console.log(itemInfo._name)
   let ammoBoxInfo = itemInfo._props.StackSlots;
   if (ammoBoxInfo !== undefined && itemInfo._name.indexOf("_damaged") < 0) {
     // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
@@ -509,15 +508,6 @@ function addItem(pmcData, body, sessionID, foundInRaid = false) {
         baseItem.isPreset = true;
         baseItem.item_id = presetItems[0]._id; //push preset
         break;
-
-      /* case (move_f.handler.getPresetByParent(baseItem.item_id) in global._database.globals.ItemPresets): //if item is in ItemPresets
-        const parToPreset = move_f.handler.getPresetByParent(baseItem.item_id)
-        console.log(parToPreset)
-        const parentPreset = utility.DeepCopy(global._database.globals.ItemPresets[parToPreset]._items);
-        itemLib.push(...parentPreset);
-        baseItem.isPreset = true;
-        baseItem.item_id = parentPreset[0]._id; //push preset
-        break; */
 
       case (helper_f.isMoneyTpl(baseItem.item_id) || (body.tid == "")): //if item_id is money, or tid is empty?
         itemLib.push({ _id: baseItem.item_id, _tpl: baseItem.item_id });

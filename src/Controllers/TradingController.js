@@ -161,7 +161,6 @@ class TradingController {
             );
 
             const random_item = JSON.parse(JSON.stringify(fileAssort.items[random_item_index]));
-            console.log(random_item);
             let random_item_children = TradingController.iterItemChildrenRecursively(
                 random_item,
                 fileAssort.items
@@ -189,8 +188,6 @@ class TradingController {
             }
             if(item_price <= 1)
               continue;
-
-            console.log(item_price);
 
             base.barter_scheme[random_item._id] = [
                       [

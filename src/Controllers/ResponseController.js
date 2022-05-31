@@ -226,8 +226,6 @@ module.exports.Routes = {
      * @returns {*} { requestId, retryAfter, status }
      */
      "/client/friend/request/cancel" : (url, info, sessionID) => {
-         console.log(info);
-         console.log(sessionID);
         const result = FriendshipController.deleteFriendRequest(sessionID, info.requestId);
         return ResponseController.getBody(result);
     },
@@ -251,15 +249,10 @@ module.exports.Routes = {
      */
     "/client/notifier/channel/create" : (url, info, sessionID) => {
         const result = {};// NotifierService.getChannel(sessionID);
-        console.log(result);
         return ResponseController.getBody(result);
     },
 
     "/client/game/profile/search" : (url, data, sessionID) => {
-
-        console.log(url);
-        console.log(data);
-        console.log(sessionID);
 
         if(sessionID === undefined) {
             throw "SESSION ID is not defined!";
@@ -272,9 +265,6 @@ module.exports.Routes = {
         if(data.nickname === undefined) {
             throw "nickname is not defined!";
         }
-
-        console.log(data.nickname);
-        console.log(sessionID);
 
         const foundAccounts = AccountController
         .getAllAccounts()

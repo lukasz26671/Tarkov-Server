@@ -304,9 +304,6 @@ function getSecuredContainer(items) {
 
 function saveProgress(offraidData, sessionID) {
 
-  console.log(offraidData);
-
-
   // if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
   //   return;
   // }
@@ -334,7 +331,6 @@ function saveProgress(offraidData, sessionID) {
   if(offraidData.health.Energy < 0 || offraidData.health.Hydration < 0) {
     logger.logError("offraidData: health is fucked. working around it.");
 
-    console.log(pmcData);
     for(const bpHealthNode in pmcData.Health.BodyParts) {
       pmcData.Health.BodyParts[bpHealthNode].Health.Maximum - offraidData.health.Health[bpHealthNode].Current;
     }

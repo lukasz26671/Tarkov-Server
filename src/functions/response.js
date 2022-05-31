@@ -417,9 +417,6 @@ class Responses {
     return response_f.getBody([profile_f.handler.generateScav(sessionID)]);
   }
   clientGameProfileSearch(url, info, sessionID) {
-    console.log(url);
-    console.log(info);
-    console.log(sessionID);
     return response_f.getBody(AccountController.getAllAccounts().filter(x=>x._id != sessionID));
   }
   clientGameProfileSelect(url, info, sessionID) {
@@ -449,7 +446,6 @@ class Responses {
   clientGameVersionValidate(url, info, sessionID) {
     const account = AccountServer.find(sessionID);
     if(account !== undefined) {
-      console.log(account);
       logger.logInfo(`User ${sessionID} connected with client version ${info.version.major}`);
     }
     else {

@@ -52,7 +52,7 @@ static getFriendRequestInbox(sessionID) {
 	 */
 	for(const friendR of acc.friendRequestInbox) {
 		if(friendR._id !== null) {
-			console.log(friendR);
+			
 			const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
 			resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
 		}
@@ -72,7 +72,6 @@ static getFriendRequestOutbox(sessionID) {
    * friendR is FriendRequest
    */
   for(const friendR of acc.friendRequestOutbox) {
-	  console.log(friendR);
 	  const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
 	resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
   }
@@ -89,11 +88,6 @@ static getFriendRequestOutbox(sessionID) {
 	static addFriendRequest(sessionID, toID) {
 		var acc = AccountServer.find(sessionID);
 		var toAcc = AccountServer.find(toID);
-
-		console.log("from");
-		console.log(acc);
-		console.log("to");
-		console.log(toAcc);
 
 		if(acc.friends === undefined) {
 		acc.friends = [];
@@ -138,7 +132,6 @@ static getFriendRequestOutbox(sessionID) {
 	 static deleteFriendRequest(sessionID, requestId) {
 		const acc = AccountServer.find(sessionID);
 		// console.log(acc);
-		console.log(requestId);
 
 		var fr_outbox = FriendshipController.getFriendRequestOutbox(sessionID);
 		const frIndex = fr_outbox.indexOf(x=>x._id == requestId);

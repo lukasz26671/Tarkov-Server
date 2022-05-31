@@ -415,7 +415,6 @@ const loadTraderAssort = (traderId) => {
     } else {
       let items = assort[item].items;
       if (utility.isUndefined(items[0])) {
-        console.log(`items[0] for ${item} is undefined`);
         items[0]["upd"] = {};
         items[0].upd["UnlimitedCount"] = false;
         items[0].upd["StackObjectsCount"] = 99;
@@ -524,7 +523,9 @@ function loadRagfair() {
     offer.items = itemsToSell;
     offer.requirements = barter_scheme;
 
-    if (utility.isUndefined(offer.buyRestrictionMax)) { console.log("offer.buyRestrictionMax - undefined"); }
+    if (utility.isUndefined(offer.buyRestrictionMax)) { 
+      // console.log("offer.buyRestrictionMax - undefined"); 
+    }
     offer.buyRestrictionMax = itemsToSell[0].upd.BuyRestrictionMax
 
     offer.loyaltyLevel = loyal_level;
