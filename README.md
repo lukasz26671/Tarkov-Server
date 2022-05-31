@@ -38,6 +38,7 @@ Zip the following folders & files
 - Run the Server
 - Provide your friends with your external IP address and port
 
-## Known usable mods
+## Known working Server mods
 - [SIT M4](https://github.com/paulov-t/SIT-Mod-M4) - Makes the M4 actually useful and good mod to show how to make changes of your own.
+- [SIT AI](https://github.com/paulov-t/SIT.ServerMod.AI) - Makes all AI move around, be more aggressive and generally make the game much harder.
  
