@@ -1,5 +1,6 @@
 "use strict";
-const { AkiModLoader } = require('../../src/AkiModSupport/AkiModLoader')
+const { AkiModLoader } = require('../../src/AkiModSupport/AkiModLoader');
+const fileIO = require('./../util/fileIO');
 
 function scanRecursiveMod(filepath, baseNode, modNode) {
 	if (typeof modNode === "string") {
@@ -158,7 +159,7 @@ class ModLoader { // handles loading mods
 		this.AlreadyQueriedMods = [];
 	}
 
-	modsFileNotFound() { // Not Found File mods.json - loop through folders and load all mods that are correct
+	loadModFolder() { // Not Found File mods.json - loop through folders and load all mods that are correct
 		const modsFolder = fileIO.readDir("user/mods").filter(dir => fileIO.lstatSync("user/mods/" + dir).isDirectory());
 		for (const modFolder of modsFolder) {
 			if (fileIO.exist(`user/mods/${modFolder}/package.json`) && fileIO.exist(`user/mods/${modFolder}/package.js`)) {
@@ -167,36 +168,43 @@ class ModLoader { // handles loading mods
 				continue;
 			}
 			if (!fileIO.exist(`user/mods/${modFolder}/mod.config.json`)) {
-				logger.logWarning(`Missing file: mod.config.json. Skipping loading mod: ${modFolder}`);
+				logger.logWarning(`Missing file: mod.config.json. Ignoring mod: ${modFolder}`);
+				continue;
 			}
 			const modConfig = fileIO.readParsed(`user/mods/${modFolder}/mod.config.json`);
-			if (modConfig.name !== undefined && typeof modConfig.name == "string") {
-				if (modConfig.author !== undefined && typeof modConfig.author == "string") {
-					if (modConfig.version !== undefined && typeof modConfig.version == "string") {
-						if (typeof modConfig.required != "undefined" && typeof modConfig.required == "object") {
-							if (typeof modConfig.src != "undefined" && typeof modConfig.src == "object") {
-								const modUniqueID = `${modConfig.name}-${modConfig.version}_${modConfig.author}`;
-								this.modsConfig[modUniqueID] = {
-									"isEnabled": true,
-									"folder": modFolder,
-									"order": -1
-								};
-								this.modsRequirements[modUniqueID] = modConfig.required;
-							} else {
-								logger.logWarning(`Missing config key: "src" for a mod ${modFolder} is missing. Skipping loading mod: ${modFolder}`);
-							}
-						} else {
-							logger.logWarning(`Missing config key: "required" for a mod ${modFolder} is missing. Skipping loading mod: ${modFolder}`);
-						}
-					} else {
-						logger.logWarning(`Missing config key: "version" is missing or its not a string. Skipping loading mod: ${modFolder}`);
-					}
-				} else {
-					logger.logWarning(`Missing config key: "author" is missing or its not a string. Skipping loading mod: ${modFolder}`);
-				}
-			} else {
+			if (modConfig.name === undefined) {
 				logger.logWarning(`Missing config key: "name" is missing or its not a string. Skipping loading mod: ${modFolder}`);
+				continue;
 			}
+			if (modConfig.version === undefined) {
+				logger.logWarning(`Missing config key: "version" is missing or its not a string. Skipping loading mod: ${modFolder}`);
+				continue;
+			}
+			if (modConfig.required === undefined) {
+				logger.logWarning(`Missing config key: "required" is missing or its not a string. Skipping loading mod: ${modFolder}`);
+				continue;
+			}
+			if (modConfig.src === undefined) {
+				logger.logWarning(`Missing config key: "src" is missing or its not a string. Skipping loading mod: ${modFolder}`);
+				continue;
+			}
+			if (modConfig.isEnabled !== undefined && !modConfig.isEnabled) {
+				logger.logWarning(`Mod Disabled: Ignoring mod: ${modFolder}`);
+				continue;
+			}
+			if (modConfig.isActive !== undefined && !modConfig.isActive) {
+				logger.logWarning(`Mod Disabled: Ignoring mod: ${modFolder}`);
+				continue;
+			}
+
+			const modUniqueID = `${modConfig.name}-${modConfig.version}_${modConfig.author}`;
+			this.modsConfig[modUniqueID] = {
+				"isEnabled": true,
+				"folder": modFolder,
+				"order": -1
+			};
+			this.modsRequirements[modUniqueID] = modConfig.required;
+						
 		}
 		fileIO.write("user/configs/mods.json", this.modsConfig);
 	}
@@ -364,7 +372,7 @@ class ModLoader { // handles loading mods
 		// }
 		// -- need to be mored to functions later on !!!
 
-		this.modsFileNotFound();
+		this.loadModFolder();
 		// if (emptyModsConfig) {
 		// 	this.modsFileNotFound();
 		// } else {
