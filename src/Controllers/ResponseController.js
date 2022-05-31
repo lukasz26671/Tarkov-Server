@@ -148,6 +148,31 @@ action: (url, info, sessionID) => {
         account.wipe = false;
         AccountServer.saveToDisk(sessionID);
     }
+},
+{
+    url: "/singleplayer/airdrop/config",
+    action: (url, info, sessionID) => {
+
+        return JSON.stringify(
+            {
+                "airdropChancePercent": {
+                    "bigmap": 100,
+                    "woods": 100,
+                    "lighthouse": 100,
+                    "shoreline": 100,
+                    "interchange": 100,
+                    "reserve": 100
+                },
+                "airdropMinStartTimeSeconds": 60,
+                "airdropMaxStartTimeSeconds": 300,
+                "airdropMinOpenHeight": 350,
+                "airdropMaxOpenHeight": 400,
+                "planeMinFlyHeight": 400,
+                "planeMaxFlyHeight": 500,
+                "planeVolume": 1
+            }
+        )
+    }
 }
 
 
