@@ -11,7 +11,6 @@ if(fs.existsSync("./user/configs/server.json")) {
 const textTable = [
 	"JustEmuTarkov " + server.getVersion(),
 	"",
-	""
 ];
 
 textTable[0] = watermarkStuff["serverConfig"] !== undefined ? watermarkStuff["serverConfig"].name : watermarkStuff["serverConfigBase"].name;
@@ -51,7 +50,7 @@ module.exports.run = () => {
 	}
 
 	let box_width_top = getBoxSpacing(1);
-	let box_width_bot = getBoxSpacing(2);
+	let box_width_bot = getBoxSpacing(1);
 	let box_width_spa = getBoxSpacing();
 
 	/* reset cursor to begin */

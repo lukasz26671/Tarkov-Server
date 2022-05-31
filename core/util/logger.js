@@ -92,7 +92,7 @@ class Logger {
   }
 
   logWarning(text) {
-    this.log("[WARNING]", text, "white", "yellow");
+    this.log("[WARNING]", text, "black", "yellow");
   }
 
   logSuccess(text) {
