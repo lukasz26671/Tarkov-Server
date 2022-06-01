@@ -193,14 +193,24 @@ class LootController
       }
 
 
-      static GenerateContainerLoot(in_items, in_locationLootChanceModifier, in_mapName) {
-        const _items = in_items;
+      static GenerateContainerLoot(in_data, in_locationLootChanceModifier, in_mapName) {
+        const containerData = in_data;
+        const _items = in_data.Items;
         const newContainerId = utility.generateNewItemId();
+
+        let isAirdrop = false;
+        if(containerData.Id.includes("Scripts") || containerData.Id.includes("scripts")) {
+          // console.log("container is Airdop!");
+          // console.log(containerData);
+          isAirdrop = true;
+        }
 
         /** String Tpl Id
          * {string}
          */
         const ContainerId = _items[0]._tpl;
+
+
         const LootContainerIdTable = Object.keys(global._database.locationConfigs.StaticLootTable);
         if (!LootContainerIdTable.includes(ContainerId)) {
             LootController.GenerateWeaponLoot(ContainerId, _items);
@@ -212,8 +222,11 @@ class LootController
         .fill()
         .map(() => Array(containerTemplate._props.Grids[0]._props.cellsH).fill(0));
         
-        let LootListItems = LootController.GenerateLootList(ContainerId);
-
+        let LootListItems = LootController.GenerateLootList(ContainerId, in_mapName);
+        if(isAirdrop) {
+          LootListItems = LootController.GenerateAirdropLootList(ContainerId, in_mapName, container2D);
+          logger.logInfo(`Airdrop container contains ${LootListItems.length} items!`);
+        }
        
 
         if(LootListItems.length == 0) {
@@ -381,10 +394,15 @@ class LootController
               }
             
             let changedIds = {};
-            for (let item of _items) {
-              let newId = utility.generateNewItemId();
+            for (const item of _items) {
+
+              const itemTemplateForNaming = global._database.items[item._tpl];
+              item.itemNameForDebug = itemTemplateForNaming._props.ShortName;
+              const newId = utility.generateNewItemId();
               changedIds[item._id] = newId;
               item._id = newId;
+
+
           
               if (!item.parentId) continue;
               item.parentId = changedIds[item.parentId];
@@ -398,7 +416,7 @@ class LootController
        * @param {String} containerId 
        * @returns {Array} an array of loot item ids
        */
-      static GenerateLootList(containerId) {
+      static GenerateLootList(containerId, in_location) {
         let LootList = [];
         let UniqueLootList = [];
         // get static container loot pools
@@ -448,64 +466,104 @@ class LootController
         return UniqueLootList;
       }
 
+      static GenerateAirdropLootList(containerId, in_location, container2D) {
+        let itemsRemoved = {};
+        const LootList = [];
+        let UniqueLootList = [];
+        // get static container loot pools
+        const ItemList = global._database.locationConfigs.StaticLootTable[containerId];
+        // get dynamic container loot pools for map
+        const DynamicLootForMap = global._database.locationConfigs.DynamicLootTable[in_location];
+        if(DynamicLootForMap !== undefined) {
+          const DynamicLootForMapKeys = Object.keys(global._database.locationConfigs.DynamicLootTable[in_location]);
+          if(DynamicLootForMapKeys !== undefined) {
+            for(var i = 0; i < container2D.length-1 && LootList.length < container2D.length-1; i++) {
+              const selectedLootIndex = utility.getRandomInt(0, DynamicLootForMapKeys.length);
+              const selectedLootKey = DynamicLootForMapKeys[selectedLootIndex];
+              if(selectedLootKey === undefined) 
+                continue;
+
+              const selectedLoot = DynamicLootForMap[selectedLootKey].SpawnList;
+              if(selectedLoot === undefined) 
+                continue;
+
+              for (const item of selectedLoot) {
+                const itemTemplate = global._database.items[item];
+                if (itemTemplate._props.LootExperience === undefined) {
+                  logger.logWarning(`itemTemplate._props.LootExperience == "undefined" for ${itemTemplate._id}`);
+                  continue;
+                }
+                if(!LootController.FilterItemByRarity(itemTemplate, itemsRemoved))
+                  LootList.push(item);
+              }
+            }
+          }
+        }
+
+        // Unique/Distinct the List
+        UniqueLootList = [...new Set(LootList)];
+        
+        return UniqueLootList;
+      }
+
       static GenerateWeaponLoot(ContainerId, _items) {
-          // Check if static weapon.
-    if (ContainerId != "5cdeb229d7f00c000e7ce174" && ContainerId != "5d52cc5ba4b9367408500062") {
-        logger.logWarning("GetLootContainerData is null something goes wrong please check if container template: " + _items[0]._tpl + " exists");
-        return;
-      } else {
-        _items[0].upd = { FireMode: { FireMode: "fullauto" } };
-        // stationary gun is actually a container...
-        const GunTempalte = global._database.items[_items[0]._tpl]; // template object
-        const MagazineTemplate = global._database.items[GunTempalte._props.Slots[0]._props.filters[0].Filter[0]]; // template object
-        const Magazine_Size = MagazineTemplate._props.Cartridges[0]._max_count; // number
-        const AmmoTemplates = MagazineTemplate._props.Cartridges[0]._props.filters[0].Filter; // array
-        const magazine = {
-          _id: utility.generateNewId("M"),
-          _tpl: MagazineTemplate._id,
-          parentId: _items[0]._id,
-          slotId: "mod_magazine",
-        };
-        _items.push(magazine);
-        for (let i = 0; i < Magazine_Size / 4; i++) {
-          if (_items[0]._tpl == "5d52cc5ba4b9367408500062") {
-            // this is grenade launcher ammo preset creation
-            if (i == 0) {
+        // Check if static weapon.
+        if (ContainerId != "5cdeb229d7f00c000e7ce174" && ContainerId != "5d52cc5ba4b9367408500062") {
+          logger.logWarning("GetLootContainerData is null something goes wrong please check if container template: " + _items[0]._tpl + " exists");
+          return;
+        } else {
+          _items[0].upd = { FireMode: { FireMode: "fullauto" } };
+          // stationary gun is actually a container...
+          const GunTempalte = global._database.items[_items[0]._tpl]; // template object
+          const MagazineTemplate = global._database.items[GunTempalte._props.Slots[0]._props.filters[0].Filter[0]]; // template object
+          const Magazine_Size = MagazineTemplate._props.Cartridges[0]._max_count; // number
+          const AmmoTemplates = MagazineTemplate._props.Cartridges[0]._props.filters[0].Filter; // array
+          const magazine = {
+            _id: utility.generateNewId("M"),
+            _tpl: MagazineTemplate._id,
+            parentId: _items[0]._id,
+            slotId: "mod_magazine",
+          };
+          _items.push(magazine);
+          for (let i = 0; i < Magazine_Size / 4; i++) {
+            if (_items[0]._tpl == "5d52cc5ba4b9367408500062") {
+              // this is grenade launcher ammo preset creation
+              if (i == 0) {
+                const bullet = {
+                  _id: utility.generateNewId("B"),
+                  _tpl: AmmoTemplates[0],
+                  parentId: magazine._id,
+                  slotId: "cartridges",
+                };
+                _items.push(bullet);
+                continue;
+              }
               const bullet = {
                 _id: utility.generateNewId("B"),
                 _tpl: AmmoTemplates[0],
                 parentId: magazine._id,
                 slotId: "cartridges",
+                location: i,
               };
               _items.push(bullet);
-              continue;
+            } else {
+              // this is machine gun ammo preset creation
+              const ammoCount = i % 2 == 0 ? 3 : 1;
+              const bullet = {
+                _id: utility.generateNewId("B"),
+                _tpl: AmmoTemplates[i % 2],
+                parentId: magazine._id,
+                slotId: "cartridges",
+                location: i,
+                upd: {
+                  StackObjectsCount: ammoCount,
+                },
+              };
+              _items.push(bullet);
             }
-            const bullet = {
-              _id: utility.generateNewId("B"),
-              _tpl: AmmoTemplates[0],
-              parentId: magazine._id,
-              slotId: "cartridges",
-              location: i,
-            };
-            _items.push(bullet);
-          } else {
-            // this is machine gun ammo preset creation
-            const ammoCount = i % 2 == 0 ? 3 : 1;
-            const bullet = {
-              _id: utility.generateNewId("B"),
-              _tpl: AmmoTemplates[i % 2],
-              parentId: magazine._id,
-              slotId: "cartridges",
-              location: i,
-              upd: {
-                StackObjectsCount: ammoCount,
-              },
-            };
-            _items.push(bullet);
           }
+          return;
         }
-        return;
-      }
       }
 }
 

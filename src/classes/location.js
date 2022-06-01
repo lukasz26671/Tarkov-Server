@@ -121,21 +121,7 @@ function LoadLootContainerNode() {
 function GenerateDynamicLootSpawnTable(lootData, mapName) {
   let containsSpawns = [];
 
-  // Paulo: I have no idea what below is doing? It never really finds the right list from what I could tell a lot of the dynamic spawns were empty or broken.
-
-  // if (global._database.gameplayConfig.useDynamicLootFromItemsArray) {
-  //   for (const spawnTemplate in lootData.Items) {
-  //     const filteredData = Object.values(global._database.items).filter((itemTemplate) => itemTemplate._parent == spawnTemplate);
-  //     // add them to the list
-  //     if (filteredData.length != 0) {
-  //       for (const itemTemplate in filteredData) {
-  //         containsSpawns.push(filteredData[itemTemplate]._id);
-  //       }
-  //     } else {
-  //       containsSpawns.push(global._database.items[spawnTemplate]);
-  //     }
-  //   }
-  // } else {
+  
     for (const key of Object.keys(global._database.locationConfigs.DynamicLootTable[mapName])) {
       const match = lootData.Id.toLowerCase();
 
@@ -147,12 +133,13 @@ function GenerateDynamicLootSpawnTable(lootData, mapName) {
             continue;
           }
           let foundItem = global._database.items[lootList[loot]];
-          // console.log(foundItem);
-          containsSpawns.push(foundItem);
+          //console.log(foundItem);
+          let itemsRemoved = {};
+          if(!LootController.FilterItemByRarity(foundItem, itemsRemoved, 0))
+            containsSpawns.push(foundItem);
         }
       }
     }
-  // }
 
   // -------------------------------------------------------------------------------
   // Paulo: If we have nothing, then we use the items list provided to find the item
@@ -743,7 +730,7 @@ class LocationLootGenerator {
       dateStarted = Date.now();
       // _GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName);
       // count++;
-      if(LootController.GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName))
+      if(LootController.GenerateContainerLoot(data, locationLootChanceModifier, MapName))
         count++;
 
 
@@ -908,7 +895,7 @@ class LocationLootGenerator {
         let filterByRarityOutput = {};
         if(!isQuestItem 
           && !isUnbuyable 
-          && !FilterItemByRarity(actualItem, filterByRarityOutput, 2))
+          && !FilterItemByRarity(actualItem, filterByRarityOutput, 1.2))
           continue;
 
           count++;
