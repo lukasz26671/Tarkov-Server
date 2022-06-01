@@ -117,30 +117,9 @@ function inflateRequestBody(req, res, next, done) {
 }
 
 app.use(function(req, res, next) {
-  
-  // console.log(req);
-
   inflateRequestBody(req, res, next, () => {
-
-    // console.log(req.url);
-    for(const r in responseClass.dynamicResponses) {
-      if (req.url.includes(r)) {
-        // console.log("found dynamic route!");
-        // console.log(req);
-        // console.log(res);
-        // console.log(responseClass.dynamicResponses[r]);
-        handleRoute(req, res, responseClass.dynamicResponses[r]);
-        return;
-      }
-    }
-
-    
-
     next();
-
-
   });
-
 });
 
 // app.use(express.static(path.join(__dirname, 'public')));
@@ -222,18 +201,8 @@ for(const r of ResponseController.Routes) {
 for(const r in Routes) {
   app.all(r, (req, res) => {
     
-    // console.log("Routes:" + r);
     handleRoute(req,res, Routes[r]);
-    // console.log(req.cookies);
   
-    // var routedData = Routes[r](req.url, {}, req.cookies["PHPSESSID"])
-    // TarkovSend.zlibJson(res, routedData, undefined, req);
-    // if(routedData != null && routedData != undefined ) {
-    //   res.send(routedData);
-    // }
-    // else {
-    //   res.send("EXPRESS Tarkov API up and running! " + r);
-    // }
   });
 }
 
@@ -246,6 +215,21 @@ for(const r in responseClass.staticResponses) {
     handleRoute(req, res, responseClass.staticResponses[r]);
   });
 }
+
+app.use(function(req, res, next) {
+    for(const r in responseClass.dynamicResponses) {
+      if (req.url.includes(r)) {
+      // if (req.url === r || req.url.endsWith(r)) {
+        // console.log("found dynamic route!");
+        // console.log(req);
+        // console.log(res);
+        // console.log(responseClass.dynamicResponses[r]);
+        handleRoute(req, res, responseClass.dynamicResponses[r]);
+        return;
+      }
+    }
+    next();
+});
 
 app.get('/', (req,res) => {
 
