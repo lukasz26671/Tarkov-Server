@@ -217,52 +217,6 @@ function loadLocaleData() {
   }
 }
 
-//needs to be worked to consolidate functions below
-/* function Create_LootGameUsableStruct(item_data, Type) {
-  let isStatic = false;
-  let useGravity = false;
-  let randomRotation = false;
-  let position = { x: 0, y: 0, z: 0 };
-  let rotation = { x: 0, y: 0, z: 0 };
-  let IsGroupPosition = false;
-  let GroupPositions = [];
-
-  if (typeof item_data.IsStatic != "undefined") isStatic = item_data.IsStatic;
-  if (typeof item_data.useGravity != "undefined") useGravity = item_data.useGravity;
-  if (typeof item_data.randomRotation != "undefined") randomRotation = item_data.randomRotation;
-
-  if (item_data.Position != 0 && item_data.Position != "0") {
-    position.x = item_data.Position.x;
-    position.y = item_data.Position.y;
-    position.z = item_data.Position.z;
-  }
-  if (item_data.Rotation != 0 && item_data.Rotation != "0") {
-    rotation.x = item_data.Rotation.x;
-    rotation.y = item_data.Rotation.y;
-    rotation.z = item_data.Rotation.z;
-  }
-  if (typeof item_data.IsGroupPosition != "undefined") {
-    IsGroupPosition = item_data.IsGroupPosition;
-    GroupPositions = item_data.GroupPositions;
-  }
-  let structure = {
-    "Id": item_data.id,
-    "IsStatic": isStatic,
-    "useGravity": useGravity,
-    "randomRotation": randomRotation,
-    "Position": position,
-    "Rotation": rotation,
-    "IsGroupPosition": IsGroupPosition,
-    "GroupPositions": GroupPositions,
-    "Items": item_data.Items
-  };
-  if (Type == "static" || Type == "mounted") {
-    const Root = typeof item_data.Items[0] == "string" ? item_data.id : item_data.Items[0]._id;
-    structure["Root"] = Root;
-  }
-  return structure;
-} */
-
 function createForcedDynamicStruct(item_data) {
   let isStatic = false;
   let useGravity = false;
@@ -340,7 +294,7 @@ function createStaticMountedStruct(item_data) {
       ? item_data.id
       : item_data.Items[0]._id;
   return {
-    Id: item_data.id,
+    Id: item_data.id !== undefined ? item_data.id : item_data.Id,
     IsStatic: isStatic,
     useGravity: useGravity,
     randomRotation: randomRotation,
@@ -369,9 +323,6 @@ function loadLocationData() {
           }
           _location.loot[type].push(createForcedDynamicStruct(item));
         }
-        /*         for (let item of loot_data[type]) {
-                  _location.loot[type].push(Create_LootGameUsableStruct(item))
-                } */
       }
     }
     _database.locations[name] = _location;
