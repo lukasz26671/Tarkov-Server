@@ -106,6 +106,7 @@ class AccountController
      * @param {object} info 
      */
     static login(info) {
+        AccountServer.reloadAccountByLogin(info);
         return AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
     }
 
