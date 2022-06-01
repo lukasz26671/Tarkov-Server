@@ -1,4 +1,46 @@
 "use strict";
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * Explores recursively a directory and returns all the filepaths and folderpaths in the callback.
+ * 
+ * @see http://stackoverflow.com/a/5827895/4241030
+ * @param {String} dir 
+ * @param {Function} done 
+ */
+ function filewalker(dir, done) {
+  let results = [];
+
+  fs.readdir(dir, function(err, list) {
+      if (err) return done(err);
+
+      var pending = list.length;
+
+      if (!pending) return done(null, results);
+
+      list.forEach(function(file){
+          file = path.resolve(dir, file);
+
+          fs.stat(file, function(err, stat){
+              // If directory, execute a recursive call
+              if (stat && stat.isDirectory()) {
+                  // Add directory to array [comment if you need to remove the directories from the array]
+                  results.push(file);
+
+                  filewalker(file, function(err, res){
+                      results = results.concat(res);
+                      if (!--pending) done(null, results);
+                  });
+              } else {
+                  results.push(file);
+
+                  if (!--pending) done(null, results);
+              }
+          });
+      });
+  });
+};
 
 class BundlesServer {
   constructor() {
@@ -6,6 +48,8 @@ class BundlesServer {
     this.bundleBykey = {};
     this.backendUrl = `https://${serverConfig.ip}:${serverConfig.port}`;
   }
+
+
 
   initialize() {
     if (res.bundles.folders !== undefined && Object.keys(res.bundles.folders).length > 0) {
@@ -28,6 +72,18 @@ class BundlesServer {
         if (path.endsWith(".bundle")) this.loadBundle(path);
       }
     }
+
+    const rootBundlePath = process.cwd() + "/bundles/";
+   filewalker(rootBundlePath, (error, data) => {
+
+    console.log(data);
+    data.forEach(element => {
+      if (element.endsWith(".bundle")) 
+        this.loadBundle(element);
+    });
+    
+   });
+
     console.log(this.bundles);
     console.log(this.bundleBykey);
   }
@@ -39,16 +95,22 @@ class BundlesServer {
 
     if (uniformPath.toLowerCase().includes("/user/mods/")) key = uniformPath.split(/\/user\/mods\//i)[1];
     else if (uniformPath.toLowerCase().includes("/res/bundles/")) key = uniformPath.split(/\/res\/bundles\//i)[1];
+    else if (uniformPath.toLowerCase().includes("/bundles/")) key = uniformPath.split(/\/bundles\//i)[1];
 
     if (this.bundleBykey !== undefined && this.bundleBykey[key] !== undefined) return;
     var manifestFile = itemPath + ".manifest";
     var dependencyKeys = [];
-    if (fileIO.exist(manifestFile)) {
+    if (fs.existsSync(manifestFile)) {
       var content = fileIO.read(manifestFile).toString();
       var dependencyKeys = content
         .replace(/\r/g, "")
         .split("\n")
         .filter((x) => x !== null && x.match(/^ *$/) === null);
+    }
+    manifestFile = itemPath + ".jmanifest";
+    if (fs.existsSync(manifestFile)) {
+      const dataJManifest = fs.readFileSync(manifestFile);
+      dependencyKeys = JSON.parse(dataJManifest);
     }
     var bundle = {
       key: key,
