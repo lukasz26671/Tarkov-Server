@@ -37,9 +37,11 @@ class Callbacks {
 		bundleKey = decodeURI(bundleKey);
 		logger.logInfo(`[BUNDLE]: ${req.url}`);
 		let bundle = bundles_f.handler.getBundleByKey(bundleKey, true);
-		let path = bundle.path;
+		let path = bundle.filePath;
 		// send bundle
-		server.tarkovSend.file(resp, path);
+		// server.tarkovSend.file(resp, path);
+		TarkovSend.sendFile(resp, path);
+
 	}
 	respondImage(sessionID, req, resp, body) {
 		let splittedUrl = req.url.split('/');
