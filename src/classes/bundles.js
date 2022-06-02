@@ -1,6 +1,7 @@
 "use strict";
 const fs = require('fs');
 const path = require('path');
+const { logger } = require('../../core/util/logger');
 
 /**
  * Explores recursively a directory and returns all the filepaths and folderpaths in the callback.
@@ -73,10 +74,9 @@ class BundlesServer {
       }
     }
 
-    const rootBundlePath = process.cwd() + "/bundles/";
+   const rootBundlePath = process.cwd() + "/bundles/";
    filewalker(rootBundlePath, (error, data) => {
 
-    console.log(data);
     data.forEach(element => {
       if (element.endsWith(".bundle")) 
         this.loadBundle(element);
@@ -84,8 +84,39 @@ class BundlesServer {
     
    });
 
-    console.log(this.bundles);
-    console.log(this.bundleBykey);
+   const modsPath = process.cwd() + "/user/mods/";
+   filewalker(modsPath, (error, data) => {
+
+    data.forEach(element => {
+      if (element.endsWith("bundles.json")) {
+        const modpath = element.replace("bundles.json","");
+        //this.loadBundle(element);
+        const manifest = JSON.parse(fs.readFileSync(element)).manifest;
+
+        for (const bundle of manifest)
+        {
+            const bundleHttpPath = `${this.backendUrl}/files/bundle/${bundle.key}`
+            const bundleFilepath = bundle.path || `${modpath}bundles/${bundle.key}`.replace(/\\/g, "/")
+            // this.bundles[bundle.key] = {
+              const newBundle = {
+                modPath: modpath,
+                key: bundle.key,
+                path: bundleHttpPath,
+                filepath: bundleFilepath,
+                filePath: bundleFilepath,
+                dependencyKeys: bundle.dependencyKeys || [],
+              };
+              this.bundles.push( newBundle)
+            this.bundleBykey[bundle.key] = newBundle;
+            logger.logInfo("Load bundle manifest " + bundle.key + " " + bundleHttpPath);
+        }
+      }
+    });
+    
+   });
+
+    // console.log(this.bundles);
+    // console.log(this.bundleBykey);
   }
 
   loadBundle(itemPath) {
@@ -122,31 +153,32 @@ class BundlesServer {
     this.bundles.push(bundle);
     this.bundleBykey[bundle.key] = bundle;
 
-    console.log(this.bundles);
-    console.log(this.bundleBykey);
+    // console.log(this.bundles);
+    // console.log(this.bundleBykey);
   }
 
   getBundles(local) {
     let bundles = utility.DeepCopy(this.bundles);
     console.log(bundles);
-    for (const bundle of bundles) {
-      if (local) {
-        bundle.path = bundle.filePath;
-      }
+    // for (const bundle of bundles) {
+    for (const bundle in bundles) {
+      // if (local) {
+      //   bundle.path = bundle.filePath;
+      // }
       delete bundle.filePath;
     }
     return bundles;
   }
 
   getBundleByKey(key, local) {
-    console.log(key);
-    console.log(local);
+    // console.log(key);
+    // console.log(local);
     let bundle = utility.DeepCopy(this.bundleBykey[key]);
     if(bundle) {
-      if (local) {
-        bundle.path = bundle.filePath;
-      }
-      delete bundle.filePath;
+      // if (local) {
+      //   bundle.path = bundle.filePath;
+      // }
+      // delete bundle.filePath;
       return bundle;
     }
     return undefined;
