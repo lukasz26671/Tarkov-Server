@@ -156,16 +156,27 @@ class TraderServer {
   }
 
   getCustomization(traderID, sessionID) {
-    // console.log(traderID);
-    // let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    console.log(traderID);
+    let pmcData = profile_f.handler.getPmcProfile(sessionID);
     let allSuits = customization_f.getCustomization();
-    // console.log(allSuits);
+    console.log(allSuits);
 
-    // //let suitArray = utility.DeepCopy(_database.customization);
+    // let suitArray = utility.DeepCopy(_database.customization);
+    // console.log(suitArray);
     // //had to bring this back until we have some time to edit the whole tree
     // //of things to make it work in memory (database.js, cache creation and more)
     // let suitArray = global._database.traders[traderID].suits;
     let suitList = [];
+    for(const suitId in allSuits) {
+      if(allSuits[suitId]._props.Side !== undefined && allSuits[suitId]._props.Side.length > 0) {
+        for (var i = 0; i < allSuits[suitId]._props.Side.length; i++) {
+          let side = allSuits[suitId]._props.Side[i];
+          if (side === pmcData.Info.Side) {
+            suitList.push(allSuits[suitId]);
+          }
+        }
+      }
+    }
 
     // for (let suit in suitArray) {
     //   if (suitArray[suit].suiteId in allSuits) {
@@ -178,8 +189,10 @@ class TraderServer {
     //   }
     // }
 
-    // return suitList;
-    return allSuits;
+    return suitList;
+    // return suitArray;
+
+    // return allSuits;
   }
   getAllCustomization(sessionID) {
     let output = [];

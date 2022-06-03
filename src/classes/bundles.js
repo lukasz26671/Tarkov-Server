@@ -108,7 +108,7 @@ class BundlesServer {
               };
               this.bundles.push( newBundle)
             this.bundleBykey[bundle.key] = newBundle;
-            logger.logInfo("Load bundle manifest " + bundle.key + " " + bundleHttpPath);
+            // logger.logInfo("Load bundle manifest " + bundle.key + " " + bundleHttpPath);
         }
       }
     });
@@ -149,7 +149,7 @@ class BundlesServer {
       filePath: uniformPath,
       dependencyKeys: dependencyKeys,
     };
-    logger.logInfo(`Load bundle manifest: ${bundle.key}`);
+    // logger.logInfo(`Load bundle manifest: ${bundle.key}`);
     this.bundles.push(bundle);
     this.bundleBykey[bundle.key] = bundle;
 
