@@ -1,5 +1,9 @@
 const fs = require('fs');
 
+/**
+ * Config Controller. 
+ * This controller provides direct access to all the config json files found in user/configs
+ */
 class ConfigController {
     constructor() {
         ConfigController.rebuildFromBaseConfigs();
@@ -8,6 +12,9 @@ class ConfigController {
     static Instance = new ConfigController();
     static Configs = {};
 
+    /**
+     * Fills ConfigController.Configs with parsed JSON data from user/configs directory
+     */
     static rebuildFromBaseConfigs() {
         if(ConfigController.Configs === undefined)
             ConfigController.Configs = {};

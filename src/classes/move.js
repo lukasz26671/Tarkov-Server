@@ -50,7 +50,7 @@ function getOwnerInventoryItems(body, sessionID) {
  * @param {*} pmcData 
  * @param {*} body 
  * @param {*} sessionID 
- * @returns 
+ * @returns {object}
  */
 function moveItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);
@@ -65,6 +65,12 @@ function moveItem(pmcData, body, sessionID) {
   return output;
 }
 
+/**
+ * 
+ * @param {*} pmcData 
+ * @param {*} body 
+ * @param {*} sessionID 
+ */
 module.exports.applyInventoryChanges = (pmcData, body, sessionID) => {
   //const output = item_f.handler.getOutput(sessionID);
 
@@ -218,7 +224,7 @@ function removeItemFromProfile(pmcData, itemId, sessionID) {
   }
 
   // set output if necessary.
-  if (typeof sessionID != "undefined" && output.hasOwnProperty("profileChanges")) {
+  if (sessionID !== undefined && output.hasOwnProperty("profileChanges")) {
     item_f.handler.setOutput(output);
   }
 }
@@ -228,7 +234,7 @@ function removeItemFromProfile(pmcData, itemId, sessionID) {
  * @param {*} profileData 
  * @param {*} body 
  * @param {*} sessionID 
- * @returns 
+ * @returns {object}
  */
 function removeItem(profileData, body, sessionID) {
   let toDo = [body];
@@ -247,7 +253,7 @@ function removeItem(profileData, body, sessionID) {
  * @param {*} pmcData 
  * @param {*} body 
  * @param {*} sessionID 
- * @returns 
+ * @returns {object}
  */
 function discardItem(pmcData, body, sessionID) {
   insurance_f.handler.remove(pmcData, body.item, sessionID);
@@ -260,7 +266,7 @@ function discardItem(pmcData, body, sessionID) {
  * @param {Object} pmcData
  * @param {Object} body
  * @param {string} sessionID
- * @returns
+ * @returns {object}
  */
 function splitItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);
@@ -318,7 +324,7 @@ function splitItem(pmcData, body, sessionID) {
  * @param {Object} pmcData      - PMC Part of profile
  * @param {Object} body         - Request Body
  * @param {string} sessionID    - Session ID
- * @returns response
+ * @returns {object}
  */
 function mergeItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);

@@ -1,19 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
 const { Http2ServerRequest } = require('http2');
 const http = require('http');
 const utility = require('./../core/util/utility')
 const { ResponseController, Routes } = require('./../src/Controllers/ResponseController');
 const { TarkovSend }  = require('./../core/server/tarkovSend');
 const zlib = require('zlib');
-var compression = require('compression');
+const compression = require('compression');
+const fs = require('fs');
 
 const responseClass = require("./../src/functions/response").responses;
 const legacyCallbacks = require("./../src/functions/callbacks.js").callbacks
 
 const cookieParser = require('cookie-parser');
-const { truncate } = require('fs');
+const { truncate, fstat } = require('fs');
 const { logger } = require('../core/util/logger');
 
 // var logger = require('morgan');
@@ -21,13 +22,22 @@ const { logger } = require('../core/util/logger');
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// // app.set('view engine', 'ejs');
+// app.set('docs', path.join(__dirname, 'out'));
+// app.set('out', path.join(__dirname, 'out'));
+// app.engine('html', require('ejs').renderFile);
+// app.set('view engine', 'html');
+app.set('view engine', 'html');
+app.engine('html', require('ejs').renderFile);
+// app.set('out', process.cwd() + "/out/");
+// console.log(process.cwd() + "\\out\\");
+// app.use(express.static(process.cwd() + "\\out\\"));
 
 app.use(express.raw({ type: "application/json", limit: '50mb',
 parameterLimit: 100000,
@@ -216,14 +226,73 @@ for(const r in responseClass.staticResponses) {
   });
 }
 
+/**
+ * Add support for JSDoc directory output
+ * You can rebuild the docs by running jsdoc src/ -r . in the Terminal
+ */
+app.use(function(req, res, next) {
+
+  if(req.url.includes("/docs/") || req.url.includes("/out/")) {
+
+    let finalFile = req.url.split('/')[req.url.split('/').length-1];
+    // console.log(finalFile);
+    if(finalFile === "" || finalFile === undefined)
+      finalFile = "index.html";
+    const requestedPath = req.url.replace("/out/", "").replace("/docs/", "").replace(finalFile, "").replace("/", "\\").replace("\/", "\\");
+    // console.log(requestedPath);
+
+    const docsPath = process.cwd() + "\\out\\" + requestedPath;
+    // console.log(docsPath);
+    const files = fs.readdirSync(docsPath);
+    // console.log(files);
+    
+    for(const file of files) {
+      // console.log(file);
+      if(finalFile.toLowerCase().includes(file.toLowerCase())) {
+        let readFile = fs.readFileSync(docsPath + finalFile);
+
+        switch(finalFile.split('.')[finalFile.split('.').length-1]) {
+          case "js":
+            res.contentType("text/js");
+            break;
+          case "html":
+            res.contentType("text/html");
+          break;
+          case "css":
+            res.contentType("text/css");
+            break;
+          case "woff":
+            res.contentType("font/woff");
+            break;
+            
+        }
+        res.status(200).send(readFile.toString());
+        return;
+      }
+      
+    }
+    res.status(404).send();
+    // for(const r in responseClass.dynamicResponses) {
+    //   if (req.url.includes(r)) {
+    //   // if (req.url === r || req.url.endsWith(r)) {
+    //     // console.log("found dynamic route!");
+    //     // console.log(req);
+    //     // console.log(res);
+    //     // console.log(responseClass.dynamicResponses[r]);
+    //     handleRoute(req, res, responseClass.dynamicResponses[r]);
+    //     return;
+    //   }
+    // }
+  }
+  next();
+});
+
+/**
+ * Handle "Dynamic" responses (Files, Bundles, Traders etc)
+ */
 app.use(function(req, res, next) {
     for(const r in responseClass.dynamicResponses) {
       if (req.url.includes(r)) {
-      // if (req.url === r || req.url.endsWith(r)) {
-        // console.log("found dynamic route!");
-        // console.log(req);
-        // console.log(res);
-        // console.log(responseClass.dynamicResponses[r]);
         handleRoute(req, res, responseClass.dynamicResponses[r]);
         return;
       }
@@ -231,12 +300,13 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/', (req,res) => {
 
+/**
+ * Home Page - NOT USED
+ */
+app.get('/', (req,res) => {
   res.status(200).send("EXPRESS Tarkov API up and running!");
 });
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
