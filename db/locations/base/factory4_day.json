@@ -34,7 +34,7 @@
             "BotSide": "Savage",
             "BotPreset": "normal",
             "WildSpawnType": "assault",
-            "isPlayers": true
+            "isPlayers": false
         },
         {
             "number": 1,
@@ -50,66 +50,18 @@
         },
         {
             "number": 2,
-            "time_min": 210,
-            "time_max": 300,
+            "time_min": -1,
+            "time_max": -1,
             "slots_min": 1,
-            "slots_max": 4,
-            "SpawnPoints": "BotZone",
-            "BotSide": "Savage",
-            "BotPreset": "hard",
-            "WildSpawnType": "assault",
-            "isPlayers": true
-        },
-        {
-            "number": 3,
-            "time_min": 260,
-            "time_max": 350,
-            "slots_min": 0,
             "slots_max": 3,
             "SpawnPoints": "BotZone",
-            "BotSide": "Savage",
+            "BotSide": "Usec",
             "BotPreset": "normal",
-            "WildSpawnType": "assault",
-            "isPlayers": true
-        },
-        {
-            "number": 4,
-            "time_min": 410,
-            "time_max": 500,
-            "slots_min": 2,
-            "slots_max": 4,
-            "SpawnPoints": "BotZone",
-            "BotSide": "Savage",
-            "BotPreset": "normal",
-            "WildSpawnType": "assault",
-            "isPlayers": true
-        },
-        {
-            "number": 5,
-            "time_min": 460,
-            "time_max": 510,
-            "slots_min": 1,
-            "slots_max": 3,
-            "SpawnPoints": "BotZone",
-            "BotSide": "Savage",
-            "BotPreset": "hard",
-            "WildSpawnType": "assault",
-            "isPlayers": true
-        },
-        {
-            "number": 6,
-            "time_min": 1200,
-            "time_max": 1500,
-            "slots_min": 1,
-            "slots_max": 3,
-            "SpawnPoints": "BotZone",
-            "BotSide": "Savage",
-            "BotPreset": "hard",
-            "WildSpawnType": "assault",
+            "WildSpawnType": "pmcBot",
             "isPlayers": false
         },
         {
-            "number": 7,
+            "number": 3,
             "time_min": 1600,
             "time_max": 1700,
             "slots_min": 0,
@@ -118,6 +70,30 @@
             "BotSide": "Savage",
             "BotPreset": "hard",
             "WildSpawnType": "assault",
+            "isPlayers": false
+        },
+        {
+            "number": 4,
+            "time_min": 0,
+            "time_max": 6,
+            "slots_min": 1,
+            "slots_max": 3,
+            "SpawnPoints": "BotZone",
+            "BotSide": "Usec",
+            "BotPreset": "normal",
+            "WildSpawnType": "pmcBot",
+            "isPlayers": false
+        },
+        {
+            "number": 5,
+            "time_min": 10,
+            "time_max": 20,
+            "slots_min": 1,
+            "slots_max": 3,
+            "SpawnPoints": "BotZone",
+            "BotSide": "Bear",
+            "BotPreset": "normal",
+            "WildSpawnType": "pmcBot",
             "isPlayers": false
         }
     ],
@@ -2539,13 +2515,24 @@
     "BossLocationSpawn": [
         {
             "BossName": "bossTagilla",
-            "BossChance": 18,
+            "BossChance": 95,
             "BossZone": "BotZone",
             "BossPlayer": false,
             "BossDifficult": "normal",
             "BossEscortType": "followerBully",
             "BossEscortDifficult": "normal",
             "BossEscortAmount": "0",
+            "Time": -1
+        },
+        {
+            "BossName": "pmcBot",
+            "BossChance": 100,
+            "BossZone": "BotZone",
+            "BossPlayer": false,
+            "BossDifficult": "normal",
+            "BossEscortType": "pmcBot",
+            "BossEscortDifficult": "normal",
+            "BossEscortAmount": "2",
             "Time": -1
         }
     ],

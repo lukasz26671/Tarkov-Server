@@ -227,7 +227,7 @@
         "SpawnPoints": "",
         "BotSide": "Usec",
         "BotPreset": "normal",
-        "isPlayers": true,
+        "isPlayers": false,
         "WildSpawnType": "pmcBot"
     },
     {
@@ -239,7 +239,55 @@
         "SpawnPoints": "",
         "BotSide": "Bear",
         "BotPreset": "normal",
-        "isPlayers": true,
+        "isPlayers": false,
+        "WildSpawnType": "pmcBot"
+    },
+    {
+        "number": 18,
+        "time_min": 60,
+        "time_max": 70,
+        "slots_min": 1,
+        "slots_max": 3,
+        "SpawnPoints": "",
+        "BotSide": "Usec",
+        "BotPreset": "normal",
+        "isPlayers": false,
+        "WildSpawnType": "pmcBot"
+    },
+    {
+        "number": 19,
+        "time_min": 120,
+        "time_max": 140,
+        "slots_min": 1,
+        "slots_max": 3,
+        "SpawnPoints": "",
+        "BotSide": "Usec",
+        "BotPreset": "normal",
+        "isPlayers": false,
+        "WildSpawnType": "pmcBot"
+    },
+    {
+        "number": 20,
+        "time_min": 240,
+        "time_max": 280,
+        "slots_min": 1,
+        "slots_max": 3,
+        "SpawnPoints": "",
+        "BotSide": "Usec",
+        "BotPreset": "normal",
+        "isPlayers": false,
+        "WildSpawnType": "pmcBot"
+    },
+    {
+        "number": 21,
+        "time_min": 320,
+        "time_max": 460,
+        "slots_min": 1,
+        "slots_max": 3,
+        "SpawnPoints": "",
+        "BotSide": "Usec",
+        "BotPreset": "normal",
+        "isPlayers": false,
         "WildSpawnType": "pmcBot"
     }
     ],
