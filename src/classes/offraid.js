@@ -328,16 +328,22 @@ function saveProgress(offraidData, sessionID) {
   
   let pmcData = profile_f.handler.getPmcProfile(sessionID);
 
-  if(offraidData.health.Energy < 0 || offraidData.health.Hydration < 0) {
-    logger.logError("offraidData: health is fucked. working around it.");
+  // if(offraidData.health.Energy < 0 || offraidData.health.Hydration < 0) {
+  //   logger.logError("offraidData: health is fucked. working around it.");
 
-    for(const bpHealthNode in pmcData.Health.BodyParts) {
-      pmcData.Health.BodyParts[bpHealthNode].Health.Maximum - offraidData.health.Health[bpHealthNode].Current;
-    }
+  //   if(offraidData.health.Energy < 0)
+  //     offraidData.health.Energy = 0;
+  //   if(offraidData.health.Hydration < 0)
+  //     offraidData.health.Hydration = 0;
 
-    pmcData.Health.Energy += offraidData.health.Energy;
-    pmcData.Health.Hydration += offraidData.health.Hydration;
-  }
+  //   for(const bpHealthNode in pmcData.Health.BodyParts) {
+  //     pmcData.Health.BodyParts[bpHealthNode].Health.Maximum - offraidData.health.Health[bpHealthNode].Current;
+  //   }
+
+
+  //   pmcData.Health.Energy.Current += offraidData.health.Energy;
+  //   pmcData.Health.Hydration.Current += offraidData.health.Hydration;
+  // }
 
 
 
