@@ -13,8 +13,8 @@
   },
   "BodyParts": {
     "Head": {
-      "min": 100,
-      "max": 100
+      "min": 42,
+      "max": 42
     },
     "Chest": {
       "min": 320,
