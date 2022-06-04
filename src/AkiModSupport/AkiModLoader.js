@@ -1,12 +1,17 @@
 const fs = require('fs');
 const { logger } = require('../../core/util/logger');
 
-// Shim all of the Aki stuff here
-
-
+/**
+ * The very simple Aki Mod Loader and Aki class shim
+ */
 class AkiModLoader
 {
     static IsAkiShimmed = false;
+
+    /**
+     * Shim the Aki structure so it is compatible with SIT/JET
+     * @returns {*} nothing
+     */
     static shimAki() {
         if(AkiModLoader.IsAkiShimmed)
             return;
@@ -23,6 +28,12 @@ class AkiModLoader
         AkiModLoader.IsAkiShimmed = true;
     }
 
+    /**
+     * Attempts to load the Aki mod via the shim method
+     * @param {*} modFolder 
+     * @param {*} packagePath 
+     * @returns {boolean} true/false value of whether the mod load was successful
+     */
     static loadMod(modFolder, packagePath) {
         // console.log(modFolder);
 
@@ -34,7 +45,7 @@ class AkiModLoader
         const packageConfig = JSON.parse(fs.readFileSync(absolutePathToPackage));
         // console.log(packageConfig);
         if(packageConfig.main === undefined)
-            return;
+            return false;
 
         const absolutePathToModMainFile = absolutePathToModFolder + "/" + packageConfig.main;
 
@@ -43,9 +54,11 @@ class AkiModLoader
         try {
             const mod = require(absolutePathToModMainFile).Mod;
             logger.logSuccess(`${modFolder} - Aki mod: Load succeeded`);
+            return true;
         }
         catch(err) {
             logger.logError(`${modFolder} - Aki mod: Load failed`);
+            return false;
         }
     }
 }
