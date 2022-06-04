@@ -164,12 +164,12 @@ action: (url, info, sessionID) => {
                     "reserve": 100
                 },
                 "airdropMinStartTimeSeconds": 60,
-                "airdropMaxStartTimeSeconds": 300,
-                "airdropMinOpenHeight": 350,
-                "airdropMaxOpenHeight": 400,
+                "airdropMaxStartTimeSeconds": 90,
+                "airdropMinOpenHeight": 75,
+                "airdropMaxOpenHeight": 150,
                 "planeMinFlyHeight": 400,
                 "planeMaxFlyHeight": 500,
-                "planeVolume": 1
+                "planeVolume": 0.5
             }
         )
     }
