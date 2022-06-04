@@ -16,10 +16,6 @@ const { certificate } = require('./../core/server/certGenerator');
 const { ConfigController } = require('./../src/Controllers/ConfigController')
 var serverIp = "127.0.0.1";
 
-// for(let i = 0; i < process.argv.length; ++i) {
-//   console.log(`index ${i} argument -> ${process.argv[i]}`);
-// }
-
 /**
  * Rebuild / Build configs
 */

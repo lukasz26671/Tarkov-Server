@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node bin/www.js",
-    "generate-docs": "jsdoc -r ."
+    "generate-docs": "jsdoc -c jsdoc.json -r ."
   },
   "dependencies": {
     "compression": "^1.7.4",
