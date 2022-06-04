@@ -1,6 +1,23 @@
 {
     "forced": [
         {
+            "id": "custom_multiScene_00058",
+            "IsStatic": true,
+            "Position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "Rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "Items": [
+                "593962ca86f774068014d9af"
+            ]
+        },
+        {
             "id": "quest_pacadge709826",
             "Position": {
                 "x": -202.607,

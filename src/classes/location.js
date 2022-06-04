@@ -995,51 +995,9 @@ class LocationServer {
 
     counters.push(count);
     
-    count = 0;
-    count = this.lootGenerator.lootForced(forced, output);
+    // count = 0;
+    // count = this.lootGenerator.lootForced(forced, output);
 
-    // ------------------------------------------------------
-    // Handle any Forced Static Loot - i.e. Unknown Key
-    // 
-    logger.logInfo(`Forced Loot Count: ${forced.length}`);
-    let numberOfForcedStaticLootAdded = 0;
-    for(let iForced in forced) {
-      let forcedItem = forced[iForced];
-      forcedItem.IsForced = true;
-      if(forcedItem.IsStatic) {
-          let newId = utility.generateNewItemId();
-          forcedItem.Root = newId;
-          let newForcedItemsList = [];
-
-          for(let iDataItem in forcedItem.Items) {
-            let newForcedInnerItem = {};
-            if(iDataItem == 0)
-            {
-              newForcedInnerItem._tpl = forcedItem.Items[iDataItem];
-              newForcedInnerItem._id = newId;
-              newForcedItemsList.push(newForcedInnerItem);
-              continue;
-            }
-            let newInnerItemId = utility.generateNewItemId();
-            newForcedInnerItem._id = newInnerItemId;
-            newForcedInnerItem._tpl = forcedItem.Items[iDataItem];
-            newForcedInnerItem.parentId = newId;
-            newForcedInnerItem.slotId = "main";
-            newForcedInnerItem.location = {
-                  x: iDataItem-1,
-                  y: 0,
-                  r: 0
-               }
-            newForcedItemsList.push(newForcedInnerItem);
-          }
-          forcedItem.Items = DeepCopy(newForcedItemsList);
-          output.Loot.push(forcedItem);
-          numberOfForcedStaticLootAdded++;
-      }
-    }
-    if(numberOfForcedStaticLootAdded > 0) {
-      logger.logSuccess(`Added ${numberOfForcedStaticLootAdded} Forced Static Loot`);
-    }
     //
     // ------------------------------------------------------
   
@@ -1051,6 +1009,9 @@ class LocationServer {
     count = 0;
     count = this.lootGenerator.lootStatics(statics, output, _location.base.GlobalLootChanceModifier, name);
    
+    counters[1] = LootController.GenerateForcedLootInContainers(forced, output.Loot);
+    counters[1] += LootController.GenerateForcedLootLoose(forced, output);
+
     // logger.logInfo(`State Containers, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 

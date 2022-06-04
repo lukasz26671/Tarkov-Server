@@ -565,6 +565,115 @@ class LootController
           return;
         }
       }
+
+      /**
+       * Generates all "forced" (usually quest) items into containers
+       * @param {*} forced 
+       * @param {*} outputLoot 
+       */
+      static GenerateForcedLootInContainers(forced, outputLoot) {
+        let count = 0;
+        // ------------------------------------------------------
+        // Handle any Forced Static Loot - i.e. Unknown Key
+        // 
+        logger.logInfo(`Forced Loot Count: ${forced.length}`);
+        let numberOfForcedStaticLootAdded = 0;
+        for(let iForced in forced) {
+          let thisForcedItem = utility.DeepCopy(forced[iForced]);
+          let lootItem = forced[iForced];
+          // console.log(lootItem);
+          lootItem.IsForced = true;
+          if(lootItem.IsStatic) {
+            count++;
+            const lootTableIndex = outputLoot.findIndex(x=>x.Id === thisForcedItem.Id);
+            const lootTableAlreadyExists = lootTableIndex !== -1;
+            let newParentId = "";
+            if(!lootTableAlreadyExists) {
+              newParentId = utility.generateNewItemId();
+              lootItem.Root = newId;
+            }
+            else {
+              lootItem = outputLoot[lootTableIndex];
+              newParentId = lootItem.Root;
+            }
+            let newForcedItemsList = [];
+
+            for(let iDataItem in thisForcedItem.Items) {
+              let newForcedInnerItem = {};
+              if(iDataItem == 0 && !lootTableAlreadyExists)
+              {
+                newForcedInnerItem._tpl = thisForcedItem.Items[iDataItem];
+                newForcedInnerItem._id = newId;
+                lootItem.Items.push(newForcedInnerItem);
+                continue;
+              }
+              let newInnerItemId = utility.generateNewItemId();
+              newForcedInnerItem._id = newInnerItemId;
+              newForcedInnerItem._tpl = thisForcedItem.Items[iDataItem];
+              const itemTemplateForNaming = global._database.items[newForcedInnerItem._tpl];
+              newForcedInnerItem.itemNameForDebug = itemTemplateForNaming._props.ShortName;
+              newForcedInnerItem.parentId = newParentId;
+              newForcedInnerItem.slotId = "main";
+              newForcedInnerItem.location = {
+                    x: lootTableAlreadyExists ? iDataItem : (iDataItem-1),
+                    y: 0,
+                    r: 0
+                  }
+              lootItem.Items[iDataItem > 0 ? iDataItem : (parseInt(iDataItem) + 1)] = newForcedInnerItem;
+            }
+            if(lootTableAlreadyExists)
+              outputLoot[lootTableIndex] = lootItem;
+            else
+              outputLoot.push(lootItem);
+
+            numberOfForcedStaticLootAdded++;
+          }
+        }
+        if(numberOfForcedStaticLootAdded > 0) {
+          logger.logSuccess(`Added ${numberOfForcedStaticLootAdded} Forced Static Loot`);
+        }
+        return count;
+      }
+
+      /**
+       * Generates all "forced" (usually quest) items into the world
+       * @param {*} forced 
+       * @param {*} output 
+       * @returns {number} count of items placed, excluding statics
+       */
+      static GenerateForcedLootLoose(forced, output) {
+          let count = 0;
+          for (const i in forced) {
+            const data = utility.DeepCopy(forced[i]);
+            if(data.IsStatic)
+              continue;
+              const newItemsData = [];
+            // forced loot should be only contain 1 item... (there shouldnt be any weapon in there...)
+            const newId = utility.generateNewId(undefined, 3);
+      
+            const createEndLootData = {
+              Id: data.Id,
+              IsStatic: data.IsStatic,
+              useGravity: data.useGravity,
+              randomRotation: data.randomRotation,
+              Position: data.Position,
+              Rotation: data.Rotation,
+              IsGroupPosition: data.IsGroupPosition,
+              GroupPositions: data.GroupPositions,
+              Root: newId,
+              Items: [
+                {
+                  _id: newId,
+                  _tpl: data.Items[0],
+                },
+              ],
+            };
+      
+            output.Loot.push(createEndLootData);
+            count++;
+          }
+          return count;
+      }
 }
 
 module.exports.LootController = LootController;
