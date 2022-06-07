@@ -173,6 +173,28 @@ action: (url, info, sessionID) => {
             }
         )
     }
+},
+/**
+ * This is called by the Client mod whenever a person is killed
+ * At time of writing. "info" contains
+ * {
+ *  diedAID (accoundId of the person who died), 
+ *  diedFaction (Faction Savage/Bear/Usec etc of the person who died), 
+ *  diedWST (Spawn type assault/pmcBot etc of the person who died), 
+ *  killedByAID (accoundId of the person who killed the person), 
+ * }
+ */
+{
+    url: "/client/raid/person/killed",
+    action: (url, info, sessionID) => {
+        console.log(info);
+
+        
+        return JSON.stringify(
+            {
+            }
+        )
+    }
 }
 
 
