@@ -57,7 +57,7 @@ class AkiModLoader
             return true;
         }
         catch(err) {
-            logger.logError(`${modFolder} - Aki mod: Load failed`);
+            logger.logError(`${modFolder} - Aki mod: Load failed with message "${err}"`);
             return false;
         }
     }

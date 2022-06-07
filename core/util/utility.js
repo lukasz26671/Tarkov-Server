@@ -1,8 +1,11 @@
 "use strict";
 const crypto = require('crypto');
 
-/* START NEW DEEPCOPY CODE */
-
+/**
+ * 
+ * @param {*} target 
+ * @returns {*}
+ */
 function cloneOtherType(target) {
     const constrFun = target.constructor;
     switch (toRawType(target)) {
@@ -304,6 +307,13 @@ const { v4: uuidv4 } = require('uuid')
 //     }
 //     return retVal;
 // }
+
+/**
+ * 
+ * @param {*} prefix 
+ * @param {*} version 
+ * @returns {string} NewId string
+ */
 exports.generateNewId = (prefix = "", version = 2) => {
     let getTime = new Date();
     let retVal = ""
@@ -357,7 +367,7 @@ exports.generateNewId = (prefix = "", version = 2) => {
 /**
  * 
  * @param {Buffer} byteArray 
- * @returns 
+ * @returns {*}
  */
 exports.toHexString = (byteArray) =>
 {

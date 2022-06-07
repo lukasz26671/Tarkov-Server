@@ -1,10 +1,18 @@
 const { ConfigController } = require('./ConfigController');
 const utility = require('./../../core/util/utility');
 
-
+/**
+ * 
+ */
 class LootController 
 {
+  /**
+   * 
+   */
     static LootRarities = {};
+    /**
+     * 
+     */
     static LocationLootChanceModifierFromFile = 1.0;
     /**
      * 
@@ -68,6 +76,11 @@ class LootController
         return LootController.LootModifiers;
     }
 
+    /**
+     * Calculates the Rarity of an item
+     * @param {string} itemTemplate 
+     * @returns {string} type of rarity this item falls into, i.e. Common -> Superrare
+     */
     static GetItemRarityType(itemTemplate) {
 
         if(LootController.LootRarities[itemTemplate._props.Name] === undefined) {
@@ -493,7 +506,7 @@ class LootController
                   logger.logWarning(`itemTemplate._props.LootExperience == "undefined" for ${itemTemplate._id}`);
                   continue;
                 }
-                if(!LootController.FilterItemByRarity(itemTemplate, itemsRemoved))
+                if(!LootController.FilterItemByRarity(itemTemplate, itemsRemoved, 5))
                   LootList.push(item);
               }
             }

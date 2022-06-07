@@ -329,6 +329,7 @@ function getCategoryList(handbookId) {
 
   return result;
 }
+
 /** Create a list of offers
  * Notes:
  * offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
@@ -337,7 +338,7 @@ function getCategoryList(handbookId) {
  * @param {*} template - ItemID
  * @param {*} onlyFunc - filter function
  * @param {*} usePresets - use presets
- * @returns 
+ * @returns {object}
  */
 function createOffer(template, onlyFunc, usePresets = true) {
   //console.log("createOffer is called")

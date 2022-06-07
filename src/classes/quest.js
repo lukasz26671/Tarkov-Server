@@ -34,7 +34,7 @@ module.exports.evaluateLevel = evaluateLevel;
  * 
  * @param {*} q "Quest" object
  * @param {*} questType "Level", "Quest" or "TraderLoyalty"
- * @returns 
+ * @returns {object}
  */
 function filterConditions(q, questType) {
   const filteredQuests = q.filter(c => {

@@ -3,7 +3,9 @@ const { AccountServer } = require('../../classes/account');
 const { AccountController } = require('./../../Controllers/AccountController');
 
 
-
+/**
+ * 
+ */
 class FriendRequest {
     /**
      * 
@@ -46,7 +48,7 @@ class FriendRequest {
     /**
      * 
      * @param {number} friendRequestId 
-     * @returns 
+     * @returns {object}
      */
     toFriendRequestResponse(friendRequestId) {
         if(!friendRequestId)
@@ -127,6 +129,7 @@ class FriendRequestResponse {
     /**
      * 
      * @param {FriendRequest} friendRequest 
+     * @returns {object}
      */
     static fromFriendRequest(friendRequest) {
       

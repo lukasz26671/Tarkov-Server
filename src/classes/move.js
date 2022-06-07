@@ -374,7 +374,7 @@ function mergeItem(pmcData, body, sessionID) {
  * @param {*} pmcData 
  * @param {*} body 
  * @param {*} sessionID 
- * @returns 
+ * @returns {object}
  */
 function transferItem(pmcData, body, sessionID) {
   const output = item_f.handler.getOutput(sessionID);
@@ -425,7 +425,7 @@ function transferItem(pmcData, body, sessionID) {
  * @param {*} pmcData 
  * @param {*} body 
  * @param {*} sessionID 
- * @returns 
+ * @returns {object}
  */
 function swapItem(pmcData, body, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
@@ -493,7 +493,7 @@ function fillAmmoBox(itemToAdd, pmcData, toDo, output) {
  * @param {*} body 
  * @param {*} sessionID 
  * @param {*} foundInRaid 
- * @returns 
+ * @returns {object}
  */
 function addItem(pmcData, body, sessionID, foundInRaid = false) {
   let output = item_f.handler.getOutput(sessionID);

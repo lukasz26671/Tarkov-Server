@@ -1,6 +1,7 @@
 "use strict";
 
 const { ConfigController } = require("../Controllers/ConfigController");
+const { DatabaseController } = require("../Controllers/DatabaseController");
 
 function loadGlobals() {
   _database.globals = fileIO.readParsed("./" + db.base.globals);

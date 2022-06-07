@@ -24,7 +24,7 @@ class ProfileServer {
   /**
    * Load the user profiled specified by sessionID from disk, generate a scav and set the profileFileAge variable as well as the skipeedSaves count.
    * @param {*} sessionID 
-   * @returns 
+   * @returns {object}
    */
   loadProfileFromDisk(sessionID) {
     if (typeof sessionID == "undefined") logger.throwErr("[CLUSTER]Session ID is undefined", "~/src/classes/profile.js | 19");

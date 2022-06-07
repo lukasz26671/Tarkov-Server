@@ -304,10 +304,10 @@ class Controller {
   }
 
   /**
-   * 
+   * Generate a bot
    * @param {*} info 
    * @param {*} sessionID 
-   * @returns 
+   * @returns {object}
    */
   generate(info, sessionID) {
     let dateNow = Date.now();

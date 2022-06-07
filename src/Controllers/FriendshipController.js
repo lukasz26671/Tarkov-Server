@@ -4,9 +4,16 @@ const utility = require('../../core/util/utility');
 const { AccountController } = require('./AccountController');
 const { FriendRequest } = require('./../EFT/JavaScriptTypes/FriendRequest')
 
+/**
+ * 
+ */
 class FriendshipController {
 
-    
+    /**
+	 * 
+	 * @param {*} sessionID 
+	 * @returns {Array}
+	 */
 	static getFriends(sessionID) {
 		// console.log("getFriends");
 		let friendAccounts = [];
@@ -40,6 +47,11 @@ class FriendshipController {
 		return friendAccounts;
 	}
 
+	/**
+	 * 
+	 * @param {*} sessionID 
+	 * @returns {Array}
+	 */
 static getFriendRequestInbox(sessionID) {
 	var acc = AccountServer.find(sessionID);
 	if(acc.friendRequestInbox === undefined) {
@@ -61,6 +73,11 @@ static getFriendRequestInbox(sessionID) {
 	return resultArray;
 }
 
+/**
+	 * 
+	 * @param {*} sessionID 
+	 * @returns {Array}
+	 */
 static getFriendRequestOutbox(sessionID) {
   var acc = AccountServer.find(sessionID);
   if(acc.friendRequestOutbox === undefined) {

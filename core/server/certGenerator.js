@@ -1,3 +1,6 @@
+/**
+ * Generates a Https Certificate
+ */
 class CertGenerator {
   constructor() {
     this.certDir = internal.resolve(process.cwd(), "./user/certs");
@@ -5,9 +8,9 @@ class CertGenerator {
     this.keyFile = internal.resolve(this.certDir, "key.pem");
   }
   /**
-   * 
+   * Generates a Certificate
    * @param {string} serverIp 
-   * @returns 
+   * @returns {object} { cert, key }
    */
   generate(serverIp) {
 
@@ -47,4 +50,5 @@ class CertGenerator {
     return { cert, key };
   }
 }
+
 module.exports.certificate = new CertGenerator();
