@@ -6,6 +6,10 @@ const { AccountController } = require('./AccountController');
 const { ConfigController } = require('./ConfigController');
 const utility = require('./../../core/util/utility');
 
+/**
+ * The response controller is the controller that handles all HTTP request and responses
+ * This controller can be overriden by Mods
+ */
 class ResponseController
 {
     static getUrl()
@@ -189,7 +193,7 @@ action: (url, info, sessionID) => {
     action: (url, info, sessionID) => {
         console.log(info);
 
-        
+
         return JSON.stringify(
             {
             }
@@ -210,12 +214,27 @@ action: (url, info, sessionID) => {
     }
 
     /**
-     * 
+     * Add a new route to the Response Controller. If route already exists, do nothing
      * @param {string} url 
      * @param {function} action 
      */
     static addRoute = (url, action) => {
-        ResponseController.Routes.push({ url: url, action: action })
+        var existingRoute = ResponseController.Routes.find(x=>x.url == url);
+        if(existingRoute === undefined)
+            ResponseController.Routes.push({ url: url, action: action })
+    }
+
+    /**
+     * Override a route in the Response Controller, if the route doesn't exist, add the route
+     * @param {*} url 
+     * @param {*} action 
+     */
+    static overrideRoute = (url, action) => {
+       var existingRoute = ResponseController.Routes.find(x=>x.url == url);
+       if(existingRoute !== undefined)
+            existingRoute.action = action;
+        else 
+            ResponseController.addRoute(url, action);
     }
 
     static RoutesToNotLog = [
