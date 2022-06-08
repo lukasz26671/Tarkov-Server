@@ -13,6 +13,9 @@ const database = require('./../../src/functions/database')
 const { ConfigController } = require('./../../src/Controllers/ConfigController')
 // const fastify = require('fastify')({ logger: true });
 
+/**
+ * 
+ */
 class Server {
   constructor() {
     // this.tarkovSend = require("./tarkovSend.js").struct;
@@ -113,7 +116,7 @@ class Server {
   getIp = () => this.ip;
   getPort = () => this.port;
   getBackendUrl = () => this.second_backendUrl != null ? this.second_backendUrl : this.backendUrl;
-  getVersion = () => global.core.constants.ServerVersion;
+  getVersion = () => ConfigController.Configs["server"].name;
 
 
   // putInBuffer(sessionID, data, bufLength) {
@@ -189,124 +192,124 @@ class Server {
   }
 
   // Logs the requests made by users. Also stripped from bullshit requests not important ones.
-  requestLog(req, sessionID) {
-    let IP = req.connection.remoteAddress.replace("::ffff:", "");
-    IP = IP == "127.0.0.1" ? "LOCAL" : IP;
+  // requestLog(req, sessionID) {
+  //   let IP = req.connection.remoteAddress.replace("::ffff:", "");
+  //   IP = IP == "127.0.0.1" ? "LOCAL" : IP;
 
 
-    let displaySessID = typeof sessionID != "undefined" ? `[${sessionID}]` : "";
+  //   let displaySessID = typeof sessionID != "undefined" ? `[${sessionID}]` : "";
 
-    // if (
-    //   req.url.substr(0, 6) != "/files" &&
-    //   req.url.substr(0, 6) != "/notif" &&
-    //   req.url != "/client/game/keepalive" &&
-    //   req.url != "/player/health/sync" &&
-    //   !req.url.includes(".css") &&
-    //   !req.url.includes(".otf") &&
-    //   !req.url.includes(".ico") &&
-    //   !req.url.includes("singleplayer/settings/bot/difficulty")
-    // )
-      logger.logRequest(req.url, `${displaySessID}[${IP}][${req.method}] `);
-  }
+  //   // if (
+  //   //   req.url.substr(0, 6) != "/files" &&
+  //   //   req.url.substr(0, 6) != "/notif" &&
+  //   //   req.url != "/client/game/keepalive" &&
+  //   //   req.url != "/player/health/sync" &&
+  //   //   !req.url.includes(".css") &&
+  //   //   !req.url.includes(".otf") &&
+  //   //   !req.url.includes(".ico") &&
+  //   //   !req.url.includes("singleplayer/settings/bot/difficulty")
+  //   // )
+  //     logger.logRequest(req.url, `${displaySessID}[${IP}][${req.method}] `);
+  // }
 
-  handleRequest(req, resp) {
+  // handleRequest(req, resp) {
     
-    let output = {};
-    const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
+  //   let output = {};
+  //   const sessionID = (consoleResponse.getDebugEnabled()) ? consoleResponse.getSession() : utility.getCookies(req)["PHPSESSID"];
 
-    this.requestLog(req, sessionID);
+  //   this.requestLog(req, sessionID);
 
-    switch(req.method) {
-      case "GET": 
-      {
-        let body = [];
-        req.on('data', (chunk) => {
-          body.push(chunk);
-        }).on('end', () => {
-          // body = Buffer.concat(body).toString();
-          let data = Buffer.concat(body);
-          // console.log(data.toString());
-        });
-        server.sendResponse(sessionID, req, resp, "");
-        // output = server.sendResponse(sessionID, req, resp, body);
-        // console.log(output);
-        return output;
-      }
-      //case "GET":
-      case "PUT":
-      case "POST": 
-      {
+  //   switch(req.method) {
+  //     case "GET": 
+  //     {
+  //       let body = [];
+  //       req.on('data', (chunk) => {
+  //         body.push(chunk);
+  //       }).on('end', () => {
+  //         // body = Buffer.concat(body).toString();
+  //         let data = Buffer.concat(body);
+  //         // console.log(data.toString());
+  //       });
+  //       server.sendResponse(sessionID, req, resp, "");
+  //       // output = server.sendResponse(sessionID, req, resp, body);
+  //       // console.log(output);
+  //       return output;
+  //     }
+  //     //case "GET":
+  //     case "PUT":
+  //     case "POST": 
+  //     {
 
-        req.on('data', (chunk) => {
+  //       req.on('data', (chunk) => {
 
-          if(req.requestBody === undefined) {
-            req.requestBody = chunk;
-          }
-          else {
-            req.requestBody = Buffer.concat([req.requestBody, chunk], req.requestBody.length + chunk.length);
-          }
+  //         if(req.requestBody === undefined) {
+  //           req.requestBody = chunk;
+  //         }
+  //         else {
+  //           req.requestBody = Buffer.concat([req.requestBody, chunk], req.requestBody.length + chunk.length);
+  //         }
 
-        }).on('end', () => {
+  //       }).on('end', () => {
 
-            // console.log(req.requestBody);
-            internal.zlib.inflate(req.requestBody, function (err, body) {
-              if(body !== undefined) {
-                let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-                output = server.sendResponse(sessionID, req, resp, jsonData);
-              }
-              else {
-                output = server.sendResponse(sessionID, req, resp, "")
-              }
-            });
+  //           // console.log(req.requestBody);
+  //           internal.zlib.inflate(req.requestBody, function (err, body) {
+  //             if(body !== undefined) {
+  //               let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+  //               output = server.sendResponse(sessionID, req, resp, jsonData);
+  //             }
+  //             else {
+  //               output = server.sendResponse(sessionID, req, resp, "")
+  //             }
+  //           });
 
-        });
-        // let body = [];
-        // req.on('data', (chunk) => {
-        //   body.push(chunk);
-        // }).on('end', () => {
-        //   let data = Buffer.concat(body);
+  //       });
+  //       // let body = [];
+  //       // req.on('data', (chunk) => {
+  //       //   body.push(chunk);
+  //       // }).on('end', () => {
+  //       //   let data = Buffer.concat(body);
         
-        //   internal.zlib.inflate(data, function (err, body) {
-        //     if(body !== undefined) {
-        //       let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-        //       output = server.sendResponse(sessionID, req, resp, jsonData);
-        //     }
-        //     else {
-        //       output = server.sendResponse(sessionID, req, resp, "")
-        //     }
-        //   });
-        // });
-        // return true;
-      }
-      // case "PUT": 
-      // {
-      //   // req.on("data", function (data) {
-      //   //   // receive data
-      //   //   if ("expect" in req.headers) {
-      //   //     const requestLength = parseInt(req.headers["content-length"]);
+  //       //   internal.zlib.inflate(data, function (err, body) {
+  //       //     if(body !== undefined) {
+  //       //       let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+  //       //       output = server.sendResponse(sessionID, req, resp, jsonData);
+  //       //     }
+  //       //     else {
+  //       //       output = server.sendResponse(sessionID, req, resp, "")
+  //       //     }
+  //       //   });
+  //       // });
+  //       // return true;
+  //     }
+  //     // case "PUT": 
+  //     // {
+  //     //   // req.on("data", function (data) {
+  //     //   //   // receive data
+  //     //   //   if ("expect" in req.headers) {
+  //     //   //     const requestLength = parseInt(req.headers["content-length"]);
 
-      //   //     if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
-      //   //       resp.writeContinue();
-      //   //     }
-      //   //   }
-      //   // })
-      //   // .on("end", function () {
-      //   //   let data = server.getFromBuffer(sessionID);
-      //   //   server.resetBuffer(sessionID);
+  //     //   //     if (!server.putInBuffer(req.headers.sessionid, data, requestLength)) {
+  //     //   //       resp.writeContinue();
+  //     //   //     }
+  //     //   //   }
+  //     //   // })
+  //     //   // .on("end", function () {
+  //     //   //   let data = server.getFromBuffer(sessionID);
+  //     //   //   server.resetBuffer(sessionID);
 
-      //   //   internal.zlib.inflate(data, function (err, body) {
-      //   //     let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
-      //   //     output = server.sendResponse(sessionID, req, resp, jsonData);
-      //   //   });
-      //   // });
-      //   return true;
-      // }
-      default: 
-      {
-        return true;
-      }
-    }
-  }
+  //     //   //   internal.zlib.inflate(data, function (err, body) {
+  //     //   //     let jsonData = body !== typeof "undefined" && body !== null && body !== "" ? body.toString() : "{}";
+  //     //   //     output = server.sendResponse(sessionID, req, resp, jsonData);
+  //     //   //   });
+  //     //   // });
+  //     //   return true;
+  //     // }
+  //     default: 
+  //     {
+  //       return true;
+  //     }
+  //   }
+  // }
 
   // CreateServer() {
   //   const backend = this.backendUrl;
@@ -490,31 +493,37 @@ class Server {
     return false;
   }
 
-  softRestart() {
-    logger.logInfo("[SoftRestart]: Reloading Database");
-    global.mods_f.ResModLoad();
-    // const databasePath = "/src/functions/database.js";
-    // require(process.cwd() + databasePath).load();
-    database.load();
-    // will not be required if all data is loaded into memory
-    logger.logInfo("[SoftRestart]: Re-initializing");
-    // account_f.handler.initialize();
-    SaveHandler.initialize();
-    locale_f.handler.initialize();
-    preset_f.handler.initialize();
-    weather_f.handler.initialize();
-    logger.logInfo("[SoftRestart]: Reloading TamperMods");
-    global.mods_f.TamperModLoad(); // TamperModLoad
-    bundles_f.handler.initialize();
-  }
+  // softRestart() {
+  //   logger.logInfo("[SoftRestart]: Reloading Database");
+  //   global.mods_f.ResModLoad();
+  //   // const databasePath = "/src/functions/database.js";
+  //   // require(process.cwd() + databasePath).load();
+  //   database.load();
+  //   // will not be required if all data is loaded into memory
+  //   logger.logInfo("[SoftRestart]: Re-initializing");
+  //   // account_f.handler.initialize();
+  //   SaveHandler.initialize();
+  //   locale_f.handler.initialize();
+  //   preset_f.handler.initialize();
+  //   weather_f.handler.initialize();
+  //   logger.logInfo("[SoftRestart]: Reloading TamperMods");
+  //   global.mods_f.TamperModLoad(); // TamperModLoad
+  //   bundles_f.handler.initialize();
+  // }
 
+  /** Start the server, used by EXE
+   * PKG Server.exe is DEPENDANT on this
+   */
   start() {
     logger.logDebug("Loading Database...");
     // const databasePath = "/src/functions/database.js";
     // const executedDir = internal.process.cwd();
     // logger.logDebug(executedDir);
     // require(process.cwd() + databasePath).load();
+    // database.load();
+
     database.load();
+    global.mods_f.load();
 
     // will not be required if all data is loaded into memory
     // logger.logDebug("Initialize account...")
