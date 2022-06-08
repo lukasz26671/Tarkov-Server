@@ -10,11 +10,33 @@ class AccountController
 {
 
   static Instance = new AccountController();
+
+  static accounts = {};
+
    constructor() {
     if(!fs.existsSync(`user/profiles/`)) {
       fs.mkdirSync(`user/profiles/`);
     }
   }
+
+   /**
+ * Tries to find account data in loaded account list if not present returns undefined
+ * @param {*} sessionID 
+ * @returns Account_data
+ */
+    static find(sessionID) {
+      // AccountServer needs to be at the top to check for changed accounts.
+      AccountServer.reloadAccountBySessionID(sessionID);
+      for (let accountID in AccountServer.accounts) {
+        let account = AccountServer.accounts[accountID];
+  
+        if (account.id === sessionID) {
+          return account;
+        }
+      }
+  
+      return undefined;
+    }
     /**
      * Gets ALL of the account data from every profile in the user/profiles directory
      * @returns all the Account data neccessary to process accounts in the server & client
