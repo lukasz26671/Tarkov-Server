@@ -1,4 +1,7 @@
 "use strict";
+const utility = require('./utility');
+const util = require("util");
+const fileIO = require('./fileIO');
 // Made by TheMaoci ~2019
 
 // colorData[0] -> front, colorData[1] -> back
@@ -80,10 +83,10 @@ class Logger {
 
     // write the logged data to the file
     if (type == "LogData") {
-      this.fileStream.write(internal.util.format(data));
-      this.fileStream.write(internal.util.format("\n")); //just new line
+      this.fileStream.write(util.format(data));
+      this.fileStream.write(util.format("\n")); //just new line
     } else {
-      this.fileStream.write(internal.util.format(deltaTime + type + "-" + data + "\n"));
+      this.fileStream.write(util.format(deltaTime + type + "-" + data + "\n"));
     }
   }
 
