@@ -18,7 +18,7 @@ class FriendshipController {
 		// console.log("getFriends");
 		let friendAccounts = [];
 
-		let allAccounts = AccountServer.getAllAccounts();
+		let allAccounts = AccountController.getAllAccounts();
 		let myAccount = AccountServer.find(sessionID);
 		if(myAccount === undefined) { 
 		logger.logError("Own Account cannot be found!");
