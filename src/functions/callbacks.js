@@ -23,7 +23,7 @@ class Callbacks {
 	}
 	receiveInsurance(sessionID, req, resp, body, output) {
 		if (req.url === "/client/notifier/channel/create") {
-			insurance_f.handler.checkExpiredInsurance();
+			// insurance_f.handler.checkExpiredInsurance();
 		}
 	}
 	receiveSave(sessionID, req, resp, body, output) {

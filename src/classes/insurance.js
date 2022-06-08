@@ -3,7 +3,7 @@
 class InsuranceServer {
     constructor() {
         this.insured = {};
-        events.scheduledEventHandler.addEvent("insuranceReturn", this.processReturn.bind(this));
+        // events.scheduledEventHandler.addEvent("insuranceReturn", this.processReturn.bind(this));
     }
 
     freeFromMemory(sessionID) {
