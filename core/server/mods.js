@@ -162,7 +162,7 @@ class ModLoader { // handles loading mods
 	loadModFolder() { // Not Found File mods.json - loop through folders and load all mods that are correct
 		const modsFolder = fileIO.readDir("user/mods").filter(dir => fileIO.lstatSync("user/mods/" + dir).isDirectory());
 		for (const modFolder of modsFolder) {
-			if (fileIO.exist(`user/mods/${modFolder}/package.json`) && fileIO.exist(`user/mods/${modFolder}/package.js`)) {
+			if (fileIO.exist(`user/mods/${modFolder}/package.json`)) {// && fileIO.exist(`user/mods/${modFolder}/package.js`)) {
 				// logger.logWarning(`Invalid mod: this mod structure is incorrect (its AKI mod). Skipping loading mod: ${modFolder}`);
 				AkiModLoader.loadMod(modFolder, `user/mods/${modFolder}/package.json`);
 				continue;
