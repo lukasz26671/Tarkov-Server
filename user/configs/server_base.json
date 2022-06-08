@@ -4,9 +4,10 @@
 	"port": 443,
 	"eventPollIntervalSec": 60,
 	"rebuildCache": true,
-	"name": "JET Server (SIT Fork)",
+	"name": "SIT Server",
 	"discord": "",
 	"website": "",
+	"version": "",
   "runSimpleHttpServer": false,
   "Patches": {
     "RemoveAddOfferButton_Awake": true,
