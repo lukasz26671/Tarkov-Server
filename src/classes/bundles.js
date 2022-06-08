@@ -111,6 +111,11 @@ class BundlesServer {
             // logger.logInfo("Load bundle manifest " + bundle.key + " " + bundleHttpPath);
         }
       }
+
+      if (element.endsWith(".manifest")) {
+        console.log(element);
+        this.loadBundle(element.replace(".manifest",""));
+      }
     });
     
    });
