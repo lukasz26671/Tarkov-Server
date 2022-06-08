@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { ConfigController } = require('../src/Controllers/ConfigController');
 const database = require('./../src/functions/database')
 
 class Initializer {
@@ -10,7 +11,7 @@ class Initializer {
     this.initializeCacheCallbacks();
 
     // start watermark and server
-    require("./watermark.js").run();
+    // require("./watermark.js").run();
     global.consoleResponse = require("./console.js").consoleResponse;
     // server.start();
   }
@@ -24,7 +25,7 @@ class Initializer {
     global._database = {};
     global.cache = {};
 
-    global.core.constants = require("./constants.js").struct;
+    // global.core.constants = require("./constants.js").struct;
 
     global.startTimestamp = new Date().getTime();
 
@@ -45,9 +46,13 @@ class Initializer {
     global.utility = require("./util/utility.js");
     global.logger = require("./util/logger.js").logger;
 
+    // ConfigController.rebuildFromBaseConfigs();
+
     this.refreshServerConfigFromBase();
     this.refreshGameplayConfigFromBase();
 
+    Initializer.buildReadOnlyDbFolder();
+    database.load();
 
     global.mods = { toLoad: {}, config: {} };
 
@@ -60,6 +65,80 @@ class Initializer {
     global.events = require("./server/events.js");
     global.server = require("./server/server.js").server;
 
+  }
+
+  static scanRecursiveRoute(filepath, deep = false) { // recursively scans given path
+    if (filepath == "db/")
+      if (!fileIO.exist("db/"))
+        return;
+    let baseNode = {};
+    let directories = utility.getDirList(filepath);
+    let files = fileIO.readDir(filepath);
+  
+    // remove all directories from files
+    for (let directory of directories) {
+      for (let file in files) {
+        if (files[file] === directory) {
+          files.splice(file, 1);
+        }
+      }
+    }
+  
+    // make sure to remove the file extention
+    for (let node in files) {
+      let fileName = files[node].split('.').slice(0, -1).join('.');
+      baseNode[fileName] = filepath + files[node];
+    }
+  
+    // deep tree search
+    for (let node of directories) {
+      //if(node != "items" && node != "assort" && node != "customization" && node != "locales" && node != "locations" && node != "templates")
+      baseNode[node] = Initializer.scanRecursiveRoute(filepath + node + "/");
+    }
+  
+    return baseNode;
+  }
+
+  /**
+   * I don't know why this happens or exists
+   * P.S. Moved this from "mods.js"????
+   */
+  static buildReadOnlyDbFolder() { // populate global.db and global.res with folders data
+    // logger.logInfo("Rebuilding cache: route database");
+    global.db = Initializer.scanRecursiveRoute("db/");
+    // logger.logInfo("Rebuilding cache: route resources");
+    global.res = Initializer.scanRecursiveRoute("res/");
+    global.files = Initializer.scanRecursiveRoute("files/");
+  
+    // populate res/bundles
+    res.bundles = { files: [], folders: [] };
+    // var path = 'res/bundles';
+    // var results = fileIO.readDir(path, true);
+    // var bundles = results.filter(x => x.toLowerCase().endswith('.bundle'));
+    // var bundlePaths = bundles.map(x => internal.path.resolve(path, x));
+    // res.bundles.files = res.bundles.files.concat(bundlePaths);
+  
+    /* add important server paths */
+    db.user = {
+      configs: {
+        server: "user/configs/server.json",
+        gameplay: "user/configs/gameplay.json",
+        cluster: "user/configs/cluster.json",
+        blacklist: "user/configs/blacklist.json",
+        mods: "user/configs/mods.json"
+      },
+      events: {
+        schedule: "user/events/schedule.json"
+      },
+      profiles: {
+        character: "user/profiles/__REPLACEME__/character.json",
+        dialogue: "user/profiles/__REPLACEME__/dialogue.json",
+        storage: "user/profiles/__REPLACEME__/storage.json",
+        userbuilds: "user/profiles/__REPLACEME__/userbuilds.json"
+      }
+    }
+    // fileIO.write("user/cache/db.json", db);
+    // fileIO.write("user/cache/res.json", res);
   }
 
   refreshServerConfigFromBase() {
@@ -120,7 +199,7 @@ class Initializer {
     const executedDir = internal.process.cwd();
     logger.logDebug(`ExecutedDir: ${executedDir}`);
     // require(executedDir + databasePath).load();
-    database.load();
+    // database.load();
 
 
 // let path = "./src/cache";
