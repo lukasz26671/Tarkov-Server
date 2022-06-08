@@ -1,32 +1,34 @@
 "use strict";
+const fs = require('fs');
+const path = require('node:path');
 
 const writeAtomically = require('write-json-file');
 
 exports.stringify = (data, oneLiner = false) => { return (oneLiner) ? JSON.stringify(data) : JSON.stringify(data, null, "\t"); }
 
-exports.createReadStream = (file) => { return internal.fs.createReadStream(file); }
+exports.createReadStream = (file) => { return fs.createReadStream(file); }
 
-exports.createWriteStream = (file) => { return internal.fs.createWriteStream(file, { flags: 'w' }); }
+exports.createWriteStream = (file) => { return fs.createWriteStream(file, { flags: 'w' }); }
 
-exports.readParsed = (file) => { return JSON.parse(internal.fs.readFileSync(file, 'utf8')); }
+exports.readParsed = (file) => { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 
 exports.parse = (string) => { return JSON.parse(string); }
 
-exports.read = (file) => { return internal.fs.readFileSync(file, 'utf8'); }
+exports.read = (file) => { return fs.readFileSync(file, 'utf8'); }
 
-exports.exist = (file) => { return internal.fs.existsSync(file); }
+exports.exist = (file) => { return fs.existsSync(file); }
 
-exports.readDir = (path, recursive = false) => {
+exports.readDir = (p, recursive = false) => {
     var paths = [];
-    if (!internal.fs.existsSync(path)) return paths;
+    if (!fs.existsSync(p)) return paths;
 
-    var items = internal.fs.readdirSync(path);
+    var items = fs.readdirSync(p);
 
     for (var i in items) {
-        var fullPath = internal.path.join(path, items[i]);
+        var fullPath = path.join(p, items[i]);
         if (this.lstatSync(fullPath).isDirectory()) {
             if (recursive) {
-                var results = this.readDir(fullPath, true).map(x => internal.path.join(items[i], x));
+                var results = this.readDir(fullPath, true).map(x => path.join(items[i], x));
                 if (results.length > 0)
                     paths = paths.concat(results);
             }
@@ -39,21 +41,21 @@ exports.readDir = (path, recursive = false) => {
     return paths.map(x => x.replace(/\\/g, "/").replace(/\/\//g, "/"));
 }
 
-exports.statSync = (path) => { return internal.fs.statSync(path); }
+exports.statSync = (path) => { return fs.statSync(path); }
 
-exports.lstatSync = (path) => { return internal.fs.lstatSync(path); }
+exports.lstatSync = (path) => { return fs.lstatSync(path); }
 
-exports.unlink = (path) => { return internal.fs.unlinkSync(path); }
+exports.unlink = (path) => { return fs.unlinkSync(path); }
 
-exports.rmDir = (path) => { return internal.fs.rmdirSync(path); }
+exports.rmDir = (path) => { return fs.rmdirSync(path); }
 
-exports.mkDir = (path) => { return internal.fs.mkdirSync(path); }
+exports.mkDir = (path) => { return fs.mkdirSync(path); }
 
 function createDir(file) {
     let filePath = file.substr(0, file.lastIndexOf('/'));
 
-    if (!internal.fs.existsSync(filePath)) {
-        internal.fs.mkdirSync(filePath, { recursive: true });
+    if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(filePath, { recursive: true });
     }
 }
 
@@ -83,14 +85,14 @@ exports.write = (file, data, raw = false, atomic = true) => {
         if (atomic) {
             writeAtomically.sync(file, data);
         } else {
-            internal.fs.writeFileSync(file, JSON.stringify(data));
+            fs.writeFileSync(file, JSON.stringify(data));
         }
         return;
     }
     if (atomic) {
         writeAtomically.sync(file, data, 'utf8');
     } else {
-        internal.fs.writeFileSync(file, JSON.stringify(data, null, "\t"), 'utf8');
+        fs.writeFileSync(file, JSON.stringify(data, null, "\t"), 'utf8');
     }
     return;
 }
