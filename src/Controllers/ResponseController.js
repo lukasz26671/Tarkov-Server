@@ -5,6 +5,7 @@ const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
 const { ConfigController } = require('./ConfigController');
 const utility = require('./../../core/util/utility');
+const { TradingController } = require('./TradingController');
 
 /**
  * The response controller is the controller that handles all HTTP request and responses
@@ -190,14 +191,53 @@ action: (url, info, sessionID) => {
  */
 {
     url: "/client/raid/person/killed",
+    /**
+     * 
+     * @param {*} url not used here
+     * @param {*} info { diedAID (accoundId of the person who died), 
+   diedFaction (Faction Savage/Bear/Usec etc of the person who died), 
+   diedWST (Spawn type assault/pmcBot etc of the person who died), 
+   killedByAID (accoundId of the person who killed the person), 
+  }
+     * @param {*} sessionID client AccountId that called this route
+     * @returns {string} stringified message
+     */
     action: (url, info, sessionID) => {
         console.log(info);
 
+        const fenceConfig = ConfigController.Configs["gameplay"].fence;
+        const killScavChange = fenceConfig.killingScavsFenceLevelChange;
+        const killPmcChange = fenceConfig.killingPMCsFenceLevelChange;
+
+        // if the killer is the player
+        if(info.killedByAID === sessionID) {
+            const account = AccountController.find(sessionID);
+            const profile = profile_f.handler.getPmcProfile(sessionID);
+            
+            if(info.diedFaction === "Savage" || info.diedFaction === "Scav")
+                profile.TradersInfo[TradingController.FenceId].standing += killScavChange; 
+            else if(info.diedFaction === "Usec" || info.diedFaction === "Bear")
+                profile.TradersInfo[TradingController.FenceId].standing += killPmcChange; 
+
+            profile_f.handler.saveToDisk(sessionID);
+        }
 
         return JSON.stringify(
             {
             }
         )
+    }
+},
+/**
+ * This is called by the Client mod to know whether to display the killed message
+ */
+ {
+    url: "/client/raid/person/killed/showMessage",
+    action: (url, info, sessionID) => {
+        console.log(info);
+
+        const showMessage = ConfigController.Configs["gameplay"].inRaid.showMessage;
+        return JSON.stringify(showMessage)
     }
 }
 
