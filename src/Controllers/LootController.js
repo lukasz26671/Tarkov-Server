@@ -91,30 +91,34 @@ class LootController
           const unlootable = itemTemplate._props.Unlootable;
       
           let itemRarityType = "COMMON";
+          const itemName = itemTemplate._props !== undefined && typeof(itemTemplate._props.Name) === "string" ? itemTemplate._props.Name : "";
       
-          if(unlootable) {
-            itemRarityType = "NOT_EXIST";
-          }
-          else {
-            if (itemExperience >= 45
-            // violet is good shit
-            || backgroundColor == "violet"
-            // the good keys and stuff are high examine
-            || examineExperience >= 20
-            || itemTemplate._props.Name.includes("key")
-            || itemTemplate._props.Name.includes("Key")
-            ) {
-                itemRarityType = "SUPERRARE";
-                // console.log("SUPERRARE");
-                // console.log(itemTemplate);
-            } else if (itemExperience >= 40 || examineExperience >= 15) {
-                itemRarityType = "RARE";
-                // console.log("RARE");
-                // console.log(itemTemplate);
-            } else if (itemExperience >= 20 || examineExperience >= 8) {
-                itemRarityType = "UNCOMMON";
-                // console.log(itemTemplate);
+          try {
+            if(unlootable) {
+              itemRarityType = "NOT_EXIST";
             }
+            else {
+              if (itemExperience >= 45
+              // violet is good shit
+              || backgroundColor == "violet"
+              // the good keys and stuff are high examine
+              || examineExperience >= 20
+              || (itemName.includes("key") || itemName.includes("Key"))
+              ) {
+                  itemRarityType = "SUPERRARE";
+                  // console.log("SUPERRARE");
+                  // console.log(itemTemplate);
+              } else if (itemExperience >= 40 || examineExperience >= 15) {
+                  itemRarityType = "RARE";
+                  // console.log("RARE");
+                  // console.log(itemTemplate);
+              } else if (itemExperience >= 20 || examineExperience >= 8) {
+                  itemRarityType = "UNCOMMON";
+                  // console.log(itemTemplate);
+              }
+            }
+          } catch(err) {
+            itemRarityType = "SUPERRARE";
           }
       
           LootController.LootRarities[itemTemplate._props.Name] = itemRarityType;
@@ -125,6 +129,13 @@ class LootController
         return LootController.LootRarities[itemTemplate._props.Name];
       }
       
+      /**
+       * Filters the Item Template by the Rarity system and returns whether to Accept or Decline
+       * @param {*} itemTemplate 
+       * @param {*} out_itemsRemoved 
+       * @param {*} in_additionalLootModifier 
+       * @returns {boolean} True = Include, False = Exclude
+       */
       static FilterItemByRarity(
         itemTemplate, 
         out_itemsRemoved,

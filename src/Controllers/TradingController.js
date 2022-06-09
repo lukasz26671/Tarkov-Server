@@ -1,4 +1,7 @@
 const fs = require('fs');
+const { LootController } = require('./LootController');
+const utility = require('./../../core/util/utility');
+
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
   "543be5cb4bdc2deb348b4568",
@@ -106,6 +109,11 @@ const ItemParentsList = [
 class TradingController {
     static Instance = new TradingController();
     static ItemDbList = [];
+    static TraderIdToNameMap = {
+      "Fence": "579dc571d53a0658a154fbec"
+    };
+    static FenceId = TradingController.TraderIdToNameMap["Fence"];
+    
 
     static iterItemChildren(item, item_list) {
         // Iterates through children of `item` present in `item_list`
@@ -143,10 +151,14 @@ class TradingController {
         }
     }
 
-    static generateFenceAssort() {
+    static generateFenceAssort(sessionID) {
         const fenceId = "579dc571d53a0658a154fbec";
         const base = { items: [], barter_scheme: {}, loyal_level_items: {} };
       
+        const traderStanding = Math.max(-10, Math.min(10, TradingController.getTraderStanding(sessionID, TradingController.FenceId)));
+        const traderStandingPriceChange = Math.max(1, 3 + (Math.min(1,Math.max(traderStanding, 0)) * -1) + (Math.random() * 0.5));
+
+
         // Read in default/base Assort (this is using proper dumped assort from live, not the JET hack version)
         global._database.traders[fenceId].assort = base;
         /**
@@ -154,17 +166,14 @@ class TradingController {
          */
         const fileAssort = JSON.parse(fs.readFileSync(process.cwd() + "/db/traders/579dc571d53a0658a154fbec/assort.json"));
 
-         for (let i = 0; i < 100; i++) {
+         //for (let i = 0; i < 100; i++) {
+          while(base.items.length < 50) {
             let random_item_index = utility.getRandomInt(
               0,
               fileAssort.items.length - 1
             );
 
             const random_item = JSON.parse(JSON.stringify(fileAssort.items[random_item_index]));
-            let random_item_children = TradingController.iterItemChildrenRecursively(
-                random_item,
-                fileAssort.items
-              );
 
             if(base.items.findIndex(x=>x._id === random_item._id) !== -1)
               continue;
@@ -175,31 +184,113 @@ class TradingController {
             if(ItemParentsList.findIndex(x=>x === random_item._tpl) !== -1)
               continue;
 
+            const templateItem = helper_f.tryGetItem(random_item._tpl);
+            if(templateItem === undefined)
+              continue;
+
+            const item_price = helper_f.getTemplatePrice(random_item._tpl);
+            if(templateItem._props.IsUnbuyable === true
+               || templateItem._props.QuestItem === true
+               || item_price <= 1)
+              continue;
+
+            var itemRem = {};
+            if(!LootController.FilterItemByRarity(templateItem, itemRem, traderStanding))
+              continue;
+
             if(random_item["upd"] !== undefined && random_item["upd"]["StackObjectsCount"] !== undefined) {
               random_item["upd"].StackObjectsCount = 1;
               random_item["upd"].UnlimitedCount = false
+              if(templateItem._props.ammoType !== undefined) {
+                random_item["upd"].StackObjectsCount = Math.round(Math.random() * Math.max(30, 200 - templateItem._props.Damage));
+              }
             }
+
+            random_item.DebugName = templateItem._props.Name;
 
             base.items.push(random_item);
 
-            let item_price = helper_f.getTemplatePrice(random_item._tpl);
-            for (const child_item of random_item_children) {
-              item_price += helper_f.getTemplatePrice(child_item._tpl);
-            }
-            if(item_price <= 1)
-              continue;
-
-            base.barter_scheme[random_item._id] = [
-                      [
-                        {
-                          count: Math.round(item_price),
-                          _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
-                        },
-                      ],
-                    ];
-            base.loyal_level_items[random_item._id] = 1;
         }
 
+        const presetItems = [];
+        var presetItemsRemovedByRarity = {};
+        for(const itemId in global._database.globals.ItemPresets) {
+          const preset = global._database.globals.ItemPresets[itemId];
+          const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
+          // console.log(templateItem);
+          if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, traderStanding))
+            continue;
+
+            const newWeaponParentId = utility.generateNewItemId();
+            let newBaseWeapon = {
+              "_id": newWeaponParentId,
+              "_tpl": preset._items[0]._tpl,
+              "parentId": "hideout",
+              "slotId": "hideout",
+              "upd": {
+                  "BuyRestrictionCurrent": 0,
+                  "BuyRestrictionMax": 1,
+                  "StackObjectsCount": 1,
+                  "UnlimitedCount": false
+              }
+            }
+            base.items.push(newBaseWeapon);
+            for(let childIndex = 1; childIndex < preset._items.length; childIndex++)
+            { 
+              const childItem = preset._items[childIndex];
+              const newWeaponChildId = utility.generateNewItemId();
+              childItem._id = newWeaponChildId;
+              childItem.parentId = newWeaponParentId;
+              base.items.push(childItem);
+            }
+        }
+        // console.log(presetItemsRemovedByRarity);
+        
+
+        for(let i = 0; i < base.items.length; i++){
+          const random_item = base.items[i];
+          let random_item_children = TradingController.iterItemChildrenRecursively(
+            random_item,
+            base.items
+          );
+
+          let item_price = helper_f.getTemplatePrice(random_item._tpl);
+          for (const child_item of random_item_children) {
+            item_price += helper_f.getTemplatePrice(child_item._tpl);
+          }
+          if(item_price <= 1)
+            item_price = 1;
+
+          base.barter_scheme[random_item._id] = [
+                    [
+                      {
+                        count: Math.round(item_price * traderStandingPriceChange),
+                        _tpl: "5449016a4bdc2d6f028b456f", // Rubles template
+                      },
+                    ],
+                  ];
+          base.loyal_level_items[random_item._id] = 1;
+        }
+
+      }
+
+      /**
+       * Gets the Trader Standing from the Profile
+       * @param {*} playerId 
+       * @param {*} traderId 
+       */
+      static getTraderStanding(playerId, traderId) {
+        const profile = profile_f.handler.getPmcProfile(playerId);
+        return profile.TradersInfo[traderId].standing;
+      }
+
+      /**
+       * Sets the Trader Standing to the Profile
+       * @param {*} playerId 
+       * @param {*} traderId 
+       */
+      static setTraderStanding(playerId, traderId) {
+        
       }
 }
 
