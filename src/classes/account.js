@@ -1,5 +1,6 @@
 "use strict";
 const fs = require('fs');
+// const { AccountController } = require('../Controllers/AccountController');
 const { logger } = require('./../../core/util/logger');
 
 /**
@@ -24,58 +25,53 @@ class AccountServer {
    * @param {*} info 
    * @returns user account ID
    */
-   static reloadAccountByLogin(info) {
-    /**
-     * Read account files from cache that were already loaded by the second part of AccountServer function.
-     * If the file was changed (for example, by another cluster member), the account file gets reloaded from disk.
-     */
-    for (let accountID in AccountServer.accounts) {
-      let account = AccountServer.accounts[accountID];
+  //  static reloadAccountByLogin(info) {
+  //   /**
+  //    * Read account files from cache that were already loaded by the second part of AccountServer function.
+  //    * If the file was changed (for example, by another cluster member), the account file gets reloaded from disk.
+  //    */
+  //   for (let accountID in AccountServer.accounts) {
+  //     let account = AccountController.find(accountID);
+  //     if(account === undefined)
+  //       continue;
 
-      // Does the account information match any cached account?
-      if (info.email === account.email && info.password === account.password) {
-        // Check if the file was modified by another cluster member using the file age.
-        let stats = global.internal.fs.statSync(`./user/profiles/${accountID}/account.json`);
-        if (stats.mtimeMs != AccountServer.accountFileAge[accountID]) {
-          logger.logWarning(`[CLUSTER] Account file for account ${accountID} was modified, reloading.`);
-          // Reload the account from disk.
-          AccountServer.accounts[accountID] = fileIO.readParsed(`./user/profiles/${accountID}/account.json`);
-          // Reset the file age for AccountServer users account file.
-          AccountServer.accountFileAge[accountID] = stats.mtimeMs;
-        }
+  //     // Does the account information match any cached account?
+  //     if (info.email === account.email && info.password === account.password) {
+  //       // Reload the account from disk.
+  //       AccountServer.accounts[accountID] = fileIO.readParsed(`./user/profiles/${accountID}/account.json`);
+  //       return accountID;
+  //     }
+      
+  //   }
 
-        return accountID;
-      }
-    }
+  //   /**
+  //    * Read account files from disk for accounts that are not cached already.
+  //    */
+  //   const profileIDs = fileIO.readDir("./user/profiles");
+  //   for (let id in profileIDs) {
+  //     if (!fileIO.exist(`./user/profiles/${profileIDs[id]}/account.json`)) {
+  //       logger.logWarning(`Account file for account ${profileIDs[id]} does not exist.`);
+  //     } else {
 
-    /**
-     * Read account files from disk for accounts that are not cached already.
-     */
-    const profileIDs = fileIO.readDir("./user/profiles");
-    for (let id in profileIDs) {
-      if (!fileIO.exist(`./user/profiles/${profileIDs[id]}/account.json`)) {
-        logger.logWarning(`[CLUSTER] Account file for account ${profileIDs[id]} does not exist.`);
-      } else {
+  //       // Read all account files from disk as we need to compare the login data.
+  //       let account = fileIO.readParsed(`./user/profiles/${profileIDs[id]}/account.json`);
+  //       if (info.email === account.email && info.password === account.password) {
+  //         // Read the file age for AccountServer users account file.
+  //         let stats = global.internal.fs.statSync(`./user/profiles/${profileIDs[id]}/account.json`);
 
-        // Read all account files from disk as we need to compare the login data.
-        let account = fileIO.readParsed(`./user/profiles/${profileIDs[id]}/account.json`);
-        if (info.email === account.email && info.password === account.password) {
-          // Read the file age for AccountServer users account file.
-          let stats = global.internal.fs.statSync(`./user/profiles/${profileIDs[id]}/account.json`);
+  //         // Save the account to memory and set the accountFileAge variable.
+  //         AccountServer.accounts[profileIDs[id]] = account
+  //         AccountServer.accountFileAge[profileIDs[id]] = stats.mtimeMs;
+  //         logger.logSuccess(`User ${account.email} with ID ${profileIDs[id]} logged in successfully.`);
 
-          // Save the account to memory and set the accountFileAge variable.
-          AccountServer.accounts[profileIDs[id]] = account
-          AccountServer.accountFileAge[profileIDs[id]] = stats.mtimeMs;
-          logger.logSuccess(`[CLUSTER] User ${account.email} with ID ${profileIDs[id]} logged in successfully.`);
+  //         return profileIDs[id];
+  //       }
+  //     }
+  //   }
 
-          return profileIDs[id];
-        }
-      }
-    }
-
-    // If the account does not exist, AccountServer will allow the launcher to display an error message.
-    return undefined;
-  }
+  //   // If the account does not exist, AccountServer will allow the launcher to display an error message.
+  //   return undefined;
+  // }
 
   /**
    * Reloads the account stored in memory for a specific session (aka. accountID), if the file was modified elsewhere.
@@ -83,11 +79,11 @@ class AccountServer {
    */
    static  reloadAccountBySessionID(sessionID) {
     if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
-      logger.logWarning(`[CLUSTER] Account file for account ${sessionID} does not exist.`);
+      logger.logWarning(`Account file for account ${sessionID} does not exist.`);
     } else {
       // Does the session exist?
       if (!AccountServer.accounts[sessionID]) {
-        logger.logWarning(`[CLUSTER] Tried to load session ${sessionID} but it wasn't cached, loading.`);
+        logger.logWarning(`Tried to load session ${sessionID} but it wasn't cached, loading.`);
         // Reload the account from disk.
         AccountServer.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
         // Set the file age for AccountServer users account file.
@@ -97,7 +93,7 @@ class AccountServer {
         // Check if the file was modified by another cluster member using the file age.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
         if (stats.mtimeMs != AccountServer.accountFileAge[sessionID]) {
-          logger.logWarning(`[CLUSTER] Account file for account ${sessionID} was modified, reloading.`);
+          logger.logWarning(`Account file for account ${sessionID} was modified, reloading.`);
 
           // Reload the account from disk.
           AccountServer.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
@@ -118,7 +114,7 @@ class AccountServer {
     let accounts = AccountServer.getList();
     for (let account in accounts) {
       if (account == sessionID) {
-        if (!fileIO.exist("user/profiles/" + sessionID + "/character.json")) logger.logSuccess(`[CLUSTER] New account ${sessionID} logged in!`);
+        if (!fileIO.exist("user/profiles/" + sessionID + "/character.json")) logger.logSuccess(`New account ${sessionID} logged in!`);
         return true
       }
     }
@@ -135,46 +131,12 @@ class AccountServer {
       fs.mkdirSync(`user/profiles/`);
     }
 
-    // Should all accounts be saved to disk?
-    if (sessionID == 0 || sessionID === undefined) {
-      // Iterate through all cached accounts.
-      for (let id in AccountServer.accounts) {
-        // Check if the file was modified by another cluster member using the file age.
-        let stats = global.internal.fs.statSync(`./user/profiles/${id}/account.json`);
-        if (stats.mtimeMs == AccountServer.accountFileAge[id]) {
-
-          // Check if the memory content differs from the content on disk.
-          let currentAccount = AccountServer.accounts[id];
-          let savedAccount = fileIO.readParsed(`./user/profiles/${id}/account.json`);
-          if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
-            // Save memory content to disk.
-            fileIO.write(`./user/profiles/${id}/account.json`, AccountServer.accounts[id]);
-
-            // Update file age to prevent another reload by AccountServer server.
-            let stats = global.internal.fs.statSync(`./user/profiles/${id}/account.json`);
-            AccountServer.accountFileAge[id] = stats.mtimeMs;
-
-            logger.logSuccess(`Account file for account ${id} was saved to disk.`);
-          }
-        } else {
-          logger.logWarning(`Account file for account ${id} was modified, reloading.`);
-
-          // Reload the account from disk.
-          AccountServer.accounts[id] = fileIO.readParsed(`./user/profiles/${id}/account.json`);
-          // Reset the file age for AccountServer users account file.
-          AccountServer.accountFileAge[id] = stats.mtimeMs;
-        }
-      }
-    } else {
+    
       // Does the account file exist? (Required for new accounts)
       if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
         // Save memory content to disk
-
         logger.logInfo(`Registering New account ${sessionID}.`);
-        
-
         fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
-
         // Update file age to prevent another reload by AccountServer server.
         let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
         AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
@@ -182,31 +144,20 @@ class AccountServer {
         logger.logSuccess(`New account ${sessionID} registered and was saved to disk.`);
       } else {
         // Check if the file was modified by another cluster member using the file age.
-        let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-        if (stats.mtimeMs == AccountServer.accountFileAge[sessionID]) {
-          // Check if the memory content differs from the content on disk.
-          let currentAccount = AccountServer.accounts[sessionID];
-          let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-          if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
-            // Save memory content to disk
-            fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
+        // let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
+        let currentAccount = AccountServer.accounts[sessionID];
+        let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+        if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
+          // Save memory content to disk
+          fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
 
-            // Update file age to prevent another reload by AccountServer server.
-            let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
-            AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
-
-            logger.logSuccess(`[CLUSTER] Account file for account ${sessionID} was saved to disk.`);
-          }
-        } else {
-          logger.logWarning(`[CLUSTER] Account file for account ${sessionID} was modified, reloading.`);
-
-          // Reload the account from disk.
-          AccountServer.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-          // Reset the file age for AccountServer users account file.
+          // Update file age to prevent another reload by AccountServer server.
+          let stats = global.internal.fs.statSync(`./user/profiles/${sessionID}/account.json`);
           AccountServer.accountFileAge[sessionID] = stats.mtimeMs;
+
+          logger.logSuccess(`Account file for account ${sessionID} was saved to disk.`);
         }
       }
-    }
   }
 
   /**

@@ -11,7 +11,7 @@ class AccountController
 
   static Instance = new AccountController();
 
-  static accounts = {};
+  // static accounts = {};
 
    constructor() {
     if(!fs.existsSync(`user/profiles/`)) {
@@ -128,7 +128,7 @@ class AccountController
      * @param {object} info 
      */
     static login(info) {
-        AccountServer.reloadAccountByLogin(info);
+        // AccountServer.reloadAccountByLogin(info);
         return AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
     }
 
@@ -137,17 +137,17 @@ class AccountController
         fs.mkdirSync(`user/profiles/`);
       }
 
-        // Get existing account from memory or cache a new one.
-        let accountID = AccountServer.reloadAccountByLogin(info)
-        if (accountID !== undefined) {
-          return accountID
-        }
+      // Get existing account from memory or cache a new one.
+      let accountID = AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
+      if (accountID !== undefined) {
+        return accountID
+      }
 
-        if(this.isEmailAlreadyInUse(info.username)) {
-          return "ALREADY_IN_USE";
-        }
+      if(this.isEmailAlreadyInUse(info.username)) {
+        return "ALREADY_IN_USE";
+      }
 
-        if(accountID === undefined) {
+      if(accountID === undefined) {
           accountID = utility.generateNewAccountId();
           if(accountID === undefined || accountID === "") {
             return "FAILED";

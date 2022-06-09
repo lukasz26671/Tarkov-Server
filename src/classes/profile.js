@@ -87,17 +87,17 @@ class ProfileServer {
           // Set the skipped saves value to 1 (used to count how many saves it should skip until the server frees some memory)
           this.skippedSaves[sessionID] = 1;
 
-          logger.logWarning(`[CLUSTER] Profile for AID ${sessionID} was modified elsewhere. Profile was reloaded successfully.`)
+          logger.logWarning(`Profile for AID ${sessionID} was modified elsewhere. Profile was reloaded successfully.`)
         }
       }
     } catch (e) {
       if (e instanceof SyntaxError) {
         return logger.logError(
-          `[CLUSTER] There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
+          `There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
         );
       } else {
         logger.logData(sessionID);
-        logger.logError(`[CLUSTER] There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
+        logger.logError(`There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
         logger.logData(e);
         return;
       }
@@ -133,7 +133,7 @@ class ProfileServer {
     delete this.profiles[sessionID];
     delete this.skippedSaves[sessionID];
 
-    logger.logInfo(`[CLUSTER] Profile for AID ${sessionID} was released from memory.`);
+    logger.logInfo(`Profile for AID ${sessionID} was released from memory.`);
   }
 
   getOpenSessions() {
@@ -145,58 +145,20 @@ class ProfileServer {
     if ("pmc" in this.profiles[sessionID]) {
       // Check if the profile path exists
       if (global.internal.fs.existsSync(getPmcPath(sessionID))) {
-        // Check if the file was modified elsewhere
-        let statsPreSave = global.internal.fs.statSync(getPmcPath(sessionID));
-        if (statsPreSave.mtimeMs == this.profileFileAge[sessionID]) {
 
-          // Compare the PMC character from server memory with the one saved on disk
-          let currentProfile = this.profiles[sessionID]['pmc'];
-          let savedProfile = fileIO.readParsed(getPmcPath(sessionID));
-          if (JSON.stringify(currentProfile) !== JSON.stringify(savedProfile)) {
-            // Save the PMC character from memory to disk.
-            fileIO.write(getPmcPath(sessionID), this.profiles[sessionID]['pmc']);
+        // Compare the PMC character from server memory with the one saved on disk
+        let currentProfile = this.profiles[sessionID]['pmc'];
+        let savedProfile = fileIO.readParsed(getPmcPath(sessionID));
+        if (JSON.stringify(currentProfile) !== JSON.stringify(savedProfile)) {
+          // Save the PMC character from memory to disk.
+          fileIO.write(getPmcPath(sessionID), this.profiles[sessionID]['pmc']);
 
-            // Reset skipped saves.
-            this.skippedSaves[sessionID] = 1;
+          // Reset skipped saves.
+          this.skippedSaves[sessionID] = 1;
 
-            logger.logSuccess(`[CLUSTER] Profile for AID ${sessionID} was saved.`);
-          } else {
-            // Check if we ware over the skipped save treshhold.
-            if (_database.clusterConfig.autoSaveAllowedSkips >= this.skippedSaves[sessionID]) {
-              // Add a skippedSave.
-              this.skippedSaves[sessionID]++;
-            } else {
-              // Free the profile from memory.
-              this.freeFromMemory(sessionID);
-            }
-          }
-        } else {
-          // As the file on disk was changed, reload the file from disk instead of overwriting it.
-          this.profiles[sessionID]['pmc'] = fileIO.readParsed(getPmcPath(sessionID));
-
-          // Check if we ware over the skipped save treshhold.
-          if (_database.clusterConfig.autoSaveAllowedSkips >= this.skippedSaves[sessionID]) {
-            // Add a skippedSave.
-            if (this.skippedSaves == 1) {
-              logger.logWarning(`[CLUSTER] Tried saving profile for AID ${sessionID} but it was modified elsewhere. Profile reloaded from disk.`);
-            }
-
-            this.skippedSaves[sessionID]++;
-          } else {
-            // Free the profile from memory.
-            this.freeFromMemory(sessionID);
-          }
-        }
-      } else {
-        // Save the PMC character from memory to disk.
-        fileIO.write(getPmcPath(sessionID), this.profiles[sessionID]['pmc']);
-
-        // Reset skipped saves.
-        this.skippedSaves[sessionID] = 1;
-      }
-      // Update the savedFileAge stored in memory for the character.json.
-      let statsAfterSave = global.internal.fs.statSync(getPmcPath(sessionID));
-      this.profileFileAge[sessionID] = statsAfterSave.mtimeMs;
+          logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
+        } 
+      } 
     }
   }
 

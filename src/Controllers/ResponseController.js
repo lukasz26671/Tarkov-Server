@@ -152,6 +152,7 @@ action: (url, info, sessionID) => {
         const account = AccountServer.find(sessionID);
         account.wipe = false;
         AccountServer.saveToDisk(sessionID);
+        profile_f.handler.saveToDisk(sessionID);
     }
 },
 {
