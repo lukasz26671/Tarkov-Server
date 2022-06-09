@@ -94,16 +94,14 @@ class TraderServer {
       const current_time = Math.floor(new Date().getTime() / 1000);
 
       // Initial Fence generation pass.
-      if (this.fence_generated_at === 0 || !this.fence_generated_at) {
+      if (this.fence_generated_at === 0 
+        || !this.fence_generated_at
+        || this.fence_generated_at + 30 < current_time
+        ) {
         this.fence_generated_at = current_time;
-        TraderUtils.generateFenceAssort();
+        TraderUtils.generateFenceAssort(sessionID);
       }
 
-      if (this.fence_generated_at + fence_assort_lifetime < current_time) {
-        this.fence_generated_at = current_time;
-        logger.logInfo("We are regenerating Fence's assort.");
-        TraderUtils.generateFenceAssort();
-      }
     }
 
     let baseAssorts = global._database.traders[traderID].assort;
@@ -321,9 +319,9 @@ class TraderUtils {
     }
   }
 
-  static generateFenceAssort() {
+  static generateFenceAssort(sessionID) {
 
-    TradingController.generateFenceAssort();
+    TradingController.generateFenceAssort(sessionID);
     // const fenceId = "579dc571d53a0658a154fbec";
     // let base = { items: [], barter_scheme: {}, loyal_level_items: {} };
   
