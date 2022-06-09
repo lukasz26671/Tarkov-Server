@@ -18,18 +18,26 @@ class Initializer {
 
   /* load core functionality */
   initializeCore() {
-    global.internal = {};
-    global.core = {};
-    global.db = {}; // used only for caching
-    global.res = {}; // used for deliver files
-    global._database = {};
-    global.cache = {};
-
-    // global.core.constants = require("./constants.js").struct;
+    // -------------------------------------------------------
+    // Initialization of globals
+    if(global.internal === undefined)
+      global.internal = {};
+    if(global.core === undefined)
+      global.core = {};
+    if(global.db === undefined)
+      global.db = {}; 
+    if(global.res === undefined)
+      global.res = {};
+    if(global._database === undefined)
+      global._database = {};
+    if(global.cache === undefined)
+      global.cache = {};
 
     global.startTimestamp = new Date().getTime();
 
-    /* setup utilites */
+    // -------------------------------------------------------
+    // NOTE/TODO: This needs to be removed!
+    //
     global.internal.fs = require("fs");
     global.internal.path = require("path");
     global.internal.util = require("util");
@@ -37,36 +45,77 @@ class Initializer {
     global.internal.zlib = require("zlib");
     global.internal.https = require("https");
     global.internal.selfsigned = require("selfsigned");
-    // global.internal.psList = require("ps-list");
     global.internal.process = require("process");
     global.executedDir = internal.process.cwd();
-
-    // internal packages
     global.fileIO = require("./util/fileIO.js");
     global.utility = require("./util/utility.js");
     global.logger = require("./util/logger.js").logger;
+    //
+    // -------------------------------------------------------
 
-    // ConfigController.rebuildFromBaseConfigs();
-
+    // -------------------------------------------------------
+    // Setup ConfigController
+    ConfigController.rebuildFromBaseConfigs();
+    // -------------------------------------------------------
+    // Rebuild user/configs/server.json from user/configs/server_base.json
     this.refreshServerConfigFromBase();
+    // -------------------------------------------------------
+    // Rebuild user/configs/gameplay.json from user/configs/gameplay_base.json
     this.refreshGameplayConfigFromBase();
 
+    // -------------------------------------------------------
+    // Build the "db" object network from the root db folder (this is NOT the actual database)
     Initializer.buildReadOnlyDbFolder();
+    // -------------------------------------------------------
+    // Build the In-Memory database from db object network
     database.load();
 
+    // -------------------------------------------------------
+    // Load the mods
     global.mods = { toLoad: {}, config: {} };
-
-    /* setup routes and cache */
     global.mods_f = require("./server/mods.js");
     global.mods_f.load();
 
-    /* core logic */
+    // -------------------------------------------------------
+    // Adjust weapon recoil by user/configs/gameplay.json file
+    // TODO: This needs to be moved somewhere else
+    if(
+      ConfigController.Configs["gameplay"]["weapons"]["cameraRecoil"] !== undefined
+      && ConfigController.Configs["gameplay"]["weapons"]["verticalRecoil"] !== undefined
+      && ConfigController.Configs["gameplay"]["weapons"]["horizontalRecoil"] !== undefined
+      ) {
+        for (const itemVar in global._database.items) {
+
+          const item = global._database.items[itemVar];
+          if(item["_props"] !== undefined && item["_props"]["CameraRecoil"] !== undefined) {
+            item["_props"]["CameraRecoil"] *= (ConfigController.Configs["gameplay"]["weapons"]["cameraRecoil"] / 100)
+          }
+          if(item["_props"] !== undefined && item["_props"]["RecoilForceUp"] !== undefined) {
+            item["_props"]["RecoilForceUp"] *= (ConfigController.Configs["gameplay"]["weapons"]["verticalRecoil"] / 100)
+          }
+          if(item["_props"] !== undefined && item["_props"]["RecoilForceBack"] !== undefined) {
+            item["_props"]["RecoilForceBack"] *= (ConfigController.Configs["gameplay"]["weapons"]["horizontalRecoil"] / 100)
+          }
+          global._database.items[itemVar] = item;
+        }
+    }
+    // -------------------------------------------------------
+
+    // -------------------------------------------------------
+    // NOTE/TODO: This needs to be removed!
+    //
     global.router = require("./server/router.js").router;
     global.events = require("./server/events.js");
     global.server = require("./server/server.js").server;
 
   }
 
+  /**
+   * Parses through the filepath recursively creating a network of objects
+   * @param {*} filepath 
+   * @param {*} deep 
+   * @returns {object} network of objects
+   */
   static scanRecursiveRoute(filepath, deep = false) { // recursively scans given path
     if (filepath == "db/")
       if (!fileIO.exist("db/"))
@@ -100,10 +149,11 @@ class Initializer {
   }
 
   /**
-   * I don't know why this happens or exists
+   * Paulov. I don't know why this happens or exists
    * P.S. Moved this from "mods.js"????
    */
   static buildReadOnlyDbFolder() { // populate global.db and global.res with folders data
+    global.db = {};
     // logger.logInfo("Rebuilding cache: route database");
     global.db = Initializer.scanRecursiveRoute("db/");
     // logger.logInfo("Rebuilding cache: route resources");

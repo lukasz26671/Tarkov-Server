@@ -79,29 +79,8 @@ function loadItemsData() {
     }
   }
 
-  // -------------------------------------------------------
-  // adjust weapon recoil by GP file
-  if(
-    gameplayConfig["weapons"]["cameraRecoil"] !== undefined
-    && gameplayConfig["weapons"]["verticalRecoil"] !== undefined
-    && gameplayConfig["weapons"]["horizontalRecoil"] !== undefined
-    ) {
-      for (const itemVar in global._database.items) {
-
-        const item = global._database.items[itemVar];
-        if(item["_props"] !== undefined && item["_props"]["CameraRecoil"] !== undefined) {
-          item["_props"]["CameraRecoil"] *= (gameplayConfig["weapons"]["cameraRecoil"] / 100)
-        }
-        if(item["_props"] !== undefined && item["_props"]["RecoilForceUp"] !== undefined) {
-          item["_props"]["RecoilForceUp"] *= (gameplayConfig["weapons"]["verticalRecoil"] / 100)
-        }
-        if(item["_props"] !== undefined && item["_props"]["RecoilForceBack"] !== undefined) {
-          item["_props"]["RecoilForceBack"] *= (gameplayConfig["weapons"]["horizontalRecoil"] / 100)
-        }
-        global._database.items[itemVar] = item;
-      }
-  }
-  // -------------------------------------------------------
+  
+  
 
 
   global._database.templates = {};

@@ -113,7 +113,7 @@ class BundlesServer {
       }
 
       if (element.endsWith(".manifest")) {
-        console.log(element);
+        // console.log(element);
         this.loadBundle(element.replace(".manifest",""));
       }
     });
