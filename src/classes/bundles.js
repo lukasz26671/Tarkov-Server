@@ -76,17 +76,18 @@ class BundlesServer {
 
    const rootBundlePath = process.cwd() + "/bundles/";
    filewalker(rootBundlePath, (error, data) => {
-
+    if(data === undefined) 
+      return;
     data.forEach(element => {
       if (element.endsWith(".bundle")) 
         this.loadBundle(element);
     });
-    
    });
 
    const modsPath = process.cwd() + "/user/mods/";
    filewalker(modsPath, (error, data) => {
-
+    if(data === undefined) 
+      return;
     data.forEach(element => {
       if (element.endsWith("bundles.json")) {
         const modpath = element.replace("bundles.json","");
