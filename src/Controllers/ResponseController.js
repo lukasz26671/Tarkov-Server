@@ -3,6 +3,7 @@ const { NotifierService } = require('./../classes/notifier');
 const { FriendshipController } = require('./FriendshipController');
 const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
+const { BotController } = require('./BotController');
 const { ConfigController } = require('./ConfigController');
 const utility = require('./../../core/util/utility');
 const { TradingController } = require('./TradingController');
@@ -239,6 +240,24 @@ action: (url, info, sessionID) => {
 
         const showMessage = ConfigController.Configs["gameplay"].inRaid.showMessage;
         return JSON.stringify(showMessage)
+    }
+}
+,
+{
+    url: "/client/raid/bots/getNewProfile",
+    action: (url, info, sessionID) => {
+        console.log(info);
+
+        return JSON.stringify(BotController.GetNewBotProfile(info, sessionID));
+    }
+}
+,
+{
+    url: "/client/raid/person/lootingContainer",
+    action: (url, info, sessionID) => {
+        console.log(info);
+
+        return JSON.stringify("");
     }
 }
 
