@@ -37,6 +37,14 @@ class DatabaseController
         //     console.log('applyData:', applyData);
         // });
     }
+
+    /**
+     * Retrieves the global in memory database
+     * @returns {*} the globally defined Database
+     */
+    static getDatabase() {
+        return global._database;
+    }
 }
 
 // // ---------------------------------------------------
