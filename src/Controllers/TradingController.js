@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { LootController } = require('./LootController');
 const utility = require('./../../core/util/utility');
+const mathjs = require('mathjs');
 
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
@@ -110,6 +111,7 @@ class TradingController {
     static Instance = new TradingController();
     static ItemDbList = [];
     static TraderIdToNameMap = {
+      "Prapor": "579dc571d53a0658a154fbec",
       "Fence": "579dc571d53a0658a154fbec"
     };
     static FenceId = TradingController.TraderIdToNameMap["Fence"];
@@ -289,8 +291,9 @@ class TradingController {
        * @param {*} playerId 
        * @param {*} traderId 
        */
-      static setTraderStanding(playerId, traderId) {
-        
+      static setTraderStanding(playerId, traderId, value) {
+        const profile = profile_f.handler.getPmcProfile(playerId);
+        profile.TradersInfo[traderId].standing = mathjs.round(value, 3);
       }
 }
 
