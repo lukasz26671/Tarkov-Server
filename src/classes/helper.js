@@ -1,6 +1,7 @@
 "use strict";
 
 const { logger } = require("../../core/util/logger");
+const { ItemController } = require('./../Controllers/ItemController');
 
 /* A reverse lookup for templates */
 function tplLookup() {
@@ -260,13 +261,14 @@ function findMoney(by, pmcData, barter_itemID) {
  * Finds an item given its id using linear search
  */
 function findItemById(items, id) {
-  for (let item of items) {
-    if (item._id === id) {
-      return item;
-    }
-  }
+  return ItemController.findItemById(items, id);
+  // for (let item of items) {
+  //   if (item._id === id) {
+  //     return item;
+  //   }
+  // }
 
-  return false;
+  // return false;
 }
 
 /* Get item data from items.json
