@@ -1,4 +1,5 @@
 const { ConfigController } = require('./ConfigController');
+const { ItemController } = require('./ItemController');
 const utility = require('./../../core/util/utility');
 
 /**
@@ -93,6 +94,11 @@ class LootController
           let itemRarityType = "COMMON";
           const itemName = itemTemplate._props !== undefined && typeof(itemTemplate._props.Name) === "string" ? itemTemplate._props.Name : "";
       
+          let item_price = helper_f.getTemplatePrice(itemTemplate._id);
+          if(itemTemplate._props.ammoType !== undefined) {
+            item_price = item_price * 60;
+
+          }
           try {
             if(unlootable) {
               itemRarityType = "NOT_EXIST";
@@ -104,6 +110,7 @@ class LootController
               // the good keys and stuff are high examine
               || examineExperience >= 20
               || (itemName.includes("key") || itemName.includes("Key"))
+              || item_price > 29999
               ) {
                   itemRarityType = "SUPERRARE";
                   // console.log("SUPERRARE");
@@ -112,7 +119,7 @@ class LootController
                   itemRarityType = "RARE";
                   // console.log("RARE");
                   // console.log(itemTemplate);
-              } else if (itemExperience >= 20 || examineExperience >= 8) {
+              } else if (itemExperience >= 20 || examineExperience >= 11 || item_price > 9499) {
                   itemRarityType = "UNCOMMON";
                   // console.log(itemTemplate);
               }
