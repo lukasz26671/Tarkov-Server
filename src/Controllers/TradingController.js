@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { DatabaseController } = require('./DatabaseController');
 const { LootController } = require('./LootController');
 const utility = require('./../../core/util/utility');
 const mathjs = require('mathjs');
@@ -111,7 +112,7 @@ class TradingController {
     static Instance = new TradingController();
     static ItemDbList = [];
     static TraderIdToNameMap = {
-      "Prapor": "579dc571d53a0658a154fbec",
+      "Prapor": "54cb50c76803fa8b248b4571",
       "Fence": "579dc571d53a0658a154fbec"
     };
     static FenceId = TradingController.TraderIdToNameMap["Fence"];
@@ -155,21 +156,21 @@ class TradingController {
 
     static generateFenceAssort(sessionID) {
         const fenceId = "579dc571d53a0658a154fbec";
-        const base = { items: [], barter_scheme: {}, loyal_level_items: {} };
+        // const base = { items: [], barter_scheme: {}, loyal_level_items: {} };
+        const base = new TraderAssort();
       
         const traderStanding = Math.max(-10, Math.min(10, TradingController.getTraderStanding(sessionID, TradingController.FenceId)));
         const traderStandingPriceChange = Math.max(1, 3 + (Math.min(1,Math.max(traderStanding, 0)) * -1) + (Math.random() * 0.5));
-
-
-        // Read in default/base Assort (this is using proper dumped assort from live, not the JET hack version)
+        // Clean out the Assort
         global._database.traders[fenceId].assort = base;
+        // TradingController.setTraderAssort(fenceId, base);
         /**
          * {}
          */
         const fileAssort = JSON.parse(fs.readFileSync(process.cwd() + "/db/traders/579dc571d53a0658a154fbec/assort.json"));
 
-         //for (let i = 0; i < 100; i++) {
-          while(base.items.length < 50) {
+         for (let i = 0; i < 100; i++) {
+          // while(base.items.length < 50) {
             let random_item_index = utility.getRandomInt(
               0,
               fileAssort.items.length - 1
@@ -200,6 +201,8 @@ class TradingController {
             if(!LootController.FilterItemByRarity(templateItem, itemRem, Math.max(0.1, traderStanding)))
               continue;
 
+            
+
             if(random_item["upd"] !== undefined && random_item["upd"]["StackObjectsCount"] !== undefined) {
               random_item["upd"].StackObjectsCount = 1;
               random_item["upd"].UnlimitedCount = false
@@ -209,6 +212,9 @@ class TradingController {
             }
 
             random_item.DebugName = templateItem._props.Name;
+            if(random_item.DebugName.includes("ammo_box")) {
+              console.log("");
+            }
 
             base.items.push(random_item);
 
@@ -223,9 +229,11 @@ class TradingController {
           if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, Math.max(0.1, traderStanding)))
             continue;
 
+
             // const newWeaponParentId = utility.generateNewItemId();
             let newBaseWeapon = {
-              "_id": preset._items[0]._id,
+              // "_id": preset._items[0]._id,
+              "_id": templateItem._id,
               "_tpl": preset._items[0]._tpl,
               "parentId": "hideout",
               "slotId": "hideout",
@@ -274,6 +282,10 @@ class TradingController {
           base.loyal_level_items[random_item._id] = 1;
         }
 
+        // Save change to the database
+        global._database.traders[fenceId].assort = base;
+        // TradingController.setTraderAssort(fenceId, base);
+
       }
 
       /**
@@ -295,6 +307,32 @@ class TradingController {
         const profile = profile_f.handler.getPmcProfile(playerId);
         profile.TradersInfo[traderId].standing = mathjs.round(value, 3);
       }
+
+      /**
+       * 
+       * @param {string} traderId 
+       * @param {TraderAssort} assort 
+       */
+      static setTraderAssort(traderId, assort) {
+        DatabaseController.getDatabase().traders[traderId] = assort;
+      }
+
+      /**
+       * 
+       * @param {*} traderId 
+       * @returns 
+       */
+      static getTraderAssort(traderId) {
+        return DatabaseController.getDatabase().traders[traderId].assort;
+      }
+}
+
+class TraderAssort {
+  constructor() {
+    this.items = [];
+    this.barter_scheme = {};
+    this.loyal_level_items = {};
+  }
 }
 
 module.exports.TradingController = TradingController;
