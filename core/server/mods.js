@@ -1,4 +1,5 @@
 "use strict";
+const path = require('path');
 const { AkiModLoader } = require('../../src/AkiModSupport/AkiModLoader');
 const fileIO = require('./../util/fileIO');
 
@@ -36,7 +37,7 @@ function scanRecursiveRoute(filepath, deep = false) { // recursively scans given
 			return;
 	let baseNode = {};
 	let directories = utility.getDirList(filepath);
-	let files = fileIO.readDir(filepath);
+	const files = fileIO.readDir(filepath);
 
 	// remove all directories from files
 	for (let directory of directories) {
@@ -96,8 +97,8 @@ function routeDatabaseAndResources() { // populate global.db and global.res with
 			userbuilds: "user/profiles/__REPLACEME__/userbuilds.json"
 		}
 	}
-	fileIO.write("user/cache/db.json", db);
-	fileIO.write("user/cache/res.json", res);
+	// fileIO.write("user/cache/db.json", db);
+	// fileIO.write("user/cache/res.json", res);
 }
 
 const SortedModKeys = () => Object.keys(global.mods.toLoad)
@@ -111,8 +112,8 @@ function loadMod(loadType) {
 		}
 		const modFolder = global.mods.toLoad[element].folder;
 		const mod = fileIO.readParsed(`user/mods/${modFolder}/mod.config.json`);
-		if (loadType == "ResModLoad") {
-			if (typeof mod.res != "undefined") {
+		// if (loadType == "ResModLoad") {
+			if (mod.res !== undefined) {
 				res = scanRecursiveMod(`user/mods/${modFolder}/`, res, mod.res);
 
 				// Add items to res.bundles
@@ -128,14 +129,17 @@ function loadMod(loadType) {
 					mod.res.bundles.loaded = true;
 				}
 			}
-		} else {
-			for (const srcToExecute in mod.src)
+		// } else {
+			for (const srcToExecute in mod.src) {
 				if (mod.src[srcToExecute] == loadType) {
 					logger.logDebug(`Executing Mod: ${modFolder}/${srcToExecute}`);
 					// make sure to use correct pathing excludes usage of path and is shorter :)
-					require(process.cwd() + `/user/mods/${modFolder}/${srcToExecute}`).mod(mod); // execute mod
+					require(path.join(process.cwd(), `/user/mods/${modFolder}/${srcToExecute}`)).mod(mod); // execute mod
 				}
-		}
+			}
+
+			
+		// }
 	}
 }
 
@@ -409,19 +413,19 @@ exports.load = () => {
 	let modLoader = new ModLoader();
 	// Loading mods data and set them in order
 	modLoader.loadModsData();
-	logger.logDebug("isRebuildRequired = " + isRebuildRequired());
-	// check if db need rebuid
-	if (isRebuildRequired() && !serverConfig.rebuildCache) {
-		logger.logWarning("Missing db.json or res.json file.");
-		serverConfig.rebuildCache = true;
-	}
+	// logger.logDebug("isRebuildRequired = " + isRebuildRequired());
+	// // check if db need rebuid
+	// if (isRebuildRequired() && !serverConfig.rebuildCache) {
+	// 	logger.logWarning("Missing db.json or res.json file.");
+	// 	serverConfig.rebuildCache = true;
+	// }
 
 	// rebuild db
-	if (serverConfig.rebuildCache) {
-		// logger.logWarning("Rebuilding cache...");
+	// if (serverConfig.rebuildCache) {
+	// 	// logger.logWarning("Rebuilding cache...");
 		routeDatabaseAndResources();
-	} else {
-		db = fileIO.readParsed("user/cache/db.json");
-		res = fileIO.readParsed("user/cache/res.json");
-	}
+	// } else {
+	// 	db = fileIO.readParsed("user/cache/db.json");
+	// 	res = fileIO.readParsed("user/cache/res.json");
+	// }
 }
