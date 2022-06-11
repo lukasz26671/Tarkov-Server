@@ -10,14 +10,7 @@ class AkiModLoader
 {
     static IsAkiShimmed = false;
 
-    /**
-     * Shim the Aki structure so it is compatible with SIT/JET
-     * @returns {*} nothing
-     */
-    static shimAki() {
-        if(AkiModLoader.IsAkiShimmed)
-            return;
-
+    static supportAki() {
         global.JsonUtil = {};
         global.JsonUtil.clone = (item) => 
         { 
@@ -47,9 +40,29 @@ class AkiModLoader
         global.ModLoader = {};
         global.ModLoader.onLoad = {};
         global.ModLoader.getModPath = (p) => process.cwd() + "/user/mods/" + p;
+
+        // VFS
         global.VFS = {};
         global.VFS.readFile = fs.readFileSync;
         global.VFS.exists = fs.existsSync;
+
+        // HttpServer
+        global.HttpServer = { onRespond: {} }
+    }
+
+    static supportAki23() {
+
+    }
+
+    /**
+     * Shim the Aki structure so it is compatible with SIT/JET
+     * @returns {*} nothing
+     */
+    static shimAki() {
+        if(AkiModLoader.IsAkiShimmed)
+            return;
+
+        AkiModLoader.supportAki();
 
         AkiModLoader.IsAkiShimmed = true;
     }
@@ -111,6 +124,9 @@ class AkiModLoader
         const packageConfig = JSON.parse(fs.readFileSync(absolutePathToPackage));
         // console.log(packageConfig);
         if(packageConfig.main === undefined)
+            return false;
+
+        if(packageConfig.enabled === false)
             return false;
 
         const absolutePathToModMainFile = absolutePathToModFolder + "/" + packageConfig.main;
