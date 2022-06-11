@@ -171,7 +171,72 @@ class AccountController
           AccountServer.saveToDisk(accountID);
           return accountID;
         }
+    }
+
+    static getPmcPath(sessionID) {
+      let pmcPath = db.user.profiles.character;
+      return pmcPath.replace("__REPLACEME__", sessionID);
+    }
+
+    static getPmcProfile(sessionID) {
+      return AccountController.getProfile(sessionID, "pmc");
+    }
+
+    /*
+   * Get profile with sessionID of type (profile type in string, i.e. 'pmc').
+   * If we don't have a profile for this sessionID yet, then load it and other related data
+   * from disk.
+   */
+  static getProfile(sessionID, type) {
+    if (!(sessionID in profile_f.handler.profiles)) {
+      AccountController.initializeProfile(sessionID);
+    } else {
+      // AccountController.reloadProfileBySessionID(sessionID);
+    }
+
+    return profile_f.handler.profiles[sessionID][type];
+  }
+
+    static initializeProfile(sessionID) {
+      profile_f.handler.profiles[sessionID] = {};
+      dialogue_f.handler.initializeDialogue(sessionID);
+      health_f.handler.initializeHealth(sessionID);
+      insurance_f.handler.resetSession(sessionID);
+      AccountController.loadProfileFromDisk(sessionID);
+    }
+  
+    /** Load the user profiled specified by sessionID from disk, generate a scav and set the profileFileAge variable as well as the skipeedSaves count.
+     * @param {*} sessionID 
+     * @returns {object}
+     */
+    static loadProfileFromDisk(sessionID) {
+      if (sessionID === undefined) logger.throwErr("Session ID is undefined");
+      try {
+        // Check if the profile file exists
+        if (!fs.existsSync(AccountController.getPmcPath(sessionID))) {
+          logger.logError(`Profile file for session ID ${sessionID} not found.`);
+          return false;
+        }
+  
+        //Load the PMC profile from disk.
+        profile_f.handler.profiles[sessionID]["pmc"] = fileIO.readParsed(AccountController.getPmcPath(sessionID));
+  
+        // Generate a scav
+        profile_f.handler.profiles[sessionID]["scav"] = profile_f.handler.generateScav(sessionID);
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+          return logger.logError(
+            `There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
+          );
+        } else {
+          logger.logData(sessionID);
+          logger.logError(`There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
+          logger.logData(e);
+          return;
+        }
       }
+      logger.logSuccess(`Loaded profile for AID ${sessionID} successfully.`);
+    }
 }
 
 module.exports.AccountController = AccountController;
