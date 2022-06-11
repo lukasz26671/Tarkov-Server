@@ -170,9 +170,10 @@ class ProfileServer {
   getProfile(sessionID, type) {
     if (!(sessionID in this.profiles)) {
       this.initializeProfile(sessionID);
-    } else {
-      this.reloadProfileBySessionID(sessionID);
-    }
+    } 
+    // else {
+    //   this.reloadProfileBySessionID(sessionID);
+    // }
 
     return this.profiles[sessionID][type];
   }
