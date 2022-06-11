@@ -28,6 +28,9 @@ const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+// app.set('docs', path.join(process.cwd(), 'out'));
+// app.set('out', path.join(process.cwd(), 'out'));
+// app.set('db', path.join(process.cwd(), 'dbViewer'));
 // // app.set('view engine', 'ejs');
 // app.set('docs', path.join(__dirname, 'out'));
 // app.set('out', path.join(__dirname, 'out'));
@@ -226,23 +229,24 @@ for(const r in responseClass.staticResponses) {
   });
 }
 
-/**
- * Add support for JSDoc directory output
- * You can rebuild the docs by running jsdoc src/ -r . in the Terminal
- */
-app.use(function(req, res, next) {
-
-  if(req.url.includes("/docs/") || req.url.includes("/out/")) {
+function serveFolder(req, res, next, routeToServe, folderToDirectTo) {
+  if(req.url.includes(routeToServe)) {
 
     let finalFile = req.url.split('/')[req.url.split('/').length-1];
     // console.log(finalFile);
     if(finalFile === "" || finalFile === undefined)
       finalFile = "index.html";
-    const requestedPath = req.url.replace("/out/", "").replace("/docs/", "").replace(finalFile, "").replace("/", "\\").replace("\/", "\\");
+    // const requestedPath = req.url.replace(routeToServe, "").replace(finalFile, "").replace("/", "\\").replace("\/", "\\");
+    const docsPath = process.cwd() + req.url.replace(routeToServe, folderToDirectTo).replace(finalFile, "").replace("/", "\\").replace("\/", "\\");
     // console.log(requestedPath);
 
-    const docsPath = process.cwd() + "\\out\\" + requestedPath;
+    // const docsPath = process.cwd() + folderToDirectTo + requestedPath;
     // console.log(docsPath);
+    if(!fs.existsSync(docsPath)) {
+      res.status(404).send();
+      return;
+    }
+
     const files = fs.readdirSync(docsPath);
     // console.log(files);
     
@@ -264,6 +268,9 @@ app.use(function(req, res, next) {
           case "woff":
             res.contentType("font/woff");
             break;
+          case "svg":
+            res.contentType("Image/svg+xml");
+            break;
             
         }
         res.status(200).send(readFile.toString());
@@ -272,18 +279,19 @@ app.use(function(req, res, next) {
       
     }
     res.status(404).send();
-    // for(const r in responseClass.dynamicResponses) {
-    //   if (req.url.includes(r)) {
-    //   // if (req.url === r || req.url.endsWith(r)) {
-    //     // console.log("found dynamic route!");
-    //     // console.log(req);
-    //     // console.log(res);
-    //     // console.log(responseClass.dynamicResponses[r]);
-    //     handleRoute(req, res, responseClass.dynamicResponses[r]);
-    //     return;
-    //   }
-    // }
   }
+}
+
+/**
+ * Add support for JSDoc directory output
+ * You can rebuild the docs by running jsdoc src/ -r . in the Terminal
+ */
+app.use(function(req, res, next) {
+
+  serveFolder(req, res, next, "/docs/", "\\out\\");
+  serveFolder(req, res, next, "/out/", "\\out\\");
+  serveFolder(req, res, next, "/db/", "\\dbViewer\\");
+ 
   next();
 });
 
@@ -309,20 +317,20 @@ app.get('/', (req,res) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// // error handler
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  console.error(err);
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   console.error(err);
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;
