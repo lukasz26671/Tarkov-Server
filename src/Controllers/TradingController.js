@@ -197,7 +197,7 @@ class TradingController {
               continue;
 
             var itemRem = {};
-            if(!LootController.FilterItemByRarity(templateItem, itemRem, traderStanding))
+            if(!LootController.FilterItemByRarity(templateItem, itemRem, Math.max(0.1, traderStanding)))
               continue;
 
             if(random_item["upd"] !== undefined && random_item["upd"]["StackObjectsCount"] !== undefined) {
@@ -220,12 +220,12 @@ class TradingController {
           const preset = global._database.globals.ItemPresets[itemId];
           const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
           // console.log(templateItem);
-          if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, traderStanding))
+          if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, Math.max(0.1, traderStanding)))
             continue;
 
-            const newWeaponParentId = utility.generateNewItemId();
+            // const newWeaponParentId = utility.generateNewItemId();
             let newBaseWeapon = {
-              "_id": newWeaponParentId,
+              "_id": preset._items[0]._id,
               "_tpl": preset._items[0]._tpl,
               "parentId": "hideout",
               "slotId": "hideout",
@@ -240,9 +240,9 @@ class TradingController {
             for(let childIndex = 1; childIndex < preset._items.length; childIndex++)
             { 
               const childItem = preset._items[childIndex];
-              const newWeaponChildId = utility.generateNewItemId();
-              childItem._id = newWeaponChildId;
-              childItem.parentId = newWeaponParentId;
+              // const newWeaponChildId = utility.generateNewItemId();
+              // childItem._id = newWeaponChildId;
+              // childItem.parentId = newWeaponParentId;
               base.items.push(childItem);
             }
         }
