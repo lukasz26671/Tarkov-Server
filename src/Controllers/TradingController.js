@@ -169,56 +169,81 @@ class TradingController {
          */
         const fileAssort = JSON.parse(fs.readFileSync(process.cwd() + "/db/traders/579dc571d53a0658a154fbec/assort.json"));
 
-         for (let i = 0; i < 100; i++) {
-          // while(base.items.length < 50) {
+        const dbItemKeys = Object.keys(global._database.items);
+        //  for (let i = 0; i < 100; i++) {
+          while(base.items.length < 25) {
             let random_item_index = utility.getRandomInt(
               0,
-              fileAssort.items.length - 1
+              // fileAssort.items.length - 1
+              dbItemKeys.length - 1
             );
 
-            const random_item = JSON.parse(JSON.stringify(fileAssort.items[random_item_index]));
-
+            // const random_item = JSON.parse(JSON.stringify(fileAssort.items[random_item_index]));
+            const random_item = JSON.parse(JSON.stringify(global._database.items[dbItemKeys[random_item_index]]));
+            const tpl = random_item._tpl !== undefined ? random_item._tpl : random_item._id;
             if(base.items.findIndex(x=>x._id === random_item._id) !== -1)
+              continue;
+
+            if(base.items.findIndex(x=>x._id === tpl) !== -1)
               continue;
 
             if(ItemParentsList.findIndex(x=>x === random_item._id) !== -1)
               continue;
 
-            if(ItemParentsList.findIndex(x=>x === random_item._tpl) !== -1)
+            if(ItemParentsList.findIndex(x=>x === tpl) !== -1)
               continue;
 
-            const templateItem = helper_f.tryGetItem(random_item._tpl);
+            const templateItem = helper_f.tryGetItem(tpl);
             if(templateItem === undefined)
               continue;
 
-            const item_price = helper_f.getTemplatePrice(random_item._tpl);
-            if(templateItem._props.IsUnbuyable === true
+            const isItemBuyable = templateItem._props.IsUnbuyable === false;
+
+            const item_price = helper_f.getTemplatePrice(tpl);
+            if(isItemBuyable === false
                || templateItem._props.QuestItem === true
                || item_price <= 1)
               continue;
 
             var itemRem = {};
-            if(!LootController.FilterItemByRarity(templateItem, itemRem, Math.max(0.1, traderStanding)))
+            if(!LootController.FilterItemByRarity(templateItem, itemRem, Math.max(0.5, traderStanding)))
               continue;
 
-            
-
-            if(random_item["upd"] !== undefined && random_item["upd"]["StackObjectsCount"] !== undefined) {
-              random_item["upd"].StackObjectsCount = 1;
-              random_item["upd"].UnlimitedCount = false
-              if(templateItem._props.ammoType !== undefined) {
-                random_item["upd"].StackObjectsCount = Math.round(Math.random() * Math.max(30, 200 - templateItem._props.Damage));
+            let newAssortItem = {
+              // "_id": utility.generateNewItemId().toString(),
+              "_id": random_item._id,
+              "_tpl": tpl,
+              "parentId": "hideout",
+              "slotId": "hideout",
+              "upd": {
+                  "StackObjectsCount": 99999999,
+                  "UnlimitedCount": true
               }
+            };
+
+            //if(random_item["upd"] !== undefined && random_item["upd"]["StackObjectsCount"] !== undefined) {
+              newAssortItem["upd"].StackObjectsCount = 1;
+              newAssortItem["upd"].UnlimitedCount = false
+              if(templateItem._props.ammoType !== undefined) {
+                newAssortItem["upd"].StackObjectsCount = Math.round(Math.random() * Math.max(30, 200 - templateItem._props.Damage));
+              }
+            //}
+
+            newAssortItem.DebugName = templateItem._props.Name;
+            if(newAssortItem.DebugName.includes("ammo_box")) {
+              continue;
+              // random_item["upd"]["StackMaxRandom"] = templateItem._props.StackMaxRandom;
+              // random_item["upd"]["StackObjectsCount"] = templateItem._props.StackObjectsCount;
             }
 
-            random_item.DebugName = templateItem._props.Name;
-            if(random_item.DebugName.includes("ammo_box")) {
-              console.log("");
-            }
-
-            base.items.push(random_item);
+            base.items.push(newAssortItem);
 
         }
+
+        // ----------------------------------------------------------------------------------------------------------------
+        // Add some random presets to the fence assortment.
+        // Presets are gathered from the database globals file. global._database.globals.ItemPresets
+        // They require the root and child items to make up the full set. You could just use parts, if you wish.
 
         const presetItems = [];
         var presetItemsRemovedByRarity = {};
@@ -226,14 +251,18 @@ class TradingController {
           const preset = global._database.globals.ItemPresets[itemId];
           const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
           // console.log(templateItem);
-          if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, Math.max(0.1, traderStanding)))
+
+          let traderStandingRarityMulti = Math.min(6.0, Math.max(3.0, 3.0 + traderStanding));
+          if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, traderStandingRarityMulti))
             continue;
 
+          if(base.items.findIndex(x=>x._id === preset._items[0]._id) !== -1)
+            continue;
 
             // const newWeaponParentId = utility.generateNewItemId();
             let newBaseWeapon = {
-              // "_id": preset._items[0]._id,
-              "_id": templateItem._id,
+              "_id": preset._items[0]._id,
+              // "_id": templateItem._id,
               "_tpl": preset._items[0]._tpl,
               "parentId": "hideout",
               "slotId": "hideout",
@@ -256,6 +285,8 @@ class TradingController {
         }
         // console.log(presetItemsRemovedByRarity);
         
+        for(let i = 0; i < base.items.length; i++) {
+        }
 
         for(let i = 0; i < base.items.length; i++){
           const random_item = base.items[i];

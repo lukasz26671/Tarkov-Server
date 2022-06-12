@@ -104,12 +104,30 @@ function examineItem(pmcData, body, sessionID) {
     }
   }
 
+  // console.log(body.item);
+  // var i = global._database.items[body.item];
+
+  // ----------------------------------------------------------------
+  // Search through the ItemPresets
+  for(const itemId in global._database.globals.ItemPresets) {
+    const preset = global._database.globals.ItemPresets[itemId];
+    const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
+    if(preset._items[0]._id === body.item) {
+      itemID = preset._items[0]._id;
+      pmcData.Info.Experience += templateItem._props.ExamineExperience;
+      pmcData.Encyclopedia[itemID] = true;
+      return item_f.handler.getOutput(sessionID);
+    }
+  }
+
+  // ----------------------------------------------------------------
   // item not found
   if (itemID === "") {
     logger.logError(`Cannot find item to examine for ${body.item}`);
     return "";
   }
 
+  // ----------------------------------------------------------------
   // item found
   if (typeof global._database.items[itemID] == "undefined") {
     logger.logError(`file not found with id: ${itemID}`);

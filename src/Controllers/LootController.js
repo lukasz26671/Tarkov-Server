@@ -108,18 +108,18 @@ class LootController
               // violet is good shit
               || backgroundColor == "violet"
               // the good keys and stuff are high examine
-              || examineExperience >= 20
+              || examineExperience >= 17
               || (itemName.includes("key") || itemName.includes("Key"))
               || item_price > 29999
               ) {
                   itemRarityType = "SUPERRARE";
                   // console.log("SUPERRARE");
                   // console.log(itemTemplate);
-              } else if (itemExperience >= 40 || examineExperience >= 15) {
+              } else if (itemExperience >= 16 || examineExperience >= 16) {
                   itemRarityType = "RARE";
                   // console.log("RARE");
                   // console.log(itemTemplate);
-              } else if (itemExperience >= 20 || examineExperience >= 11 || item_price > 9499) {
+              } else if (itemExperience >= 13 || examineExperience >= 13 || item_price > 9499) {
                   itemRarityType = "UNCOMMON";
                   // console.log(itemTemplate);
               }
