@@ -356,6 +356,19 @@ class TradingController {
       static getTraderAssort(traderId) {
         return DatabaseController.getDatabase().traders[traderId].assort;
       }
+
+      /**
+       * Gets all the data for each trader in the memory database
+       * @returns {*} All traders currently in memory database
+       */
+      static getAllTraders() {
+        const keys = Object.keys(DatabaseController.getDatabase().traders);
+        const traders = [];
+        for(const key of keys) {
+          traders.push(DatabaseController.getDatabase().traders[key]);
+        }
+        return traders;
+      }
 }
 
 class TraderAssort {
