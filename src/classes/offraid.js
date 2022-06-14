@@ -417,6 +417,9 @@ function saveProgress(offraidData, sessionID) {
 
   offraid_f.handler.removeMapAccessKey(offraidData, sessionID);
   offraid_f.handler.removePlayer(sessionID);
+
+  // Ensure the profile saves!
+  profile_f.handler.saveToDisk(sessionID);
 }
 
 //takes a profile and checks/remove for completed conditions in profile's quests section, that are
