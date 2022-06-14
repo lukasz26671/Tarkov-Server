@@ -7,6 +7,8 @@ const { BotController } = require('./BotController');
 const { ConfigController } = require('./ConfigController');
 const utility = require('./../../core/util/utility');
 const { TradingController } = require('./TradingController');
+const { DatabaseController } = require('./DatabaseController');
+const { ItemController } = require('./ItemController');
 
 /**
  * The response controller is the controller that handles all HTTP request and responses
@@ -322,6 +324,18 @@ action: (url, info, sessionID) => {
     return ResponseController.getBody(result);
 }
  },
+ /**
+ * Expects requestId, retryAfter, status
+ * @param {string} url 
+ * @param {object} info 
+ * @param {string} sessionID 
+ * @returns {object} { requestId, retryAfter, status }
+ */
+  { url: "/client/friend/request/accept", action:(url, info, sessionID) => {
+    FriendshipController.acceptAllRequests(sessionID);
+    return ResponseController.getBody("OK");
+  }
+ },
 /**
  * Expects requestId, retryAfter, status
  * @param {string} url 
@@ -370,6 +384,13 @@ action: (url, info, sessionID) => {
 
         return response_f.getBody(foundAccounts);
     }
+},
+{
+    url: "/raid/profile/save",
+    action: (url, info, sessionID) => {
+        offraid_f.saveProgress(info, sessionID);
+        return response_f.nullResponse();
+    }
 }
 
 
@@ -392,7 +413,9 @@ action: (url, info, sessionID) => {
     static addRoute = (url, action) => {
         var existingRoute = ResponseController.Routes.find(x=>x.url == url);
         if(existingRoute === undefined)
-            ResponseController.Routes.push({ url: url, action: action })
+            ResponseController.Routes.push({ url: url, action: action });
+        else
+            throw `ResponseController already has a route of the url: ${url}`;
     }
 
     /**
@@ -414,5 +437,58 @@ action: (url, info, sessionID) => {
 
 };
 
+
+/**
+ * Responses for Db Viewer
+ */
+class ResponseDbViewer {
+
+    constructor() {
+        // Items ----------------
+        var listOfItems = ItemController.getDatabaseItems();
+        for(const itemId in listOfItems) {
+            ResponseController.addRoute(`/db/getItemInfo/${itemId}`, (url, info, sessionID) => { return JSON.stringify(listOfItems[itemId]); });
+        };
+        ResponseController.addRoute(`/db/searchItemsByName/`, (url, info, sessionID) => { 
+            if (info.searchParams !== undefined) {
+                for(const itemId in listOfItems) {
+                };
+                return JSON.stringify(listOfItems); 
+            }
+            return JSON.stringify(null); 
+        });
+
+        // Traders ----------------
+        var listOfTraders = TradingController.getAllTraders();
+        ResponseController.addRoute(`/db/getTraders/`, (url, info, sessionID) => { return JSON.stringify(listOfTraders); })
+        for(const t of listOfTraders) {
+            ResponseController.addRoute(`/db/getTraderInfo/${t.base._id}`, (url, info, sessionID) => { 
+                return JSON.stringify(t); 
+            })
+            ResponseController.addRoute(`/db/getTradingAssort/${t.base._id}`, (url, info, sessionID) => { 
+                const assort = TradingController.getTraderAssort(t.base._id);
+                assort.items.forEach(element => {
+                    element["itemInfo"] = ItemController.getDatabaseItems()[element._tpl];
+                });
+                return JSON.stringify(assort); 
+            })
+        };
+
+        // Users ----------------
+        // var listOfTraders = TradingController.getAllTraders();
+        // for(const t of listOfTraders) {
+        //     ResponseController.addRoute(`/db/getTraderInfo/${t.base._id}`, (url, info, sessionID) => { return JSON.stringify(t); })
+        //     ResponseController.addRoute(`/db/getTradingAssort/${t.base._id}`, (url, info, sessionID) => { return JSON.stringify(t.assort); })
+        // };
+    }
+}
+
 module.exports.ResponseController = ResponseController;
 module.exports.Routes = {}
+
+// Hacked in responses
+module.exports.ResponseDbViewer = new ResponseDbViewer();
+// create routes for dbViewer
+// (function() {
+//     
+// })();
