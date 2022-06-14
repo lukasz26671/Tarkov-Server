@@ -1,7 +1,8 @@
 {
-  "inraid":
+  "inRaid":
   {
-      "showDeathMessage": true
+      "showDeathMessage": true,
+      "createFriendlyAI": true
   },
   "fence":
   {
@@ -83,7 +84,9 @@
       },
       "noDuplicatesTill": 2,
       "useDynamicLootFromItemsArray": false,
-      "useDynamicLootMultiplier": true
+      "useDynamicLootMultiplier": true,
+      "DynamicLooseLootMultiplier": 2.0
+
   },
   "match":
   {

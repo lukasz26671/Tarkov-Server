@@ -114,17 +114,46 @@ class ConfigController {
           gpjson = JSON.parse(fs.readFileSync("user/configs/gameplay.json"));
     
         let changesMade = false;
-        for(let item in configBase) {
-          if(gpjson[item] === undefined) {
-            gpjson[item] = configBase[item];
-            logger.logInfo("Adding Config Setting " + item + " to gameplay.json");
-            changesMade = true;
-          }
-        }
+        // for(let rootItem in configBase) {
+        //   if(gpjson[rootItem] === undefined) {
+        //     gpjson[rootItem] = configBase[rootItem];
+        //     logger.logInfo("Adding Config Setting " + rootItem + " to gameplay.json");
+        //     changesMade = true;
+        //   }
+        //   else {
+        //     if(Object.keys(gpjson[rootItem]) !== undefined && Object.keys(gpjson[rootItem]).length > 0) {
+        //       console.log(gpjson[rootItem]);
+        //     }
+        //   }
+        // }
+        changesMade = ConfigController.mergeRecursiveIgnoringExisting(gpjson, configBase);
     
         if(changesMade)
           fs.writeFileSync("user/configs/gameplay.json", JSON.stringify(gpjson));
       }
+
+      static mergeRecursiveIgnoringExisting(targetObject, sourceObject) {
+        let changesMade = false;
+        for(const key of Object.keys(sourceObject))
+        {
+          if (typeof sourceObject[key] === "object") {
+            if (targetObject[key] === undefined) {
+              targetObject[key] = {};
+              changesMade = true;
+            }
+            const innerChangesMade = ConfigController.mergeRecursiveIgnoringExisting(targetObject[key], sourceObject[key]);
+            if(innerChangesMade)
+              changesMade = true;
+          } else {
+            if(targetObject[key] === undefined) {
+              targetObject[key] = sourceObject[key];
+              changesMade = true;
+            }
+          }
+        };
+        return changesMade;
+      }
+
 }
 
 module.exports.ConfigController = ConfigController;

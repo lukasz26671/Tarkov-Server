@@ -118,46 +118,46 @@ function LoadLootContainerNode() {
   if (_LootContainerNode.length == 0) _LootContainerNode = Object.values(global._database.items).filter((item) => item._parent === "566965d44bdc2d814c8b4571");
   return _LootContainerNode;
 }
-function GenerateDynamicLootSpawnTable(lootData, mapName) {
-  let containsSpawns = [];
+// function GenerateDynamicLootSpawnTable(lootData, mapName) {
+//   let containsSpawns = [];
 
   
-    for (const key of Object.keys(global._database.locationConfigs.DynamicLootTable[mapName])) {
-      const match = lootData.Id.toLowerCase();
+//     for (const key of Object.keys(global._database.locationConfigs.DynamicLootTable[mapName])) {
+//       const match = lootData.Id.toLowerCase();
 
-      if (match.includes(key)) {
-        const lootList = global._database.locationConfigs.DynamicLootTable[mapName][key].SpawnList;
-        for (const loot in lootList) {
-          if (ItemParentsList.includes(lootList[loot])) {
-            logger.logWarning(`In Map ${mapName}: there is dynamic loot ${lootList[loot]} as prohibited ParentId... skipping`);
-            continue;
-          }
-          let foundItem = global._database.items[lootList[loot]];
-          //console.log(foundItem);
-          let itemsRemoved = {};
-          if(!LootController.FilterItemByRarity(foundItem, itemsRemoved, 0))
-            containsSpawns.push(foundItem);
-        }
-      }
-    }
+//       if (match.includes(key)) {
+//         const lootList = global._database.locationConfigs.DynamicLootTable[mapName][key].SpawnList;
+//         for (const loot in lootList) {
+//           if (ItemParentsList.includes(lootList[loot])) {
+//             logger.logWarning(`In Map ${mapName}: there is dynamic loot ${lootList[loot]} as prohibited ParentId... skipping`);
+//             continue;
+//           }
+//           let foundItem = global._database.items[lootList[loot]];
+//           //console.log(foundItem);
+//           let itemsRemoved = {};
+//           if(!LootController.FilterItemByRarity(foundItem, itemsRemoved, 1))
+//             containsSpawns.push(foundItem);
+//         }
+//       }
+//     }
 
-  // -------------------------------------------------------------------------------
-  // Paulo: If we have nothing, then we use the items list provided to find the item
-  if(containsSpawns.length == 0) {
-    // console.log(lootData);
-    for(const index in lootData.Items) {
-      let foundItem = helper_f.getItem(lootData.Items[index])[1];
-      // console.log(foundItem);
-      containsSpawns.push(foundItem);
-    }
-    // let foundItem = helper_f.getItem(lootData.Items[utility.getRandomInt(0, lootData.Items.length-1)])[1];
-    // console.log(foundItem);
-    // containsSpawns.push(foundItem);
+//   // -------------------------------------------------------------------------------
+//   // Paulo: If we have nothing, then we use the items list provided to find the item
+//   if(containsSpawns.length == 0) {
+//     // console.log(lootData);
+//     for(const index in lootData.Items) {
+//       let foundItem = helper_f.getItem(lootData.Items[index])[1];
+//       // console.log(foundItem);
+//       containsSpawns.push(foundItem);
+//     }
+//     // let foundItem = helper_f.getItem(lootData.Items[utility.getRandomInt(0, lootData.Items.length-1)])[1];
+//     // console.log(foundItem);
+//     // containsSpawns.push(foundItem);
     
-  }
+//   }
 
-  return containsSpawns;
-}
+//   return containsSpawns;
+// }
 
 function GetLootModifiers() 
 {
@@ -746,166 +746,168 @@ class LocationLootGenerator {
     }
     return count;
   }
-  lootDynamic(typeArray, output, locationLootChanceModifier, MapName) {
-    let count = 0;
+  // lootDynamic(typeArray, output, locationLootChanceModifier, MapName) {
+  //   let count = 0;
 
-    let currentUsedPositions = [];
-    let currentUsedItems = [];
-    for (let itemLoot in typeArray) {
-      const lootData = typeArray[itemLoot];
-      //loot overlap removed its useless...
-      let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(lootData, MapName); // add this function
-      // should return Array() of strings where they are item ID's
-      // check server settigns if auto detect or use Items strings to detect predefined items
-      if (DynamicLootSpawnTable.length == 0) {
-        logger.logWarning(`LootSpawn: ${lootData.Id} has not found any loot table for the spawn automatically. Skipping...`);
-        continue;
-      }
+  //   let currentUsedPositions = [];
+  //   let currentUsedItems = [];
+  //   for (let itemLoot in typeArray) {
+  //     const lootData = typeArray[itemLoot];
+  //     //loot overlap removed its useless...
+  //     let DynamicLootSpawnTable = GenerateDynamicLootSpawnTable(lootData, MapName); // add this function
+  //     // should return Array() of strings where they are item ID's
+  //     // check server settigns if auto detect or use Items strings to detect predefined items
+  //     if (DynamicLootSpawnTable.length == 0) {
+  //       logger.logWarning(`LootSpawn: ${lootData.Id} has not found any loot table for the spawn automatically. Skipping...`);
+  //       continue;
+  //     }
 
-      const generatedItemId = utility.generateNewItemId();
-      let randomChoosedItem = DynamicLootSpawnTable[utility.getRandomInt(0, DynamicLootSpawnTable.length - 1)];
+  //     const generatedItemId = utility.generateNewItemId();
+  //     let randomChoosedItem = DynamicLootSpawnTable[utility.getRandomInt(0, DynamicLootSpawnTable.length - 1)];
 
-      const createdItem = {
-        _id: generatedItemId,
-        _tpl: randomChoosedItem._id,
-      };
+  //     const createdItem = {
+  //       _id: generatedItemId,
+  //       _tpl: randomChoosedItem._id,
+  //     };
 
-      // item creation
-      let createEndLootData = {
-        Id: lootData.Id,
-        IsStatic: lootData.IsStatic,
-        useGravity: lootData.useGravity,
-        randomRotation: lootData.randomRotation,
-        Position: lootData.Position,
-        Rotation: lootData.Rotation,
-        IsGroupPosition: lootData.IsGroupPosition,
-        GroupPositions: lootData.GroupPositions,
-        Root: generatedItemId,
-        Items: [],
-      };
+  //     // item creation
+  //     let createEndLootData = {
+  //       Id: lootData.Id,
+  //       IsStatic: lootData.IsStatic,
+  //       useGravity: lootData.useGravity,
+  //       randomRotation: lootData.randomRotation,
+  //       Position: lootData.Position,
+  //       Rotation: lootData.Rotation,
+  //       IsGroupPosition: lootData.IsGroupPosition,
+  //       GroupPositions: lootData.GroupPositions,
+  //       Root: generatedItemId,
+  //       Items: [],
+  //     };
       
-      createEndLootData.Items.push(createdItem);
-      // now add other things like cartriges etc.
+  //     createEndLootData.Items.push(createdItem);
+  //     // now add other things like cartriges etc.
 
-      // AMMO BOXES !!!
-      let isAmmoBox = global._database.items[createEndLootData.Items[0]._tpl]._parent == "543be5cb4bdc2deb348b4568";
-      if (isAmmoBox) {
-        const ammoTemplate = global._database.items[createEndLootData.Items[0]._tpl]._props.StackSlots[0]._props.filters[0].Filter[0];
-        const ammoMaxStack = global._database.items[ammoTemplate]._props.StackMaxSize;
-        const randomizedBulletsCount = utility.getRandomInt(
-          global._database.items[createEndLootData.Items[0]._tpl]._props.StackMinRandom,
-          global._database.items[createEndLootData.Items[0]._tpl]._props.StackMaxRandom
-        );
-        let locationCount = 0;
-        for (let i = 0; i < randomizedBulletsCount; i += ammoMaxStack) {
-          const currentStack = i + ammoMaxStack > randomizedBulletsCount ? randomizedBulletsCount - i : ammoMaxStack;
-          createEndLootData.Items.push({
-            _id: utility.generateNewItemId(),
-            _tpl: ammoTemplate,
-            parentId: createEndLootData.Items[0]._id,
-            slotId: "cartridges",
-            location: locationCount,
-            upd: {
-              StackObjectsCount: currentStack,
-            },
-          });
-          locationCount++;
-        }
-      }
-      // Preset weapon
-      const PresetData = FindIfItemIsAPreset(createEndLootData.Items[0]._tpl);
-      if (PresetData != null) {
-        let preset = PresetData[utility.getRandomInt(0, PresetData.length)];
-        if (preset == null) continue;
+  //     // AMMO BOXES !!!
+  //     let isAmmoBox = global._database.items[createEndLootData.Items[0]._tpl]._parent == "543be5cb4bdc2deb348b4568";
+  //     if (isAmmoBox) {
+  //       const ammoTemplate = global._database.items[createEndLootData.Items[0]._tpl]._props.StackSlots[0]._props.filters[0].Filter[0];
+  //       const ammoMaxStack = global._database.items[ammoTemplate]._props.StackMaxSize;
+  //       const randomizedBulletsCount = utility.getRandomInt(
+  //         global._database.items[createEndLootData.Items[0]._tpl]._props.StackMinRandom,
+  //         global._database.items[createEndLootData.Items[0]._tpl]._props.StackMaxRandom
+  //       );
+  //       let locationCount = 0;
+  //       for (let i = 0; i < randomizedBulletsCount; i += ammoMaxStack) {
+  //         const currentStack = i + ammoMaxStack > randomizedBulletsCount ? randomizedBulletsCount - i : ammoMaxStack;
+  //         createEndLootData.Items.push({
+  //           _id: utility.generateNewItemId(),
+  //           _tpl: ammoTemplate,
+  //           parentId: createEndLootData.Items[0]._id,
+  //           slotId: "cartridges",
+  //           location: locationCount,
+  //           upd: {
+  //             StackObjectsCount: currentStack,
+  //           },
+  //         });
+  //         locationCount++;
+  //       }
+  //     }
+  //     // Preset weapon
+  //     const PresetData = FindIfItemIsAPreset(createEndLootData.Items[0]._tpl);
+  //     if (PresetData != null) {
+  //       let preset = PresetData[utility.getRandomInt(0, PresetData.length)];
+  //       if (preset == null) continue;
 
-        let oldBaseItem = preset._items[0];
-        preset._items = preset._items.splice(0, 1);
-        let idSuffix = 0;
-        let OldIds = {};
-        for (var p in preset._items) {
-          let currentItem = DeepCopy(preset._items[p]);
-          OldIds[currentItem.id] = utility.generateNewItemId();
-          if (currentItem.parentId == oldBaseItem._id) currentItem.parentId = createEndLootData.Items[0]._id;
-          if (typeof OldIds[currentItem.parentId] != "undefined") currentItem.parentId = OldIds[currentItem.parentId];
+  //       let oldBaseItem = preset._items[0];
+  //       preset._items = preset._items.splice(0, 1);
+  //       let idSuffix = 0;
+  //       let OldIds = {};
+  //       for (var p in preset._items) {
+  //         let currentItem = DeepCopy(preset._items[p]);
+  //         OldIds[currentItem.id] = utility.generateNewItemId();
+  //         if (currentItem.parentId == oldBaseItem._id) currentItem.parentId = createEndLootData.Items[0]._id;
+  //         if (typeof OldIds[currentItem.parentId] != "undefined") currentItem.parentId = OldIds[currentItem.parentId];
 
-          currentItem.id = OldIds[currentItem.id];
-          createEndLootData.Items.push(currentItem);
+  //         currentItem.id = OldIds[currentItem.id];
+  //         createEndLootData.Items.push(currentItem);
 
-          if (preset._items[p].slotId === "mod_magazine") {
-            let mag = helper_f.getItem(preset._items[p]._tpl)[1];
-            let cartridges = {
-              _id: currentItem.id + "_" + idSuffix,
-              _tpl: item._props.defAmmo,
-              parentId: preset._items[p]._id,
-              slotId: "cartridges",
-              upd: { StackObjectsCount: mag._props.Cartridges[0]._max_count },
-            };
+  //         if (preset._items[p].slotId === "mod_magazine") {
+  //           let mag = helper_f.getItem(preset._items[p]._tpl)[1];
+  //           let cartridges = {
+  //             _id: currentItem.id + "_" + idSuffix,
+  //             _tpl: item._props.defAmmo,
+  //             parentId: preset._items[p]._id,
+  //             slotId: "cartridges",
+  //             upd: { StackObjectsCount: mag._props.Cartridges[0]._max_count },
+  //           };
 
-            createEndLootData.Items.push(cartridges);
-            idSuffix++;
-          }
-        }
-      }
+  //           createEndLootData.Items.push(cartridges);
+  //           idSuffix++;
+  //         }
+  //       }
+  //     }
 
-      // Remove overlapping items by doing this simple check
-      // if(!isAmmoBox && PresetData == null 
+  //     // Remove overlapping items by doing this simple check
+  //     // if(!isAmmoBox && PresetData == null 
 
-      let similarUsedPosition = currentUsedPositions.find(p => 
-        round(p.x, 3) == round(lootData.Position.x, 3)
-        && round(p.y, 3) == round(lootData.Position.y, 3)
-        && round(p.z, 3) == round(lootData.Position.z, 3)
-      );
-      if(PresetData == null 
-        && similarUsedPosition !== undefined
-        ) {
+  //     let similarUsedPosition = currentUsedPositions.find(p => 
+  //       round(p.x, 3) == round(lootData.Position.x, 3)
+  //       && round(p.y, 3) == round(lootData.Position.y, 3)
+  //       && round(p.z, 3) == round(lootData.Position.z, 3)
+  //     );
+  //     if(PresetData == null 
+  //       && similarUsedPosition !== undefined
+  //       ) {
 
-      // console.log("filtering dynamic item due to location");
-      // console.log(lootData.Position);
-      // console.log(similarUsedPosition);
-      continue;
-      }
+  //     // console.log("filtering dynamic item due to location");
+  //     // console.log(lootData.Position);
+  //     // console.log(similarUsedPosition);
+  //     continue;
+  //     }
 
-      let modifierDynamicChanceMin = 20;
-      let modifierDynamicChanceMax = 99;
-      if (global._database.gameplayConfig.locationloot.DynamicChance != undefined) {
-          modifierDynamicChanceMin = global._database.gameplayConfig.locationloot.DynamicChance.Min;
-          modifierDynamicChanceMax = global._database.gameplayConfig.locationloot.DynamicChance.Max;
+  //     let modifierDynamicChanceMin = 20;
+  //     let modifierDynamicChanceMax = 99;
+  //     if (global._database.gameplayConfig.locationloot.DynamicChance != undefined) {
+  //         modifierDynamicChanceMin = global._database.gameplayConfig.locationloot.DynamicChance.Min;
+  //         modifierDynamicChanceMax = global._database.gameplayConfig.locationloot.DynamicChance.Max;
 
-          if (modifierDynamicChanceMin == undefined) {
-              modifierDynamicChanceMin = 20;
-          }
-          if (modifierDynamicChanceMax == undefined) {
-              modifierDynamicChanceMax = 99;
-          }
-      }
+  //         if (modifierDynamicChanceMin == undefined) {
+  //             modifierDynamicChanceMin = 20;
+  //         }
+  //         if (modifierDynamicChanceMax == undefined) {
+  //             modifierDynamicChanceMax = 99;
+  //         }
+  //     }
 
-      // spawn chance calculation
-      let randomNumber = utility.getRandomInt(
-          modifierDynamicChanceMin,
-          modifierDynamicChanceMax
-      );
+  //     // spawn chance calculation
+  //     let randomNumber = utility.getRandomInt(
+  //         modifierDynamicChanceMin,
+  //         modifierDynamicChanceMax
+  //     );
 
-      let actualItem = helper_f.getItem(createdItem._tpl)[1];
-      if(actualItem !== undefined) {
-        const actualItemLootExperience 
-        = actualItem["_props"]["LootExperience"] + actualItem["_props"]["ExamineExperience"];
-        const isUnbuyable = actualItem["_props"]["Unbuyable"];
-        const isQuestItem = actualItem["_props"]["QuestItem"];
+  //     let actualItem = helper_f.getItem(createdItem._tpl)[1];
+  //     if(actualItem !== undefined) {
+  //       const actualItemLootExperience 
+  //       = actualItem["_props"]["LootExperience"] + actualItem["_props"]["ExamineExperience"];
+  //       const isUnbuyable = actualItem["_props"]["Unbuyable"];
+  //       const isQuestItem = actualItem["_props"]["QuestItem"];
       
-        let filterByRarityOutput = {};
-        if(!isQuestItem 
-          && !isUnbuyable 
-          && !FilterItemByRarity(actualItem, filterByRarityOutput, 1.2))
-          continue;
+  //       let filterByRarityOutput = {};
+  //       if(!isQuestItem 
+  //         && !isUnbuyable 
+  //         && !FilterItemByRarity(actualItem, filterByRarityOutput, 1.2))
+  //         continue;
 
-          count++;
-          output.Loot.push(createEndLootData);
-          currentUsedPositions.push(createEndLootData.Position);
-          currentUsedItems.push(createEndLootData);
-      }
-    }
-    return count;
-  }
+  //         count++;
+  //         output.Loot.push(createEndLootData);
+  //         currentUsedPositions.push(createEndLootData.Position);
+  //         currentUsedItems.push(createEndLootData);
+  //     }
+   
+  //   }
+          
+  //   return count;
+  // }
 }
 
 const round = (number, decimalPlaces) => {
@@ -1019,8 +1021,8 @@ class LocationServer {
 
     // dyanmic loot
     count = 0;
-    count = this.lootGenerator.lootDynamic(dynamic, output, _location.base.GlobalLootChanceModifier, name);
-   
+    // count = this.lootGenerator.lootDynamic(dynamic, output, _location.base.GlobalLootChanceModifier, name);
+    count = LootController.GenerateDynamicLootLoose(dynamic, output, _location.base.GlobalLootChanceModifier, name);
     // logger.logInfo(`State Dynamic, TimeElapsed: ${Date.now() - dateNow}ms`);
     dateNow = Date.now();
 
