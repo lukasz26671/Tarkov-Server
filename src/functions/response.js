@@ -98,7 +98,7 @@ class Responses {
       "/player/health/sync": this.playerHealthSync,
       "/raid/map/name": this.raidMapName,
       "/raid/profile/list": this.raidProfileList,
-      "/raid/profile/save": this.raidProfileSave,
+      // "/raid/profile/save": this.raidProfileSave,
       "/server/config/accounts": this.serverConfigAccounts,
       "/server/config/gameplay": this.serverConfigGameplay,
       "/server/config/mods": this.serverConfigMods,
@@ -730,10 +730,10 @@ class Responses {
   raidProfileList(url, info, sessionID) {
     return response_f.getBody(match_f.handler.getProfile(info));
   }
-  raidProfileSave(url, info, sessionID) {
-    offraid_f.saveProgress(info, sessionID);
-    return response_f.nullResponse();
-  }
+  // raidProfileSave(url, info, sessionID) {
+  //   offraid_f.saveProgress(info, sessionID);
+  //   return response_f.nullResponse();
+  // }
   serverConfigAccounts(url, body, sessionID) {
     home_f.processSaveAccountsData(body, db.user.configs.accounts);
     return home_f.RenderAccountsConfigPage("/server/config/accounts");
