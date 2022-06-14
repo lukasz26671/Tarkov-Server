@@ -78,7 +78,7 @@ class TarkovSend {
      * @param {string} file 
      */
     static sendFile(resp, file) {
-        console.log(file);
+        // console.log(file);
         const _split = file.split(".");
         let type = TarkovSend.mimeTypes[_split[_split.length - 1]] || TarkovSend.mimeTypes["txt"];
         
