@@ -245,7 +245,7 @@
                     , methods: {
                         updateAssort(traderId) {
                             $.ajax( { 
-                                url : `/db/getTradingAssort/${traderId}`,
+                                url : `/db/getTradingAssort?tid=${traderId}`,
                                 type: 'POST',
                                 async: false,
                                 dataType : "json",

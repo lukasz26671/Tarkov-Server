@@ -7,7 +7,9 @@ const utility = require('../../core/util/utility');
 class ItemController
 {
     static getDatabaseItems() {
-        return DatabaseController.getDatabase().items;
+        const dbItems = DatabaseController.getDatabase().items;
+        
+        return dbItems;
     }
    
     /**

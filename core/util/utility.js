@@ -473,3 +473,33 @@ exports.splitStack = (item) => {
 }
 
 exports.clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+/** 
+* This ES6(ECMAScript) function getQueryStringParameters takes url 
+* as parmater and returns
+* parameters name and value in JSON key value format 
+* @parameter {String} url 
+* (if url is not passed it takes the current url 
+* from window.location.href) 
+* 
+**/
+exports.getQueryStringParameters = url => {
+
+    var query = "";
+    if (url){
+      if(url.split("?").length>0){
+      query = url.split("?")[1];
+    }
+    }else{
+       url = window.location.href;
+       query = window.location.search.substring(1);
+    }
+    return (/^[?#]/.test(query) ? query.slice(1) : query)
+    .split('&')
+    .reduce((params, param) => 
+{
+  let [ key, value ] = param.split('=');
+  params[key] = value?decodeURIComponent(value.replace(/\+/g, ' ')):'';
+  return params;
+}, { });
+};

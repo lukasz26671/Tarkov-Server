@@ -82,8 +82,10 @@ class TarkovSend {
         const _split = file.split(".");
         let type = TarkovSend.mimeTypes[_split[_split.length - 1]] || TarkovSend.mimeTypes["txt"];
         
+        // console.log(process.cwd() + "/" + file);
+        // console.log(file);
         // Post 0.12.12.15.17975, it now gets stuff from files not res
-        if(file.indexOf("/files/") !== -1 && !fs.existsSync(process.cwd() + file))
+        if(file.indexOf("/files/") !== -1 && !fs.existsSync(process.cwd() + "/" + file))
             file = file.replace("/files/", "/res/");
 
         let fileStream = fs.createReadStream(file);

@@ -353,6 +353,15 @@ class TradingController {
        * @param {*} traderId 
        * @returns 
        */
+       static getTrader(traderId) {
+        return DatabaseController.getDatabase().traders[traderId];
+      }
+
+      /**
+       * 
+       * @param {*} traderId 
+       * @returns 
+       */
       static getTraderAssort(traderId) {
         return DatabaseController.getDatabase().traders[traderId].assort;
       }

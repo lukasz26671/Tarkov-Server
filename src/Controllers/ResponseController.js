@@ -445,10 +445,12 @@ class ResponseDbViewer {
 
     constructor() {
         // Items ----------------
-        var listOfItems = ItemController.getDatabaseItems();
-        for(const itemId in listOfItems) {
-            ResponseController.addRoute(`/db/getItemInfo/${itemId}`, (url, info, sessionID) => { return JSON.stringify(listOfItems[itemId]); });
-        };
+        ResponseController.addRoute(`/db/getItemInfo`, (url, info, sessionID) => { 
+            const qsParams = utility.getQueryStringParameters(url);
+            var listOfItems = ItemController.getDatabaseItems();
+            return JSON.stringify(listOfItems(qsParams.itemId)); 
+
+        });
         ResponseController.addRoute(`/db/searchItemsByName/`, (url, info, sessionID) => { 
             if (info.searchParams !== undefined) {
                 for(const itemId in listOfItems) {
@@ -460,19 +462,37 @@ class ResponseDbViewer {
 
         // Traders ----------------
         var listOfTraders = TradingController.getAllTraders();
-        ResponseController.addRoute(`/db/getTraders/`, (url, info, sessionID) => { return JSON.stringify(listOfTraders); })
+        ResponseController.addRoute(`/db/getTraders/`, (url, info, sessionID) => { 
+            // always get the database current list of traders, so recall getAllTraders here
+            return JSON.stringify(TradingController.getAllTraders()); 
+        });
         for(const t of listOfTraders) {
             ResponseController.addRoute(`/db/getTraderInfo/${t.base._id}`, (url, info, sessionID) => { 
-                return JSON.stringify(t); 
-            })
+                return JSON.stringify(TradingController.getTrader(t.base._id)); 
+            });
             ResponseController.addRoute(`/db/getTradingAssort/${t.base._id}`, (url, info, sessionID) => { 
                 const assort = TradingController.getTraderAssort(t.base._id);
                 assort.items.forEach(element => {
                     element["itemInfo"] = ItemController.getDatabaseItems()[element._tpl];
                 });
                 return JSON.stringify(assort); 
-            })
+            });
         };
+        ResponseController.addRoute(`/db/getTraderInfo`, (url, info, sessionID) => { 
+            const qsParams = utility.getQueryStringParameters(url);
+
+            return JSON.stringify(TradingController.getTrader(qsParams.tid)); 
+
+        });
+        ResponseController.addRoute(`/db/getTradingAssort`, (url, info, sessionID) => { 
+            const qsParams = utility.getQueryStringParameters(url);
+
+            const assort = TradingController.getTraderAssort(qsParams.tid);
+            assort.items.forEach(element => {
+                element["itemInfo"] = ItemController.getDatabaseItems()[element._tpl];
+            });
+            return JSON.stringify(assort); 
+        });
 
         // Users ----------------
         // var listOfTraders = TradingController.getAllTraders();
