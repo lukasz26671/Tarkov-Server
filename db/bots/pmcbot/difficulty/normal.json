@@ -418,20 +418,20 @@
 	},
 	"Core": {
 		"VisibleAngle": 160.0,
-		"VisibleDistance": 142.0,
+		"VisibleDistance": 1000.0,
 		"GainSightCoef": 0.1,
 		"ScatteringPerMeter": 0.045,
 		"ScatteringClosePerMeter": 0.12,
 		"DamageCoeff": 1.0,
-		"HearingSense": 2.9,
+		"HearingSense": 6.0,
 		"CanRun": true,
 		"CanGrenade": true,
 		"AimingType": "normal",
 		"PistolFireDistancePref": 35.0,
 		"ShotgunFireDistancePref": 50.0,
-		"RifleFireDistancePref": 100.0,
-		"AccuratySpeed": 0.2,
-		"WaitInCoverBetweenShotsSec": 0.3
+		"RifleFireDistancePref": 115.0,
+		"AccuratySpeed": 1.0,
+		"WaitInCoverBetweenShotsSec": 0.2
 	},
 	"Scattering": {
 		"MinScatter": 0.03,
