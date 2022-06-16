@@ -1,6 +1,7 @@
 "use strict";
 
 const { logger } = require("../../core/util/logger");
+const utility = require('./../../core/util/utility');
 
 //use bot names in lowercase as it matches folders
 const botSwaps = {
@@ -30,7 +31,7 @@ const botSwaps = {
   }
 }
 
-class Controller {
+class BotsController {
   constructor() {
 
   }
@@ -67,7 +68,7 @@ class Controller {
     }
   }
 
-  generateBotName(role) {
+  static generateBotName(role) {
 
     const name_database = global._database.bots.names;
     let name;
@@ -76,33 +77,23 @@ class Controller {
       case "exusec":
       case "pmcbot":
       case "bear":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.normal);
-        //console.log(name, "name")
         break;
-
       case "followertagilla":
       case "bosstagilla":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.tagilla);
-        //console.log(name, "name")
-
         break;
 
       case "followerkojaniy":
       case "followertest":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.followerkojany);
-        //console.log(name, "name")
         break;
 
       case "followergluharsecurity":
       case "followergluharsnipe":
       case "followergluharscout":
       case "followergluharassault":
-        //console.log(role, "role")
         name = utility.getArrayValue(name_database.followergluhar);
-        //console.log(name, "name")
         break;
       case "bosskojaniy":
         name = utility.getArrayValue(name_database.bosskojany);
@@ -121,7 +112,7 @@ class Controller {
         // console.log(role)
         name = utility.getArrayValue(name_database[role]);
         if(!name) {
-          logger.logError(`Bot ${role} name not found in name list, could be a typo, send help pls.`);
+          logger.logError(`Bot ${role} name not found in name list!`);
           name = utility.getArrayValue(name_database.scav);
         }
         break;
@@ -137,7 +128,7 @@ class Controller {
   }
 
   //START -----
-  generateBot(bot, role, pmcData) {
+  static generateBot(bot, role, pmcData) {
     let node = [];
 
     // debugging generatebot
@@ -154,12 +145,14 @@ class Controller {
     if (loweredRole == "playerscav") {
       bot.Info.Side = "Savage";
       node = global._database.bots["assault"];
+      bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
     }
     // -----------------------------------------------------------------------------
     // Paulo: This allows the location json files to include "PmcBot" as a spawnable
     else if (loweredRole == "pmcbot") {
-      bot.Info.Side = pmcData.Info.Side;
+      bot.Info.Side = utility.getRandomInt(0, 100) > 10 ? "Usec" : "Bear";
       node = global._database.bots["pmcbot"];
+      bot.Info.Voice = "Usec_1";
     }
     else {
 
@@ -167,10 +160,12 @@ class Controller {
       node = global._database.bots[loweredRole];
       // console.log(node);
       // console.log(bot);
+      bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
     
     }
 
-    bot.Info.Nickname = this.generateBotName(role);
+    bot.Info.Nickname = BotsController.generateBotName(role);
+    bot.Info.Settings.BotDifficulty = "normal";
     bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
     bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
     bot.Health = bots_f.botHandler.generateHealth(node.health);
@@ -223,6 +218,9 @@ class Controller {
     // generate new inventory ID
     bot = utility.generateInventoryID(bot);
 
+    // console.log(bot);
+    console.log(role);
+
     return bot;
 
   }
@@ -238,7 +236,7 @@ class Controller {
     //default
     node = global._database.bots[newRole];
 
-    bot.Info.Nickname = this.generateBotName(newRole);
+    bot.Info.Nickname = BotsController.generateBotName(newRole);
     bot.Info.Settings.Experience = utility.getRandomInt(
       node.experience.reward.min,
       node.experience.reward.max
@@ -304,7 +302,8 @@ class Controller {
   }
 
   /**
-   * Generate a bot
+   * Generate a bot 
+   * You can test run this by running `bots_f.botHandler.generate({conditions: [{ Role: "pmcBot", Limit: 5 }]}, "AID062158106353313252ruc");` in the debug console
    * @param {*} info 
    * @param {*} sessionID 
    * @returns {object}
@@ -316,25 +315,26 @@ class Controller {
     const pmcData = profile_f.handler.getPmcProfile(sessionID);
 
     for (const condition of info.conditions) {
-      condition.Limit = Math.min(20, condition.Limit);
+      condition.Limit = Math.min(100, condition.Limit);
       condition.Limit = Math.max(1, condition.Limit);
 
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
         let bot = JSON.parse(JSON.stringify(global._database.core.botBase));
-        // bot.Info.Side = "Savage";
         bot.Info.Settings.Role = condition.Role;
+        // bot.Info.Settings.Role = "pmcBot"; // Testing!
         bot.Info.Settings.BotDifficulty = condition.Difficulty;
-        bot = bots_f.botHandler.generateBot(bot, role, pmcData);
+        bot = BotsController.generateBot(bot, role, pmcData);
         output.unshift(bot);
         count++;
       }
     }
-    //debugging purposes
     //if we generated bots and are in raid
-    if (count > 0 && offraid_f.handler.getPlayer(sessionID)) {
+    // if (count > 0 && offraid_f.handler.getPlayer(sessionID)) {
+    if (count > 0) {
       logger.logSuccess(
-        "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map. (" + (Date.now() - dateNow) + "ms)"
+        // "\u001b[32;1mGenerated: " + count + " bots for " + offraid_f.handler.getPlayer(sessionID).Location + " map. (" + (Date.now() - dateNow) + "ms)"
+        "\u001b[32;1mGenerated: " + count + " bots. (" + (Date.now() - dateNow) + "ms)"
       );
     }
     return output;
@@ -1308,7 +1308,7 @@ class ExhaustableArray {
   }
 }
 
-var controller = new Controller();
+var controller = new BotsController();
 module.exports.botHandler = controller;
 module.exports.generate = controller.generate;
 module.exports.getBotLimit = controller.getBotLimit;
