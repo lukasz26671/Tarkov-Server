@@ -26,48 +26,25 @@
     "waves": [
         {
             "number": 0,
-            "time_min": 0,
-            "time_max": 0,
-            "slots_min": 3,
+            "time_min": 5,
+            "time_max": 60,
+            "slots_min": 1,
             "slots_max": 4,
-            "SpawnPoints": "",
+            "SpawnPoints": "BotZone",
             "BotSide": "Savage",
             "BotPreset": "normal",
             "WildSpawnType": "assault",
             "isPlayers": false
-        },
+        }
+        ,
         {
             "number": 1,
-            "time_min": 2,
-            "time_max": 6,
+            "time_min": 5,
+            "time_max": 60,
             "slots_min": 1,
-            "slots_max": 1,
-            "SpawnPoints": "",
-            "BotSide": "Usec",
-            "BotPreset": "normal",
-            "WildSpawnType": "pmcBot",
-            "isPlayers": false
-        },
-        {
-            "number": 2,
-            "time_min": 9,
-            "time_max": 16,
-            "slots_min": 1,
-            "slots_max": 1,
-            "SpawnPoints": "",
+            "slots_max": 4,
+            "SpawnPoints": "BotZone",
             "BotSide": "Savage",
-            "BotPreset": "normal",
-            "WildSpawnType": "assault",
-            "isPlayers": false
-        },
-        {
-            "number": 4,
-            "time_min": 25,
-            "time_max": 35,
-            "slots_min": 1,
-            "slots_max": 1,
-            "SpawnPoints": "",
-            "BotSide": "Usec",
             "BotPreset": "normal",
             "WildSpawnType": "exUsec",
             "isPlayers": false
@@ -2489,28 +2466,17 @@
         }
     ],
     "BossLocationSpawn": [
-        {
-            "BossName": "bossTagilla",
-            "BossChance": 95,
-            "BossZone": "BotZone",
-            "BossPlayer": false,
-            "BossDifficult": "normal",
-            "BossEscortType": "followerBully",
-            "BossEscortDifficult": "normal",
-            "BossEscortAmount": "0",
-            "Time": -1
-        },
-        {
-          "BossName": "pmcBot",
-          "BossChance": 100,
-          "BossZone": "BotZone",
-          "BossPlayer": true,
-          "BossDifficult": "normal",
-          "BossEscortType": "pmcBot",
-          "BossEscortDifficult": "normal",
-          "BossEscortAmount": "3",
-          "Time": 15
-        }
+  {
+    "BossName": "pmcBot",
+    "BossChance": 100,
+    "BossZone": "BotZone",
+    "BossPlayer": false,
+    "BossDifficult": "normal",
+    "BossEscortType": "pmcBot",
+    "BossEscortDifficult": "normal",
+    "BossEscortAmount": "2",
+    "Time": 5
+  }
     ],
     "Id": "factory4_day",
     "_Id": "55f2d3fd4bdc2d5f408b4567",
