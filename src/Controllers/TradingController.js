@@ -211,7 +211,7 @@ class TradingController {
 
             let newAssortItem = {
               // "_id": utility.generateNewItemId().toString(),
-              "_id": random_item._id,
+              "_id": tpl,
               "_tpl": tpl,
               "parentId": "hideout",
               "slotId": "hideout",
