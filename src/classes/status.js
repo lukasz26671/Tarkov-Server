@@ -1,5 +1,7 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+
 function foldItem(pmcData, body, sessionID) {
   for (let item of pmcData.Inventory.items) {
     if (item._id && item._id === body.item) {
@@ -59,56 +61,69 @@ function bindItem(pmcData, body, sessionID) {
 }
 
 function examineItem(pmcData, body, sessionID) {
-  let itemID = "";
-  let pmcItems = pmcData.Inventory.items;
-
-  // outside player profile
-  if ("fromOwner" in body) {
-    // scan ragfair as a trader
-    if (body.fromOwner.type === "RagFair") {
-      body.item = body.fromOwner.id;
-      body.fromOwner.type = "Trader";
-      body.fromOwner.id = "ragfair";
-    }
-
-    // get trader assort
-    if (body.fromOwner.type === "Trader") {
-      pmcItems = trader_f.handler.getAssort(sessionID, body.fromOwner.id).items;
-    }
-
-    // get hideout item
-    if (body.fromOwner.type === "HideoutProduction") {
-      itemID = body.item;
-    }
+  let itemID = body.item;
+  let pmcItems = pmcData !== undefined && pmcData.Inventory !== undefined ? pmcData.Inventory.items : [];
+  if(pmcData === undefined || pmcData.Inventory === undefined) {
+    pmcData = profile_f.handler.getPmcProfile(sessionID);
   }
 
-  if (preset_f.handler.isPreset(itemID)) {
-    itemID = preset_f.handler.getBaseItemTpl(itemID);
-  }
+  if(itemID.length > 24) {
+    logger.logInfo("Examining obscure Id " + itemID);
+    itemID = "";
+    // outside player profile
+    if ("fromOwner" in body) {
+      // scan ragfair as a trader
+      if (body.fromOwner.type === "RagFair") {
+        body.item = body.fromOwner.id;
+        body.fromOwner.type = "Trader";
+        body.fromOwner.id = "ragfair";
+      }
 
-  if (itemID === "") {
-    // player/trader inventory
-    for (let item of pmcItems) {
-      if (item._id === body.item) {
-        itemID = item._tpl;
-        break;
+      // get trader assort
+      if (body.fromOwner.type === "Trader") {
+        pmcItems = trader_f.handler.getAssort(sessionID, body.fromOwner.id).items;
+      }
+
+      // get hideout item
+      if (body.fromOwner.type === "HideoutProduction") {
+        itemID = body.item;
       }
     }
-  }
 
-  if (itemID === "") {
-    // player/trader inventory
-    let result = helper_f.tryGetItem(body.item);
-    if (result[0]) {
-      itemID = result[1]._id;
+    if (preset_f.handler.isPreset(itemID)) {
+      itemID = preset_f.handler.getBaseItemTpl(itemID);
     }
-  }
 
-  // console.log(body.item);
-  // var i = global._database.items[body.item];
+    if (itemID === "") {
+      // player/trader inventory
+      for (let item of pmcItems) {
+        if (item._id === body.item) {
+          
+          itemID = item._tpl;
+          break;
+        }
+      }
+    }
+
+    if (itemID === "") {
+      // player/trader inventory
+      let result = helper_f.tryGetItem(body.item);
+      if (result[0]) {
+        itemID = result[1]._id;
+      }
+    }
+
+  }
 
   // ----------------------------------------------------------------
-  // Search through the ItemPresets
+  // item not found
+  if (itemID === "") {
+    logger.logError(`Cannot find item to examine for ${body.item}`);
+    return "";
+  }
+
+  // ----------------------------------------------------------------
+  // Search through the ItemPresets - This is a check
   for(const itemId in global._database.globals.ItemPresets) {
     const preset = global._database.globals.ItemPresets[itemId];
     const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
@@ -118,13 +133,6 @@ function examineItem(pmcData, body, sessionID) {
       pmcData.Encyclopedia[itemID] = true;
       return item_f.handler.getOutput(sessionID);
     }
-  }
-
-  // ----------------------------------------------------------------
-  // item not found
-  if (itemID === "") {
-    logger.logError(`Cannot find item to examine for ${body.item}`);
-    return "";
   }
 
   // ----------------------------------------------------------------
