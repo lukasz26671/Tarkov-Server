@@ -908,18 +908,23 @@ module.exports.getPlayerStashSlotMap = (sessionID, pmcData) => {
     }
 
     let tmpSize = helper_f.getSizeByInventoryItemHash(item._tpl, item._id, inventoryItemHash);
-    let iW = tmpSize[0]; // x
-    let iH = tmpSize[1]; // y
-    let fH = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iW : iH;
-    let fW = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iH : iW;
-    let fillTo = item.location.x + fW;
+    if(tmpSize !== undefined && tmpSize.length == 2) {
+      let iW = tmpSize[0]; // x
+      let iH = tmpSize[1]; // y
+      let fH = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iW : iH;
+      let fW = item.location.r === 1 || item.location.r === "Vertical" || item.location.rotation === "Vertical" ? iH : iW;
+      let fillTo = item.location.x + fW;
 
-    for (let y = 0; y < fH; y++) {
-      try {
-        Stash2D[item.location.y + y].fill(1, item.location.x, fillTo);
-      } catch (e) {
-        logger.logError(`[OOB] for item with id ${item._id}; Error message: ${e}`);
+      for (let y = 0; y < fH; y++) {
+        try {
+          Stash2D[item.location.y + y].fill(1, item.location.x, fillTo);
+        } catch (e) {
+          logger.logError(`[OOB] for item with id ${item._id}; Error message: ${e}`);
+        }
       }
+    }
+    else {
+      logger.logError(`Error in getting tempSize for item with id ${item._id}`);
     }
   }
 
