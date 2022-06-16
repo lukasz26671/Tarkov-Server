@@ -1,5 +1,7 @@
 "use strict";
 
+const fs = require('fs');
+const utility = require('./../../core/util/utility');
 const { ConfigController } = require("../Controllers/ConfigController");
 const { DatabaseController } = require("../Controllers/DatabaseController");
 
@@ -320,46 +322,77 @@ const loadTraderAssort = (traderId) => {
     return base;
 
   const assort = fileIO.readParsed(db.traders[traderId].assort);
+  // Recompile IDs - TODO: Check whether this is still needed
+  if(assort.items !== undefined) {
+    // Items
+    const convertedIds = {};
+    for(const it of assort.items) {
+      let currId = it._id;
+      let newId = utility.generateNewItemId();
+      convertedIds[currId] = newId;
+      it._id = newId;
+    }
+    // Barter Scheme
+    const newBarterScheme = {};
+    for(const id in assort.barter_scheme) {
+      let currData = assort.barter_scheme[id]
+      newBarterScheme[convertedIds[id]] = JSON.parse(JSON.stringify(currData));
+    }
+    assort.barter_scheme = JSON.parse(JSON.stringify(newBarterScheme));
+    // Loyal Level Items
+    const newLoyalLevel = {};
+    for(const id in assort.loyal_level_items) {
+      let currData = assort.loyal_level_items[id]
+      newLoyalLevel[convertedIds[id]] = JSON.parse(JSON.stringify(currData));
+    }
+    assort.loyal_level_items = JSON.parse(JSON.stringify(newLoyalLevel));
 
-  for (let item in assort) {
-    let items;
-    if (traderId != "ragfair") {
-      if (!utility.isUndefined(assort[item].items[0])) {
+    base.items = assort.items;
+    base.barter_scheme = assort.barter_scheme;
+    base.loyal_level_items = assort.loyal_level_items;
+  }
+  // do it JET way
+  else { 
+    for (let item in assort) {
+      let items;
+      if (traderId != "ragfair") {
+        if (!utility.isUndefined(assort[item].items[0])) {
+          let items = assort[item].items;
+
+
+          /*
+          copy properties of db item 
+          There are a lot of properties missing and that is gay and retarded
+          */
+
+          items[0].upd = Object.assign({}, items[0].upd);
+          if (utility.isUndefined(items[0].upd)) {
+            items[0]["upd"] = Object.assign({}, items[0].upd);
+          }
+
+          if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
+            items[0].upd["UnlimitedCount"] = false;
+          }
+
+        }
+      } else {
         let items = assort[item].items;
-
-
-        /*
-        copy properties of db item 
-        There are a lot of properties missing and that is gay and retarded
-        */
-
-        items[0].upd = Object.assign({}, items[0].upd);
-        if (utility.isUndefined(items[0].upd)) {
-          items[0]["upd"] = Object.assign({}, items[0].upd);
-        }
-
-        if (utility.isUndefined(items[0].upd.UnlimitedCount)) {
+        if (utility.isUndefined(items[0])) {
+          items[0]["upd"] = {};
           items[0].upd["UnlimitedCount"] = false;
+          items[0].upd["StackObjectsCount"] = 99;
+          items[0].upd["BuyRestrictionMax"] = 99;
+          items[0].upd["BuyRestrictionCurrent"] = 0;
         }
-
       }
-    } else {
-      let items = assort[item].items;
-      if (utility.isUndefined(items[0])) {
-        items[0]["upd"] = {};
-        items[0].upd["UnlimitedCount"] = false;
-        items[0].upd["StackObjectsCount"] = 99;
-        items[0].upd["BuyRestrictionMax"] = 99;
-        items[0].upd["BuyRestrictionCurrent"] = 0;
-      }
-    }
 
-    items = assort[item].items;
-    for (let assort_item in items) {
-      base.items.push(items[assort_item]);
+      items = assort[item].items;
+      for (let assort_item in items) {
+        base.items.push(items[assort_item]);
+      }
+      base.barter_scheme[item] = assort[item].barter_scheme;
+      base.loyal_level_items[item] = assort[item].loyalty;
     }
-    base.barter_scheme[item] = assort[item].barter_scheme;
-    base.loyal_level_items[item] = assort[item].loyalty;
   }
   return base;
 }
@@ -369,8 +402,16 @@ function loadTradersData() {
   for (let traderID in db.traders) {
     global._database.traders[traderID] = { base: {}, assort: {}, categories: {} };
     global._database.traders[traderID].base = fileIO.readParsed("./" + db.traders[traderID].base);
-    global._database.traders[traderID].categories = fileIO.readParsed("./" + db.traders[traderID].categories);
-    global._database.traders[traderID].base.sell_category = _database.traders[traderID].categories; // override trader categories
+    global._database.traders[traderID].categories = global._database.traders[traderID].base.sell_category;
+    if( 
+      global._database.traders[traderID].base.sell_category.length === 0
+      && fs.existsSync(`./db/traders/${traderID}/categories.json`)
+      ) {
+      global._database.traders[traderID].categories = fileIO.readParsed("./" + db.traders[traderID].categories);
+      global._database.traders[traderID].base.sell_category = _database.traders[traderID].categories; // override trader categories
+    }
+
+    global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
 
     // Loading Assort depending if its Fence or not
     if (traderID == "579dc571d53a0658a154fbec") {
