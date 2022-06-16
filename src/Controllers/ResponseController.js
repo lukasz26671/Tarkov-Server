@@ -172,9 +172,9 @@ action: (url, info, sessionID) => {
                     "interchange": 100,
                     "reserve": 100
                 },
-                "airdropMinStartTimeSeconds": 60,
-                "airdropMaxStartTimeSeconds": 90,
-                "airdropMinOpenHeight": 75,
+                "airdropMinStartTimeSeconds": 90,
+                "airdropMaxStartTimeSeconds": 120,
+                "airdropMinOpenHeight": 100,
                 "airdropMaxOpenHeight": 150,
                 "planeMinFlyHeight": 400,
                 "planeMaxFlyHeight": 500,
