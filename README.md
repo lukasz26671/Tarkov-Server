@@ -67,4 +67,11 @@ Zip the following folders & files
 *This is Work in Progress*
 - You can find the DBViewer at https://localhost:443/db
 
+## Thanks list
+- TheMaoci / MaoMao
+- CQ
+- King
+- Nehax
+- CWX (Traders/Airdrop)
+
  
