@@ -1,6 +1,7 @@
 const fs = require('fs');
 const {AccountServer} = require('./../classes/account');
 const utility = require('./../../core/util/utility');
+const { logger } = require('../../core/util/logger');
 
 /**
  * Account Controller. 
@@ -101,8 +102,11 @@ class AccountController
         for (const id of profileFolders) {
             if (!fileIO.exist(`user/profiles/${id}/account.json`)) continue;
             let account = JSON.parse(fs.readFileSync(`user/profiles/${id}/account.json`));
-            if(account.email == username && account.password == password)
+            if(account.email == username && account.password == password) {
+              const profile = AccountController.getPmcProfile(id);
+
               return id;
+            }
         }
       return undefined;
     }
@@ -129,7 +133,11 @@ class AccountController
      */
     static login(info) {
         // AccountServer.reloadAccountByLogin(info);
-        return AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
+        const loginSuccessId = AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
+        if(loginSuccessId !== undefined) {
+          logger.logSuccess(`Login ${loginSuccessId} Successful`)
+        }
+        return loginSuccessId;
     }
 
     static register(info) {
@@ -219,7 +227,26 @@ class AccountController
         }
   
         //Load the PMC profile from disk.
-        profile_f.handler.profiles[sessionID]["pmc"] = fileIO.readParsed(AccountController.getPmcPath(sessionID));
+        const loadedProfile = fileIO.readParsed(AccountController.getPmcPath(sessionID));
+        const changedIds = {};
+        for(const item of loadedProfile.Inventory.items) {
+          if(item._id.length > 24 || item._id.includes("0000")) {
+            const oldId = item._id;
+            const newId = utility.generateNewId(undefined, 3);
+            console.log(`${oldId} is becomming ${newId}`);
+            changedIds[oldId] = newId;
+            item._id = newId;
+          }
+        }
+        for(const item of loadedProfile.Inventory.items) {
+          if(changedIds[item.parentId] !== undefined) {
+            item.parentId = changedIds[item.parentId];
+          }
+        }
+        if(Object.keys(changedIds).length > 0) {
+          logger.logSuccess(`Login cleaned ${Object.keys(changedIds).length} items`);
+        }
+        profile_f.handler.profiles[sessionID]["pmc"] = loadedProfile;
   
         // Generate a scav
         profile_f.handler.profiles[sessionID]["scav"] = profile_f.handler.generateScav(sessionID);

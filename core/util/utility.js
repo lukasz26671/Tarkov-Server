@@ -315,13 +315,18 @@ const { v4: uuidv4 } = require('uuid')
  * @returns {string} NewId string
  */
 exports.generateNewId = (prefix = "", version = 2) => {
+    if(prefix === "" || prefix === null)
+        prefix = undefined;
+
     let getTime = new Date();
     let retVal = ""
     switch(version)
     {
         case 1:
         {
-            retVal = prefix
+            if(prefix !== undefined)
+                retVal = prefix
+
             retVal += getTime.getMonth().toString();
             retVal += getTime.getDate().toString();
             retVal += getTime.getHours().toString();
@@ -331,7 +336,11 @@ exports.generateNewId = (prefix = "", version = 2) => {
             break;
         }
         case 2:
-            retVal = `${prefix}-${uuidv4()}`;
+            if(prefix !== undefined)
+                retVal = `${prefix}-${uuidv4()}`;
+            else 
+            retVal = uuidv4();
+
             break;
         case 3:
         {
@@ -340,7 +349,7 @@ exports.generateNewId = (prefix = "", version = 2) => {
             const objectIdBinary = Buffer.alloc(12);
             const randomBytes = crypto.randomBytes(5);
 
-            objectIdBinary[3] = dateNow & 0xff;
+            objectIdBinary[3] = (dateNow >> 4) & 0xff;
             objectIdBinary[2] = (dateNow >> 8) & 0xff;
             objectIdBinary[1] = (dateNow >> 16) & 0xff;
             objectIdBinary[0] = (dateNow >> 24) & 0xff;
