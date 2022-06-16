@@ -140,10 +140,13 @@ function examineItem(pmcData, body, sessionID) {
   if (typeof global._database.items[itemID] == "undefined") {
     logger.logError(`file not found with id: ${itemID}`);
   }
-  let item = global._database.items[itemID];
-  pmcData.Info.Experience += item._props.ExamineExperience;
-  pmcData.Encyclopedia[itemID] = true;
 
+  let item = global._database.items[itemID];
+  // handle issues gracefully for now
+  if(item !== undefined) {
+    pmcData.Info.Experience += item._props.ExamineExperience;
+    pmcData.Encyclopedia[itemID] = true;
+  }
   //logger.logSuccess(`EXAMINED: ${itemID}`);
   return item_f.handler.getOutput(sessionID);
 }
