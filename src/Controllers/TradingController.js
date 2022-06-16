@@ -378,6 +378,39 @@ class TradingController {
         }
         return traders;
       }
+
+      /**
+       * NOT COMPLETE
+       * Add a trader to the in Memory Database
+       * @param {string} traderId 
+       * @param {string} traderName 
+       * @param {TraderAssort} traderAssort 
+       * @param {object} traderInfo 
+       */
+      static addTrader(traderId, traderName, traderAssort, traderInfo) {
+
+      }
+
+      /**
+       * NOT COMPLETE
+       * Redirects to addTrader
+       * @param {string} traderId 
+       * @param {string} traderName 
+       * @param {TraderAssort} traderAssort 
+       * @param {object} traderInfo 
+       */
+      static createTrader(traderId, traderName, traderAssort, traderInfo) {
+        TradingController.addTrader(traderId, traderName, traderAssort, traderInfo);
+      }
+
+      /**
+       * NOT COMPLETE
+       * @param {string} traderId 
+       */
+      static saveTraderToDisk(traderId) {
+        const trader = TradingController.getTrader(traderId);
+        
+      }
 }
 
 class TraderAssort {
