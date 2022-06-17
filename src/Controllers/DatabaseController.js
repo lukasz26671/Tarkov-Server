@@ -1,3 +1,5 @@
+const oldDb = require('./../functions/database');
+const { ConfigController } = require('./ConfigController');
 // import onChange from 'on-change';
 // const onChange = require('on-change');
 
@@ -43,6 +45,11 @@ class DatabaseController
      * @returns {*} the globally defined Database
      */
     static getDatabase() {
+        ConfigController.init();
+        if(global._database === undefined || global._database.traders === undefined) {
+            oldDb.load();
+        }
+
         return global._database;
     }
 }

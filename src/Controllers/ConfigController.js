@@ -13,6 +13,10 @@ class ConfigController {
     static Instance = new ConfigController();
     static Configs = {};
 
+    static init() {
+      ConfigController.rebuildFromBaseConfigs();
+    }
+
     /**
      * Fills ConfigController.Configs with parsed JSON data from user/configs directory
      */

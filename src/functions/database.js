@@ -16,7 +16,7 @@ function loadClusterConfig() {
 }
 
 function loadGameplayConfig() {
-  global._database.gameplay = fileIO.readParsed("./user/configs/gameplay.json");
+  global._database.gameplay = fileIO.readParsed("./user/configs/gameplay_base.json");
 }
 
 function loadBlacklistConfig() {
@@ -553,6 +553,8 @@ function loadRagfair() {
 }
 
 exports.load = () => {
+  ConfigController.init();
+
   logger.logDebug("Load: 'Core'");
   loadCoreData();
   logger.logDebug("Load: 'Globals'");
