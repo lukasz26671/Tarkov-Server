@@ -78,11 +78,25 @@ class ResponseController
     static nullResponse = () => {
         return this.getBody(null);
     }
-    // emptyArrayResponse
+    /**
+     * emptyArrayResponse
+     * @returns {Object} empty Body Array
+     */
     static emptyArrayResponse = () => {
         return this.getBody([]);
     }
 
+    /**
+     * A method that is called whenever any request is made to the Server
+     * @param {HttpRequest} req 
+     */
+    static receivedCall = (req) => {
+        insurance_f.handler.checkExpiredInsurance();
+    }
+
+    /**
+     * Routes
+     */
     static Routes = 
     [
         {

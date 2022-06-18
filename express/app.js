@@ -53,6 +53,8 @@ app.use(function(req, res, next) {
   if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
     logger.logInfo(`${PHPSESSID}::${req.method}::${req.url}`);
 
+  ResponseController.receivedCall(req);
+
   next();
 });
 
