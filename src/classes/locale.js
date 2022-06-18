@@ -11,9 +11,9 @@ class LocaleServer {
     if(global !== undefined && this.dataBase !== undefined) {
       this.dataBase.locales.global['en']
       .interface["Attention! This is a Beta version of Escape from Tarkov for testing purposes."] 
-      = "Attention! This is an emulated version of \"Escape from Tarkov\".";
+      = "Welcome to Stay In Tarkov, an Escape from Tarkov emulator.";
       this.dataBase.locales.global['en']
-      .interface["NDA free warning"] = "You MUST have a legal copy of the game for this mod to work. Any attempt to use this illegaly will be reported automatically.";
+      .interface["NDA free warning"] = "You MUST have a legal copy of the game for this mod to work. Please support the game developers!";
       this.dataBase.locales.global['en']
       .interface["Offline raid description"] 
       = "You are now entering an emulated version of a Tarkov raid. This emulated raid has all the features of a live version, but it has no connection to BSG's servers, and stays local on your PC.\nOther PMCs will spawn as emulated AI, and will spawn with randomized gear, levels, inventory, and names. This means you can loot, kill, and extract as you would online, and keep your inventory when you extract, but you cannot bring this loot into live EFT servers.";

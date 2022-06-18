@@ -233,7 +233,7 @@ class AccountController
           if(item._id.length > 24 || item._id.includes("0000")) {
             const oldId = item._id;
             const newId = utility.generateNewId(undefined, 3);
-            console.log(`${oldId} is becomming ${newId}`);
+            console.log(`${oldId} is becoming ${newId}`);
             changedIds[oldId] = newId;
             item._id = newId;
           }

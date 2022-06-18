@@ -240,10 +240,10 @@ class ProfileServer {
     let storage = { _id: "", suites: [] };
 
     // delete existing profile
-    if (this.profiles[account.id]) {
-      delete this.profiles[account.id];
-      events.scheduledEventHandler.wipeScheduleForSession(sessionID);
-    }
+    // if (this.profiles[account.id]) {
+    //   delete this.profiles[account.id];
+    //   events.scheduledEventHandler.wipeScheduleForSession(sessionID);
+    // }
 
     // Set defaults for new profile generation //
     pmcData._id = "pmc" + account.id;

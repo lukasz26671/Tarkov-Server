@@ -1,5 +1,11 @@
 "use strict";
 
+const { logger } = require("../../core/util/logger");
+const { AccountController } = require("../Controllers/AccountController");
+
+/**
+ * 
+ */
 class InsuranceServer {
     constructor() {
         this.insured = {};
@@ -10,18 +16,29 @@ class InsuranceServer {
         delete this.insured[sessionID];
     }
 
+    /**
+     * Currently runs on every call to the server. 
+     * DO a check whether to expire or return insurance items.
+     */
     checkExpiredInsurance() {
-        let scheduledEvents = events.scheduledEventHandler.scheduledEvents;
-        let now = Date.now();
-
-        for (let count = scheduledEvents.length - 1; count >= 0; count--) {
-            let event = scheduledEvents[count];
-
-            if (event.type === "insuranceReturn" && event.scheduledTime <= now) {
-                events.scheduledEventHandler.processEvent(event);
-                events.scheduledEventHandler.removeFromSchedule(event);
+        // logger.logInfo("checkExpiredInsurance");
+        for(const p in profile_f.handler.profiles) {
+            for (let insurance in p.InsuredItems) {
+                console.log("insuredItem");
+                console.log(insurance);
             }
         }
+        // let scheduledEvents = events.scheduledEventHandler.scheduledEvents;
+        // let now = Date.now();
+
+        // for (let count = scheduledEvents.length - 1; count >= 0; count--) {
+        //     let event = scheduledEvents[count];
+
+        //     if (event.type === "insuranceReturn" && event.scheduledTime <= now) {
+        //         events.scheduledEventHandler.processEvent(event);
+        //         events.scheduledEventHandler.removeFromSchedule(event);
+        //     }
+        // }
     }
 
     /* remove insurance from an item */
@@ -170,16 +187,18 @@ class InsuranceServer {
                 }
             };
 
-            events.scheduledEventHandler.addToSchedule({
-                "type": "insuranceReturn",
-                "sessionId": sessionID,
-                "scheduledTime": Date.now() + utility.getRandomInt(trader.insurance.min_return_hour * 3600, trader.insurance.max_return_hour * 3600) * 1000,
-                "data": {
-                    "traderId": traderId,
-                    "messageContent": messageContent,
-                    "items": this.insured[sessionID][traderId]
-                }
-            });
+            const p = AccountController.getPmcProfile(sessionID);
+
+            // events.scheduledEventHandler.addToSchedule({
+            //     "type": "insuranceReturn",
+            //     "sessionId": sessionID,
+            //     "scheduledTime": Date.now() + utility.getRandomInt(trader.insurance.min_return_hour * 3600, trader.insurance.max_return_hour * 3600) * 1000,
+            //     "data": {
+            //         "traderId": traderId,
+            //         "messageContent": messageContent,
+            //         "items": this.insured[sessionID][traderId]
+            //     }
+            // });
         }
 
         this.resetSession(sessionID);

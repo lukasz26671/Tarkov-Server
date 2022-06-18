@@ -27,9 +27,9 @@ class Callbacks {
 		}
 	}
 	receiveSave(sessionID, req, resp, body, output) {
-		if (global._database.clusterConfig.saveOnReceive) {
-			savehandler_f.saveOpenSessions();
-		}
+		// if (global._database.clusterConfig.saveOnReceive) {
+		// 	savehandler_f.saveOpenSessions();
+		// }
 	}
 
 	respondBundle(sessionID, req, resp, body) {
