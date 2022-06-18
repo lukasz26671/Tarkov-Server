@@ -332,6 +332,14 @@ const loadTraderAssort = (traderId) => {
       convertedIds[currId] = newId;
       it._id = newId;
     }
+    for(const it of assort.items) {
+      if(it.parentId !== undefined 
+        && it.parentId.length === 24
+        && convertedIds[it.parentId] !== undefined) {
+        // console.log(it.parentId);
+        it.parentId = convertedIds[it.parentId];
+      }
+    }
     // Barter Scheme
     const newBarterScheme = {};
     for(const id in assort.barter_scheme) {
@@ -414,12 +422,12 @@ function loadTradersData() {
     global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
 
     // Loading Assort depending if its Fence or not
-    if (traderID == "579dc571d53a0658a154fbec") {
-      global._database.traders[traderID].base_assort = loadTraderAssort(traderID);
-      global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
-    } else {
+    // if (traderID == "579dc571d53a0658a154fbec") {
+    //   global._database.traders[traderID].base_assort = loadTraderAssort(traderID);
+    //   global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
+    // } else {
       global._database.traders[traderID].assort = loadTraderAssort(traderID);
-    }
+    // }
     // Loading Player Customizations For Buying
     if ("suits" in db.traders[traderID]) {
       if (typeof db.traders[traderID].suits == "string") {
