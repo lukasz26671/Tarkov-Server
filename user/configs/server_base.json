@@ -66,6 +66,7 @@
 		"tooShort": "The nickname is too short"
 	},
   "serverIPs": {
+    "Enable": false,
     "Trading": "https://127.0.0.1:443",
     "Messaging": "https://127.0.0.1:443",
     "Main": "https://127.0.0.1:443",

@@ -17,39 +17,43 @@ const { ItemController } = require('./ItemController');
 class ResponseController
 {
     static getUrl()
-  {
-      ConfigController.rebuildFromBaseConfigs();
-      var ip = ConfigController.Configs["server"].ip;
-      var port = ConfigController.Configs["server"].port;
-      return `${ip}:${port}`;
-  }
+    {
+        ConfigController.rebuildFromBaseConfigs();
+        var ip = ConfigController.Configs["server"].ip;
+        var port = ConfigController.Configs["server"].port;
+        return `${ip}:${port}`;
+    }
+
+    static getBackendUrl()
+    {
+        ConfigController.rebuildFromBaseConfigs();
+        var ip = ConfigController.Configs["server"].ip_backend;
+        var port = ConfigController.Configs["server"].port;
+        return `https://${ip}:${port}`;
+    }
 
   static getMainUrl() {
     ConfigController.rebuildFromBaseConfigs();
-    var ip = ConfigController.Configs["server"].ip;
-    var port = ConfigController.Configs["server"].port;
-    return `${ip}:${port}`;
+    var ip = ConfigController.Configs["server"].serverIPs.Main;
+    return `${ip}`;
   }
 
   static getTradingUrl() {
     ConfigController.rebuildFromBaseConfigs();
-    var ip = ConfigController.Configs["server"].ip;
-    var port = ConfigController.Configs["server"].port;
-    return `${ip}:${port}`;
+    var ip = ConfigController.Configs["server"].serverIPs.Trading;
+    return `${ip}`;
   }
 
   static getRagfairUrl() {
     ConfigController.rebuildFromBaseConfigs();
-    var ip = ConfigController.Configs["server"].ip;
-    var port = ConfigController.Configs["server"].port;
-    return `${ip}:${port}`;
+    var ip = ConfigController.Configs["server"].serverIPs.Ragfair;
+    return `${ip}`;
   }
 
   static getMessagingUrl() {
     ConfigController.rebuildFromBaseConfigs();
-    var ip = ConfigController.Configs["server"].ip;
-    var port = ConfigController.Configs["server"].port;
-    return `${ip}:${port}`;
+    var ip = ConfigController.Configs["server"].serverIPs.Messaging;
+    return `${ip}`;
   }
 
   static getPort() {
@@ -121,7 +125,8 @@ class ResponseController
     {
      url: "/client/game/config", action: (url, info, sessionID) => {
 
-        var mainUrl = ResponseController.getHttpsUrl();
+        var mainUrl = ResponseController.getBackendUrl();
+        var enableIndividualIps = ConfigController.Configs["server"].serverIPs.Enable;
 
         let obj = {
             queued: false,
@@ -135,13 +140,13 @@ class ResponseController
             nickname: "user",
             utc_time: utility.getTimestamp(),
             backend: {
-              Trading: mainUrl,// server.getBackendUrl(),
-              Messaging: mainUrl,//server.getBackendUrl(),
-              Main: mainUrl,//server.getBackendUrl(),
-              RagFair: mainUrl,//server.getBackendUrl(),
+              Trading: enableIndividualIps === true ? ResponseController.getTradingUrl() : mainUrl,// server.getBackendUrl(),
+              Messaging: enableIndividualIps === true ? ResponseController.getMessagingUrl() : mainUrl,// server.getBackendUrl(),
+              Main: enableIndividualIps === true ? ResponseController.getMainUrl() : mainUrl,// server.getBackendUrl(),
+              RagFair: enableIndividualIps === true ? ResponseController.getRagfairUrl() : mainUrl,// server.getBackendUrl(),
             },
             totalInGame: 1000,
-            reportAvailable: true,
+            reportAvailable: false,
           };
           return ResponseController.getBody(obj);
     }

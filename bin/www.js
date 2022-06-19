@@ -30,7 +30,7 @@ const serverBaseConfig = ConfigController.Configs["server_base"];
  */
 //  const serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
 const serverConfig = ConfigController.Configs["server"];
-
+serverIp = serverConfig.ip;
 var port = normalizePort(serverConfig.port);
 app.set('port', port);
 
@@ -43,7 +43,7 @@ const certs = certificate.generate(serverConfig.ip);
 const httpsServer = https.createServer({
   key: certs.key,
   cert: certs.cert
-},app);
+}, app);
 
 const io = require('socket.io')(server,{
   perMessageDeflate :false
@@ -63,8 +63,8 @@ if(serverConfig.runSimpleHttpServer === true) {
 }
 // else {
   httpsServer.on('error', onError);
-  httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().port) });
-  httpsServer.listen(port, ()=>{
+  httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().address + ":" + httpsServer.address().port) });
+  httpsServer.listen(port, serverIp, ()=>{
   });
 // }
 

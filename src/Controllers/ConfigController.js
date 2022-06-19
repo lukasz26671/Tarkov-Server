@@ -95,14 +95,16 @@ class ConfigController {
         if(fs.existsSync(process.cwd() + "/user/configs/server.json"))
           global.serverConfig = JSON.parse(fs.readFileSync(process.cwd() + "/user/configs/server.json"));
     
+        // let changesMade = false;
+        // for(let item in serverConfigBase) {
+        //   if(global.serverConfig[item] === undefined) {
+        //     global.serverConfig[item] = serverConfigBase[item];
+        //     logger.logInfo("Adding Config Setting " + item + " to server.json");
+        //     changesMade = true;
+        //   }
+        // }
         let changesMade = false;
-        for(let item in serverConfigBase) {
-          if(global.serverConfig[item] === undefined) {
-            global.serverConfig[item] = serverConfigBase[item];
-            logger.logInfo("Adding Config Setting " + item + " to server.json");
-            changesMade = true;
-          }
-        }
+        changesMade = ConfigController.mergeRecursiveIgnoringExisting(global.serverConfig, serverConfigBase);
     
         if(changesMade)
           fs.writeFileSync(process.cwd() + "/user/configs/server.json", JSON.stringify(global.serverConfig));

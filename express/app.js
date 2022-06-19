@@ -17,30 +17,14 @@ const cookieParser = require('cookie-parser');
 const { truncate, fstat } = require('fs');
 const { logger } = require('../core/util/logger');
 
-// var logger = require('morgan');
-
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
-
 const app = express();
 
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// app.set('docs', path.join(process.cwd(), 'out'));
-// app.set('out', path.join(process.cwd(), 'out'));
-// app.set('db', path.join(process.cwd(), 'dbViewer'));
-// // app.set('view engine', 'ejs');
-// app.set('docs', path.join(__dirname, 'out'));
-// app.set('out', path.join(__dirname, 'out'));
-// app.engine('html', require('ejs').renderFile);
-// app.set('view engine', 'html');
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
-// app.set('out', process.cwd() + "/out/");
-// console.log(process.cwd() + "\\out\\");
-// app.use(express.static(process.cwd() + "\\out\\"));
 
 app.use(express.raw({ type: "application/json", limit: '50mb',
 parameterLimit: 100000,
