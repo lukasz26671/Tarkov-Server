@@ -1,5 +1,5 @@
-const { Server, server } = require('./../../core/server/server');
-const { NotifierService } = require('./../classes/notifier');
+// const { Server, server } = require('./../../core/server/server');
+// const { NotifierService } = require('./../classes/notifier');
 const { FriendshipController } = require('./FriendshipController');
 const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
@@ -16,6 +16,7 @@ const { ItemController } = require('./ItemController');
  */
 class ResponseController
 {
+    static SessionIdToIpMap = {};
     static getUrl()
     {
         ConfigController.rebuildFromBaseConfigs();
@@ -94,7 +95,13 @@ class ResponseController
      * A method that is called whenever any request is made to the Server
      * @param {HttpRequest} req 
      */
-    static receivedCall = (req) => {
+    static receivedCall = (req, sessionID) => {
+
+        const ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+        const port = req.socket.remotePort || req.socket.localPort;
+        // ResponseController.SessionIdToIpMap[sessionID] = `${ip}:${port}`;
+        ResponseController.SessionIdToIpMap[sessionID] = `${ip}`;
+
         insurance_f.handler.checkExpiredInsurance();
     }
 
@@ -164,7 +171,8 @@ action: (url, info, sessionID) => {
     action: (url, info, sessionID) => {
         let accountId = AccountServer.login(info);
         let output = AccountServer.find(accountId);
-        output['server'] = server.name;
+        // output['server'] = server.name;
+        output['server'] = "CUNT";
         return fileIO.stringify(output);
       }
 },
@@ -180,26 +188,27 @@ action: (url, info, sessionID) => {
 {
     url: "/singleplayer/airdrop/config",
     action: (url, info, sessionID) => {
-
-        return JSON.stringify(
-            {
-                "airdropChancePercent": {
-                    "bigmap": 100,
-                    "woods": 100,
-                    "lighthouse": 100,
-                    "shoreline": 100,
-                    "interchange": 100,
-                    "reserve": 100
-                },
-                "airdropMinStartTimeSeconds": 90,
-                "airdropMaxStartTimeSeconds": 120,
-                "airdropMinOpenHeight": 100,
-                "airdropMaxOpenHeight": 150,
-                "planeMinFlyHeight": 400,
-                "planeMaxFlyHeight": 500,
-                "planeVolume": 0.5
-            }
-        )
+        const airdropSettings = ConfigController.Configs["gameplay"].inRaid.airdropSettings;
+        // return JSON.stringify(
+        //     {
+        //         "airdropChancePercent": {
+        //             "bigmap": 100,
+        //             "woods": 100,
+        //             "lighthouse": 100,
+        //             "shoreline": 100,
+        //             "interchange": 100,
+        //             "reserve": 100
+        //         },
+        //         "airdropMinStartTimeSeconds": 90,
+        //         "airdropMaxStartTimeSeconds": 120,
+        //         "airdropMinOpenHeight": 100,
+        //         "airdropMaxOpenHeight": 150,
+        //         "planeMinFlyHeight": 400,
+        //         "planeMaxFlyHeight": 500,
+        //         "planeVolume": 0.5
+        //     }
+        // )
+        return JSON.stringify(airdropSettings);
     }
 },
 /**
@@ -257,19 +266,23 @@ action: (url, info, sessionID) => {
  {
     url: "/client/raid/person/killed/showMessage",
     action: (url, info, sessionID) => {
-        console.log(info);
-
-        const showMessage = ConfigController.Configs["gameplay"].inRaid.showMessage;
-        return JSON.stringify(showMessage)
+        const showMessage = ConfigController.Configs["gameplay"].inRaid.showDeathMessage;
+        if(showMessage !== undefined)
+            return JSON.stringify(showMessage);
+        else
+            return JSON.stringify(false);
     }
 },
 {
     url: "/client/raid/createFriendlyAI",
     action: (url, info, sessionID) => {
-        console.log(info);
 
         const createFriendlies = ConfigController.Configs["gameplay"].inRaid.createFriendlyAI;
-        return JSON.stringify(createFriendlies)
+        if(createFriendlies !== undefined)
+            return JSON.stringify(createFriendlies);
+        else
+            return JSON.stringify(false);
+
     }
 },
 {

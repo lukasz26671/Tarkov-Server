@@ -33,11 +33,12 @@ app.use(cookieParser());
 
 app.use(function(req, res, next) {
   const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
-
+  var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+  // console.log(ip);
   if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
-    logger.logInfo(`${PHPSESSID}::${req.method}::${req.url}`);
+    logger.logInfo(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
 
-  ResponseController.receivedCall(req);
+  ResponseController.receivedCall(req, PHPSESSID);
 
   next();
 });
