@@ -2,7 +2,25 @@
   "inRaid":
   {
       "showDeathMessage": true,
-      "createFriendlyAI": true
+      "createFriendlyAI": true,
+      "airdropSettings": {
+        "airdropChancePercent": {
+            "bigmap": 100,
+            "woods": 100,
+            "lighthouse": 100,
+            "shoreline": 100,
+            "interchange": 100,
+            "reserve": 100
+        },
+        "airdropMinStartTimeSeconds": 90,
+        "airdropMaxStartTimeSeconds": 120,
+        "airdropMinOpenHeight": 100,
+        "airdropMaxOpenHeight": 150,
+        "planeMinFlyHeight": 400,
+        "planeMaxFlyHeight": 500,
+        "planeVolume": 0.5,
+        "maximumAirdopsPerRaid": 1
+    }
   },
   "fence":
   {
