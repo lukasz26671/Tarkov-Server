@@ -209,8 +209,7 @@ for(const r in Routes) {
 for(const r in responseClass.staticResponses) {
   // console.log(r);
   app.all(r, (req, res) => {
-    // console.log("responseClass.staticResponses:" + r);
-   logger.logInfo("responseClass.staticResponses:" + r)
+  //  logger.logInfo("responseClass.staticResponses:" + r)
 
     handleRoute(req, res, responseClass.staticResponses[r]);
   });
