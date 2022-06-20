@@ -91,15 +91,15 @@ class Logger {
   }
 
   logError(text) {
-    this.log("[ERROR]", text, "white", "red");
+    this.log("!", text, "white", "red");
   }
 
   logWarning(text) {
-    this.log("[WARNING]", text, "black", "yellow");
+    this.log("!", text, "black", "yellow");
   }
 
   logSuccess(text) {
-    this.log("[SUCCESS]", text, "white", "green");
+    this.log(".", text, "white", "green");
   }
 
   logDebug(text, isStructData = false) {
@@ -112,10 +112,10 @@ class Logger {
   }
 
   logInfo(text) {
-    if (!serverConfig.hideInfoLogs) this.log("[INFO]", text, "white", "blue");
+    if (!serverConfig.hideInfoLogs) this.log(".", text, "white", "blue");
   }
   logDebug(text) {
-    if (serverConfig.showDebugLogs) this.log("[DEBUG]", text, "white");
+    if (serverConfig.showDebugLogs) this.log(".", text, "white");
   }
   logRequest(text, data = "") {
     if (data == "") this.log("", text, "cyan", "black");
