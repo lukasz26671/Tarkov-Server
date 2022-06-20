@@ -139,6 +139,15 @@ function loadQuestsData() {
   _database.quests = fileIO.readParsed("./" + db.quests.quests);
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
 
+  // - Convert Aki's working Quests to JETs quest array // 
+  const objectQData = fileIO.readParsed("./" + db.quests.quests2);
+  if(objectQData !== undefined) {
+    _database.quests = [];
+    for(const q in objectQData) {
+      _database.quests.push(objectQData[q]);
+    }
+  }
+
   /*   // this should load quests depending on file content if its single quest it will be pushed to the list
     // if its quests array containing more then 1 quest it will be loaded as for loop push 
     // unless database quests array is empty then it will just everride the empty array
