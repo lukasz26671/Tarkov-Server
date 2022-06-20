@@ -400,7 +400,7 @@ function completeQuest(pmcData, body, sessionID) {
   }
 
   // give reward
-  const quest = getCachedQuest(body.qid);
+  let quest = getCachedQuest(body.qid);
   const locale = AccountServer.getAccountLang(sessionID);
 
   if (intelCenterBonus > 0) {
