@@ -33,6 +33,14 @@ class ResponseController
         return `https://${ip}:${port}`;
     }
 
+    static getWebSocketUrl()
+    {
+        ConfigController.rebuildFromBaseConfigs();
+        var ws = ResponseController.getBackendUrl().replace("https", "ws");
+        console.log("getWebSocketUrl:" + ws)
+        return ws;
+    }
+
   static getMainUrl() {
     ConfigController.rebuildFromBaseConfigs();
     var ip = ConfigController.Configs["server"].serverIPs.Main;
@@ -65,8 +73,6 @@ class ResponseController
 
   static getHttpsUrl = () => `https://${ResponseController.getUrl()}`;
 
-
-  static getWebsocketUrl = () => `ws://${ResponseController.getUrl()}`;
     // noBody
     static noBody = (data) => {
         return utility.clearString(fileIO.stringify(data));
@@ -105,6 +111,16 @@ class ResponseController
         insurance_f.handler.checkExpiredInsurance();
     }
 
+    static getNotifier = (sessionID) => {
+        return {
+            server: ResponseController.getBackendUrl(), // this.httpServerHelper.buildUrl(),
+            channel_id: sessionID,
+            url: `${ResponseController.getBackendUrl()}/notifierServer/get/${sessionID}`,
+            notifierServer: `${ResponseController.getBackendUrl()}/notifierServer/get/${sessionID}`,
+            ws: `${ResponseController.getWebSocketUrl()}/notifierServer/getwebsocket/${sessionID}`
+        }
+    }
+
     /**
      * Routes
      */
@@ -115,8 +131,8 @@ class ResponseController
             action: (url, info, sessionID) => {
                 return ResponseController.getBody({
                     "status": "ok",
-                    // "notifier": NotifierService.getChannel(sessionID),
-                    // "notifierServer": NotifierService.getServer(sessionID)
+                    "notifier": ResponseController.getNotifier(sessionID),
+                    "notifierServer": ResponseController.getNotifier(sessionID).notifierServer
                 });
             }
         },
@@ -300,14 +316,14 @@ action: (url, info, sessionID) => {
         return JSON.stringify("");
     }
 },
-{ url: "/client/game/profile/select", action: (url, info, sessionID) => {
-    return ResponseController.getBody({
-        "status": "ok",
-        "notifier": NotifierService.getChannel(sessionID),
-        "notifierServer": NotifierService.getServer(sessionID)
-    });
-}
-},
+// { url: "/client/game/profile/select", action: (url, info, sessionID) => {
+//     return ResponseController.getBody({
+//         "status": "ok",
+//         // "notifier": NotifierService.getChannel(sessionID),
+//         // "notifierServer": NotifierService.getServer(sessionID)
+//     });
+// }
+// },
 { url: "/client/friend/list", action: (url, info, sessionID) => {
 
     var result = { Friends: [], Ignore: [], InIgnoreList: [] };
@@ -388,8 +404,8 @@ action: (url, info, sessionID) => {
  * @returns {object} 
  */
  { url: "/client/notifier/channel/create", action: (url, info, sessionID) => {
-    const result = {};// NotifierService.getChannel(sessionID);
-    return ResponseController.getBody(result);
+    return ResponseController.getBody(ResponseController.getNotifier(sessionID));
+    // return JSON.stringify(ResponseController.getNotifier(sessionID));
 }
  },
 {
@@ -423,9 +439,58 @@ action: (url, info, sessionID) => {
         offraid_f.saveProgress(info, sessionID);
         return response_f.nullResponse();
     }
+},
+{
+    url: "/client/match/group/create",
+    action: (url, info, sessionID) => {
+
+    }
 }
 
 
+    ]
+
+    static DynamicRoutes = [
+
+        {
+            url: "/?last_id",
+            action: (url, info, sessionID) => {
+                // return this.notifierCallbacks.notify(url, info, sessionID)
+                console.log("DynamicRoutes:last_id");
+                return ResponseController.getBody({
+                    "status": "ok",
+                });
+            }
+        },
+        {
+            url: "/notifierServer",
+            action: (url, info, sessionID) => {
+                // return this.notifierCallbacks.notify(url, info, sessionID)
+                console.log("DynamicRoutes:notifierServer");
+
+                return ResponseController.getBody({
+                    "status": "ok",
+                });
+            }
+        },
+        {
+            url: "/push/notifier/get/",
+            action: (url, info, sessionID) => {
+                console.log("DynamicRoutes:/push/notifier/get/");
+
+                // return this.notifierCallbacks.getNotifier(url, info, sessionID)
+                return ResponseController.getBody("ok");
+            }
+        },
+        {
+            url: "/push/notifier/getwebsocket/",
+            action: (url, info, sessionID) => {
+                console.log("/push/notifier/getwebsocket/");
+
+                // return this.notifierCallbacks.getNotifier(url, info, sessionID)
+                return ResponseController.getBody("ok");
+            }
+        },
     ]
 
     static getRoute = (url,info,sessionID) => {
