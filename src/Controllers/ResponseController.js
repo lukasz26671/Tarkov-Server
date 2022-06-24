@@ -9,6 +9,7 @@ const utility = require('./../../core/util/utility');
 const { TradingController } = require('./TradingController');
 const { DatabaseController } = require('./DatabaseController');
 const { ItemController } = require('./ItemController');
+const { InsuranceController } = require('./InsuranceController');
 
 /**
  * The response controller is the controller that handles all HTTP request and responses
@@ -102,13 +103,13 @@ class ResponseController
      * @param {HttpRequest} req 
      */
     static receivedCall = (req, sessionID) => {
+        InsuranceController.checkExpiredInsurance();
 
         const ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
         const port = req.socket.remotePort || req.socket.localPort;
         // ResponseController.SessionIdToIpMap[sessionID] = `${ip}:${port}`;
         ResponseController.SessionIdToIpMap[sessionID] = `${ip}`;
 
-        insurance_f.handler.checkExpiredInsurance();
     }
 
     static getNotifier = (sessionID) => {
