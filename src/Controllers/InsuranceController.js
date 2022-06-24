@@ -1,5 +1,6 @@
 const { AccountServer } = require('../classes/account');
 const insurance = require('../classes/insurance');
+const { AccountController } = require('./AccountController')
 
 class InsuranceController {
 
@@ -10,9 +11,9 @@ class InsuranceController {
      static checkExpiredInsurance() {
         // logger.logInfo("checkExpiredInsurance");
         for(const p in profile_f.handler.profiles) {
-            const prof = profile_f.handler.profiles[p].pmc;
+            const prof = AccountController.getPmcProfile(p);
             // console.log(prof);
-            if(prof.InsuredItems !== undefined) {
+            if(prof !== undefined && prof.InsuredItems !== undefined) {
                 for (const insurance of prof.InsuredItems) {
                     // console.log("insuredItem");
                     // console.log(insurance);

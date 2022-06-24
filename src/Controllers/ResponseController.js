@@ -38,7 +38,7 @@ class ResponseController
     {
         ConfigController.rebuildFromBaseConfigs();
         var ws = ResponseController.getBackendUrl().replace("https", "ws");
-        console.log("getWebSocketUrl:" + ws)
+        // console.log("getWebSocketUrl:" + ws)
         return ws;
     }
 
