@@ -11,7 +11,7 @@ class InsuranceController {
         // logger.logInfo("checkExpiredInsurance");
         for(const p in profile_f.handler.profiles) {
             const prof = profile_f.handler.profiles[p].pmc;
-            console.log(prof);
+            // console.log(prof);
             if(prof.InsuredItems !== undefined) {
                 for (const insurance of prof.InsuredItems) {
                     // console.log("insuredItem");
