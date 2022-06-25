@@ -10,6 +10,7 @@ const { TradingController } = require('./TradingController');
 const { DatabaseController } = require('./DatabaseController');
 const { ItemController } = require('./ItemController');
 const { InsuranceController } = require('./InsuranceController');
+const { logger } = require('../../core/util/logger');
 
 /**
  * The response controller is the controller that handles all HTTP request and responses
@@ -76,7 +77,8 @@ class ResponseController
 
     // noBody
     static noBody = (data) => {
-        return utility.clearString(fileIO.stringify(data));
+        // return utility.clearString(fileIO.stringify(data));
+        return JSON.stringify(data);
     }
     // getBody
     static getBody = (data, err = 0, errmsg = null) => {
@@ -88,7 +90,7 @@ class ResponseController
     }
     // nullResponse
     static nullResponse = () => {
-        return this.getBody(null);
+        return ResponseController.getBody(null);
     }
     /**
      * emptyArrayResponse
@@ -438,13 +440,56 @@ action: (url, info, sessionID) => {
     url: "/raid/profile/save",
     action: (url, info, sessionID) => {
         offraid_f.saveProgress(info, sessionID);
-        return response_f.nullResponse();
+        return ResponseController.nullResponse();
     }
 },
 {
     url: "/client/match/group/create",
     action: (url, info, sessionID) => {
-
+        logger.logError("Cannot create group while in Singleplayer!");
+        return ResponseController.nullResponse();
+    }
+},
+{
+    url: "/client/match/group/leave",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot leave group while in Singleplayer!");
+        return ResponseController.nullResponse();
+    }
+},
+{
+    url: "/client/match/group/delete",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot delete group while in Singleplayer!");
+        return ResponseController.nullResponse();
+    }
+},
+{
+    url: "/client/match/group/exit_from_menu",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot leave group while in Singleplayer!");
+        return ResponseController.nullResponse();
+    }
+},
+{
+    url: "/client/match/group/invite/send",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot send invites while in Singleplayer!");
+        return ResponseController.nullResponse();
+    }
+},
+{
+    url: "/client/match/group/invite/cancel",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot cancel invites while in Singleplayer!");
+        return ResponseController.nullResponse();
+    }
+},
+{
+    url: "/client/match/group/invite/accept",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot accept invites while in Singleplayer!");
+        return ResponseController.nullResponse();
     }
 }
 
