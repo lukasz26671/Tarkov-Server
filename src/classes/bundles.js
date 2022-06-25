@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { logger } = require('../../core/util/logger');
+const { ResponseController } = require('../Controllers/ResponseController');
 
 /**
  * Explores recursively a directory and returns all the filepaths and folderpaths in the callback.
@@ -47,7 +48,8 @@ class BundlesServer {
   constructor() {
     this.bundles = [];
     this.bundleBykey = {};
-    this.backendUrl = `https://${serverConfig.ip}:${serverConfig.port}`;
+    // this.backendUrl = `https://${serverConfig.ip}:${serverConfig.port}`;
+    this.backendUrl = ResponseController.getBackendUrl();
   }
 
 
