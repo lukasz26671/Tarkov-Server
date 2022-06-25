@@ -221,7 +221,7 @@ class BotsController {
     bot = utility.generateInventoryID(bot);
 
     // console.log(bot);
-    console.log(role);
+    // console.log(role);
 
     return bot;
 
