@@ -29,24 +29,11 @@
             "time_min": 5,
             "time_max": 60,
             "slots_min": 1,
-            "slots_max": 4,
+            "slots_max": 3,
             "SpawnPoints": "BotZone",
             "BotSide": "Savage",
             "BotPreset": "normal",
             "WildSpawnType": "assault",
-            "isPlayers": false
-        }
-        ,
-        {
-            "number": 1,
-            "time_min": 5,
-            "time_max": 60,
-            "slots_min": 1,
-            "slots_max": 4,
-            "SpawnPoints": "BotZone",
-            "BotSide": "Savage",
-            "BotPreset": "normal",
-            "WildSpawnType": "exUsec",
             "isPlayers": false
         }
     ],
@@ -2474,7 +2461,7 @@
     "BossDifficult": "normal",
     "BossEscortType": "pmcBot",
     "BossEscortDifficult": "normal",
-    "BossEscortAmount": "2",
+    "BossEscortAmount": "0",
     "Time": 5
   }
     ],
