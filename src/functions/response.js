@@ -63,10 +63,10 @@ class Responses {
       // "/client/match/group/invite/accept": this.clientMatchGroupInviteAccept,
       // "/client/match/group/invite/cancel": this.clientMatchGroupInviteCancel,
       // "/client/match/group/invite/send": this.clientMatchGroupInviteSend,
-      "/client/match/group/looking/start": this.clientMatchGroupLookingStart,
-      "/client/match/group/looking/stop": this.clientMatchGroupLookingStop,
+      // "/client/match/group/looking/start": this.clientMatchGroupLookingStart,
+      // "/client/match/group/looking/stop": this.clientMatchGroupLookingStop,
       "/client/match/group/start_game": this.clientMatchGroupStart_Game,
-      "/client/match/group/status": this.clientMatchGroupStatus,
+      // "/client/match/group/status": this.clientMatchGroupStatus,
       "/client/match/join": this.clientMatchJoin,
       "/client/match/offline/start": this.clientMatchOfflineStart,
       "/client/match/offline/end": this.clientMatchOfflineEnd,
@@ -563,9 +563,9 @@ class Responses {
   clientMatchGroupStart_Game(url, info, sessionID) {
     return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
   }
-  clientMatchGroupStatus(url, info, sessionID) {
-    return response_f.getBody(match_f.handler.getGroupStatus(info));
-  }
+  // clientMatchGroupStatus(url, info, sessionID) {
+  //   return response_f.getBody(match_f.handler.getGroupStatus(info));
+  // }
   clientMatchJoin(url, info, sessionID) {
     return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
   }

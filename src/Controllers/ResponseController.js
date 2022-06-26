@@ -11,6 +11,8 @@ const { DatabaseController } = require('./DatabaseController');
 const { ItemController } = require('./ItemController');
 const { InsuranceController } = require('./InsuranceController');
 const { logger } = require('../../core/util/logger');
+const { responses } = require('./../functions/response');
+
 
 /**
  * The response controller is the controller that handles all HTTP request and responses
@@ -491,6 +493,13 @@ action: (url, info, sessionID) => {
         logger.logError("Cannot accept invites while in Singleplayer!");
         return ResponseController.nullResponse();
     }
+},
+{
+    url: "/client/match/group/status",
+    action: (url, info, sessionID) => {
+        logger.logError("Cannot search for friends while in Singleplayer!");
+        return ResponseController.getBody({"players": []});
+    }
 }
 
 
@@ -537,6 +546,20 @@ action: (url, info, sessionID) => {
                 return ResponseController.getBody("ok");
             }
         },
+        // {
+        //     url:"/client/location/getLocalloot",
+        //     action: (url, info, sessionID) => {
+        //         let location_name = "";
+        //         const params = new URL("https://127.0.0.1" + url).searchParams;
+        //         if (typeof info.locationId != "undefined") {
+        //         location_name = info.locationId;
+        //         } else {
+        //         location_name = params.get("locationId");
+        //         }
+
+        //         return response_f.getBody(location_f.handler.get(location_name));
+        //     }
+        // }
     ]
 
     static getRoute = (url,info,sessionID) => {
@@ -567,9 +590,16 @@ action: (url, info, sessionID) => {
      * @param {*} action 
      */
     static overrideRoute = (url, action) => {
-       var existingRoute = ResponseController.Routes.find(x=>x.url == url);
-       if(existingRoute !== undefined)
-            existingRoute.action = action;
+        var existingRouteStatic = ResponseController.Routes.find(x=>x.url == url);
+        var existingRouteDynamic = ResponseController.DynamicRoutes.find(x=>x.url == url);
+        if(existingRouteStatic !== undefined)
+            existingRouteStatic.action = action;
+        else if(existingRouteDynamic !== undefined)
+            existingRouteDynamic.action = action;
+        else if(responses.staticResponses[url] !== undefined)
+            responses.staticResponses[url] = action;
+        else if(responses.dynamicResponses[url] !== undefined)
+            responses.dynamicResponses[url] = action;
         else 
             ResponseController.addRoute(url, action);
     }
