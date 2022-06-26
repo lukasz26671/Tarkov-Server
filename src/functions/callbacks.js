@@ -35,7 +35,7 @@ class Callbacks {
 	respondBundle(sessionID, req, resp, body) {
 		let bundleKey = req.url.split('/bundle/')[1];
 		bundleKey = decodeURI(bundleKey);
-		logger.logInfo(`[BUNDLE]: ${req.url}`);
+		// logger.logInfo(`[BUNDLE]: ${req.url}`);
 		let bundle = bundles_f.handler.getBundleByKey(bundleKey, true);
 		let path = bundle.filePath;
 		// send bundle
