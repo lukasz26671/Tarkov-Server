@@ -167,7 +167,7 @@ class BundlesServer {
 
   getBundles(local) {
     let bundles = utility.DeepCopy(this.bundles);
-    console.log(bundles);
+    // console.log(bundles);
     // for (const bundle of bundles) {
     for (const bundle in bundles) {
       // if (local) {
