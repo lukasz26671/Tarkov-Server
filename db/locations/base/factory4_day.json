@@ -26,8 +26,8 @@
     "waves": [
         {
             "number": 0,
-            "time_min": 5,
-            "time_max": 60,
+            "time_min": 6,
+            "time_max": 15,
             "slots_min": 1,
             "slots_max": 3,
             "SpawnPoints": "BotZone",
