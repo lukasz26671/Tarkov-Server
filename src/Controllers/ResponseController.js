@@ -500,9 +500,28 @@ action: (url, info, sessionID) => {
         logger.logError("Cannot search for friends while in Singleplayer!");
         return ResponseController.getBody({"players": []});
     }
+},
+{
+    url: "/ServerInternalIPAddress",
+    action: (url, info, sessionID) => {
+        const internalIp =ConfigController.Configs["server"].ip;
+        // return JSON.stringify(internalIp);
+        return internalIp;
+    }
+},
+{
+    url: "/ServerExternalIPAddress",
+    action: (url, info, sessionID) => {
+        const externalIP =ConfigController.Configs["server"].ip_backend;
+        return JSON.stringify(externalIP);
+    }
+},
+{
+    url: "/getBundleList",
+    action: (url, info, sessionID) => {
+        return ResponseController.noBody(bundles_f.handler.getBundles(false));
+    }
 }
-
-
     ]
 
     static DynamicRoutes = [

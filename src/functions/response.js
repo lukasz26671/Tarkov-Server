@@ -105,7 +105,7 @@ class Responses {
       "/server/config/profiles": this.serverConfigProfiles,
       "/server/config/server": this.serverConfigServer,
       "/server/softreset": this.serverSoftReset,
-      "/singleplayer/bundles": this.singleplayerBundles,
+      // "/singleplayer/bundles": this.singleplayerBundles,
       "/singleplayer/settings/raid/endstate": this.singleplayerSettingsRaidEndstate,
       "/singleplayer/settings/raid/menu": this.singleplayerSettingsRaidMenu,
       //"/singleplayer/settings/bot/difficulty": this.singleplayerSettingsBotDifficulty,
