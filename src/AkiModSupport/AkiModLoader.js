@@ -20,6 +20,10 @@ class AkiModLoader
         { 
             return JSON.parse(item); 
         } ;
+        global.JsonUtil.serialize = (item) => 
+        { 
+            return JSON.stringify(item); 
+        } ;
 
 
         global.DatabaseServer = {};
@@ -105,6 +109,36 @@ class AkiModLoader
                 global._database.locales.global[localeID].templates[langKey] = DatabaseServer.tables.locales.global[localeID].templates[langKey];
             }
         }
+
+        // add the assorts from the mod
+        for(const traderId in DatabaseServer.tables.traders) {
+            // Barter Scheme ----------------->
+            for(const barterScheme in DatabaseServer.tables.traders[traderId].assort.barter_scheme) {
+                if(global._database.traders[traderId].assort.barter_scheme[barterScheme] === undefined) {
+                    // console.log(barterScheme);
+                    global._database.traders[traderId].assort.barter_scheme[barterScheme] 
+                        = DatabaseServer.tables.traders[traderId].assort.barter_scheme[barterScheme];
+                }
+            }
+
+            // Assort Items ----------------->
+            for(const assortItem of DatabaseServer.tables.traders[traderId].assort.items) {
+                const index = global._database.traders[traderId].assort.items.findIndex(x => x._tpl === assortItem._tpl);
+                if(index === -1) {
+                    // console.log(assortItem);
+                    global._database.traders[traderId].assort.items.push(assortItem);
+                }
+            }
+
+            // Loyal Level Items ----------------->
+            for(const loyalLevelItem in DatabaseServer.tables.traders[traderId].assort.loyal_level_items) {
+                if(global._database.traders[traderId].assort.loyal_level_items[loyalLevelItem] === undefined) {
+                    // console.log(loyalLevelItem);
+                    global._database.traders[traderId].assort.loyal_level_items[loyalLevelItem] 
+                        = DatabaseServer.tables.traders[traderId].assort.loyal_level_items[loyalLevelItem];
+                }
+            }
+        }
     }
 
     /**
@@ -131,7 +165,7 @@ class AkiModLoader
 
         const absolutePathToModMainFile = absolutePathToModFolder + "/" + packageConfig.main;
 
-        logger.logWarning(`${modFolder} - Aki mod: This is a SPT-Aki mod, I will attempt to load it.`);
+        // logger.logWarning(`${modFolder} - Aki mod: This is a SPT-Aki mod, I will attempt to load it.`);
 
         try {
             ModLoader.onLoad = {};
