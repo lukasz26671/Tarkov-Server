@@ -3,6 +3,11 @@
 ## Current known working Tarkov Version
 - 0.12.12.15.*
 
+## Disclaimer
+
+This is by no means designed for cheats or illegally downloading the game. This is purely for educational and game modification purposes. You must buy the game to use this. 
+You can obtain it here. [https://www.escapefromtarkov.com](https://www.escapefromtarkov.com)
+
 ## Debugging
 - Download and Install [Visual Studio Code](https://code.visualstudio.com/) 
 - Open the Directory (can be done in several ways)
