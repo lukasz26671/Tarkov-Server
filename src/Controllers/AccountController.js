@@ -227,7 +227,7 @@ class AccountController
         }
   
         //Load the PMC profile from disk.
-        const loadedProfile = fileIO.readParsed(AccountController.getPmcPath(sessionID));
+        let loadedProfile = fileIO.readParsed(AccountController.getPmcPath(sessionID));
         const changedIds = {};
         for(const item of loadedProfile.Inventory.items) {
           if(item._id.length > 24 || item._id.includes("0000")) {
@@ -243,6 +243,11 @@ class AccountController
             item.parentId = changedIds[item.parentId];
           }
         }
+        
+        // In patch 0.12.12.30 . BSG introduced "Special Slots" for PMCs.
+        // To cater for old/broken accounts, we remove the old "Pockets" (557ffd194bdc2d28148b457f) and replace with the new (627a4e6b255f7527fb05a0f6)
+        loadedProfile = AccountController.AddSpecialSlotPockets(loadedProfile);
+        
         if(Object.keys(changedIds).length > 0) {
           logger.logSuccess(`Login cleaned ${Object.keys(changedIds).length} items`);
         }
@@ -264,6 +269,100 @@ class AccountController
       }
       logger.logSuccess(`Loaded profile for AID ${sessionID} successfully.`);
     }
+
+    /**
+     * In patch 0.12.12.30 . BSG introduced "Special Slots" for PMCs.
+     * To cater for old/broken accounts, we remove the old "Pockets" (557ffd194bdc2d28148b457f) and replace with the new (627a4e6b255f7527fb05a0f6)
+     * @param {*} profile 
+     * @returns {object} profile
+     */
+    static AddSpecialSlotPockets(profile) {
+
+      // In patch 0.12.12.30 . BSG introduced "Special Slots" for PMCs.
+      // To cater for old/broken accounts, we remove the old "Pockets" (557ffd194bdc2d28148b457f) and replace with the new (627a4e6b255f7527fb05a0f6)
+      const preSpecialSlotPocketsIndex = profile.Inventory.items.findIndex(x=>x._tpl === "557ffd194bdc2d28148b457f");
+      if(preSpecialSlotPocketsIndex !== -1) {
+        profile.Inventory.items = profile.Inventory.items.filter(x => x._tpl !== "557ffd194bdc2d28148b457f")
+        let addedSpecialItems = profile.Inventory.items.findIndex(x=>x._tpl === "627a4e6b255f7527fb05a0f6") === -1;
+        if(addedSpecialItems) {
+          profile.Inventory.items.push({
+            "_id": utility.generateNewId(undefined, 3),
+            "_tpl": "627a4e6b255f7527fb05a0f6",
+            "parentId": profile.Inventory.equipment,
+            "slotId": "Pockets"
+          });
+          logger.logSuccess(`Login added Special Items Pockets`);
+        }
+      }
+      return profile;
+
+    }
+
+    /** Create character profile
+   * 
+   * @param {*} info 
+   * @param {*} sessionID 
+   */
+  static createProfile(info, sessionID) {
+console.log("createProfile");
+console.log(info);
+
+    // Load account data //
+    const account = AccountController.find(sessionID);
+
+    // Get profile location //
+    const folder = account_f.getPath(account.id);
+
+    // Get the faction the player has chosen //
+    const ChosenSide = info.side.toLowerCase();
+
+    // Get the faction the player has chosen as UpperCase String //
+    const ChosenSideCapital = ChosenSide.charAt(0).toUpperCase() + ChosenSide.slice(1);
+
+    // Get the profile template for the chosen faction //
+    // let pmcData = fileIO.readParsed(db.profile[account.edition]["character_" + ChosenSide]);
+    // let pmcData = JSON.parse(fs.readFileSync(process.cwd() + "/db/profile/Edge Of Darkness/character_usec.json"));
+    let pmcData = JSON.parse(fs.readFileSync(process.cwd() + `/db/profile/Edge Of Darkness/character_${ChosenSide}.json`));
+
+    // Initialize the clothing object //
+    let storage = { _id: "", suites: [] };
+
+    // delete existing profile
+    // if (this.profiles[account.id]) {
+    //   delete this.profiles[account.id];
+    //   events.scheduledEventHandler.wipeScheduleForSession(sessionID);
+    // }
+
+    // Set defaults for new profile generation //
+    pmcData._id = "pmc" + account.id;
+    pmcData.aid = account.id;
+    pmcData.savage = "scav" + account.id;
+    pmcData.Info.Side = ChosenSideCapital;
+    pmcData.Info.Nickname = info.nickname;
+    pmcData.Info.LowerNickname = info.nickname.toLowerCase();
+    pmcData.Info.Voice = customization_f.getCustomization()[info.voiceId]._name;
+    pmcData.Customization = fileIO.readParsed(db.profile.defaultCustomization)[ChosenSideCapital]
+    pmcData.Customization.Head = info.headId;
+    pmcData.Info.RegistrationDate = ~~(new Date() / 1000);
+    pmcData.Health.UpdateTime = ~~(Date.now() / 1000);
+
+    // Load default clothing into the profile //
+    let def = fileIO.readParsed(db.profile[account.edition].storage);
+    storage = { err: 0, errmsg: null, data: { _id: pmcData._id, suites: def[ChosenSide] } };
+
+    // Write the profile to disk //
+    fileIO.write(`${folder}character.json`, pmcData);
+    fileIO.write(`${folder}storage.json`, storage);
+    fileIO.write(`${folder}userbuilds.json`, {});
+    fileIO.write(`${folder}dialogue.json`, {});
+    fileIO.write(`${folder}exfiltrations.json`, { bigmap: 0, develop: 0, factory4_day: 0, factory4_night: 0, interchange: 0, laboratory: 0, lighthouse: 0, rezervbase: 0, shoreline: 0, suburbs: 0, tarkovstreets: 0, terminal: 0, town: 0, woods: 0, privatearea: 0 });
+
+    pmcData = AccountController.AddSpecialSlotPockets(pmcData);
+
+    // don't wipe profile again //
+    AccountServer.setWipe(account.id, false);
+    this.initializeProfile(sessionID);
+  }
 }
 
 module.exports.AccountController = AccountController;
