@@ -40,17 +40,17 @@ class DialogueServer {
     if (global.internal.fs.existsSync(getPath(sessionID))) {
 
       // Compare the file age saved in memory with the file age on disk.
-      let stats = global.internal.fs.statSync(getPath(sessionID));
-      if (stats.mtimeMs != this.dialogueFileAge[sessionID]) {
+      // let stats = global.internal.fs.statSync(getPath(sessionID));
+      // if (stats.mtimeMs != this.dialogueFileAge[sessionID]) {
 
         //Load saved dialogues from disk.
         this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
 
         // Reset the file age for the sessions dialogues.
-        let stats = global.internal.fs.statSync(getPath(sessionID));
-        this.dialogueFileAge[sessionID] = stats.mtimeMs;
-        logger.logWarning(`Dialogues for AID ${sessionID} were modified elsewhere. Dialogue was reloaded successfully.`)
-      }
+        // let stats = global.internal.fs.statSync(getPath(sessionID));
+        // this.dialogueFileAge[sessionID] = stats.mtimeMs;
+        // logger.logWarning(`Dialogues for AID ${sessionID} were modified elsewhere. Dialogue was reloaded successfully.`)
+      // }
     }
   }
 
@@ -145,6 +145,8 @@ class DialogueServer {
 
     return fileIO.stringify({ err: 0, errmsg: null, data: { messages: this.dialogues[sessionID][dialogueId].messages } });
   }
+
+  
 
   /**
    * Add a templated message to the dialogue.
