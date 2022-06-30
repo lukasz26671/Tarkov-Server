@@ -317,7 +317,7 @@ class Initializer {
       "keepalive.js",
       "locale.js",
       "location.js",
-      "match.js",
+      // "match.js",
       "move.js",
       "note.js",
       "notifier.js",

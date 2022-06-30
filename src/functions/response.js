@@ -55,8 +55,8 @@ class Responses {
       "/client/mail/dialog/remove": this.clientMailDialogRemove,
       "/client/mail/dialog/unpin": this.clientMailDialogUnpin,
       "/client/mail/dialog/view": this.clientMailDialogView,
-      "/client/match/available": this.clientMatchAvailable,
-      "/client/match/exit": this.clientMatchExit,
+      // "/client/match/available": this.clientMatchAvailable,
+      // "/client/match/exit": this.clientMatchExit,
       // "/client/match/group/create": this.clientMatchGroupCreate,
       // "/client/match/group/delete": this.clientMatchGroupDelete,
       // "/client/match/group/exit_from_menu": this.clientMatchGroupExit_From_Menu,
@@ -65,12 +65,12 @@ class Responses {
       // "/client/match/group/invite/send": this.clientMatchGroupInviteSend,
       // "/client/match/group/looking/start": this.clientMatchGroupLookingStart,
       // "/client/match/group/looking/stop": this.clientMatchGroupLookingStop,
-      "/client/match/group/start_game": this.clientMatchGroupStart_Game,
+      // "/client/match/group/start_game": this.clientMatchGroupStart_Game,
       // "/client/match/group/status": this.clientMatchGroupStatus,
-      "/client/match/join": this.clientMatchJoin,
-      "/client/match/offline/start": this.clientMatchOfflineStart,
-      "/client/match/offline/end": this.clientMatchOfflineEnd,
-      "/client/match/updatePing": this.clientMatchUpdatePing,
+      // "/client/match/join": this.clientMatchJoin,
+      // "/client/match/offline/start": this.clientMatchOfflineStart,
+      // "/client/match/offline/end": this.clientMatchOfflineEnd,
+      // "/client/match/updatePing": this.clientMatchUpdatePing,
       // "/client/notifier/channel/create": this.clientNotifierChannelCreate,
       "/client/profile/status": this.clientProfileStatus,
       "/client/putMetrics": this.clientPutMetrics,
@@ -97,7 +97,7 @@ class Responses {
       "/player/health/events": this.playerHealthEvents,
       "/player/health/sync": this.playerHealthSync,
       "/raid/map/name": this.raidMapName,
-      "/raid/profile/list": this.raidProfileList,
+      // "/raid/profile/list": this.raidProfileList,
       // "/raid/profile/save": this.raidProfileSave,
       "/server/config/accounts": this.serverConfigAccounts,
       "/server/config/gameplay": this.serverConfigGameplay,
@@ -524,51 +524,53 @@ class Responses {
   clientMailDialogView(url, info, sessionID) {
     return dialogue_f.handler.generateDialogueView(info.dialogId, sessionID);
   }
-  clientMatchAvailable(url, info, sessionID) {
-    const output = match_f.handler.getEnabled();
+  // clientMatchAvailable(url, info, sessionID) {
+  //   // const output = match_f.handler.getEnabled();
 
-    if (output === false) {
-      return response_f.getBody(null, 999, "Offline mode enabled, if you are a server owner please change that in gameplay settings");
-    }
+  //   // if (output === false) {
+  //   //   return response_f.getBody(null, 999, "Offline mode enabled, if you are a server owner please change that in gameplay settings");
+  //   // }
 
-    return response_f.getBody(output);
-  }
-  clientMatchExit(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupCreate(url, info, sessionID) {
-    return response_f.getBody(match_f.handler.createGroup(sessionID, info));
-  }
-  clientMatchGroupDelete(url, info, sessionID) {
-    return response_f.getBody(match_f.handler.createGroup(sessionID, info));
-  }
-  clientMatchGroupExit_From_Menu(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupInviteAccept(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupInviteCancel(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupInviteSend(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupLookingStart(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupLookingStop(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
-  clientMatchGroupStart_Game(url, info, sessionID) {
-    return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
-  }
+  //   // return response_f.getBody(output);
+  //   return response_f.getBody(true);
+  // }
+  // clientMatchExit(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupCreate(url, info, sessionID) {
+  //   // return response_f.getBody(match_f.handler.createGroup(sessionID, info));
+
+  // }
+  // clientMatchGroupDelete(url, info, sessionID) {
+  //   // return response_f.getBody(match_f.handler.createGroup(sessionID, info));
+  // }
+  // clientMatchGroupExit_From_Menu(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupInviteAccept(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupInviteCancel(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupInviteSend(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupLookingStart(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupLookingStop(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
+  // clientMatchGroupStart_Game(url, info, sessionID) {
+  //   return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
+  // }
   // clientMatchGroupStatus(url, info, sessionID) {
   //   return response_f.getBody(match_f.handler.getGroupStatus(info));
   // }
-  clientMatchJoin(url, info, sessionID) {
-    return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
-  }
+  // clientMatchJoin(url, info, sessionID) {
+  //   return response_f.getBody(match_f.handler.joinMatch(info, sessionID));
+  // }
   clientMatchOfflineStart(url, info, sessionID) {
 
     //how offline/start request is formatted
@@ -602,12 +604,12 @@ class Responses {
     });
     return response_f.getBody(null);
   }
-  clientMatchOfflineEnd(url, info, sessionID) {
-    return response_f.getBody(null);
-  }
-  clientMatchUpdatePing(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
+  // clientMatchOfflineEnd(url, info, sessionID) {
+  //   return response_f.getBody(null);
+  // }
+  // clientMatchUpdatePing(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
   // clientNotifierChannelCreate(url, info, sessionID) {
   //   return response_f.getBody({
   //     notifier: {
@@ -731,9 +733,9 @@ class Responses {
   raidMapName(url, info, sessionID) {
     return offraid_f.handler.addPlayer(sessionID, info);
   }
-  raidProfileList(url, info, sessionID) {
-    return response_f.getBody(match_f.handler.getProfile(info));
-  }
+  // raidProfileList(url, info, sessionID) {
+  //   return response_f.getBody(match_f.handler.getProfile(info));
+  // }
   // raidProfileSave(url, info, sessionID) {
   //   offraid_f.saveProgress(info, sessionID);
   //   return response_f.nullResponse();

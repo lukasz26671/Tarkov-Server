@@ -521,6 +521,30 @@ action: (url, info, sessionID) => {
     action: (url, info, sessionID) => {
         return ResponseController.noBody(bundles_f.handler.getBundles(false));
     }
+},
+{
+    url: "/client/match/offline/start",
+    action: (url, info, sessionID) => {
+        console.log(info);
+        offraid_f.handler.addPlayer(sessionID, {
+            Location: info.locationName,
+            Time: info.dateTime,
+        });
+        return ResponseController.getBody(null);
+    }
+},
+{
+    url: "/client/match/offline/end",
+    action: (url, info, sessionID) => {
+        console.log(info);
+        return ResponseController.getBody(null);
+    }
+},
+{
+    url: "/raid/profile/list",
+    action: (url, info, sessionID) => {
+        return ResponseController.getBody(match_f.handler.getProfile(info));
+    }
 }
     ]
 
