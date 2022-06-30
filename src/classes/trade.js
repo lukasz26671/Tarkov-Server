@@ -1,6 +1,7 @@
 "use strict";
+const utility = require('../../core/util/utility');
 
-class TradeHandler{
+class TradeHandler {
 
   static buyItem(pmcData, body, sessionID){
     const newReq = {
@@ -28,6 +29,7 @@ class TradeHandler{
     output.profileChanges[pmcData._id].traderRelations = {
       [body.tid]: pmcData.TradersInfo[body.tid],
     }
+    body.item_id = utility.generateNewId(undefined, 3);
     logger.logSuccess(`Bought item: ${body.item_id}`);
   }
 
