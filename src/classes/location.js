@@ -925,6 +925,11 @@ class LocationServer {
 
   /* generates a random location preset to use for local session */
   generate(name, sessionID) {
+
+    // Clear Loot Rarities
+    LootController.LootRarities = {};
+    LootController.PreviouslyGeneratedItems = [];
+
     // const lootGenerator = new Generator();
     let dateNow = Date.now();
     let stage = 0;
@@ -1029,6 +1034,13 @@ class LocationServer {
     counters.push(count);
 
     output["_SIT_DEBUG_RARITIES"] = LootController.LootRarities;
+    output["_SIT_DEBUG_RARITIES_COUNT"] = {};
+    for(const r in LootController.LootRarities) {
+      if(output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]] === undefined)
+        output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]] = 1;
+
+      output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]]++;
+    }
     // Loot position list for filtering the lootItem in the same position.
     if (global.serverConfig.lootDebug) {
       logger.logSuccess(

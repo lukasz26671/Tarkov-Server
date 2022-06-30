@@ -30,6 +30,11 @@ class LootController
 
     /**
      * 
+     */
+    static PreviouslyGeneratedItems = [];
+
+    /**
+     * 
      * @returns {object} Loot Modifiers
      */
     static GetLootModifiers() 
@@ -187,7 +192,9 @@ class LootController
           const modifierCommon = LootController.LootModifiers.modifierCommon;
       
           if(in_additionalLootModifier === undefined)
-            in_additionalLootModifier = 1.0 * LootController.LocationLootChanceModifierFromFile;
+            in_additionalLootModifier = 1.0;
+            
+          in_additionalLootModifier *= LootController.LocationLootChanceModifierFromFile;
           
           if(out_itemsRemoved == undefined)
             out_itemsRemoved = {};
@@ -503,7 +510,6 @@ class LootController
       
           // --------------------------------------------
           // Paulo: Filter out by Loot Rarity
-          // TODO: Move this to an Array filter function
           if(
             ItemList.SpawnList.length > 1 // More than 2 items to spawn
             && !itemTemplate.QuestItem // Is not a quest item
@@ -514,6 +520,17 @@ class LootController
               continue; // If returned False then ignore this item
             }
       
+            // ------------------------------------------------------------------------------
+            // Paulo: Filter previously generated items, so we don't loads of nuts, bolts etc
+            if(LootController.PreviouslyGeneratedItems.findIndex(x => x === item) !== -1) {
+              var countOfPrevItems = LootController.PreviouslyGeneratedItems.filter(x => x === item).length;
+              var previousItemMult = 1 - (countOfPrevItems * 0.05);
+              if(!LootController.FilterItemByRarity(itemTemplate, itemsRemoved, previousItemMult)) {
+                numberOfItemsRemoved++;
+                continue;
+              }
+            }
+
             LootList.push(item);
         }
         logger.logDebug(`Loot Multiplier :: Number of Items Removed :: Total:${numberOfItemsRemoved} Common:${itemsRemoved.numberOfCommonRemoved} Uncommon:${itemsRemoved.numberOfUncommonRemoved} Rare:${itemsRemoved.numberOfRareRemoved} Superrare:${itemsRemoved.numberOfSuperrareRemoved}`);
@@ -526,6 +543,8 @@ class LootController
         // Unique/Distinct the List
         UniqueLootList = [...new Set(LootList)];
         
+        LootController.PreviouslyGeneratedItems = LootController.PreviouslyGeneratedItems.concat(UniqueLootList)
+
         return UniqueLootList;
       }
 
