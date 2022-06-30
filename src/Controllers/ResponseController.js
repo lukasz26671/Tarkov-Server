@@ -180,6 +180,31 @@ class ResponseController
     }
 },
 {
+url: "/client/profile/status",
+action: (url, info, sessionID) => {
+      return ResponseController.getBody({
+          maxPveCountExceeded: false,
+          profiles:[
+          {
+            profileid: "scav" + sessionID,
+            profileToken: null,
+            status: "Free",
+            sid: "",
+            ip: "",
+            port: 0,
+          },
+          {
+            profileid: "pmc" + sessionID,
+            profileToken: null,
+            status: "Free",
+            sid: "",
+            ip: "",
+            port: 0,
+          }]
+        });
+    }
+},
+{
 url: "/launcher/profile/login",
 action: (url, info, sessionID) => {
     // let output = AccountServer.login(info);

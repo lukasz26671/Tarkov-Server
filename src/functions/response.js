@@ -72,7 +72,7 @@ class Responses {
       // "/client/match/offline/end": this.clientMatchOfflineEnd,
       // "/client/match/updatePing": this.clientMatchUpdatePing,
       // "/client/notifier/channel/create": this.clientNotifierChannelCreate,
-      "/client/profile/status": this.clientProfileStatus,
+      // "/client/profile/status": this.clientProfileStatus,
       "/client/putMetrics": this.clientPutMetrics,
       "/client/quest/list": this.clientQuestList,
       "/client/ragfair/find": this.clientRagfairFind,
@@ -620,28 +620,28 @@ class Responses {
   //     notifierServer: `${server.getBackendUrl()}/notifierServer/get/${sessionID}`,
   //   });
   // }
-  clientProfileStatus(url, info, sessionID) {
-    return response_f.getBody({
-        maxPveCountExceeded: false,
-        profiles:[
-        {
-          profileid: "scav" + sessionID,
-          profileToken: null,
-          status: "Free",
-          sid: "",
-          ip: "",
-          port: 0,
-        },
-        {
-          profileid: "pmc" + sessionID,
-          profileToken: null,
-          status: "Free",
-          sid: "",
-          ip: "",
-          port: 0,
-        }]
-      });
-  }
+  // clientProfileStatus(url, info, sessionID) {
+  //   return response_f.getBody({
+  //       maxPveCountExceeded: false,
+  //       profiles:[
+  //       {
+  //         profileid: "scav" + sessionID,
+  //         profileToken: null,
+  //         status: "Free",
+  //         sid: "",
+  //         ip: "",
+  //         port: 0,
+  //       },
+  //       {
+  //         profileid: "pmc" + sessionID,
+  //         profileToken: null,
+  //         status: "Free",
+  //         sid: "",
+  //         ip: "",
+  //         port: 0,
+  //       }]
+  //     });
+  // }
   clientPutMetrics(url, info, sessionID) {
     return response_f.nullResponse();
   }
