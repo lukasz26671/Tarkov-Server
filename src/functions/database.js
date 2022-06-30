@@ -43,14 +43,41 @@ function loadBotsData() {
       hard: difficulty_hard,
       impossible: difficulty_impossible,
     };
-    _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
-    _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
-    _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
-    _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
-    _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
-    _database.bots[botType].inventory = {};
-    for (const name in db.bots[botType].inventory) {
-      _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
+    if(db.bots[botType].profile !== undefined) {
+      _database.bots[botType].appearance = { body: [], feet: [], hands: [], head: [], voice: []};
+      _database.bots[botType].chances = {};
+      _database.bots[botType].generation = {};
+      _database.bots[botType].health = {};
+      _database.bots[botType].inventory = {};
+
+      for(const p in db.bots[botType].profile) {
+        const fileLocation = db.bots[botType].profile[p];
+        if(fs.existsSync(fileLocation)) {
+          const data = JSON.parse(fs.readFileSync(fileLocation)).data;
+
+          _database.bots[botType].appearance.body.push(data.Customization.Body);
+          _database.bots[botType].appearance.feet.push(data.Customization.Feet);
+          _database.bots[botType].appearance.hands.push(data.Customization.Hands);
+          _database.bots[botType].appearance.head.push(data.Customization.Head);
+          _database.bots[botType].appearance.voice.push(data.Customization.Voice);
+          _database.bots[botType].health = data.Health;
+          // load inventory
+          _database.bots[botType].inventory["0_80"] = data.Inventory;
+        }
+      }
+      console.log(_database.bots[botType]);
+    }
+    else {
+      _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
+      _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
+      _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
+      _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
+      _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
+      _database.bots[botType].inventory = {};
+      for (const name in db.bots[botType].inventory) {
+        _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
+      }
+      console.log( _database.bots[botType]);
     }
   }
   _database.bots.names = fileIO.readParsed("./" + db.base.botNames);
@@ -337,7 +364,8 @@ const loadTraderAssort = (traderId) => {
     const convertedIds = {};
     for(const it of assort.items) {
       let currId = it._id;
-      let newId = utility.generateNewItemId();
+      // let newId = utility.generateNewItemId();
+      let newId = utility.generateNewId(undefined, 3);
       convertedIds[currId] = newId;
       it._id = newId;
     }
