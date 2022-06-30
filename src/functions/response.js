@@ -370,7 +370,7 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGameProfileCreate(url, info, sessionID) {
-    profile_f.handler.createProfile(info, sessionID);
+    AccountController.createProfile(info, sessionID);
     return response_f.getBody({ uid: "pmc" + sessionID });
   }
   clientGameProfileItemsMoving(url, info, sessionID) {
