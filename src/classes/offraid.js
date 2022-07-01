@@ -145,6 +145,10 @@ function deleteInventory(pmcData, sessionID) {
         item.slotId !== "SecuredContainer" &&
         item.slotId !== "Scabbard" &&
         item.slotId !== "Pockets" &&
+        item.slotId !== "Armband" &&
+        item.slotId !== "SpecialSlot1" &&
+        item.slotId !== "SpecialSlot2" &&
+        item.slotId !== "SpecialSlot3" &&
         item.slotId !== "Compass") ||
       item.parentId === pmcData.Inventory.questRaidItems
     ) {
