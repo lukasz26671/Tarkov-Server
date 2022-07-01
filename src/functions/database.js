@@ -65,7 +65,7 @@ function loadBotsData() {
           _database.bots[botType].inventory["0_80"] = data.Inventory;
         }
       }
-      console.log(_database.bots[botType]);
+      // console.log(_database.bots[botType]);
     }
     else {
       _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
@@ -77,7 +77,7 @@ function loadBotsData() {
       for (const name in db.bots[botType].inventory) {
         _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
       }
-      console.log( _database.bots[botType]);
+      // console.log( _database.bots[botType]);
     }
   }
   _database.bots.names = fileIO.readParsed("./" + db.base.botNames);
@@ -167,7 +167,14 @@ function loadQuestsData() {
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
 
   // - Convert Aki's working Quests to JETs quest array // 
-  const objectQData = fileIO.readParsed("./" + db.quests.quests2);
+  // const objectQData = fileIO.readParsed("./" + db.quests.quests2);
+  // if(objectQData !== undefined) {
+  //   _database.quests = [];
+  //   for(const q in objectQData) {
+  //     _database.quests.push(objectQData[q]);
+  //   }
+  // }
+  const objectQData = fileIO.readParsed("./" + db.quests.quests3);
   if(objectQData !== undefined) {
     _database.quests = [];
     for(const q in objectQData) {
