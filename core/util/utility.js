@@ -308,6 +308,22 @@ const { v4: uuidv4 } = require('uuid')
 //     return retVal;
 // }
 
+exports.randomIdArray = [];
+
+/**
+ * DO NOT USE THIS YET!
+ */
+exports.generateRandomIdArray = () => {
+
+    if(this.randomIdArray.length === 0) {
+        // for(let i = 0; i < 4294967295; i++) {
+        for(let i = 0; i < 9999999; i++) {
+            this.randomIdArray.push(this.generateNewId(undefined, 4));
+        }
+    }
+
+}
+
 /**
  * 
  * @param {*} prefix 
@@ -342,6 +358,7 @@ exports.generateNewId = (prefix = "", version = 2) => {
             retVal = uuidv4();
 
             break;
+        // close to MongoId but not really
         case 3:
         {
             const dateNow = Date.now();
@@ -367,8 +384,45 @@ exports.generateNewId = (prefix = "", version = 2) => {
             }
             break;
         }
+        // new quicker format - does not allow shoddy prefixes so conforms to MongoID
+        case 4:
+        {
+            const dateNow = Date.now();
+            let hex = dateNow.toString(16);
+            const dateNow2 = Date.now();
+            let hex2 = dateNow2.toString(8);
+
+            let newHex = hex + hex2;
+            retVal = newHex.substring(0, 24);
+            // const dateNow = Date.now();
+            // const dateNow2 = Date.now() * 2;
+            // const dateNow3 = Date.now() * 3;
+            // const objectIdBinary = Buffer.alloc(12);
+            // objectIdBinary[0] = (dateNow >> 4) & 0xff;
+            // objectIdBinary[1] = (dateNow >> 8) & 0xff;
+            // objectIdBinary[2] = (dateNow >> 16) & 0xff;
+            // objectIdBinary[3] = (dateNow >> 24) & 0xff;
+            // objectIdBinary[4] = (dateNow2 >> 24) & 0xff;
+            // objectIdBinary[5] = (dateNow2 >> 16) & 0xff;
+            // objectIdBinary[6] = (dateNow2 >> 8) & 0xff;
+            // objectIdBinary[7] = (dateNow2 >> 4) & 0xff;
+            // objectIdBinary[8] = (dateNow3 >> 4) & 0xff;
+            // objectIdBinary[9] = (dateNow3 >> 8) & 0xff;
+            // objectIdBinary[10] = (dateNow3 >> 16) & 0xff;
+            // objectIdBinary[11] = (dateNow3 >> 24) & 0xff;
+            // retVal = this.toHexString(objectIdBinary);
+            break;
+        }
+        // Uses the pre-generated array of Ids
+        case 5:
+        {
+            this.generateRandomIdArray();
+            retVal = this.randomIdArray[Math.floor(Math.random() * (this.randomIdArray.length - 1))]
+            break;
+        }
     }
 
+   
 
     return retVal;
 }
