@@ -3122,6 +3122,18 @@
     ],
     "BossLocationSpawn": [
       {
+        "BossName": "pmcBot",
+        "BossChance": 100,
+        "BossZone": "BotZone",
+        "BossPlayer": false,
+        "BossDifficult": "normal",
+        "BossEscortType": "pmcBot",
+        "BossEscortDifficult": "normal",
+        "BossEscortAmount": "0",
+        "Time": -1,
+        "RandomTimeSpawn": false
+      },
+      {
         "BossName": "bossTagilla",
         "BossChance": 8,
         "BossZone": "BotZone",
@@ -3130,6 +3142,18 @@
         "BossEscortType": "followerBully",
         "BossEscortDifficult": "normal",
         "BossEscortAmount": "0",
+        "Time": -1,
+        "RandomTimeSpawn": false
+      },
+      {
+        "BossName": "bossKnight",
+        "BossChance": 100,
+        "BossZone": "BotZone",
+        "BossPlayer": false,
+        "BossDifficult": "normal",
+        "BossEscortType": "followerBigPipe",
+        "BossEscortDifficult": "normal",
+        "BossEscortAmount": "1",
         "Time": -1,
         "RandomTimeSpawn": false
       }
