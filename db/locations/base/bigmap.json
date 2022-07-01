@@ -512,7 +512,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "bossKnight",
-      "BossChance": 8,
+      "BossChance": 100,
       "BossZone": "ZoneScavBase",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -546,21 +546,36 @@
       "RandomTimeSpawn": true
     },
     {
-      "BossName": "sectantPriest",
-      "BossChance": 5,
-      "BossZone": "ZoneScavBase",
+      "BossName": "pmcBot",
+      "BossChance": 100,
+      "BossZone": "ZoneCustoms,ZoneDormitory,ZoneGasStation",
       "BossPlayer": false,
       "BossDifficult": "normal",
-      "BossEscortType": "sectantWarrior",
+      "BossEscortType": "pmcBot",
       "BossEscortDifficult": "normal",
-      "BossEscortAmount": "4",
+      "BossEscortAmount": "2",
       "Time": -1,
-      "Supports": null,
-      "RandomTimeSpawn": false
+      "Supports": [
+        {
+          "BossEscortType": "pmcBot",
+          "BossEscortDifficult": [
+            "normal"
+          ],
+          "BossEscortAmount": "1"
+        },
+        {
+          "BossEscortType": "pmcBot",
+          "BossEscortDifficult": [
+            "normal"
+          ],
+          "BossEscortAmount": "1"
+        }
+      ],
+      "RandomTimeSpawn": true
     },
     {
       "BossName": "bossBully",
-      "BossChance": 10,
+      "BossChance": 100,
       "BossZone": "ZoneDormitory,ZoneGasStation",
       "BossPlayer": false,
       "BossDifficult": "normal",
