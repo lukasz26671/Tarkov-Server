@@ -282,11 +282,14 @@ class BotsController {
     for (const condition of info.conditions) {
       condition.Limit = Math.min(100, condition.Limit);
       condition.Limit = Math.max(1, condition.Limit);
-
+      let role = condition.Role.toLowerCase();
+      if(!_database.bots[role]) {
+        logger.logError(`Role ${role} not found in database, ignoring.`)
+        continue;
+      }
       for (let i = 0; i < condition.Limit; i++) {
-        let role = condition.Role.toLowerCase();
         let bot = {};
-        if(_database.bots[role].profile) {
+        if(_database.bots[role] && _database.bots[role].profile) {
           bot = _database.bots[role].profile;
           bot = BotController.generateId(bot);
         }
