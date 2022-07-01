@@ -1,3 +1,4 @@
+const utility = require('../../core/util/utility');
 /**
  * Bot Controller. 
  * This controller contains everything to handle bot data and generation
@@ -8,6 +9,11 @@ class BotController {
         return {};
     }
 
+    /**
+     * Generate and set the Dogtag of the provided Bot oject
+     * @param {object} bot 
+     * @returns {object} bot
+     */
     static generateDogtag(bot) {
         bot.Inventory.items.push({
             _id: utility.generateNewItemId(),
@@ -30,6 +36,19 @@ class BotController {
             },
             },
         });
+
+        return bot;
+    }
+
+    /**
+     * Generate and set the Id of the provided Bot object
+     * @param {object} bot 
+     * @returns {object} bot
+     */
+    static generateId(bot) {
+        const botId = utility.generateNewId(undefined, 4);
+        bot._id = botId;
+        bot.aid = botId;
 
         return bot;
     }

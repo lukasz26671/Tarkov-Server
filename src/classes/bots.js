@@ -2,6 +2,7 @@
 
 const { logger } = require("../../core/util/logger");
 const utility = require('./../../core/util/utility');
+const { BotController } = require('../Controllers/BotController');
 
 //use bot names in lowercase as it matches folders
 const botSwaps = {
@@ -72,7 +73,16 @@ class BotsController {
 
     const name_database = global._database.bots.names;
     let name;
-    switch (role) {
+    switch (role.toLowerCase()) {
+      case "bossknight":
+        name = "Knight";
+        break;
+      case "followerbigpipe":
+        name = "Big Pipe";
+        break;
+      case "followerbirdeye":
+        name = "Bird Eye";
+        break;
       case "usec":
       case "exusec":
       case "pmcbot":
@@ -110,7 +120,7 @@ class BotsController {
 
       default:
         // console.log(role)
-        name = utility.getArrayValue(name_database[role]);
+        name = name_database[role] !== undefined ? utility.getArrayValue(name_database[role]) : undefined;
         if(!name) {
           logger.logError(`Bot ${role} name not found in name list!`);
           name = utility.getArrayValue(name_database.scav);
@@ -120,12 +130,12 @@ class BotsController {
     return name;
   }
 
-  generateId(bot) {
-    const botId = utility.generateNewAccountId();
-    bot._id = botId;
-    bot.aid = botId;
-    return bot;
-  }
+  // generateId(bot) {
+  //   const botId = utility.generateNewAccountId();
+  //   bot._id = botId;
+  //   bot.aid = botId;
+  //   return bot;
+  // }
 
   //START -----
   static generateBot(bot, role, pmcData) {
@@ -164,9 +174,21 @@ class BotsController {
     
     }
 
+    if(loweredRole.includes("knight") || loweredRole.includes("bigpipe") || loweredRole.includes("birdeye")) {
+      console.log(bot);
+    }
+
     bot.Info.Nickname = BotsController.generateBotName(role);
     bot.Info.Settings.BotDifficulty = "normal";
+    if(node.experience === undefined || node.experience.reward === undefined || node.experience.reward.min === undefined) {
+      logger.logError(`Bot ${role} could not find experience reward`)
+      node.experience = { reward: { min: 100, max: 300 } };
+    }
     bot.Info.Settings.Experience = utility.getRandomInt(node.experience.reward.min, node.experience.reward.max);
+    if(node.appearance === undefined || node.appearance.voice === undefined) {
+      logger.logError(`Bot ${role} could not find appearance or voice`)
+      node.appearance = { voice: "Usec_1" };
+    }
     bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
     bot.Health = bots_f.botHandler.generateHealth(node.health);
     bot.Customization.Head = utility.getArrayValue(node.appearance.head);
@@ -174,13 +196,14 @@ class BotsController {
     bot.Customization.Feet = utility.getArrayValue(node.appearance.feet);
     bot.Customization.Hands = utility.getArrayValue(node.appearance.hands);
 
+    const pmcLevel = (pmcData && pmcData.Info && pmcData.Info.Level) ? pmcData.Info.Level : 1;
     let inventoryData = "";
     for (const inventoryNode in node.inventory) {
       const levelFromTo = inventoryNode.split("_");
       const levelFrom = parseInt(levelFromTo[0]);
       const levelTo = parseInt(levelFromTo[1]);
 
-      if (pmcData.Info.Level >= levelFrom && pmcData.Info.Level < levelTo) {
+      if (pmcLevel >= levelFrom && pmcLevel < levelTo) {
         inventoryData = node.inventory[inventoryNode];
         break;  // once we got our datas, no need to keep looping
       }
@@ -197,98 +220,38 @@ class BotsController {
     }    
     */
 
-    bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, role);
 
-    const levelResult = bots_f.botHandler.generateRandomLevel(
-      node.experience.level.min,
-      node.experience.level.max,
-      pmcData.Info.Level
-    );
-    bot.Info.Experience = levelResult.exp;
-    bot.Info.Level = levelResult.level;
-
-    if (bot.Info.Side.toLowerCase() == "usec"
-      || bot.Info.Side.toLowerCase() == "bear"
-      || loweredRole == "pmcbot"
-      ) {
-      bot = bots_f.botHandler.generateDogtag(bot);
+    if(inventoryData && inventoryData.items && inventoryData.items.length > 0) {
+      bot.Inventory = inventoryData;
+      bot = BotController.generateId(bot);
     }
+    else {
+      bot.Inventory = bots_f.generator.generateInventory(inventoryData, node.chances, node.generation, role);
 
-    // generate new bot ID
-    bot = bots_f.botHandler.generateId(bot);
+      const levelResult = bots_f.botHandler.generateRandomLevel(
+        node.experience.level.min,
+        node.experience.level.max,
+        pmcData && pmcData.Info && pmcData.Info.Level ? pmcData.Info.Level : 1
+      );
+      bot.Info.Experience = levelResult.exp;
+      bot.Info.Level = levelResult.level;
 
-    // generate new inventory ID
-    bot = utility.generateInventoryID(bot);
+      if (bot.Info.Side.toLowerCase() == "usec"
+        || bot.Info.Side.toLowerCase() == "bear"
+        || loweredRole == "pmcbot"
+        ) {
+        bot = BotController.generateDogtag(bot);
+      }
+
+      // generate new bot ID
+      bot = BotController.generateId(bot);
+
+      // generate new inventory ID
+      bot = utility.generateInventoryID(bot);
+    }
 
     // console.log(bot);
     // console.log(role);
-
-    return bot;
-
-  }
-
-  //extended generateBot function for custom types of bot as defined in isCustomBot
-  generateCustomBot(bot, role, pmcData, map) {
-
-    let node = [];
-    let newRole = "";
-
-    newRole = botSwaps[map][role.toLowerCase()];
-
-    //default
-    node = global._database.bots[newRole];
-
-    bot.Info.Nickname = BotsController.generateBotName(newRole);
-    bot.Info.Settings.Experience = utility.getRandomInt(
-      node.experience.reward.min,
-      node.experience.reward.max
-    );
-    bot.Info.Voice = utility.getArrayValue(node.appearance.voice);
-    bot.Health = bots_f.botHandler.generateHealth(node.health);
-    bot.Customization.Head = utility.getArrayValue(node.appearance.head);
-    bot.Customization.Body = utility.getArrayValue(node.appearance.body);
-    bot.Customization.Feet = utility.getArrayValue(node.appearance.feet);
-    bot.Customization.Hands = utility.getArrayValue(node.appearance.hands);
-
-    let inventoryData = "";
-    for (const inventoryNode in node.inventory) {
-      const levelFromTo = inventoryNode.split("_");
-      const levelFrom = parseInt(levelFromTo[0]);
-      const levelTo = parseInt(levelFromTo[1]);
-
-      if (pmcData.Info.Level >= levelFrom && pmcData.Info.Level < levelTo) {
-        inventoryData = node.inventory[inventoryNode];
-        break;  // once we got our datas, no need to keep looping
-      }
-    }
-    if (inventoryData == "") {
-      // inventory is empty using fallback
-      inventoryData = node.inventory[Object.keys(node.inventory)[0]];
-    }
-
-    bot.Inventory = bots_f.generator.generateInventory(
-      inventoryData,
-      node.chances,
-      node.generation
-    );
-
-    const levelResult = bots_f.botHandler.generateRandomLevel(
-      node.experience.level.min,
-      node.experience.level.max,
-      pmcData.Info.Level
-    );
-    bot.Info.Experience = levelResult.exp;
-    bot.Info.Level = levelResult.level;
-
-    if (bot.Info.Side.toLowerCase() == "usec" || bot.Info.Side.toLowerCase() == "bear") {
-      bot = bots_f.botHandler.generateDogtag(bot);
-    }
-
-    // generate new bot ID
-    bot = bots_f.botHandler.generateId(bot);
-
-    // generate new inventory ID
-    bot = utility.generateInventoryID(bot);
 
     return bot;
 
@@ -322,12 +285,20 @@ class BotsController {
 
       for (let i = 0; i < condition.Limit; i++) {
         let role = condition.Role.toLowerCase();
-        let bot = JSON.parse(JSON.stringify(global._database.core.botBase));
-        bot.Info.Settings.Role = condition.Role;
-        // bot.Info.Settings.Role = "pmcBot"; // Testing!
-        bot.Info.Settings.BotDifficulty = condition.Difficulty;
-        bot = BotsController.generateBot(bot, role, pmcData);
-        output.unshift(bot);
+        let bot = {};
+        if(_database.bots[role].profile) {
+          bot = _database.bots[role].profile;
+          bot = BotController.generateId(bot);
+        }
+        else {
+          bot = JSON.parse(JSON.stringify(global._database.core.botBase));
+          bot.Info.Settings.Role = condition.Role;
+          // bot.Info.Settings.Role = "pmcBot"; // Testing!
+          bot.Info.Settings.BotDifficulty = condition.Difficulty;
+          bot = BotsController.generateBot(bot, role, pmcData);
+          // output.unshift(bot);
+        }
+        output.push(bot);
         count++;
       }
     }
@@ -541,19 +512,19 @@ class Generator {
   }
 
   generateInventoryBase() {
-    const equipmentId = utility.generateNewItemId();
+    const equipmentId = utility.generateNewId(undefined, 3);
     const equipmentTpl = "55d7217a4bdc2d86028b456d";
 
-    const stashId = utility.generateNewItemId();
+    const stashId = utility.generateNewId(undefined, 3);
     const stashTpl = "566abbc34bdc2d92178b4576";
 
-    const questRaidItemsId = utility.generateNewItemId();
+    const questRaidItemsId = utility.generateNewId(undefined, 3);
     const questRaidItemsTpl = "5963866286f7747bf429b572";
 
-    const questStashItemsId = utility.generateNewItemId();
+    const questStashItemsId = utility.generateNewId(undefined, 3);
     const questStashItemsTpl = "5963866b86f7747bfa1c4462";
 
-    const sortingTableId = utility.generateNewItemId();
+    const sortingTableId = utility.generateNewId(undefined, 3);
     const sortingTableTpl = "602543c13fee350cd564d032";
 
     return {

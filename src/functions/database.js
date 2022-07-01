@@ -54,7 +54,7 @@ function loadBotsData() {
         const fileLocation = db.bots[botType].profile[p];
         if(fs.existsSync(fileLocation)) {
           const data = JSON.parse(fs.readFileSync(fileLocation)).data;
-
+          _database.bots[botType].profile = data;
           _database.bots[botType].appearance.body.push(data.Customization.Body);
           _database.bots[botType].appearance.feet.push(data.Customization.Feet);
           _database.bots[botType].appearance.hands.push(data.Customization.Hands);
