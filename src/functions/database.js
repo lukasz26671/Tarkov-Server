@@ -131,8 +131,9 @@ function loadHideoutData() {
   if (typeof _database.hideout.settings.data != "undefined") {
     _database.hideout.settings = _database.hideout.settings.data;
   }
-  for (let area in db.hideout.areas) {
-    _database.hideout.areas.push(fileIO.readParsed("./" + db.hideout.areas[area]));
+  const dbAreas = JSON.parse(fs.readFileSync("./" + db.hideout.areas["_items"]));
+  for (let area in dbAreas) {
+    _database.hideout.areas.push(dbAreas[area]);
   }
   for (let production in db.hideout.production) {
     _database.hideout.production.push(fileIO.readParsed("./" + db.hideout.production[production]));
@@ -205,18 +206,22 @@ function loadQuestsData() {
 function loadCustomizationData() {
 
   _database.customization = {};
-  for (let file in db.customization) {
-    let data = fileIO.readParsed(db.customization[file]);
-    // make sure it has _id so we gonna use that
-    if (Object.keys(data)[0].length == 24) {
-      for (let q in data) {
-        _database.customization[q] = data[q];
-      }
-    } else {
-      // if sile doesnt contain _id use file name
-      _database.customization[file] = data;
-    }
+  let data = JSON.parse(fs.readFileSync(db.customization["_items"]));
+  for(let id in data) {
+    _database.customization[id] = data[id];
   }
+  // for (let file in db.customization) {
+  //   let data = fileIO.readParsed(db.customization[file]);
+  //   // make sure it has _id so we gonna use that
+  //   if (Object.keys(data)[0].length == 24) {
+  //     for (let q in data) {
+  //       _database.customization[q] = data[q];
+  //     }
+  //   } else {
+  //     // if sile doesnt contain _id use file name
+  //     _database.customization[file] = data;
+  //   }
+  // }
 }
 
 function loadLocaleData() {
