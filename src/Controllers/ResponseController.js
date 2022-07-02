@@ -12,6 +12,7 @@ const { ItemController } = require('./ItemController');
 const { InsuranceController } = require('./InsuranceController');
 const { logger } = require('../../core/util/logger');
 const { responses } = require('./../functions/response');
+const { CustomizationController } = require('./CustomizationController');
 
 
 /**
@@ -236,24 +237,7 @@ action: (url, info, sessionID) => {
     action: (url, info, sessionID) => {
         const airdropSettings = ConfigController.Configs["gameplay"].inRaid.airdropSettings;
         // return JSON.stringify(
-        //     {
-        //         "airdropChancePercent": {
-        //             "bigmap": 100,
-        //             "woods": 100,
-        //             "lighthouse": 100,
-        //             "shoreline": 100,
-        //             "interchange": 100,
-        //             "reserve": 100
-        //         },
-        //         "airdropMinStartTimeSeconds": 90,
-        //         "airdropMaxStartTimeSeconds": 120,
-        //         "airdropMinOpenHeight": 100,
-        //         "airdropMaxOpenHeight": 150,
-        //         "planeMinFlyHeight": 400,
-        //         "planeMaxFlyHeight": 500,
-        //         "planeVolume": 0.5
-        //     }
-        // )
+      
         return JSON.stringify(airdropSettings);
     }
 },
@@ -568,8 +552,17 @@ action: (url, info, sessionID) => {
 {
     url: "/raid/profile/list",
     action: (url, info, sessionID) => {
-        return ResponseController.getBody(match_f.handler.getProfile(info));
+        // return ResponseController.getBody(match_f.handler.getProfile(info));
+        return ResponseController.nullResponse();
     }
+},
+{
+    url: "/client/trading/customization/storage",
+    action: (url, info, sessionID) => {
+        // return fileIO.read(customization_f.getPath(sessionID));
+        // return ResponseController.getBody(CustomizationController.getCustomizationStorage(sessionID));
+        return CustomizationController.getCustomizationStorage(sessionID);
+      }
 }
     ]
 

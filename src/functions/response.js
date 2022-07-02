@@ -1,7 +1,8 @@
 const { Server } = require("../../core/server/server");
 const { logger } = require("../../core/util/logger");
 const { AccountServer } = require('../../src/classes/account')
-const { AccountController } = require('../../src/Controllers/AccountController')
+const { AccountController } = require('../../src/Controllers/AccountController');
+const { CustomizationController } = require("../Controllers/CustomizationController");
 
 class Responses {
   constructor() {
@@ -82,7 +83,7 @@ class Responses {
       "/client/settings": this.clientSettings,
       "/client/trading/api/getTradersList": this.clientTradingApiGetTradersList,
       "/client/trading/api/traderSettings": this.clientTradingApiTraderSettings,
-      "/client/trading/customization/storage": this.clientTradingCustomizationStorage,
+      // "/client/trading/customization/storage": this.clientTradingCustomizationStorage,
       "/client/weather": this.clientWeather,
       "/launcher/profile/change/email": this.launcherProfileChangeEmail,
       "/launcher/profile/change/password": this.launcherProfileChangePassword,
@@ -669,9 +670,10 @@ class Responses {
   clientTradingApiTraderSettings(url, info, sessionID) {
     return response_f.getBody(trader_f.handler.getAllTraders(sessionID));
   }
-  clientTradingCustomizationStorage(url, info, sessionID) {
-    return fileIO.read(customization_f.getPath(sessionID));
-  }
+  // clientTradingCustomizationStorage(url, info, sessionID) {
+  //   // return fileIO.read(customization_f.getPath(sessionID));
+  //   return CustomizationController.getCustomizationStorage();
+  // }
   clientWeather(url, info, sessionID) {
     return response_f.getBody(weather_f.generate());
   }
