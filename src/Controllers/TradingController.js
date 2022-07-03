@@ -3,6 +3,7 @@ const { DatabaseController } = require('./DatabaseController');
 const { LootController } = require('./LootController');
 const utility = require('./../../core/util/utility');
 const mathjs = require('mathjs');
+const { AccountController } = require('./AccountController');
 
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
@@ -154,6 +155,10 @@ class TradingController {
         }
     }
 
+    /**
+     * 
+     * @param {*} sessionID 
+     */
     static generateFenceAssort(sessionID) {
         const fenceId = "579dc571d53a0658a154fbec";
         // const base = { items: [], barter_scheme: {}, loyal_level_items: {} };
@@ -316,7 +321,7 @@ class TradingController {
         // Save change to the database
         global._database.traders[fenceId].assort = base;
         // TradingController.setTraderAssort(fenceId, base);
-
+        return base;
       }
 
       /**
@@ -340,6 +345,51 @@ class TradingController {
       }
 
       /**
+ * Get player loyalty LEVEL for current trader...
+ * when used to get the index of a trader loyaltyLevels, must use -1
+ * @param {Object} pmcData -> player infos,
+ * @param {string} traderID -> current trader ID,
+ * @returns {number} calculatedLoyalty -> loyalty level
+ */
+static getLoyalty(pmcData, traderID) {
+  let playerSaleSum;
+  let playerStanding;
+  let playerLevel;
+
+  if (pmcData.TradersInfo[traderID]) {
+    // we fetch player's trader related data
+    playerSaleSum = pmcData.TradersInfo[traderID].salesSum;
+    playerStanding = pmcData.TradersInfo[traderID].standing;
+    playerLevel = pmcData.Info.Level;
+  } else {
+    // default traders value
+    playerSaleSum = 0;
+    playerStanding = 0;
+    playerLevel = pmcData.Info.Level;
+  }
+  // we fetch the trader data
+  const traderInfo = global._database.traders[traderID].base;
+
+  let calculatedLoyalty = 0;
+  if (traderID !== "ragfair") {
+    // we check if player meet loyalty requirements
+    for (let loyaltyLevel of traderInfo.loyaltyLevels) {
+      if (playerSaleSum >= loyaltyLevel.minSalesSum &&
+        playerStanding >= loyaltyLevel.minStanding &&
+        playerLevel >= loyaltyLevel.minLevel) {
+        calculatedLoyalty++;
+      }
+      else {
+        if (calculatedLoyalty == 0) { calculatedLoyalty = 1; }
+        break;
+      }
+    }
+  } else { return "ragfair" }
+
+  return calculatedLoyalty;
+}
+
+      /**
        * 
        * @param {string} traderId 
        * @param {TraderAssort} assort 
@@ -353,17 +403,85 @@ class TradingController {
        * @param {*} traderId 
        * @returns 
        */
-       static getTrader(traderId) {
+      static getTrader(traderId) {
         return DatabaseController.getDatabase().traders[traderId];
       }
 
       /**
-       * 
+       * Gets the complete Trader Assort (NOT filtered by Levels)
        * @param {*} traderId 
-       * @returns 
+       * @returns {object} Assort
        */
       static getTraderAssort(traderId) {
-        return DatabaseController.getDatabase().traders[traderId].assort;
+        if(traderId !== 'ragfair')
+          return DatabaseController.getDatabase().traders[traderId].assort;
+        else 
+          return new TraderAssort();
+      }
+
+      /**
+       * Gets the complete Trader Assort (NOT filtered by Levels)
+       * @param {*} traderId 
+       * @returns {object} Assort
+       */
+       static getTraderAssortFilteredByLevel(traderId, sessionID) {
+        const assort = TradingController.getTraderAssort(traderId);
+        const newAssort = new TraderAssort();// JSON.parse(JSON.stringify(TradingController.getTraderAssort(traderId)));
+        const pmcData = AccountController.getPmcProfile(sessionID);
+        const traderLevel = TradingController.getLoyalty(pmcData, traderId);
+        let traderQuestAssort = global._database.traders[traderId].questassort;
+
+        // Get all items filtered by level
+        for (const key in assort.loyal_level_items) {
+          const requiredLevel = assort.loyal_level_items[key];
+          if(requiredLevel <= traderLevel) {
+            const itemIndex = assort.items.findIndex(x=>x._id === key);
+            if(itemIndex !== -1) {
+              const questStatus = quest_f.getQuestStatus(pmcData, traderQuestAssort.started[key]);
+
+              if (
+                key in traderQuestAssort.started && questStatus !== "Started"
+              ) {
+                continue;
+              }
+      
+              if (
+                key in traderQuestAssort.success &&
+                quest_f.getQuestStatus(pmcData, traderQuestAssort.success[key]) !==
+                "Success"
+              ) {
+                continue;
+              }
+      
+              if (
+                key in traderQuestAssort.fail &&
+                quest_f.getQuestStatus(pmcData, traderQuestAssort.fail[key]) !== "Fail"
+              ) {
+                continue;
+              }
+
+              newAssort.barter_scheme[key] = assort.barter_scheme[key];
+              newAssort.loyal_level_items[key] = requiredLevel;
+
+              const assortItem = assort.items[itemIndex];
+              newAssort.items.push(assortItem);
+            }
+          }
+        }
+
+        // 
+        const childItemsToAdd = [];
+        for (const assortItem of newAssort.items) {
+          const childItems = TradingController.iterItemChildrenRecursively(assortItem, 
+            assort.items);
+          for(const childItem of childItems) {
+            childItemsToAdd.push(childItem);
+          }
+        }
+        for (const assortItem of childItemsToAdd) {
+          newAssort.items.push(assortItem);
+        }
+        return newAssort;
       }
 
       /**

@@ -116,9 +116,9 @@ class Responses {
       "/client/menu/locale": this.dynClientMenuLocale,
       "/client/location/getLocalloot": this.dynClientLocationGetLocalloot,
       "/client/trading/api/getUserAssortPrice/trader": this.dynClientTradingApiGetUserAssortPriceTrader,
-      "/client/trading/api/getTraderAssort": this.dynClientTradingApiGetTraderAssort,
+      // "/client/trading/api/getTraderAssort": this.dynClientTradingApiGetTraderAssort,
       "/client/trading/api/getTrader": this.dynClientTradingApiGetTrader,
-      "/client/trading/customization": this.dynClientTradingCustomization,
+      // "/client/trading/customization": this.dynClientTradingCustomization,
       "server/profile": this.dynServerProfile,
       "singleplayer/settings/bot/difficulty": this.dynSingleplayerSettingsBotDifficulty,
       "singleplayer/settings/bot/limit": this.dynSingleplayerSettingsBotLimit,
@@ -178,9 +178,10 @@ class Responses {
     return response_f.getBody(trader_f.handler.getPurchasesData(url.substr(url.lastIndexOf("/") + 1), sessionID));
   }
   dynClientTradingCustomization(url, info, sessionID) {
-    let splittedUrl = url.split("/");
-    let traderID = splittedUrl[splittedUrl.length - 2];
-    return response_f.getBody(trader_f.handler.getCustomization(traderID, sessionID));
+    return response_f.getBody(CustomizationController.getCustomization(null, sessionID));
+    // let splittedUrl = url.split("/");
+    // let traderID = splittedUrl[splittedUrl.length - 2];
+    // return response_f.getBody(trader_f.handler.getCustomization(traderID, sessionID));
   }
   dynBundle() {
     return "BUNDLE";

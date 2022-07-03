@@ -607,6 +607,23 @@ action: (url, info, sessionID) => {
                 return ResponseController.getBody("ok");
             }
         },
+        {
+            url: "/client/trading/customization/",
+            action: (url, info, sessionID) => {
+                console.log("/client/trading/customization/");
+
+                return ResponseController.getBody(CustomizationController.getCustomization(null, sessionID));
+            }
+        },
+        {
+            url: "/client/trading/api/getTraderAssort/",
+            action: (url, info, sessionID) => {
+                let traderID = url.split("/");
+                traderID = traderID[traderID.length - 1];
+                return ResponseController.getBody(TradingController.getTraderAssortFilteredByLevel(traderID, sessionID));
+            }
+        },
+
         // {
         //     url:"/client/location/getLocalloot",
         //     action: (url, info, sessionID) => {
