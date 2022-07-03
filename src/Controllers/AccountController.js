@@ -271,6 +271,48 @@ class AccountController
     }
 
     /**
+   * If the sessionID is specified, AccountServer function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
+   * @param {*} sessionID 
+   */
+  static saveToDisk(sessionID = 0) {
+
+    if(!fs.existsSync(`user/profiles/`)) {
+      fs.mkdirSync(`user/profiles/`);
+    }
+
+    AccountController.saveToDiskAccount(sessionID);
+    AccountController.saveToDiskProfile(sessionID);
+  }
+
+  static saveToDiskAccount(sessionID) {
+    // Does the account file exist? (Required for new accounts)
+    if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
+      logger.logInfo(`Registering New account ${sessionID}.`);
+      fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
+      logger.logSuccess(`New account ${sessionID} registered and was saved to disk.`);
+    } else {
+      let currentAccount = AccountServer.accounts[sessionID];
+      let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+      if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
+        // Save memory content to disk
+        fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
+        logger.logSuccess(`Account file for account ${sessionID} was saved to disk.`);
+      }
+    }
+  }
+
+    static saveToDiskProfile(sessionID) {
+      // Check if a PMC character exists in the server memory.
+      if (profile_f.handler.profiles[sessionID] === undefined)
+        return;
+
+      const profilePath = AccountController.getPmcPath(sessionID);
+      fileIO.write(profilePath, AccountController.getPmcProfile(sessionID));
+
+      logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
+    }
+
+    /**
      * In patch 0.12.12.30 . BSG introduced "Special Slots" for PMCs.
      * To cater for old/broken accounts, we remove the old "Pockets" (557ffd194bdc2d28148b457f) and replace with the new (627a4e6b255f7527fb05a0f6)
      * @param {*} profile 
@@ -360,8 +402,10 @@ console.log(info);
     pmcData = AccountController.AddSpecialSlotPockets(pmcData);
 
     // don't wipe profile again //
-    AccountServer.setWipe(account.id, false);
-    this.initializeProfile(sessionID);
+    // AccountServer.setWipe(account.id, false);
+    account.wipe = false;
+    AccountController.initializeProfile(sessionID);
+    AccountController.saveToDisk(sessionID);
   }
 }
 
