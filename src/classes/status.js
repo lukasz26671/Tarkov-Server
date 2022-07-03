@@ -1,6 +1,8 @@
 "use strict";
 
 const { logger } = require("../../core/util/logger");
+const { DatabaseController } = require("../Controllers/DatabaseController");
+const { TradingController } = require("../Controllers/TradingController");
 
 function foldItem(pmcData, body, sessionID) {
   for (let item of pmcData.Inventory.items) {
@@ -67,53 +69,27 @@ function examineItem(pmcData, body, sessionID) {
     pmcData = profile_f.handler.getPmcProfile(sessionID);
   }
 
-  if(itemID.length > 24) {
-    logger.logInfo("Examining obscure Id " + itemID);
-    itemID = "";
-    // outside player profile
-    if ("fromOwner" in body) {
-      // scan ragfair as a trader
-      if (body.fromOwner.type === "RagFair") {
-        body.item = body.fromOwner.id;
-        body.fromOwner.type = "Trader";
-        body.fromOwner.id = "ragfair";
-      }
-
-      // get trader assort
-      if (body.fromOwner.type === "Trader") {
-        pmcItems = trader_f.handler.getAssort(sessionID, body.fromOwner.id).items;
-      }
-
-      // get hideout item
-      if (body.fromOwner.type === "HideoutProduction") {
-        itemID = body.item;
+  if(pmcItems.length > 0) {
+    for(const pmcItem of pmcItems) {
+      if(pmcItem._id === itemID || pmcItem._tpl === itemID) {
+        itemID = pmcItem._tpl;
+        break;
       }
     }
-
-    if (preset_f.handler.isPreset(itemID)) {
-      itemID = preset_f.handler.getBaseItemTpl(itemID);
-    }
-
-    if (itemID === "") {
-      // player/trader inventory
-      for (let item of pmcItems) {
-        if (item._id === body.item) {
-          
-          itemID = item._tpl;
-          break;
-        }
-      }
-    }
-
-    if (itemID === "") {
-      // player/trader inventory
-      let result = helper_f.tryGetItem(body.item);
-      if (result[0]) {
-        itemID = result[1]._id;
-      }
-    }
-
   }
+
+  for(const trader of TradingController.getAllTraders()) {
+    const assort = TradingController.getTraderAssort(trader.base._id);
+    const traderAssortIndex = assort.items.findIndex(x=>x._id === itemID);
+    if(traderAssortIndex !== -1) {
+      itemID = assort.items[traderAssortIndex]._tpl;
+      break;
+    }
+  }
+ 
+
+
+
 
   // ----------------------------------------------------------------
   // item not found
