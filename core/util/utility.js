@@ -308,6 +308,7 @@ const { v4: uuidv4 } = require('uuid')
 //     return retVal;
 // }
 
+exports.mongoIdCounter = 0;
 exports.randomIdArray = [];
 
 /**
@@ -389,10 +390,10 @@ exports.generateNewId = (prefix = "", version = 2) => {
         {
             const dateNow = Date.now();
             let hex = dateNow.toString(16);
-            const dateNow2 = Date.now();
+            const dateNow2 = (Date.now() * 2) + (this.mongoIdCounter++)
             let hex2 = dateNow2.toString(8);
 
-            let newHex = hex + hex2;
+            let newHex = hex.substring(0, 12) + hex2.split("").reverse().join("").substring(0, 12)
             retVal = newHex.substring(0, 24);
             // const dateNow = Date.now();
             // const dateNow2 = Date.now() * 2;
