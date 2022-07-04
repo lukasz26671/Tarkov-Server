@@ -8,7 +8,7 @@ class Initializer {
     this.initializeExceptions();
     this.initializeClasses();
     this.initializeItemRoute();
-    this.initializeCacheCallbacks();
+    // this.initializeCacheCallbacks();
 
     // start watermark and server
     // require("./watermark.js").run();
@@ -18,6 +18,14 @@ class Initializer {
 
   /* load core functionality */
   initializeCore() {
+
+
+    if(!fs.existsSync(process.cwd() + "/user/"))
+      fs.mkdirSync(process.cwd() + "/user/");
+
+    if(!fs.existsSync(process.cwd() + "/user/mods/"))
+      fs.mkdirSync(process.cwd() + "/user/mods/");
+
     // -------------------------------------------------------
     // Initialization of globals
     if(global.internal === undefined)
@@ -75,6 +83,7 @@ class Initializer {
     global.mods = { toLoad: {}, config: {} };
     global.mods_f = require("./server/mods.js");
     global.mods_f.load();
+    global.mods_f.ResModLoad();
 
     // -------------------------------------------------------
     // Adjust weapon recoil by user/configs/gameplay.json file
@@ -101,12 +110,14 @@ class Initializer {
     }
     // -------------------------------------------------------
 
+
+
     // -------------------------------------------------------
     // NOTE/TODO: This needs to be removed!
     //
-    global.router = require("./server/router.js").router;
-    global.events = require("./server/events.js");
-    global.server = require("./server/server.js").server;
+    // global.router = require("./server/router.js").router;
+    // global.events = require("./server/events.js");
+    // global.server = require("./server/server.js").server;
 
   }
 
@@ -173,8 +184,8 @@ class Initializer {
       configs: {
         server: "user/configs/server.json",
         gameplay: "user/configs/gameplay.json",
-        cluster: "user/configs/cluster.json",
-        blacklist: "user/configs/blacklist.json",
+        // cluster: "user/configs/cluster.json",
+        // blacklist: "user/configs/blacklist.json",
         mods: "user/configs/mods.json"
       },
       events: {
@@ -242,33 +253,33 @@ class Initializer {
 
 
   initializeCacheCallbacks() {
-    this.cacheCallback = {};
+//     this.cacheCallback = {};
     
-    logger.logDebug("Loading Database...");
-    const databasePath = "/src/functions/database.js";
-    const executedDir = internal.process.cwd();
-    logger.logDebug(`ExecutedDir: ${executedDir}`);
-    // require(executedDir + databasePath).load();
-    // database.load();
+//     logger.logDebug("Loading Database...");
+//     const databasePath = "/src/functions/database.js";
+//     const executedDir = process.cwd();
+//     logger.logDebug(`ExecutedDir: ${executedDir}`);
+//     // require(executedDir + databasePath).load();
+//     // database.load();
 
 
-// let path = "./src/cache";
-//     let files = fileIO.readDir(path);
-//     for (let file of files) {
-//       let scriptName = "cache" + file.replace(".js", "");
-//       this.cacheCallback[scriptName] = require("../src/cache/" + file).cache;
-//     }
-//     logger.logSuccess("Create: Cache Callback");
+// // let path = "./src/cache";
+// //     let files = fileIO.readDir(path);
+// //     for (let file of files) {
+// //       let scriptName = "cache" + file.replace(".js", "");
+// //       this.cacheCallback[scriptName] = require("../src/cache/" + file).cache;
+// //     }
+// //     logger.logSuccess("Create: Cache Callback");
 
-//     // execute cache callback
-//     if (serverConfig.rebuildCache) {
-//        logger.logInfo("[Warmup]: Cache callbacks...");
-//       for (let type in this.cacheCallback) {
-//         this.cacheCallback[type]();
-//       } 
-//       global.mods_f.CacheModLoad(); // CacheModLoad
-//     }
-    global.mods_f.ResModLoad(); // load Res Mods
+// //     // execute cache callback
+// //     if (serverConfig.rebuildCache) {
+// //        logger.logInfo("[Warmup]: Cache callbacks...");
+// //       for (let type in this.cacheCallback) {
+// //         this.cacheCallback[type]();
+// //       } 
+// //       global.mods_f.CacheModLoad(); // CacheModLoad
+// //     }
+//     global.mods_f.ResModLoad(); // load Res Mods
   }
 
   /* load exception handler */
@@ -302,7 +313,7 @@ class Initializer {
     let loadedModules = "";
     const loadOrder = [
       "helper.js",
-      "account.js",
+      // "account.js",
       "bots.js",
       "bundles.js",
       "customization.js",

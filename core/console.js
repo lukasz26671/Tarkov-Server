@@ -113,7 +113,6 @@ class ConsoleResponse {
     }
     logger.logRequest(`Login: "${email}", Password: "${password}", Edition: "${edition}"`);
     const info = { email: email, password: password, edition: edition };
-    account_f.handler.register(info);
   }
 }
 

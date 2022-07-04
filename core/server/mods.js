@@ -83,8 +83,8 @@ function routeDatabaseAndResources() { // populate global.db and global.res with
 		configs: {
 			server: "user/configs/server.json",
 			gameplay: "user/configs/gameplay.json",
-			cluster: "user/configs/cluster.json",
-			blacklist: "user/configs/blacklist.json",
+			// cluster: "user/configs/cluster.json",
+			// blacklist: "user/configs/blacklist.json",
 			mods: "user/configs/mods.json"
 		},
 		events: {

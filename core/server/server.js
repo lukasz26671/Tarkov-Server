@@ -6,7 +6,6 @@ const WebSocket = require('ws'); // requires npm install ws on the Server
 const utility = require('./../util/utility')
 const { ResponseController } = require('../../src/Controllers/ResponseController');
 const { logger } = require('../util/logger');
-const { Account } = require('./../../src/classes/account');
 const { SaveHandler } = require('./../../src/classes/savehandler');
 const { TarkovSend } = require('./tarkovSend.js');
 const database = require('./../../src/functions/database')
@@ -493,24 +492,6 @@ class Server {
     return false;
   }
 
-  // softRestart() {
-  //   logger.logInfo("[SoftRestart]: Reloading Database");
-  //   global.mods_f.ResModLoad();
-  //   // const databasePath = "/src/functions/database.js";
-  //   // require(process.cwd() + databasePath).load();
-  //   database.load();
-  //   // will not be required if all data is loaded into memory
-  //   logger.logInfo("[SoftRestart]: Re-initializing");
-  //   // account_f.handler.initialize();
-  //   SaveHandler.initialize();
-  //   locale_f.handler.initialize();
-  //   preset_f.handler.initialize();
-  //   weather_f.handler.initialize();
-  //   logger.logInfo("[SoftRestart]: Reloading TamperMods");
-  //   global.mods_f.TamperModLoad(); // TamperModLoad
-  //   bundles_f.handler.initialize();
-  // }
-
   /** Start the server, used by EXE
    * PKG Server.exe is DEPENDANT on this
    */
@@ -527,7 +508,6 @@ class Server {
 
     // will not be required if all data is loaded into memory
     // logger.logDebug("Initialize account...")
-    // account_f.handler.initialize();
     // logger.logDebug("Initialize save handler...")
     // savehandler_f.initialize();
     SaveHandler.initialize();

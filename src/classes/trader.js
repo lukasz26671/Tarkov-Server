@@ -49,41 +49,6 @@ class TraderServer {
     return Traders;
   }
 
-  // Bude: Modifed the file to reset traders based on character profile defaults from our profile overhaul.
-  resetTrader(sessionID, traderID) {
-    logger.logInfo(`Resetting ${traderID}`);
-    let account;
-    let pmcData;
-    if (sessionID != "" && typeof sessionID != "undefined") {
-      account = account_f.handler.find(sessionID);
-      pmcData = profile_f.handler.getPmcProfile(sessionID);
-    } else {
-      logger.logError(`[MISSING SESSION ID] resetTrader(sessionID) is blank or undefined;`)
-    }
-
-    const character_file = "character_" + pmcData.Info.Side;
-    let templateData = fileIO.readParsed(
-      db.profile[account.edition][character_file.toLowerCase()]
-    );
-    pmcData.TradersInfo[traderID] = templateData.TradersInfo[traderID];
-    let traderWipe = fileIO.readParsed(
-      db.profile[account.edition]["initialTraderStanding"]
-    );
-
-    if (pmcData.TradersInfo[traderID] == undefined)
-      pmcData.TradersInfo[traderID] = {
-        salesSum: 0,
-        standing: 0,
-        unlocked: global._database.traders[traderID].base.unlockedByDefault,
-      };
-
-    if (traderID == "5c0647fdd443bc2504c2d371")
-      pmcData.TradersInfo[traderID].unlocked = false;
-
-    pmcData.TradersInfo[traderID].salesSum = traderWipe.initialSalesSum;
-    pmcData.TradersInfo[traderID].standing = traderWipe.initialStanding;
-  }
-
   getAssort(sessionID, traderID, isBuyingFromFence = false) {
     if (traderID === "579dc571d53a0658a154fbec" && !isBuyingFromFence) {
       // Fence
