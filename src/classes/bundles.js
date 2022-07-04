@@ -14,33 +14,30 @@ const { ResponseController } = require('../Controllers/ResponseController');
  function filewalker(dir, done) {
   let results = [];
 
-  fs.readdir(dir, function(err, list) {
-      if (err) return done(err);
+  const list = fs.readdirSync(dir);
 
-      var pending = list.length;
+  var pending = list.length;
 
-      if (!pending) return done(null, results);
+  if (!pending) return done(null, results);
 
-      list.forEach(function(file){
-          file = path.resolve(dir, file);
+  list.forEach(function(file) {
+      file = path.resolve(dir, file);
 
-          fs.stat(file, function(err, stat){
-              // If directory, execute a recursive call
-              if (stat && stat.isDirectory()) {
-                  // Add directory to array [comment if you need to remove the directories from the array]
-                  results.push(file);
+      const stat = fs.statSync(file);
+      // If directory, execute a recursive call
+      if (stat && stat.isDirectory()) {
+          // Add directory to array [comment if you need to remove the directories from the array]
+          results.push(file);
 
-                  filewalker(file, function(err, res){
-                      results = results.concat(res);
-                      if (!--pending) done(null, results);
-                  });
-              } else {
-                  results.push(file);
-
-                  if (!--pending) done(null, results);
-              }
+          filewalker(file, function(err, res){
+              results = results.concat(res);
+              if (!--pending) done(null, results);
           });
-      });
+      } else {
+          results.push(file);
+
+          if (!--pending) done(null, results);
+      }
   });
 };
 
@@ -166,6 +163,9 @@ class BundlesServer {
   }
 
   getBundles(local) {
+    if(this.bundles.length === 0)
+      this.initialize();
+
     let bundles = utility.DeepCopy(this.bundles);
     // console.log(bundles);
     // for (const bundle of bundles) {
