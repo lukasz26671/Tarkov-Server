@@ -1,7 +1,4 @@
-// const { Server, server } = require('./../../core/server/server');
-// const { NotifierService } = require('./../classes/notifier');
 const { FriendshipController } = require('./FriendshipController');
-const { AccountServer } = require('./../classes/account');
 const { AccountController } = require('./AccountController');
 const { BotController } = require('./BotController');
 const { ConfigController } = require('./ConfigController');
@@ -208,7 +205,7 @@ action: (url, info, sessionID) => {
 {
 url: "/launcher/profile/login",
 action: (url, info, sessionID) => {
-    // let output = AccountServer.login(info);
+    // let output = AccountController.login(info);
     let output = AccountController.login(info);
     return output === undefined || output === null || output === "" ? "FAILED" : output;
   }
@@ -216,8 +213,8 @@ action: (url, info, sessionID) => {
 {
     url: "/launcher/profile/get",
     action: (url, info, sessionID) => {
-        let accountId = AccountServer.login(info);
-        let output = AccountServer.find(accountId);
+        let accountId = AccountController.login(info);
+        let output = AccountController.find(accountId);
         // output['server'] = server.name;
         output['server'] = "CUNT";
         return fileIO.stringify(output);
@@ -226,9 +223,9 @@ action: (url, info, sessionID) => {
 {
     url: "/client/game/logout",
     action: (url, info, sessionID) => {
-        const account = AccountServer.find(sessionID);
+        const account = AccountController.find(sessionID);
         account.wipe = false;
-        AccountServer.saveToDisk(sessionID);
+        AccountController.saveToDisk(sessionID);
         profile_f.handler.saveToDisk(sessionID);
     }
 },

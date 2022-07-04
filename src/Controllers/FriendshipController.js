@@ -1,5 +1,4 @@
 const { logger } = require('../../core/util/logger');
-const { AccountServer } = require('../classes/account');
 const utility = require('../../core/util/utility');
 const { AccountController } = require('./AccountController');
 const { FriendRequest } = require('./../EFT/JavaScriptTypes/FriendRequest')
@@ -19,7 +18,7 @@ class FriendshipController {
 		let friendAccounts = [];
 
 		let allAccounts = AccountController.getAllAccounts();
-		let myAccount = AccountServer.find(sessionID);
+		let myAccount = AccountController.find(sessionID);
 		if(myAccount === undefined) { 
 		logger.logError("Own Account cannot be found!");
 		return null;
@@ -27,7 +26,7 @@ class FriendshipController {
 
 		if(myAccount.friends === undefined) {
 			myAccount.friends = [];
-			AccountServer.saveToDisk(sessionID);
+			AccountController.saveToDisk(sessionID);
 			return [];
 		}
 		else {
@@ -53,7 +52,7 @@ class FriendshipController {
 	 * @returns {Array}
 	 */
 static getFriendRequestInbox(sessionID) {
-	var acc = AccountServer.find(sessionID);
+	var acc = AccountController.find(sessionID);
 	if(acc.friendRequestInbox === undefined) {
 	  acc.friendRequestInbox = [];
 	} 
@@ -79,7 +78,7 @@ static getFriendRequestInbox(sessionID) {
 	 * @returns {Array}
 	 */
 static getFriendRequestOutbox(sessionID) {
-  var acc = AccountServer.find(sessionID);
+  var acc = AccountController.find(sessionID);
   if(acc.friendRequestOutbox === undefined) {
 	acc.friendRequestOutbox = [];
   } 
@@ -103,8 +102,8 @@ static getFriendRequestOutbox(sessionID) {
  * @returns {object} { requestId, retryAfter, status }
  */
 	static addFriendRequest(sessionID, toID) {
-		var acc = AccountServer.find(sessionID);
-		var toAcc = AccountServer.find(toID);
+		var acc = AccountController.find(sessionID);
+		var toAcc = AccountController.find(toID);
 
 		if(acc.friends === undefined) {
 		acc.friends = [];
@@ -132,8 +131,8 @@ static getFriendRequestOutbox(sessionID) {
 		toAcc.friendRequestInbox.push(nFriendRequestInbox);
 
 
-		AccountServer.saveToDisk(sessionID);
-		AccountServer.saveToDisk(toID);
+		AccountController.saveToDisk(sessionID);
+		AccountController.saveToDisk(toID);
 		// acc.friends.push(toID);
 		// toAcc.friends.push(acc);
 
@@ -147,7 +146,7 @@ static getFriendRequestOutbox(sessionID) {
  * @returns {object} { requestId, retryAfter, status }
  */
 	 static deleteFriendRequest(sessionID, requestId) {
-		const acc = AccountServer.find(sessionID);
+		const acc = AccountController.find(sessionID);
 		// console.log(acc);
 
 		var fr_outbox = FriendshipController.getFriendRequestOutbox(sessionID);
@@ -160,13 +159,13 @@ static getFriendRequestOutbox(sessionID) {
 			logger.logError("Unable to remove friend request " + requestId);
 		}
 		acc.friendRequestOutbox = fr_outbox;
-		AccountServer.saveToDisk(sessionID);
+		AccountController.saveToDisk(sessionID);
 
 		return requestId;
 	 }
 
 	static addFriend(sessionID, friend_id) {
-		var acc = AccountServer.find(sessionID);
+		var acc = AccountController.find(sessionID);
 		if(acc.friends === undefined) {
 			acc.friends = [];
 		}
@@ -175,7 +174,7 @@ static getFriendRequestOutbox(sessionID) {
 	}
 
 	static deleteFriend(sessionID, friend_id) {
-		var acc = AccountServer.find(sessionID);
+		var acc = AccountController.find(sessionID);
 		if(acc.friends === undefined) {
 			acc.friends = [];
 		}
@@ -194,7 +193,7 @@ static getFriendRequestOutbox(sessionID) {
 	 * @param {string} sessionID 
 	 */
 	static acceptAllRequests(sessionID) {
-		var acc = AccountServer.find(sessionID);
+		var acc = AccountController.find(sessionID);
 		if(acc.friendRequestInbox === undefined) {
 			acc.friendRequestInbox = [];
 		}

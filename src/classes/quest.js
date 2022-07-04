@@ -1,6 +1,6 @@
 "use strict";
 const { QuestEvent } = require('../Controllers/QuestController')
-const {AccountServer} = require('./account')
+const { AccountController } = require('./../Controllers/AccountController')
 
 /*
  * Quest status values
@@ -327,7 +327,7 @@ function acceptQuest(pmcData, body, sessionID) {
   if(quest === undefined)
     return item_f.handler.getOutput(sessionID);
 
-  const accountLang = AccountServer.getAccountLang(sessionID)
+  const accountLang = AccountController.getAccountLang(sessionID)
 
   const globalLocales = locale_f.handler.getGlobal(accountLang, false, sessionID);
   
@@ -401,7 +401,7 @@ function completeQuest(pmcData, body, sessionID) {
 
   // give reward
   let quest = getCachedQuest(body.qid);
-  const locale = AccountServer.getAccountLang(sessionID);
+  const locale = AccountController.getAccountLang(sessionID);
 
   if (intelCenterBonus > 0) {
     quest = applyMoneyBoost(quest, intelCenterBonus); //money = money + (money*intelCenterBonus/100)

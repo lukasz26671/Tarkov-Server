@@ -1,5 +1,4 @@
 const utility = require('../../../core/util/utility');
-const { AccountServer } = require('../../classes/account');
 const { AccountController } = require('./../../Controllers/AccountController');
 
 
@@ -60,8 +59,8 @@ class FriendRequest {
         if(this.from === undefined)
             return undefined;
 
-        var acc = AccountServer.find(this.from);
-		var toAcc = AccountServer.find(this.to);
+        var acc = AccountController.find(this.from);
+		var toAcc = AccountController.find(this.to);
 
 		// console.log("from");
 		// console.log(acc);

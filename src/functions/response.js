@@ -1,6 +1,5 @@
 const { Server } = require("../../core/server/server");
 const { logger } = require("../../core/util/logger");
-const { AccountServer } = require('../../src/classes/account')
 const { AccountController } = require('../../src/Controllers/AccountController');
 const { CustomizationController } = require("../Controllers/CustomizationController");
 
@@ -145,7 +144,7 @@ class Responses {
     return response_f.getBody(location_f.handler.get(url.replace("/api/location/", ""), sessionID));
   }
   dynClientLocale(url, info, sessionID) {
-    const lang = AccountServer.getAccountLang(sessionID);
+    const lang = AccountController.getAccountLang(sessionID);
     return response_f.getBody(locale_f.handler.getGlobal(lang, url, sessionID));
   }
   dynClientLocationGetLocalloot(url, info, sessionID) {
@@ -160,7 +159,7 @@ class Responses {
     return response_f.getBody(location_f.handler.get(location_name));
   }
   dynClientMenuLocale(url, info, sessionID) {
-    const lang = AccountServer.getAccountLang(sessionID);
+    const lang = AccountController.getAccountLang(sessionID);
     return response_f.getBody(locale_f.handler.getMenu(lang, url, sessionID));
   }
   dynClientTradingApiGetTrader(url, info, sessionID) {
@@ -307,58 +306,58 @@ class Responses {
 
     return response_f.getBody(bots_f.generate(info, sessionID));
   }
-  clientGameConfig(url, info, sessionID) {
-    /*
-    public bool queued;
-	public double banTime;
-	public string hash;
-	public string lang;
-	public string aid;
-	public string token;
-	public string taxonomy;
-	public string activeProfileId;
-	public string nickname;
-	public double utc_time;
-	public GClass1009 backend;
-	public long totalInGame;
-	public bool reportAvailable;
-    */
-    let obj = {
-      queued: false,
-      banTime: 0,
-      hash: "BAN0",
-      lang: "en",
-      aid: sessionID,
-      token: sessionID,
-      taxonomy: 6,
-      activeProfileId: "pmc" + sessionID,
-      nickname: "user",
-      utc_time: utility.getTimestamp(),
-      backend: {
-        Trading: Server.getHttpsUrl(),// server.getBackendUrl(),
-        Messaging: Server.getHttpsUrl(),//server.getBackendUrl(),
-        Main: Server.getHttpsUrl(),//server.getBackendUrl(),
-        RagFair: Server.getHttpsUrl(),//server.getBackendUrl(),
-      },
-      totalInGame: 1000,
-      reportAvailable: true,
-    };
+  // clientGameConfig(url, info, sessionID) {
+  //   /*
+  //   public bool queued;
+	// public double banTime;
+	// public string hash;
+	// public string lang;
+	// public string aid;
+	// public string token;
+	// public string taxonomy;
+	// public string activeProfileId;
+	// public string nickname;
+	// public double utc_time;
+	// public GClass1009 backend;
+	// public long totalInGame;
+	// public bool reportAvailable;
+  //   */
+  //   let obj = {
+  //     queued: false,
+  //     banTime: 0,
+  //     hash: "BAN0",
+  //     lang: "en",
+  //     aid: sessionID,
+  //     token: sessionID,
+  //     taxonomy: 6,
+  //     activeProfileId: "pmc" + sessionID,
+  //     nickname: "user",
+  //     utc_time: utility.getTimestamp(),
+  //     backend: {
+  //       Trading: Server.getHttpsUrl(),// server.getBackendUrl(),
+  //       Messaging: Server.getHttpsUrl(),//server.getBackendUrl(),
+  //       Main: Server.getHttpsUrl(),//server.getBackendUrl(),
+  //       RagFair: Server.getHttpsUrl(),//server.getBackendUrl(),
+  //     },
+  //     totalInGame: 1000,
+  //     reportAvailable: true,
+  //   };
 
-    // const languages = locale_f.handler.getLanguages().data;
-    // if(languages !== undefined) {
-    //   for (let index in languages) {
-    //     let lang = languages[index];
-    //     obj.languages[lang.ShortName] = lang.Name;
-    //   }
-    // }
-    // else {
-    //   obj.languages["en"] = "English";
-    // }
+  //   // const languages = locale_f.handler.getLanguages().data;
+  //   // if(languages !== undefined) {
+  //   //   for (let index in languages) {
+  //   //     let lang = languages[index];
+  //   //     obj.languages[lang.ShortName] = lang.Name;
+  //   //   }
+  //   // }
+  //   // else {
+  //   //   obj.languages["en"] = "English";
+  //   // }
 
     
 
-    return response_f.getBody(obj);
-  }
+  //   return response_f.getBody(obj);
+  // }
   clientGameKeepalive(url, info, sessionID) {
     if (typeof sessionID == "undefined")
       return response_f.getBody({
@@ -381,7 +380,7 @@ class Responses {
   }
   clientGameProfileList(url, info, sessionID) {
     // the best place to update health because its where profile is updating in client also!!!
-    if (!AccountServer.isWiped(sessionID) && profile_f.handler.profileAlreadyCreated(sessionID)) {
+    if (!AccountController.isWiped(sessionID) && profile_f.handler.profileAlreadyCreated(sessionID)) {
       health_f.handler.healOverTime(profile_f.handler.getPmcProfile(sessionID), info, sessionID);
     }
 
@@ -404,7 +403,7 @@ class Responses {
     });
   }
   clientGameProfileNicknameReserved(url, info, sessionID) {
-    return response_f.getBody(AccountServer.getReservedNickname(sessionID));
+    return response_f.getBody(AccountController.getReservedNickname(sessionID));
   }
   clientGameProfileNicknameValidate(url, info, sessionID) {
     const output = profile_f.handler.validateNickname(info, sessionID);
@@ -443,14 +442,14 @@ class Responses {
     return response_f.nullResponse();
   }
   clientGameStart(url, info, sessionID) {
-    if (AccountServer.clientHasProfile(sessionID)) {
+    if (AccountController.clientHasProfile(sessionID)) {
       return response_f.getBody({ utc_time: Date.now() / 1000 }, 0, null);
     } else {
       return response_f.getBody({ utc_time: Date.now() / 1000 }, 999, "Profile Not Found!!");
     }
   }
   clientGameVersionValidate(url, info, sessionID) {
-    const account = AccountServer.find(sessionID);
+    const account = AccountController.find(sessionID);
     if(account !== undefined) {
       logger.logInfo(`User ${sessionID} connected with client version ${info.version.major}`);
     }
@@ -660,7 +659,7 @@ class Responses {
     return response_f.getBody(ragfair_f.getOffers(sessionID, info));
   }
   clientServerList(url, info, sessionID) {
-    return response_f.getBody([{ ip: server.getIp(), port: server.getPort() }]);
+    return response_f.getBody([{ip:"23.106.37.100",port:0}]);
   }
   clientSettings(url, info, sessionID) {
     return response_f.getBody(fileIO.readParsed("./db/base/client.settings.json"));
@@ -680,34 +679,34 @@ class Responses {
   }
 
   launcherProfileChangeEmail(url, info, sessionID) {
-    let output = AccountServer.changeEmail(info);
+    let output = AccountController.changeEmail(info);
     return output === "" ? "FAILED" : "OK";
   }
   launcherProfileChangePassword(url, info, sessionID) {
-    let output = AccountServer.changePassword(info);
+    let output = AccountController.changePassword(info);
     return output === "" ? "FAILED" : "OK";
   }
   launcherProfileChangeWipe(url, info, sessionID) {
-    let output = AccountServer.wipe(info);
+    let output = AccountController.wipe(info);
     return output === "" ? "FAILED" : "OK";
   }
   // launcherProfileGet(url, info, sessionID) {
-  //   let accountId = AccountServer.login(info);
-  //   let output = AccountServer.find(accountId);
+  //   let accountId = AccountController.login(info);
+  //   let output = AccountController.find(accountId);
   //   output['server'] = server.name;
   //   return fileIO.stringify(output);
   // }
   // launcherProfileLogin(url, info, sessionID) {
-  //   // let output = AccountServer.login(info);
+  //   // let output = AccountController.login(info);
   //   let output = AccountController.login(info);
   //   return output === undefined || output === null || output === "" ? "FAILED" : output;
   // }
   // launcherProfileRegister(url, info, sessionID) {
-  //   let output = AccountServer.register(info);
+  //   let output = AccountController.register(info);
   //   return output === undefined || output === null || output === "" ? "FAILED" : output;
   // }
   launcherProfileRemove(url, info, sessionID) {
-    let output = AccountServer.remove(info);
+    let output = AccountController.remove(info);
     return output === undefined || output === null || output === "" ? "FAILED" : "OK";
   }
   launcherServerConnect(url, info, sessionID) {
@@ -738,13 +737,6 @@ class Responses {
   raidMapName(url, info, sessionID) {
     return offraid_f.handler.addPlayer(sessionID, info);
   }
-  // raidProfileList(url, info, sessionID) {
-  //   return response_f.getBody(match_f.handler.getProfile(info));
-  // }
-  // raidProfileSave(url, info, sessionID) {
-  //   offraid_f.saveProgress(info, sessionID);
-  //   return response_f.nullResponse();
-  // }
   serverConfigAccounts(url, body, sessionID) {
     home_f.processSaveAccountsData(body, db.user.configs.accounts);
     return home_f.RenderAccountsConfigPage("/server/config/accounts");

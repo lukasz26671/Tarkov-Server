@@ -13,16 +13,12 @@ class DialogueServer {
   initializeDialogue(sessionID) {
     // Check if the profile file exists
     if (!global.internal.fs.existsSync(getPath(sessionID))) {
-      logger.logError(`Dialogue file for session ID ${sessionID} not found.`);
+      // logger.logError(`Dialogue file for session ID ${sessionID} not found.`);
       return false;
     }
 
     // Load saved dialogues from disk
     this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
-
-    // Set the file age for the dialogues save file.
-    let stats = global.internal.fs.statSync(getPath(sessionID));
-    this.dialogueFileAge[sessionID] = stats.mtimeMs;
 
     logger.logSuccess(`Loaded dialogues for AID ${sessionID} successfully.`);
   }

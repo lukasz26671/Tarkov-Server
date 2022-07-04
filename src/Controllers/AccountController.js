@@ -1,5 +1,4 @@
 const fs = require('fs');
-const {AccountServer} = require('./../classes/account');
 const utility = require('./../../core/util/utility');
 const { logger } = require('../../core/util/logger');
 
@@ -9,6 +8,9 @@ const { logger } = require('../../core/util/logger');
  */
 class AccountController
 {
+  static accounts = {};
+  static accountFileAge = {};
+  static profiles = {};
 
   static Instance = new AccountController();
 
@@ -26,10 +28,10 @@ class AccountController
  * @returns Account_data
  */
     static find(sessionID) {
-      // AccountServer needs to be at the top to check for changed accounts.
-      AccountServer.reloadAccountBySessionID(sessionID);
-      for (let accountID in AccountServer.accounts) {
-        let account = AccountServer.accounts[accountID];
+      // AccountController needs to be at the top to check for changed accounts.
+      AccountController.reloadAccountBySessionID(sessionID);
+      for (let accountID in AccountController.accounts) {
+        let account = AccountController.accounts[accountID];
   
         if (account.id === sessionID) {
           return account;
@@ -51,7 +53,7 @@ class AccountController
           const profileFolders = fs.readdirSync(`user/profiles/`);
       // console.log(profileFolders);
       
-          // let ids = Object.keys(AccountServer.accounts);
+          // let ids = Object.keys(AccountController.accounts);
           // for (let i in ids) {
           for (const id of profileFolders) {
               // let id = ids[i];
@@ -62,7 +64,7 @@ class AccountController
                   Info: {}
               };
       
-              let profile = profile_f.handler.getPmcProfile(character.aid);
+              let profile = AccountController.getPmcProfile(character.aid);
       
               obj.Id = character.aid;
               obj._id = character.aid;
@@ -92,6 +94,43 @@ class AccountController
           return fullyLoadedAccounts;
         }
 
+        static  reloadAccountBySessionID(sessionID) {
+          if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
+            logger.logWarning(`Account file for account ${sessionID} does not exist.`);
+          } else {
+            // Does the session exist?
+            if (!AccountController.accounts[sessionID]) {
+              logger.logWarning(`Tried to load session ${sessionID} but it wasn't cached, loading.`);
+              // Reload the account from disk.
+              AccountController.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+            } else {
+              // Reload the account from disk.
+              AccountController.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+            }
+          }
+        }
+
+        static isWiped(sessionID) {
+          // AccountController needs to be at the top to check for changed accounts.
+          AccountController.reloadAccountBySessionID(sessionID);
+          return AccountController.accounts[sessionID].wipe;
+        }
+
+        static getReservedNickname(sessionID) {
+          AccountController.reloadAccountBySessionID(sessionID);
+          return "";
+        }
+      
+        static nicknameTaken(info) {
+          // AccountController will be usefull if you dont want to have same nicknames in accounts info otherwise leave it to always false
+          // for (let accountID in AccountController.accounts) {
+            // if (info.nickname.toLowerCase() === AccountController.accounts[accountID].nickname.toLowerCase()) {
+              // return true;
+            // }
+          // }
+      
+          return false;
+        }
 
     static findAccountIdByUsernameAndPassword(username, password) {
       if(!fs.existsSync(`user/profiles/`)) {
@@ -132,7 +171,7 @@ class AccountController
      * @param {object} info 
      */
     static login(info) {
-        // AccountServer.reloadAccountByLogin(info);
+        // AccountController.reloadAccountByLogin(info);
         const loginSuccessId = AccountController.findAccountIdByUsernameAndPassword(info.username, info.password);
         if(loginSuccessId !== undefined) {
           logger.logSuccess(`Login ${loginSuccessId} Successful`)
@@ -161,7 +200,7 @@ class AccountController
             return "FAILED";
           }
       
-          AccountServer.accounts[accountID] = {
+          AccountController.accounts[accountID] = {
             id: accountID,
             email: info.email,
             password: info.password,
@@ -176,7 +215,7 @@ class AccountController
 	          friendRequestOutbox: []
           };
       
-          AccountServer.saveToDisk(accountID);
+          AccountController.saveToDisk(accountID);
           return accountID;
         }
     }
@@ -186,9 +225,7 @@ class AccountController
       return pmcPath.replace("__REPLACEME__", sessionID);
     }
 
-    static getPmcProfile(sessionID) {
-      return AccountController.getProfile(sessionID, "pmc");
-    }
+    
 
     /*
    * Get profile with sessionID of type (profile type in string, i.e. 'pmc').
@@ -196,17 +233,27 @@ class AccountController
    * from disk.
    */
   static getProfile(sessionID, type) {
-    if (!(sessionID in profile_f.handler.profiles)) {
+    if (AccountController.profiles[sessionID] === undefined) {
       AccountController.initializeProfile(sessionID);
     } else {
       // AccountController.reloadProfileBySessionID(sessionID);
     }
 
-    return profile_f.handler.profiles[sessionID][type];
+    return AccountController.profiles[sessionID][type];
+  }
+
+  static getPmcProfile(sessionID) {
+    return AccountController.getProfile(sessionID, "pmc");
   }
 
     static initializeProfile(sessionID) {
-      profile_f.handler.profiles[sessionID] = {};
+      if(sessionID === undefined || sessionID === "")
+        return;
+
+      if(AccountController.profiles[sessionID] !== undefined)
+        return;
+
+      AccountController.profiles[sessionID] = {};
       dialogue_f.handler.initializeDialogue(sessionID);
       health_f.handler.initializeHealth(sessionID);
       insurance_f.handler.resetSession(sessionID);
@@ -218,7 +265,9 @@ class AccountController
      * @returns {object}
      */
     static loadProfileFromDisk(sessionID) {
-      if (sessionID === undefined) logger.throwErr("Session ID is undefined");
+      if (sessionID === undefined) 
+        logger.throwErr("Session ID is undefined");
+
       try {
         // Check if the profile file exists
         if (!fs.existsSync(AccountController.getPmcPath(sessionID))) {
@@ -251,10 +300,10 @@ class AccountController
         if(Object.keys(changedIds).length > 0) {
           logger.logSuccess(`Login cleaned ${Object.keys(changedIds).length} items`);
         }
-        profile_f.handler.profiles[sessionID]["pmc"] = loadedProfile;
+        AccountController.profiles[sessionID]["pmc"] = loadedProfile;
   
         // Generate a scav
-        profile_f.handler.profiles[sessionID]["scav"] = profile_f.handler.generateScav(sessionID);
+        AccountController.profiles[sessionID]["scav"] = profile_f.handler.generateScav(sessionID);
       } catch (e) {
         if (e instanceof SyntaxError) {
           return logger.logError(
@@ -271,7 +320,7 @@ class AccountController
     }
 
     /**
-   * If the sessionID is specified, AccountServer function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
+   * If the sessionID is specified, AccountController function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
    * @param {*} sessionID 
    */
   static saveToDisk(sessionID = 0) {
@@ -288,14 +337,14 @@ class AccountController
     // Does the account file exist? (Required for new accounts)
     if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
       logger.logInfo(`Registering New account ${sessionID}.`);
-      fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
+      fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountController.accounts[sessionID]);
       logger.logSuccess(`New account ${sessionID} registered and was saved to disk.`);
     } else {
-      let currentAccount = AccountServer.accounts[sessionID];
+      let currentAccount = AccountController.accounts[sessionID];
       let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
       if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
         // Save memory content to disk
-        fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountServer.accounts[sessionID]);
+        fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountController.accounts[sessionID]);
         logger.logSuccess(`Account file for account ${sessionID} was saved to disk.`);
       }
     }
@@ -303,7 +352,7 @@ class AccountController
 
     static saveToDiskProfile(sessionID) {
       // Check if a PMC character exists in the server memory.
-      if (profile_f.handler.profiles[sessionID] === undefined)
+      if (AccountController.profiles[sessionID] === undefined)
         return;
 
       const profilePath = AccountController.getPmcPath(sessionID);
@@ -353,7 +402,7 @@ console.log(info);
     const account = AccountController.find(sessionID);
 
     // Get profile location //
-    const folder = account_f.getPath(account.id);
+    const folder = AccountController.getPath(account.id);
 
     // Get the faction the player has chosen //
     const ChosenSide = info.side.toLowerCase();
@@ -402,10 +451,128 @@ console.log(info);
     pmcData = AccountController.AddSpecialSlotPockets(pmcData);
 
     // don't wipe profile again //
-    // AccountServer.setWipe(account.id, false);
+    // AccountController.setWipe(account.id, false);
     account.wipe = false;
     AccountController.initializeProfile(sessionID);
     AccountController.saveToDisk(sessionID);
+  }
+
+  /**
+   * Check if the client has a profile. AccountController function will be used by the response "/client/game/start" and determine, if a new profile will be created.
+   * @param {*} sessionID 
+   * @returns If the account exists.
+   */
+   static clientHasProfile(sessionID) {
+    AccountController.reloadAccountBySessionID(sessionID)
+    let accounts = AccountController.getList();
+    for (let account in accounts) {
+      if (account == sessionID) {
+        if (!fileIO.exist("user/profiles/" + sessionID + "/character.json")) logger.logSuccess(`New account ${sessionID} logged in!`);
+        return true
+      }
+    }
+    return false
+  }
+
+  static getList() {
+    return AccountController.accounts;
+  }
+
+  static getPath(sessionID) {
+    return `user/profiles/${sessionID}/`;
+  }
+
+  static wipe(info) {
+    let accountID = AccountController.login(info);
+
+    if (accountID !== "") {
+      AccountController.accounts[accountID].edition = info.edition;
+      AccountController.accounts[accountID].wipe = true;
+      // AccountController.setWipe(accountID, true);
+      AccountController.saveToDisk(accountID);
+    }
+
+    return accountID;
+  }
+
+  static remove(info) {
+    let accountID = AccountController.login(info);
+
+    if (accountID !== "") {
+      delete AccountController.accounts[accountID];
+      utility.removeDir(`user/profiles/${accountID}/`);
+      //AccountController.saveToDisk();
+    }
+
+    return accountID;
+  }
+
+  static changeEmail(info) {
+    let accountID = AccountController.login(info);
+
+    if (accountID !== "") {
+      AccountController.accounts[accountID].email = info.change;
+      AccountController.saveToDisk(accountID);
+    }
+
+    return accountID;
+  }
+
+  static changePassword(info) {
+    let accountID = AccountController.login(info);
+
+    if (accountID !== "") {
+      AccountController.accounts[accountID].password = info.change;
+      AccountController.saveToDisk(accountID);
+    }
+
+    return accountID;
+  }
+
+  /**
+ * Searches for account and tries to retrive the account language
+ * @param {string} sessionID 
+ * @returns {string} - Account language (en, ru...)
+ */
+   static getAccountLang(sessionID) {
+    // AccountController needs to be at the top to check for changed accounts.
+    AccountController.reloadAccountBySessionID(sessionID);
+    let account = AccountController.find(sessionID);
+    if (typeof account.lang == "undefined") {
+      account.lang = "en";
+      AccountController.saveToDisk(sessionID);
+    }
+    return account.lang;
+  }
+
+  /**
+   * Reload the profile from disk if the profile was changed by another server.
+   * @param {*} sessionID 
+   */
+   static reloadProfileBySessionID(sessionID) {
+    if (sessionID === undefined) {
+      logger.throwErr("Session ID is undefined");
+      return;
+    }
+    try {
+
+      // Check if the profile file exists
+      if (global.internal.fs.existsSync(AccountController.getPmcPath(sessionID))) {
+          //Load the PMC profile from disk.
+          AccountController.profiles[sessionID]["pmc"] = fileIO.readParsed(AccountController.getPmcPath(sessionID));
+      }
+    } catch (e) {
+      if (e instanceof SyntaxError) {
+        return logger.logError(
+          `There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
+        );
+      } else {
+        logger.logData(sessionID);
+        logger.logError(`There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
+        logger.logData(e);
+        return;
+      }
+    }
   }
 }
 

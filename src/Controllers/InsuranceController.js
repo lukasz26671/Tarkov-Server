@@ -1,4 +1,3 @@
-const { AccountServer } = require('../classes/account');
 const insurance = require('../classes/insurance');
 const { AccountController } = require('./AccountController')
 
@@ -10,7 +9,7 @@ class InsuranceController {
      */
      static checkExpiredInsurance() {
         // logger.logInfo("checkExpiredInsurance");
-        for(const p in profile_f.handler.profiles) {
+        for(const p in AccountController.profiles) {
             const prof = AccountController.getPmcProfile(p);
             // console.log(prof);
             if(prof !== undefined && prof.InsuredItems !== undefined) {
@@ -74,7 +73,7 @@ class InsuranceController {
             });
         }
     
-        AccountServer.saveToDisk(sessionID);
+        AccountController.saveToDisk(sessionID);
         return item_f.handler.getOutput(sessionID);
     }
 

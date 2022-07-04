@@ -22,7 +22,7 @@ class InsuranceServer {
      */
     checkExpiredInsurance() {
         // logger.logInfo("checkExpiredInsurance");
-        for(const p in profile_f.handler.profiles) {
+        for(const p in AccountController.profiles) {
             for (let insurance in p.InsuredItems) {
                 console.log("insuredItem");
                 console.log(insurance);

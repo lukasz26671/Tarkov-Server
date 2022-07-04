@@ -1,10 +1,10 @@
 "use strict";
 
 const { logger } = require("../../core/util/logger");
-const { AccountServer } = require('./account')
+const { AccountController } = require('./../Controllers/AccountController')
 
 function main(sessionID) {
-  if (!AccountServer.isWiped(sessionID)) {
+  if (!AccountController.isWiped(sessionID)) {
     updateTraders(sessionID);
     updatePlayerHideout(sessionID);
   }

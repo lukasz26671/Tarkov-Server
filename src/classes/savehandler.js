@@ -1,6 +1,6 @@
 "use strict";
 const { ConfigController } = require('../Controllers/ConfigController');
-const { AccountServer } = require('./account')
+const { AccountController } = require('./../Controllers/AccountController')
 
 class SaveHandler 
 {
@@ -30,7 +30,7 @@ class SaveHandler
 	}
 
 	static saveOpenSessions() {
-		AccountServer.saveToDisk();
+		AccountController.saveToDisk();
 		// events.scheduledEventHandler.saveToDisk();
 
 		for (let sessionId of profile_f.handler.getOpenSessions()) {
