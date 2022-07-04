@@ -94,19 +94,20 @@ function loadCoreData() {
 function loadItemsData() {
 
   var gameplayConfig = ConfigController.Configs["gameplay"];
-  global._database.items = {};
+  global._database.items = fileIO.readParsed(db.items["_items"]);
+
 
   // gather all items into memory db
-  const itemNodeFiles = db.items;
-  for (const file in itemNodeFiles) {
-    for (const items of fileIO.readParsed(itemNodeFiles[file])) {
-      if (items._id == undefined) {
-        logger.logWarning(`[Loading ItemsDB] file: ${file} looks to contain corrupted data`)
-        continue;
-      }
-      global._database.items[items._id] = items;
-    }
-  }
+  // const itemNodeFiles = db.items;
+  // for (const file in itemNodeFiles) {
+  //   for (const items of fileIO.readParsed(itemNodeFiles[file])) {
+  //     if (items._id == undefined) {
+  //       logger.logWarning(`[Loading ItemsDB] file: ${file} looks to contain corrupted data`)
+  //       continue;
+  //     }
+  //     global._database.items[items._id] = items;
+  //   }
+  // }
 
   
   
@@ -168,20 +169,20 @@ function loadQuestsData() {
   if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
 
   // - Convert Aki's working Quests to JETs quest array // 
-  // const objectQData = fileIO.readParsed("./" + db.quests.quests2);
-  // if(objectQData !== undefined) {
-  //   _database.quests = [];
-  //   for(const q in objectQData) {
-  //     _database.quests.push(objectQData[q]);
-  //   }
-  // }
-  const objectQData = fileIO.readParsed("./" + db.quests.quests3);
+  const objectQData = fileIO.readParsed("./" + db.quests.quests2);
   if(objectQData !== undefined) {
     _database.quests = [];
     for(const q in objectQData) {
       _database.quests.push(objectQData[q]);
     }
   }
+  // const objectQData = fileIO.readParsed("./" + db.quests.quests3);
+  // if(objectQData !== undefined) {
+  //   _database.quests = [];
+  //   for(const q in objectQData) {
+  //     _database.quests.push(objectQData[q]);
+  //   }
+  // }
 
   /*   // this should load quests depending on file content if its single quest it will be pushed to the list
     // if its quests array containing more then 1 quest it will be loaded as for loop push 
@@ -616,10 +617,10 @@ exports.load = () => {
   loadCoreData();
   logger.logDebug("Load: 'Globals'");
   loadGlobals();
-  logger.logDebug("Load: 'Cluster Config'")
-  loadClusterConfig();
-  logger.logDebug("Load: 'Blacklist'")
-  loadBlacklistConfig();
+  // logger.logDebug("Load: 'Cluster Config'")
+  // loadClusterConfig();
+  // logger.logDebug("Load: 'Blacklist'")
+  // loadBlacklistConfig();
   logger.logDebug("Load: 'Gameplay'");
   loadGameplayConfig();
   logger.logDebug("Load: 'Bots'");
