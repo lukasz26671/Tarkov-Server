@@ -285,8 +285,6 @@ class Initializer {
   /* load exception handler */
   initializeExceptions() {
     internal.process.on("uncaughtException", (error, promise) => {
-      logger.logError("[Server]:" + server.getVersion());
-      logger.logError("[Trace]:");
       logger.logData(error);
     });
   }
