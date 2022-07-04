@@ -109,57 +109,86 @@ const ItemParentsList = [
   "5422acb9af1c889c16000029",
 ];
 
+/**
+ * Trading Controller
+ */
 class TradingController {
     static Instance = new TradingController();
     static ItemDbList = [];
     static TraderIdToNameMap = {
       "Prapor": "54cb50c76803fa8b248b4571",
-      "Fence": "579dc571d53a0658a154fbec"
+      "Therapist": "54cb57776803fa99248b456e",
+      "Fence": "579dc571d53a0658a154fbec",
+      "Skier": "58330581ace78e27b8b10cee",
+      "Mechanic": "5a7c2eca46aef81a7ca2145d",
+      "Ragman": "5ac3b934156ae10c4430e83c",
+      "Jaeger": "5c0647fdd443bc2504c2d371",
+      "Ragfair": "ragfair"
     };
     static FenceId = TradingController.TraderIdToNameMap["Fence"];
+    static RagfairId = TradingController.TraderIdToNameMap["Ragfair"];
+    /**
+     * Last time that fence assort was generated
+     */
+    static LastFenceGenerationTime = undefined;
+    /**
+     * Keeping previously generated Assorts for examining etc.
+     */
+    static PreviousAssorts = [];
     
-
     static iterItemChildren(item, item_list) {
-        // Iterates through children of `item` present in `item_list`
-        return item_list.filter((child_item) => child_item.parentId === item._id);
+      // Iterates through children of `item` present in `item_list`
+      return item_list.filter((child_item) => child_item.parentId === item._id);
+    }
+    
+    static iterItemChildrenRecursively(item, item_list) {
+      // Recursively iterates through children of `item` present in `item_list`
+    
+      let stack = TradingController.iterItemChildren(item, item_list);
+      let child_items = [...stack];
+    
+      while (stack.length > 0) {
+        let child = stack.pop();
+        let children_of_child = TradingController.iterItemChildren(child, item_list);
+        stack.push(...children_of_child);
+        child_items.push(...children_of_child);
       }
     
-      static iterItemChildrenRecursively(item, item_list) {
-        // Recursively iterates through children of `item` present in `item_list`
-      
-        let stack = TradingController.iterItemChildren(item, item_list);
-        let child_items = [...stack];
-      
-        while (stack.length > 0) {
-          let child = stack.pop();
-          let children_of_child = TradingController.iterItemChildren(child, item_list);
-          stack.push(...children_of_child);
-          child_items.push(...children_of_child);
-        }
-      
-        return child_items;
-      }
+      return child_items;
+    }
 
     static generateItemIds(...items) {
-        const ids_map = {};
-      
-        for (const item of items) {
-          ids_map[item._id] = utility.generateNewItemId();
+      const ids_map = {};
+    
+      for (const item of items) {
+        ids_map[item._id] = utility.generateNewItemId();
+      }
+    
+      for (const item of items) {
+        item._id = ids_map[item._id];
+        if (item.parentId in ids_map) {
+          item.parentId = ids_map[item.parentId];
         }
-      
-        for (const item of items) {
-          item._id = ids_map[item._id];
-          if (item.parentId in ids_map) {
-            item.parentId = ids_map[item.parentId];
-          }
-        }
+      }
     }
 
     /**
-     * 
-     * @param {*} sessionID 
+     * Dynamically generates a TraderAssort
+     * @param {string} sessionID 
+     * @returns {TraderAssort} Assort
      */
     static generateFenceAssort(sessionID) {
+
+      if(TradingController.getTrader(TradingController.FenceId) !== undefined
+        && global._database.traders[TradingController.FenceId].assort !== undefined
+        && global._database.traders[TradingController.FenceId].assort.items.length > 0
+        && TradingController.LastFenceGenerationTime !== undefined
+        && TradingController.LastFenceGenerationTime > Date.now() - (60 * 1000)
+        )
+        return global._database.traders[TradingController.FenceId].assort;
+
+
+        TradingController.LastFenceGenerationTime = Date.now();
         const fenceId = "579dc571d53a0658a154fbec";
         // const base = { items: [], barter_scheme: {}, loyal_level_items: {} };
         const base = new TraderAssort();
@@ -176,7 +205,7 @@ class TradingController {
 
         const dbItemKeys = Object.keys(global._database.items);
         //  for (let i = 0; i < 100; i++) {
-          while(base.items.length < 25) {
+          while(base.items.length < 50) {
             let random_item_index = utility.getRandomInt(
               0,
               // fileAssort.items.length - 1
@@ -250,44 +279,44 @@ class TradingController {
         // Presets are gathered from the database globals file. global._database.globals.ItemPresets
         // They require the root and child items to make up the full set. You could just use parts, if you wish.
 
-        const presetItems = [];
-        var presetItemsRemovedByRarity = {};
-        for(const itemId in global._database.globals.ItemPresets) {
-          const preset = global._database.globals.ItemPresets[itemId];
-          const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
-          // console.log(templateItem);
+        // const presetItems = [];
+        // var presetItemsRemovedByRarity = {};
+        // for(const itemId in global._database.globals.ItemPresets) {
+        //   const preset = global._database.globals.ItemPresets[itemId];
+        //   const templateItem = helper_f.tryGetItem(preset._items[0]._tpl);
+        //   // console.log(templateItem);
 
-          let traderStandingRarityMulti = Math.min(6.0, Math.max(3.0, 3.0 + traderStanding));
-          if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, traderStandingRarityMulti))
-            continue;
+        //   let traderStandingRarityMulti = Math.min(6.0, Math.max(3.0, 3.0 + traderStanding));
+        //   if(!LootController.FilterItemByRarity(templateItem, presetItemsRemovedByRarity, traderStandingRarityMulti))
+        //     continue;
 
-          if(base.items.findIndex(x=>x._id === preset._items[0]._id) !== -1)
-            continue;
+        //   if(base.items.findIndex(x=>x._id === preset._items[0]._id) !== -1)
+        //     continue;
 
-            // const newWeaponParentId = utility.generateNewItemId();
-            let newBaseWeapon = {
-              "_id": preset._items[0]._id,
-              // "_id": templateItem._id,
-              "_tpl": preset._items[0]._tpl,
-              "parentId": "hideout",
-              "slotId": "hideout",
-              "upd": {
-                  "BuyRestrictionCurrent": 0,
-                  "BuyRestrictionMax": 1,
-                  "StackObjectsCount": 1,
-                  "UnlimitedCount": false
-              }
-            }
-            base.items.push(newBaseWeapon);
-            for(let childIndex = 1; childIndex < preset._items.length; childIndex++)
-            { 
-              const childItem = preset._items[childIndex];
-              // const newWeaponChildId = utility.generateNewItemId();
-              // childItem._id = newWeaponChildId;
-              // childItem.parentId = newWeaponParentId;
-              base.items.push(childItem);
-            }
-        }
+        //     // const newWeaponParentId = utility.generateNewItemId();
+        //     let newBaseWeapon = {
+        //       "_id": preset._items[0]._id,
+        //       // "_id": templateItem._id,
+        //       "_tpl": preset._items[0]._tpl,
+        //       "parentId": "hideout",
+        //       "slotId": "hideout",
+        //       "upd": {
+        //           "BuyRestrictionCurrent": 0,
+        //           "BuyRestrictionMax": 1,
+        //           "StackObjectsCount": 1,
+        //           "UnlimitedCount": false
+        //       }
+        //     }
+        //     base.items.push(newBaseWeapon);
+        //     for(let childIndex = 1; childIndex < preset._items.length; childIndex++)
+        //     { 
+        //       const childItem = preset._items[childIndex];
+        //       // const newWeaponChildId = utility.generateNewItemId();
+        //       // childItem._id = newWeaponChildId;
+        //       // childItem.parentId = newWeaponParentId;
+        //       base.items.push(childItem);
+        //     }
+        // }
         // console.log(presetItemsRemovedByRarity);
         
         for(let i = 0; i < base.items.length; i++) {
@@ -320,6 +349,9 @@ class TradingController {
 
         // Save change to the database
         global._database.traders[fenceId].assort = base;
+        global._database.traders[fenceId].assort.items = [...new Set(base.items)];
+
+        TradingController.PreviousAssorts.push(base);
         // TradingController.setTraderAssort(fenceId, base);
         return base;
       }
@@ -330,7 +362,7 @@ class TradingController {
        * @param {*} traderId 
        */
       static getTraderStanding(playerId, traderId) {
-        const profile = profile_f.handler.getPmcProfile(playerId);
+        const profile = AccountController.getPmcProfile(playerId);
         return profile.TradersInfo[traderId].standing;
       }
 
@@ -412,7 +444,9 @@ static getLoyalty(pmcData, traderID) {
        * @param {*} traderId 
        * @returns {object} Assort
        */
-      static getTraderAssort(traderId) {
+      static getTraderAssort(traderId, sessionID) {
+        TradingController.generateFenceAssort(sessionID);
+
         if(traderId !== 'ragfair')
           return DatabaseController.getDatabase().traders[traderId].assort;
         else 
@@ -425,7 +459,7 @@ static getLoyalty(pmcData, traderID) {
        * @returns {object} Assort
        */
        static getTraderAssortFilteredByLevel(traderId, sessionID) {
-        const assort = TradingController.getTraderAssort(traderId);
+        const assort = TradingController.getTraderAssort(traderId, sessionID);
         const newAssort = new TraderAssort();// JSON.parse(JSON.stringify(TradingController.getTraderAssort(traderId)));
         const pmcData = AccountController.getPmcProfile(sessionID);
         const traderLevel = TradingController.getLoyalty(pmcData, traderId);
