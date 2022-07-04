@@ -26,8 +26,8 @@
   },
   "bin": "bin/www.js",
   "pkg": {
-    "scripts": [],
-    "assets": [],
+    "scripts": "",
+    "assets": "",
     "targets": [
       "node16-win"
     ]
