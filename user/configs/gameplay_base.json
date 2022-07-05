@@ -50,7 +50,14 @@
   },
   "trading":
   {
-      "ragfairMultiplier": 1.6,
+    "fleaMarket": {
+        "ragfairMultiplierDesc": "How much to multiply the base price by when creating the offer in Flea Market",
+        "ragfairMultiplier": 3.0,
+        "minItemsInOffer": 0,
+        "maxItemsInOffer": 8,
+        "filtersByRarityDesc": "PLANNED: CURRENTLY NOT USED",
+        "filtersByRarity": false
+    },
       "repairMultiplier": 1,
       "insureMultiplier": 0.1,
       "insurerMultiplier":
@@ -112,11 +119,11 @@
   },
   "weapons":
   {
-      "cameraRecoilDesc": "Adjust Camera Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 2 = double recoil",
+      "cameraRecoilDesc": "Adjust Camera Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 200 = double recoil",
       "cameraRecoil": 100,
-      "verticalRecoilDesc": "Adjust Vertical Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 2 = double recoil",
+      "verticalRecoilDesc": "Adjust Vertical Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 200 = double recoil",
       "verticalRecoil": 100,
-      "horizontalRecoilDesc": "Adjust Horizontal Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 2 = double recoil",
+      "horizontalRecoilDesc": "Adjust Horizontal Recoil by (%) percentage - 0 = no recoil, 100 = vanilla recoil, 200 = double recoil",
       "horizontalRecoil": 100
   }
 }

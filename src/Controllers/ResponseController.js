@@ -18,6 +18,9 @@ const { CustomizationController } = require('./CustomizationController');
  */
 class ResponseController
 {
+    constructor() {
+        // console.log("ResponseController");
+    }
     static SessionIdToIpMap = {};
     static getUrl()
     {
@@ -660,6 +663,16 @@ action: (url, info, sessionID) => {
     }
 
     /**
+     * Adds an Array of Routes to the ResponseController
+     * @param {*} listOfRoutes 
+     */
+    static addRoutes = (listOfRoutes) => {
+        for(const item of listOfRoutes) {
+            ResponseController.addRoute(item.url, item.action);
+        }
+    }
+
+    /**
      * Override a route in the Response Controller, if the route doesn't exist, add the route
      * @param {*} url 
      * @param {*} action 
@@ -760,3 +773,14 @@ module.exports.ResponseDbViewer = new ResponseDbViewer();
 // (function() {
 //     
 // })();
+
+const RagfairRoutes = [
+    {
+        url: "/client/ragfair/find",
+        action: (url, info, sessionID) => {
+            return ResponseController.getBody(ragfair_f.getOffers(sessionID, info));
+        }
+    }
+]
+
+ResponseController.addRoutes(RagfairRoutes);

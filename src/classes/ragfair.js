@@ -1,5 +1,7 @@
 "use strict";
 
+const { ConfigController } = require('../Controllers/ConfigController');
+
 function sortOffersByID(a, b) {
   return a.intId - b.intId;
 }
@@ -130,6 +132,8 @@ function countCategories(response) {
 
 function getOffers(sessionID, request) {
 
+  // console.log(request);
+  require('fs').writeFileSync("ragfairRequest.json", JSON.stringify(request));
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
   let itemsToAdd = [];
   let offers = [];
@@ -180,8 +184,12 @@ function getOffers(sessionID, request) {
     offers = [...offers, ...traderOffers];
   }
 
+
   response.offers = sortOffers(request, offers);
   countCategories(response);
+
+  response.offersCount = response.offers.length;
+  response.offers = response.offers.slice(request.page * request.limit, (request.page+1) * request.limit);
   return response;
 }
 
@@ -238,7 +246,7 @@ function getOffersFromTraders(sessionID, request) {
         const traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
         for (let item of traderAssort) {
           if (item._id === tmpOffer.root) {
-            jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = (tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
+            jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = 30; //(tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
             offersToKeep.push(jsonToReturn.offers[offer]);
             break;
           }
@@ -350,14 +358,17 @@ function createOffer(template, onlyFunc, usePresets = true) {
 
 
   // Remove items that don't exist in assort
-  if (Object.values(global._database.traders.ragfair.assort.items).filter(tItem => tItem._tpl == template || tItem._id == template).length == 0) {
-    logger.logWarning(`Item ${template} does not exist in ragfair assort, ignoring...`);
-    return [];
-  }
+  // if (Object.values(global._database.traders.ragfair.assort.items).filter(tItem => tItem._tpl == template || tItem._id == template).length == 0) {
+  //   logger.logWarning(`Item ${template} does not exist in ragfair assort, ignoring...`);
+  //   return [];
+  // }
 
-  const offerBase = _database.core.fleaOffer;
-  //let offerBase = fileIO.readParsed(db.user.cache.ragfair_offers);
-  let offers = [];
+  const offerBase = utility.DeepCopy(_database.core.fleaOffer);
+  const offers = [];
+
+  const ragfairMultiplier = ConfigController.Configs["gameplay"].trading.fleaMarket.ragfairMultiplier;
+  const minItemsInOffer = Math.max(1, ConfigController.Configs["gameplay"].trading.fleaMarket.minItemsInOffer);
+  const maxItemsInOffer = Math.max(minItemsInOffer, Math.min(99, ConfigController.Configs["gameplay"].trading.fleaMarket.maxItemsInOffer));
 
   // Preset
   if (usePresets && preset_f.handler.hasPreset(template)) {
@@ -378,10 +389,10 @@ function createOffer(template, onlyFunc, usePresets = true) {
       offer._id = p._id; // The offer's id is now the preset's id
       offer.root = mods[0]._id; // Sets the main part of the weapon
       offer.items = mods;
-      offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
+      offer.items[0].upd.StackObjectsCount = utility.getRandomInt(0, 1);// utility.getRandomInt(1, 25);
       delete offer.buyRestrictionMax
       // ~~ = Math.round
-      offer.requirements[0].count = ~~(rub * global._database.gameplay.trading.ragfairMultiplier);
+      offer.requirements[0].count = ~~(rub * ragfairMultiplier);
       // randomize the name
       offer.user.nickname = global.utility.getArrayValue(global._database.bots.names.normal);
       offers.push(offer);
@@ -394,10 +405,10 @@ function createOffer(template, onlyFunc, usePresets = true) {
     let offer = utility.DeepCopy(offerBase);
 
     //~~ = Math.round
-    let rubPrice = ~~(helper_f.getTemplatePrice(template) * global._database.gameplay.trading.ragfairMultiplier);
+    let rubPrice = ~~(helper_f.getTemplatePrice(template) * ragfairMultiplier);
     offer._id = template;
     offer.items[0]._tpl = template;
-    offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
+    offer.items[0].upd.StackObjectsCount = utility.getRandomInt(minItemsInOffer, maxItemsInOffer);
     offer.requirements[0].count = rubPrice;
     offer.itemsCost = rubPrice;
     offer.requirementsCost = rubPrice;

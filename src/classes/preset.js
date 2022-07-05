@@ -23,6 +23,9 @@ class ItemPresets {
     }
 
     hasPreset(templateId) {
+        if(this.lookup === undefined)
+            this.initialize();
+            
         return templateId in this.lookup;
     }
 

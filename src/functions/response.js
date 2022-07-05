@@ -75,7 +75,7 @@ class Responses {
       // "/client/profile/status": this.clientProfileStatus,
       "/client/putMetrics": this.clientPutMetrics,
       "/client/quest/list": this.clientQuestList,
-      "/client/ragfair/find": this.clientRagfairFind,
+      // "/client/ragfair/find": this.clientRagfairFind,
       "/client/ragfair/itemMarketPrice": this.clientRagfairItemMarketPrice,
       "/client/ragfair/search": this.clientRagfairSearch,
       "/client/server/list": this.clientServerList,
@@ -649,10 +649,10 @@ class Responses {
   clientQuestList(url, info, sessionID) {
     return response_f.getBody(quest_f.getQuestsForPlayer(url, info, sessionID));
   }
-  clientRagfairFind(url, info, sessionID) {
-    return response_f.nullResponse();
-    // return response_f.getBody(ragfair_f.getOffers(sessionID, info));
-  }
+  // clientRagfairFind(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  //   // return response_f.getBody(ragfair_f.getOffers(sessionID, info));
+  // }
   clientRagfairItemMarketPrice(url, info, sessionID) {
     return response_f.getBody(ragfair_f.itemMarKetPrice(info));
   }
