@@ -74,7 +74,7 @@ class ConsoleResponse {
     let newItemList = { items: [{ item_id: commandStructure[2], count: commandStructure[3] }], tid: "" };
     let pmcData = profile_f.handler.getPmcProfile(sessionID);
     move_f.addItem(pmcData, newItemList, sessionID, true);
-    savehandler_f.saveOpenSessions();
+    // savehandler_f.saveOpenSessions();
     logger.logInfo(`Item added: ${newItemList.items[0].item_id} count:${newItemList.items[0].count} session:${sessionID}`);
   }
   resetServer(commandStructure) {

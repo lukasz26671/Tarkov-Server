@@ -1,5 +1,6 @@
 "use strict";
 
+const { AccountController } = require("../Controllers/AccountController");
 const { TradingController } = require("../Controllers/TradingController");
 
 /* TraderServer class maintains list of traders for each sessionID in memory. */
@@ -75,8 +76,8 @@ class TraderServer {
     let assorts = utility.DeepCopy(baseAssorts);
 
     // Fetch the current trader loyalty level
-    const pmcData = profile_f.handler.getPmcProfile(sessionID);
-    const TraderLevel = profile_f.getLoyalty(pmcData, traderID);
+    const pmcData = AccountController.getPmcProfile(sessionID);
+    const TraderLevel = TradingController.getLoyalty(pmcData, traderID);
 
     if (TraderLevel !== "ragfair") {
       // 1 is min level, 4 is max level
@@ -129,8 +130,8 @@ class TraderServer {
     return output;
   }
   getPurchasesData(traderID, sessionID) {
-    const pmcData = profile_f.handler.getPmcProfile(sessionID);
-    const trader = global._database.traders[traderID].base;
+    const pmcData = AccountController.getPmcProfile(sessionID);
+    const trader = TradingController.getTrader(traderID).base;
     const currency = helper_f.getCurrency(trader.currency);
     let output = {};
 
@@ -157,9 +158,9 @@ class TraderServer {
       )) {
         if (!global._database.items[childItem._tpl]) {
           continue;
-        } // Ignore child item if it does not have an entry in the db. -- kiobu
+        } 
         const getPrice = helper_f.getTemplatePrice(childItem._tpl);
-        let priceCoef = (trader.loyaltyLevels[profile_f.getLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
+        let priceCoef = (trader.loyaltyLevels[TradingController.getLoyalty(pmcData, traderID) - 1].buy_price_coef) / 100;
         let tempPrice = getPrice >= 1 ? getPrice : 1;
         let count =
           "upd" in childItem && "StackObjectsCount" in childItem.upd

@@ -398,6 +398,8 @@ static getLoyalty(pmcData, traderID) {
     playerSaleSum = 0;
     playerStanding = 0;
     playerLevel = pmcData.Info.Level;
+
+    pmcData.TradersInfo[traderID] = { salesSum: 0, standing: 0 };
   }
   // we fetch the trader data
   const traderInfo = global._database.traders[traderID].base;
@@ -445,10 +447,15 @@ static getLoyalty(pmcData, traderID) {
        * @returns {object} Assort
        */
       static getTraderAssort(traderId, sessionID) {
-        TradingController.generateFenceAssort(sessionID);
+
+        if(sessionID !== undefined) {
+          TradingController.generateFenceAssort(sessionID);
+        }
+
 
         if(traderId !== 'ragfair')
-          return DatabaseController.getDatabase().traders[traderId].assort;
+          // return DatabaseController.getDatabase().traders[traderId].assort;
+          return global._database.traders[traderId].assort;
         else 
           return new TraderAssort();
       }
@@ -459,8 +466,13 @@ static getLoyalty(pmcData, traderID) {
        * @returns {object} Assort
        */
        static getTraderAssortFilteredByLevel(traderId, sessionID) {
+        const newAssort = new TraderAssort();
+
+        if(sessionID === undefined || sessionID === "") {
+          return newAssort;
+        }
+
         const assort = TradingController.getTraderAssort(traderId, sessionID);
-        const newAssort = new TraderAssort();// JSON.parse(JSON.stringify(TradingController.getTraderAssort(traderId)));
         const pmcData = AccountController.getPmcProfile(sessionID);
         const traderLevel = TradingController.getLoyalty(pmcData, traderId);
         let traderQuestAssort = global._database.traders[traderId].questassort;

@@ -2,6 +2,7 @@
 
 const { logger } = require("../../core/util/logger");
 const { AccountController } = require("../Controllers/AccountController");
+const { TradingController } = require("../Controllers/TradingController");
 
 /**
  * 
@@ -217,8 +218,8 @@ class InsuranceServer {
 }
 
 function getPremium(pmcData, inventoryItem, traderId) {    
-    let loyaltyLevelIndex = profile_f.getLoyalty(pmcData, traderId) - 1;
-    let trader = trader_f.handler.getTrader(traderId, pmcData.aid);
+    let loyaltyLevelIndex = TradingController.getLoyalty(pmcData, traderId) - 1;
+    let trader = TradingController.getTrader(traderId, pmcData.aid);
     let insuranceMultiplier;
     insuranceMultiplier = trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef / 100
 

@@ -22,11 +22,11 @@ class AccountController
     }
   }
 
-   /**
- * Tries to find account data in loaded account list if not present returns undefined
- * @param {*} sessionID 
- * @returns Account_data
- */
+  /**
+   * Tries to find account data in loaded account list if not present returns undefined
+   * @param {*} sessionID 
+   * @returns Account_data
+   */
     static find(sessionID) {
       // AccountController needs to be at the top to check for changed accounts.
       AccountController.reloadAccountBySessionID(sessionID);
@@ -56,6 +56,10 @@ class AccountController
           // let ids = Object.keys(AccountController.accounts);
           // for (let i in ids) {
           for (const id of profileFolders) {
+
+            AccountController.reloadAccountBySessionID(id);
+            AccountController.initializeProfile(id);
+
               // let id = ids[i];
               if (!fileIO.exist(`user/profiles/${id}/character.json`)) continue;
               const character = fileIO.readParsed(`user/profiles/${id}/character.json`);
@@ -65,7 +69,7 @@ class AccountController
               };
       
               let profile = AccountController.getPmcProfile(character.aid);
-      
+              
               obj.Id = character.aid;
               obj._id = character.aid;
               obj.Nickname = character.Info.Nickname;
@@ -301,6 +305,9 @@ class AccountController
           logger.logSuccess(`Login cleaned ${Object.keys(changedIds).length} items`);
         }
         AccountController.profiles[sessionID]["pmc"] = loadedProfile;
+
+        // ---------------------------------- 
+        loadedProfile = AccountController.FixTradersInfo(loadedProfile);
   
         // Generate a scav
         AccountController.profiles[sessionID]["scav"] = profile_f.handler.generateScav(sessionID);
@@ -356,7 +363,9 @@ class AccountController
         return;
 
       const profilePath = AccountController.getPmcPath(sessionID);
-      fileIO.write(profilePath, AccountController.getPmcProfile(sessionID));
+      let prof = AccountController.getPmcProfile(sessionID);
+      prof = AccountController.FixTradersInfo(prof);
+      fileIO.write(profilePath, prof);
 
       logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
     }
@@ -387,6 +396,33 @@ class AccountController
       }
       return profile;
 
+    }
+
+    /**
+     * This is a hack to fix TradersInfo until we figure out the real cause of the problem
+     * ISSUE: The issue is that some Traders sell as "saleSum", others "salesSum", which is stupid
+     * @param {*} profile 
+     * @returns 
+     */
+    static FixTradersInfo(profile) {
+
+      let fixesApplied = false;
+      for(const id in profile.TradersInfo) {
+        const tInfo = profile.TradersInfo[id];
+        if(tInfo.salesSum === undefined || tInfo.salesSum === null) {
+          tInfo.salesSum = 0;
+          fixesApplied = true;
+        }
+        if(tInfo.standing === undefined || tInfo.standing === null) {
+          tInfo.standing = 0;
+          fixesApplied = true;
+        }
+      }
+      if(fixesApplied) {
+        AccountController.saveToDiskProfile(profile.aid);
+      }
+
+      return profile;
     }
 
     /** Create character profile

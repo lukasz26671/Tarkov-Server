@@ -1,10 +1,12 @@
 "use strict";
 
+const { TradingController } = require("../Controllers/TradingController");
+
 exports.main = (pmcData, body, sessionID) => {
     let output = item_f.handler.getOutput(sessionID);
     const trader = trader_f.handler.getTrader(body.tid, sessionID);
 
-    const TraderLevel = profile_f.getLoyalty(pmcData, body.tid);
+    const TraderLevel = TradingController.getLoyalty(pmcData, body.tid);
 
     const LoyaltyIndex = TraderLevel - 1;
 

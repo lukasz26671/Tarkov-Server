@@ -1,5 +1,6 @@
 const insurance = require('../classes/insurance');
-const { AccountController } = require('./AccountController')
+const { AccountController } = require('./AccountController');
+const { TradingController } = require('./TradingController');
 
 class InsuranceController {
 
@@ -85,8 +86,8 @@ class InsuranceController {
      * @returns {Number} cost
      */
     static getPremium(pmcData, inventoryItem, traderId) {    
-        let loyaltyLevelIndex = profile_f.getLoyalty(pmcData, traderId) - 1;
-        let trader = trader_f.handler.getTrader(traderId, pmcData.aid);
+        let loyaltyLevelIndex = TradingController.getLoyalty(pmcData, traderId) - 1;
+        let trader = TradingController.getTrader(traderId, pmcData.aid);
         let insuranceMultiplier;
         insuranceMultiplier = trader.loyaltyLevels[loyaltyLevelIndex].insurance_price_coef / 100
     
