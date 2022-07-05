@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { AccountController } = require('../src/Controllers/AccountController');
 const { ConfigController } = require('../src/Controllers/ConfigController');
 const database = require('./../src/functions/database')
 
@@ -14,6 +15,10 @@ class Initializer {
     // require("./watermark.js").run();
     global.consoleResponse = require("./console.js").consoleResponse;
     // server.start();
+
+    // -------------------------------------------------------
+    // Loads all Accounts and Profiles into the Memory Store
+    AccountController.getAllAccounts();
   }
 
   /* load core functionality */
@@ -77,7 +82,7 @@ class Initializer {
     // -------------------------------------------------------
     // Build the In-Memory database from db object network
     database.load();
-
+    
     // -------------------------------------------------------
     // Load the mods
     global.mods = { toLoad: {}, config: {} };
