@@ -378,7 +378,8 @@ const loadTraderAssort = (traderId) => {
     for(const it of assort.items) {
       let currId = it._id;
       // let newId = utility.generateNewItemId();
-      let newId = utility.generateNewId(undefined, 3);
+      // let newId = utility.generateNewId(undefined, 3);
+      let newId = utility.generateNewId(undefined, 4);
       convertedIds[currId] = newId;
       it._id = newId;
     }
@@ -403,6 +404,11 @@ const loadTraderAssort = (traderId) => {
       let currData = assort.loyal_level_items[id]
       newLoyalLevel[convertedIds[id]] = JSON.parse(JSON.stringify(currData));
     }
+    // for(const it of assort.items) { 
+    //   if(it.parentId === undefined && newLoyalLevel[it._id] === undefined) {
+    //     console.log("");
+    //   }
+    // }
     assort.loyal_level_items = JSON.parse(JSON.stringify(newLoyalLevel));
 
     base.items = assort.items;

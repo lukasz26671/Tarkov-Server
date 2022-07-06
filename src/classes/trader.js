@@ -1,6 +1,7 @@
 "use strict";
 
 const { AccountController } = require("../Controllers/AccountController");
+const { CustomizationController } = require("../Controllers/CustomizationController");
 const { TradingController } = require("../Controllers/TradingController");
 
 /* TraderServer class maintains list of traders for each sessionID in memory. */
@@ -124,7 +125,7 @@ class TraderServer {
     for (let traderID in global._database.traders) {
       ///if customization_seller
       if(global._database.traders[traderID].base.customization_seller == true){
-        output = output.concat(this.getCustomization(traderID, sessionID));
+        output = output.concat(CustomizationController.getCustomization(traderID, sessionID));
       }
     }
     return output;
