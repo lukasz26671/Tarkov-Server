@@ -89,6 +89,7 @@ class Initializer {
     global.mods_f = require("./server/mods.js");
     global.mods_f.load();
     global.mods_f.ResModLoad();
+    global.mods_f.TamperModLoad();
 
     // -------------------------------------------------------
     // Adjust weapon recoil by user/configs/gameplay.json file
