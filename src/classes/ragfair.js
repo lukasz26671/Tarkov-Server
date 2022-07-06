@@ -1,6 +1,8 @@
 "use strict";
 
 const { ConfigController } = require('../Controllers/ConfigController');
+const { DatabaseController } = require('../Controllers/DatabaseController');
+const { ItemController } = require('../Controllers/ItemController');
 
 function sortOffersByID(a, b) {
   return a.intId - b.intId;
@@ -356,6 +358,16 @@ function createOffer(template, onlyFunc, usePresets = true) {
     return [];
   }
 
+  const item = ItemController.tryGetItem(template);
+  if(item !== undefined) {
+    if(ConfigController.Configs["gameplay"].trading.fleaMarket.UseFleaMarketTradingBlacklist === true
+        && item._props.CanSellOnRagfair === false)
+      return [];
+    if(item._props.IsUnbuyable === true)
+      return [];
+    if(item._props.QuestItem === true)
+      return [];
+  }
 
   // Remove items that don't exist in assort
   // if (Object.values(global._database.traders.ragfair.assort.items).filter(tItem => tItem._tpl == template || tItem._id == template).length == 0) {

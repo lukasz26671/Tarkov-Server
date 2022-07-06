@@ -56,7 +56,8 @@
         "minItemsInOffer": 0,
         "maxItemsInOffer": 8,
         "filtersByRarityDesc": "PLANNED: CURRENTLY NOT USED",
-        "filtersByRarity": false
+        "filtersByRarity": false,
+        "UseFleaMarketTradingBlacklist": true
     },
       "repairMultiplier": 1,
       "insureMultiplier": 0.1,
