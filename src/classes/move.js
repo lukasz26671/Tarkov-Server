@@ -1,12 +1,14 @@
 "use strict";
 
+const { AccountController } = require("../Controllers/AccountController");
+
 /** Based on the item action, determine whose inventories we should be looking at for from and to.
  * @param body Request to determine
  * @param sessionID SessionID
 */
 function getOwnerInventoryItems(body, sessionID) {
   let isSameInventory = false;
-  let pmcItems = profile_f.handler.getPmcProfile(sessionID).Inventory.items;
+  let pmcItems = AccountController.getPmcProfile(sessionID).Inventory.items;
   let scavData = profile_f.handler.getScavProfile(sessionID);
   let fromInventoryItems = pmcItems;
   let fromType = "pmc";

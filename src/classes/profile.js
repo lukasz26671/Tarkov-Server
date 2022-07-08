@@ -156,9 +156,9 @@ class ProfileServer {
     return fileIO.write(`user/profiles/${ID}/exfiltrations.json`, data);
   }
 
-  getPmcProfile(sessionID) {
-    return AccountController.getProfile(sessionID, "pmc");
-  }
+  // getPmcProfile(sessionID) {
+  //   return AccountController.getProfile(sessionID, "pmc");
+  // }
 
   getScavProfile(sessionID) {
     return AccountController.getProfile(sessionID, "scav");
@@ -173,7 +173,7 @@ class ProfileServer {
 
     if (!AccountController.isWiped(sessionID)) {
       output.push(profile_f.handler.getScavProfile(sessionID));
-      output.push(profile_f.handler.getPmcProfile(sessionID));
+      output.push(AccountController.getPmcProfile(sessionID));
     }
 
     return output;
@@ -241,7 +241,7 @@ function getPmcPath(sessionID) {
 }
 
 function getStashType(sessionID) {
-  let pmcData = profile_f.handler.getPmcProfile(sessionID);
+  let pmcData = AccountController.getPmcProfile(sessionID);
 
   for (let item of pmcData.Inventory.items) {
     if (item._id === pmcData.Inventory.stash) {

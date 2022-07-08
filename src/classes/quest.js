@@ -67,7 +67,7 @@ function getQuestsForPlayer(url, info, sessionID) {
 
   let quests = [];
 
-  const _profile = profile_f.handler.getPmcProfile(sessionID);
+  const _profile = AccountController.getPmcProfile(sessionID);
   let quest_database = utility.DeepCopy(global._database.quests);
   const side = _profile.Info.Side;
 

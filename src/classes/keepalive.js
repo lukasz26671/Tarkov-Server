@@ -37,7 +37,7 @@ function updateTraders(sessionID) {
 }
 
 function updatePlayerHideout(sessionID) {
-  let pmcData = profile_f.handler.getPmcProfile(sessionID);
+  let pmcData = AccountController.getPmcProfile(sessionID);
   //let recipes = fileIO.readParsed(db.user.cache.hideout_production);
   let recipes = _database.hideout.production;
   let solarPowerLevel = 0;
