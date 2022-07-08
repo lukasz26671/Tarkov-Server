@@ -1,20 +1,22 @@
 "use strict";
 const { logger } = require('../../core/util/logger');
+const { AccountController } = require('../Controllers/AccountController');
 const { InsuranceController } = require('../Controllers/InsuranceController');
 const utility = require('./../../core/util/utility');
 
 class InraidServer {
   constructor() {
-    // this needs to be saved on drive so if player closes server it can keep it going after restart
     this.players = {};
   }
 
   addPlayer(sessionID, info) {
     this.players[sessionID] = info;
   }
+
   getPlayer(sessionID) {
     return this.players[sessionID];
   }
+
   removePlayer(sessionID) {
     delete this.players[sessionID];
   }
@@ -217,8 +219,20 @@ function MapNameConversion(sessionID) {
   }
 }
 
-function getPlayerGear(items) {
-  // Player Slots we care about
+function getSafeSlots() {
+  const inventorySlots = [
+    "SecuredContainer",
+    "Pockets",
+    "Armband",
+    "SpecialSlot1",
+    "SpecialSlot2",
+    "SpecialSlot3",
+    "SpecialSlot4",
+  ];
+  return inventorySlots;
+}
+
+function getGearSlots() {
   const inventorySlots = [
     "FirstPrimaryWeapon",
     "SecondPrimaryWeapon",
@@ -235,13 +249,136 @@ function getPlayerGear(items) {
     "pocket3",
     "pocket4",
     "SecuredContainer",
+    "Pockets",
+    "Armband",
+    "SpecialSlot1",
+    "SpecialSlot2",
+    "SpecialSlot3",
+    "SpecialSlot4",
   ];
+  return inventorySlots;
+}
+
+function getPlayerGear(items) {
+  // Player Slots we care about
+  const inventorySlots = getGearSlots();
 
   let inventoryItems = [];
 
   // Get an array of root player items
   for (let item of items) {
     if (inventorySlots.includes(item.slotId)) {
+      inventoryItems.push(item);
+    }
+  }
+
+  // Loop through these items and get all of their children
+  let newItems = inventoryItems;
+  while (newItems.length > 0) {
+    let foundItems = [];
+
+    for (let item of newItems) {
+      // Find children of this item
+      for (let newItem of items) {
+        if (newItem.parentId === item._id) {
+          foundItems.push(newItem);
+        }
+      }
+    }
+
+    // Add these new found items to our list of inventory items
+    inventoryItems = [...inventoryItems, ...foundItems];
+
+    // Now find the children of these items
+    newItems = foundItems;
+  }
+
+  return inventoryItems;
+}
+
+function getPlayerStash(items) {
+  const inventorySlots = ["hideout"];
+
+  let inventoryItems = [];
+
+  // Get an array of root player items
+  for (let item of items) {
+    if (inventorySlots.includes(item.slotId)) {
+      inventoryItems.push(item);
+    }
+  }
+
+  // Loop through these items and get all of their children
+  let newItems = inventoryItems;
+  while (newItems.length > 0) {
+    let foundItems = [];
+
+    for (let item of newItems) {
+      // Find children of this item
+      for (let newItem of items) {
+        if (newItem.parentId === item._id) {
+          foundItems.push(newItem);
+        }
+      }
+    }
+
+    // Add these new found items to our list of inventory items
+    inventoryItems = [...inventoryItems, ...foundItems];
+
+    // Now find the children of these items
+    newItems = foundItems;
+  }
+
+  return inventoryItems;
+}
+
+
+function getPlayerItemsInSlot(items, slotId) {
+  // Player Slots we care about
+  const inventorySlots = [slotId];
+
+  let inventoryItems = [];
+
+  // Get an array of root player items
+  for (let item of items) {
+    if (inventorySlots.includes(item.slotId)) {
+      inventoryItems.push(item);
+    }
+  }
+
+  // Loop through these items and get all of their children
+  let newItems = inventoryItems;
+  while (newItems.length > 0) {
+    let foundItems = [];
+
+    for (let item of newItems) {
+      // Find children of this item
+      for (let newItem of items) {
+        if (newItem.parentId === item._id) {
+          foundItems.push(newItem);
+        }
+      }
+    }
+
+    // Add these new found items to our list of inventory items
+    inventoryItems = [...inventoryItems, ...foundItems];
+
+    // Now find the children of these items
+    newItems = foundItems;
+  }
+
+  return inventoryItems;
+}
+
+function getPlayerItemsNotInSlot(items, slotId) {
+  // Player Slots we care about
+  const inventorySlots = [slotId];
+
+  let inventoryItems = [];
+
+  // Get an array of root player items
+  for (let item of items) {
+    if (!inventorySlots.includes(item.slotId)) {
       inventoryItems.push(item);
     }
   }
@@ -309,15 +446,19 @@ function getSecuredContainer(items) {
 
 function saveProgress(offraidData, sessionID) {
 
+  // require('fs').writeFileSync("offraid.json", JSON.stringify(offraidData));
+
+  
+
   // if (!global._database.gameplayConfig.inraid.saveLootEnabled) {
   //   return;
   // }
-  const isPlayerScav = offraidData.isPlayerScav;
-  // Check for insurance if its enabled on this map
-  if (offraidData === undefined) {
-    logger.logError("offraidData: undefined");
-    return;
-  }
+  // const isPlayerScav = offraidData.isPlayerScav;
+  // // Check for insurance if its enabled on this map
+  // if (offraidData === undefined) {
+  //   logger.logError("offraidData: undefined");
+  //   return;
+  // }
   if (offraidData.exit === undefined || offraidData.isPlayerScav === undefined || offraidData.profile === undefined) {
     logger.logError("offraidData: variables are empty... (exit, isPlayerScav, profile)");
     logger.logError(offraidData.exit);
@@ -330,44 +471,70 @@ function saveProgress(offraidData, sessionID) {
     logger.logError("offraidData: health is undefined");
     return;
   }
-  
-  let pmcData = profile_f.handler.getPmcProfile(sessionID);
 
-  // if(offraidData.health.Energy < 0 || offraidData.health.Hydration < 0) {
-  //   logger.logError("offraidData: health is fucked. working around it.");
+  let pmcData = AccountController.getPmcProfile(sessionID);
+  // const currentProfile = AccountController.getPmcProfile(sessionID);
+  // const currentProfileInventoryItems = utility.DeepCopy(currentProfile.Inventory.items);
+  // const currentProfileGearItems = utility.DeepCopy(getPlayerGear(currentProfile.Inventory.items));
+  // const raidProfile = offraidData.profile;
+  // const raidProfileGearItems = utility.DeepCopy(getPlayerGear(raidProfile.Inventory.items));
 
-  //   if(offraidData.health.Energy < 0)
-  //     offraidData.health.Energy = 0;
-  //   if(offraidData.health.Hydration < 0)
-  //     offraidData.health.Hydration = 0;
-
-  //   for(const bpHealthNode in pmcData.Health.BodyParts) {
-  //     pmcData.Health.BodyParts[bpHealthNode].Health.Maximum - offraidData.health.Health[bpHealthNode].Current;
+  // const newItems = [];
+  // const gearSlots = getGearSlots();
+  // for(const item of currentProfileInventoryItems) {
+  //   if(item.slotId === undefined && item.parentId === undefined) {
+  //     // console.log(item);
+  //     newItems.push(item);
   //   }
+  // }
+  // const oldItemsInHideout = [];
+  // for(const item of currentProfileInventoryItems) {
+  //   if(item.slotId === "hideout") {
+  //     // console.log(item);
+  //     oldItemsInHideout.push(item);
+  //   }
+  // }
+  // for(const item of currentProfileInventoryItems) {
+  //   if(item.slotId !== "hideout" 
+  //       && oldItemsInHideout.findIndex( x => x._id === item.parentId) !== -1) {
+  //     newItems.push(item);
+  //   }
+  // }
+  // for(const item of oldItemsInHideout) {
+  //   newItems.push(item);
+  // }
+  // for(const item of raidProfileGearItems) {
+  //   if(newItems.findIndex(x=>x._id === item._id) === -1)
+  //     newItems.push(item);
+  // }
+  // currentProfile.Inventory.items = newItems;
 
+  // currentProfile.Info.Level = raidProfile.Info.Level;
+  // currentProfile.Skills = raidProfile.Skills;
+  // currentProfile.Stats = raidProfile.Stats;
+  // currentProfile.Encyclopedia = raidProfile.Encyclopedia;
+  // currentProfile.ConditionCounters = raidProfile.ConditionCounters;
+  // currentProfile.Quests = raidProfile.Quests;
+  // currentProfile.Info.Experience += raidProfile.Stats.TotalSessionExperience;
+  // currentProfile.Stats.TotalSessionExperience = 0;
 
-  //   pmcData.Health.Energy.Current += offraidData.health.Energy;
-  //   pmcData.Health.Hydration.Current += offraidData.health.Hydration;
+  // if (offraidData.exit === "survived") {
+  //   // mark found items and replace item ID's if the player survived
+    // offraidData.profile = markFoundItems(pmcData, offraidData.profile, isPlayerScav);
+    offraidData.profile = markFoundItems(pmcData, offraidData.profile, false);
+  // } else {
+  //   //Or remove the FIR status if the player havn't survived
+  //   offraidData.profile = RemoveFoundItems(offraidData.profile);
   // }
 
-
-
-  if (offraidData.exit === "survived") {
-    // mark found items and replace item ID's if the player survived
-    offraidData.profile = markFoundItems(pmcData, offraidData.profile, isPlayerScav);
-  } else {
-    //Or remove the FIR status if the player havn't survived
-    offraidData.profile = RemoveFoundItems(offraidData.profile);
-  }
-
-  if (isPlayerScav) {
-    let scavData = profile_f.handler.getScavProfile(sessionID);
-    scavData = setInventory(scavData, offraidData.profile, sessionID, true);
-    health_f.handler.initializeHealth(sessionID);
-    profile_f.handler.setScavProfile(sessionID, scavData);
-    return;
-    // ENDING HERE IF SCAV PLAYER !!!!
-  }
+  // if (isPlayerScav) {
+  //   let scavData = profile_f.handler.getScavProfile(sessionID);
+  //   scavData = setInventory(scavData, offraidData.profile, sessionID, true);
+  //   health_f.handler.initializeHealth(sessionID);
+  //   profile_f.handler.setScavProfile(sessionID, scavData);
+  //   return;
+  //   // ENDING HERE IF SCAV PLAYER !!!!
+  // }
 
   pmcData.Info.Level = offraidData.profile.Info.Level;
   pmcData.Skills = offraidData.profile.Skills;
@@ -376,57 +543,55 @@ function saveProgress(offraidData, sessionID) {
   pmcData.ConditionCounters = offraidData.profile.ConditionCounters;
   pmcData.Quests = offraidData.profile.Quests;
 
-  // For some reason, offraidData seems to drop the latest insured items.
-  // It makes more sense to use pmcData's insured items as the source of truth.
-  offraidData.profile.InsuredItems = pmcData.InsuredItems;
+  // // For some reason, offraidData seems to drop the latest insured items.
+  // // It makes more sense to use pmcData's insured items as the source of truth.
+  // offraidData.profile.InsuredItems = pmcData.InsuredItems;
 
-  // add experience points
-  pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
-  pmcData.Stats.TotalSessionExperience = 0;
+  // // add experience points
+  // pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
+  // pmcData.Stats.TotalSessionExperience = 0;
 
-  // Remove the Lab card
+  // // Remove the Lab card
 
   pmcData = setInventory(pmcData, offraidData.profile);
   if(offraidData.health !== undefined && offraidData.health !== null)
     health_f.handler.saveHealth(pmcData, offraidData.health, sessionID);
 
-  // remove inventory if player died and send insurance items
-  //TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
-  const systemMapName = MapNameConversion(sessionID);
-  const insuranceEnabled = global._database.locations[systemMapName].base.Insurance;
-  const preRaidGear = getPlayerGear(pmcData.Inventory.items);
+  // // remove inventory if player died and send insurance items
+  // //TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
+  // const systemMapName = MapNameConversion(sessionID);
+  // const insuranceEnabled = global._database.locations[systemMapName].base.Insurance;
+  // const preRaidGear = getPlayerGear(pmcData.Inventory.items);
 
-  if (insuranceEnabled) {
-    // insurance_f.handler.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
-    InsuranceController.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
-  }
-  if (offraidData.exit === "survived") {
-    let exfils = profile_f.handler.getProfileExfilsById(sessionID);
-    exfils[systemMapName] = exfils[systemMapName] + 1;
-    profile_f.handler.setProfileExfilsById(sessionID, exfils);
-  }
+  // if (insuranceEnabled) {
+  //   // insurance_f.handler.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
+  //   InsuranceController.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
+  // }
+  // if (offraidData.exit === "survived") {
+  //   let exfils = profile_f.handler.getProfileExfilsById(sessionID);
+  //   exfils[systemMapName] = exfils[systemMapName] + 1;
+  //   profile_f.handler.setProfileExfilsById(sessionID, exfils);
+  // }
   if (offraidData.exit !== "survived" && offraidData.exit !== "runner") {
-    if (insuranceEnabled) {
-      // insurance_f.handler.storeDeadGear(pmcData, offraidData, preRaidGear, sessionID);
-      InsuranceController.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
-    }
+    InsuranceController.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
     pmcData = deleteInventory(pmcData, sessionID);
 
     //remove completed conditions related to QuestItem to avoid causing the item not spawning
-		profile_f.handler.getPmcProfile(sessionID).Quests = removeLooseQuestItemsConditions(profile_f.handler.getPmcProfile(sessionID));
+		AccountController.getPmcProfile(sessionID).Quests = removeLooseQuestItemsConditions(AccountController.getPmcProfile(sessionID));
     
     //Delete carried quests items
     offraidData.profile.Stats.CarriedQuestItems = [];
   }
-  if (insuranceEnabled) {
-    insurance_f.handler.sendInsuredItems(pmcData, sessionID);
-  }
+  // if (insuranceEnabled) {
+  //   insurance_f.handler.sendInsuredItems(pmcData, sessionID);
+  // }
 
-  offraid_f.handler.removeMapAccessKey(offraidData, sessionID);
+  // offraid_f.handler.removeMapAccessKey(offraidData, sessionID);
   offraid_f.handler.removePlayer(sessionID);
 
+  AccountController.profiles[sessionID]["pmc"] = pmcData;
   // Ensure the profile saves!
-  profile_f.handler.saveToDisk(sessionID);
+  // AccountController.saveToDisk(sessionID);
 }
 
 //takes a profile and checks/remove for completed conditions in profile's quests section, that are
@@ -435,7 +600,6 @@ function saveProgress(offraidData, sessionID) {
 //returns cleaned quests section.
 function removeLooseQuestItemsConditions(profile) {
 	let dateNow = Date.now();
-	//let curQuests = profile_f.handler.getPmcProfile(sessionID).Quests;
 	let curQuests = utility.DeepCopy(profile.Quests);
 	for (let i = 0; i < curQuests.length; i++) {
 		//if active quest
