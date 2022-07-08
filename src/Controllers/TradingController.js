@@ -372,7 +372,7 @@ class TradingController {
        * @param {*} traderId 
        */
       static setTraderStanding(playerId, traderId, value) {
-        const profile = profile_f.handler.getPmcProfile(playerId);
+        const profile = AccountController.getPmcProfile(playerId);
         profile.TradersInfo[traderId].standing = mathjs.round(value, 3);
       }
 

@@ -129,13 +129,18 @@ function loadHideoutData() {
   _database.hideout = { settings: {}, areas: [], production: [], scavcase: [] };
 
   _database.hideout.settings = fileIO.readParsed("./" + db.hideout.settings);
-  if (typeof _database.hideout.settings.data != "undefined") {
-    _database.hideout.settings = _database.hideout.settings.data;
-  }
+  // if (typeof _database.hideout.settings.data != "undefined") {
+  //   _database.hideout.settings = _database.hideout.settings.data;
+  // }
   const dbAreas = JSON.parse(fs.readFileSync("./" + db.hideout.areas["_items"]));
-  for (let area in dbAreas) {
-    _database.hideout.areas.push(dbAreas[area]);
-  }
+  _database.hideout.areas = dbAreas;
+  // for (let area in dbAreas) {
+  //   _database.hideout.areas.push(dbAreas[area]);
+  // }
+  // for (let area in db.hideout.areas) {
+  //   if(area !== "_items")
+  //     _database.hideout.areas.push(fileIO.readParsed("./" + db.hideout.areas[area]));
+  // }
   for (let production in db.hideout.production) {
     _database.hideout.production.push(fileIO.readParsed("./" + db.hideout.production[production]));
   }
@@ -144,14 +149,14 @@ function loadHideoutData() {
   }
 
   // apply production time divider
-  for (let id in _database.hideout.areas) {
-    for (let id_stage in _database.hideout.areas[id].stages) {
-      let stage = _database.hideout.areas[id].stages[id_stage];
-      if (stage.constructionTime != 0 && stage.constructionTime > _database.gameplay.hideout.productionTimeDivide_Areas) {
-        stage.constructionTime = stage.constructionTime / _database.gameplay.hideout.productionTimeDivide_Areas;
-      }
-    }
-  }
+  // for (const area of _database.hideout.areas) {
+  //   for (const stageIndex in area.stages) {
+  //     const stage = area.stages[stageIndex];
+  //     if (stage.constructionTime != 0 && stage.constructionTime > _database.gameplay.hideout.productionTimeDivide_Areas) {
+  //       // stage.constructionTime = stage.constructionTime / _database.gameplay.hideout.productionTimeDivide_Areas;
+  //     }
+  //   }
+  // }
   for (let id in _database.hideout.production) {
     if (_database.hideout.production[id].productionTime != 0 && _database.hideout.production[id].productionTime > _database.gameplay.hideout.productionTimeDivide_Production) {
       _database.hideout.production[id].productionTime = _database.hideout.production[id].productionTime / _database.gameplay.hideout.productionTimeDivide_Production;

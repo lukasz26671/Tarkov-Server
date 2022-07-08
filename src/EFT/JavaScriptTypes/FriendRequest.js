@@ -67,7 +67,7 @@ class FriendRequest {
 		// console.log("to");
 		// console.log(toAcc);
 
-        let pmcProfile = profile_f.handler.getPmcProfile(this.to);
+        let pmcProfile = AccountController.getPmcProfile(this.to);
 
         let profile = {
             _id: pmcProfile._id,
