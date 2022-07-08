@@ -1,3 +1,5 @@
+const { AccountController } = require("../src/Controllers/AccountController");
+
 let debugSessionEnabled;
 let debugSession;
 
@@ -72,7 +74,7 @@ class ConsoleResponse {
     */
     let sessionID = commandStructure[1];
     let newItemList = { items: [{ item_id: commandStructure[2], count: commandStructure[3] }], tid: "" };
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    let pmcData = AccountController.getPmcProfile(sessionID);
     move_f.addItem(pmcData, newItemList, sessionID, true);
     // savehandler_f.saveOpenSessions();
     logger.logInfo(`Item added: ${newItemList.items[0].item_id} count:${newItemList.items[0].count} session:${sessionID}`);

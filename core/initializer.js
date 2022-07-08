@@ -2,6 +2,7 @@ const fs = require('fs');
 const { AccountController } = require('../src/Controllers/AccountController');
 const { ConfigController } = require('../src/Controllers/ConfigController');
 const database = require('./../src/functions/database')
+const tests = require('../tests/RaidSaveProfileTests');
 
 class Initializer {
   constructor() {

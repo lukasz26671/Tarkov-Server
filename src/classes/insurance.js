@@ -241,7 +241,7 @@ function getPremium(pmcData, inventoryItem, traderId) {
 /* calculates insurance cost */
 function cost(info, sessionID) {
     let output = {};
-    let pmcData = profile_f.handler.getPmcProfile(sessionID);
+    let pmcData = AccountController.getPmcProfile(sessionID);
 
     let inventoryItemsHash = {};
     pmcData.Inventory.items.forEach(i => inventoryItemsHash[i._id] = i);

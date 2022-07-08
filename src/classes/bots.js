@@ -3,6 +3,7 @@
 const { logger } = require("../../core/util/logger");
 const utility = require('./../../core/util/utility');
 const { BotController } = require('../Controllers/BotController');
+const { AccountController } = require("../Controllers/AccountController");
 
 //use bot names in lowercase as it matches folders
 const botSwaps = {
@@ -277,7 +278,7 @@ class BotsController {
     let dateNow = Date.now();
     let count = 0;
     let output = [];
-    const pmcData = profile_f.handler.getPmcProfile(sessionID);
+    const pmcData = AccountController.getPmcProfile(sessionID);
 
     for (const condition of info.conditions) {
       condition.Limit = Math.min(100, condition.Limit);

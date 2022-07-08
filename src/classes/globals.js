@@ -73,27 +73,6 @@ const SKILLS = {
 
 function getGlobals(url, info, sessionID) {
 	let playerGlobals = utility.DeepCopy(global._database.globals);
-	//logger.logError(`url: \n${JSON.stringify(url, null, 2)} \ninfo: \n\n${JSON.stringify(info, null, 2)} \nsessionID: \n${JSON.stringify(sessionID, null, 2)}`);
-	/*
-	let profile = utility.DeepCopy(profile_f.handler.getPmcProfile(sessionID));
-	
-	//testing example code for future use:
-	let physBonus = profile.Bonuses.find(bonus => bonus.skillType === "Physical");
-	if(physBonus){
-		logger.logSuccess("MOFO's got physical boost");
-	}
-	
-	//other testing example code, this increases how much skill xp the action gives
-	//playerGlobals.config.SkillsSettings.Vitality.DamageTakenAction = 0.5;
-
-	boostSkillProgressionRate(playerGlobals);
-
-	//old code from response.js:
-	//global._database.globals.time = Date.now() / 1000;
-	//return global._database.globals;
-
-	//same old code but without modifying base globals and instead sending it for the player who requested it
-	*/
 	playerGlobals.time = utility.getTimestamp();
 	return playerGlobals;
 }

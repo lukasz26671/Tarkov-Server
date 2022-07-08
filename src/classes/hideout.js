@@ -1,6 +1,7 @@
 "use strict";
 
 const { logger } = require("../../core/util/logger");
+const { AccountController } = require("../Controllers/AccountController");
 
 function handleBitcoinReproduction(pmcData, sessionID) {
   let output = item_f.handler.getOutput(sessionID);
@@ -291,7 +292,7 @@ module.exports.takeItemsFromAreaSlots = (pmcData, body, sessionID) => {
     };
 
     output = move_f.addItem(pmcData, newReq, sessionID);
-    pmcData = profile_f.handler.getPmcProfile(sessionID);
+    pmcData = AccountController.getPmcProfile(sessionID);
     if (typeof output.profileChanges[pmcData._id].items.new != "undefined") {
       output.profileChanges[pmcData._id].items.new[0].upd = itemToMove.upd;
       for (let item of pmcData.Inventory.items) {
@@ -311,7 +312,7 @@ module.exports.takeItemsFromAreaSlots = (pmcData, body, sessionID) => {
     };
 
     output = move_f.addItem(pmcData, newReq, sessionID);
-    pmcData = profile_f.handler.getPmcProfile(sessionID);
+    pmcData = AccountController.getPmcProfile(sessionID);
     profileHideoutArea.slots.splice(0, 1);
   }
 
@@ -521,7 +522,7 @@ module.exports.takeProduction = (pmcData, body, sessionID) => {
       //pmcData.Hideout.Production[prod].Products = pmcData.Hideout.Production["141"].Products;
       // give items BEFORE deleting the production
       for (let itemProd of pmcData.Hideout.Production[prod].Products) {
-        pmcData = profile_f.handler.getPmcProfile(sessionID);
+        pmcData = AccountController.getPmcProfile(sessionID);
         let id = itemProd._tpl;
         //if item is a weapon preset, get a random one
         if (preset_f.handler.hasPreset(id)) {
