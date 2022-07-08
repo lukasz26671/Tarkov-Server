@@ -38,7 +38,7 @@ class Responses {
       "/client/globals": this.clientGlobals,
       "/client/handbook/builds/my/list": this.clientHandbookBuildsMyList,
       "/client/handbook/templates": this.clientHandbookTemplates,
-      "/client/hideout/areas": this.clientHideoutAreas,
+      // "/client/hideout/areas": this.clientHideoutAreas,
       "/client/hideout/production/recipes": this.clientHideoutProductionRecipes,
       "/client/hideout/production/scavcase/recipes": this.clientHideoutProductionScavcaseRecipes,
       "/client/hideout/settings": this.clientHideoutSettings,
@@ -367,21 +367,22 @@ class Responses {
     keepalive_f.main(sessionID);
     return response_f.getBody({ msg: "OK", utc_time: utility.getTimestamp() });
   }
-  clientGameLogout(url, info, sessionID) {
-    return response_f.nullResponse();
-  }
+  // clientGameLogout(url, info, sessionID) {
+  //   return response_f.nullResponse();
+  // }
   clientGameProfileCreate(url, info, sessionID) {
     AccountController.createProfile(info, sessionID);
     return response_f.getBody({ uid: "pmc" + sessionID });
   }
   clientGameProfileItemsMoving(url, info, sessionID) {
     const data = item_f.handler.handleRoutes(info, sessionID);
+    AccountController.saveToDisk(sessionID);
     return response_f.getBody(data);
   }
   clientGameProfileList(url, info, sessionID) {
     // the best place to update health because its where profile is updating in client also!!!
     if (!AccountController.isWiped(sessionID) && profile_f.handler.profileAlreadyCreated(sessionID)) {
-      health_f.handler.healOverTime(profile_f.handler.getPmcProfile(sessionID), info, sessionID);
+      health_f.handler.healOverTime(AccountController.getPmcProfile(sessionID), info, sessionID);
     }
 
     return response_f.getBody(profile_f.handler.getCompleteProfile(sessionID));
@@ -470,9 +471,9 @@ class Responses {
   clientHandbookTemplates(url, info, sessionID) {
     return response_f.getBody(global._database.templates);
   }
-  clientHideoutAreas(url, info, sessionID) {
-    return response_f.getBody(global._database.hideout.areas);
-  }
+  // clientHideoutAreas(url, info, sessionID) {
+  //   return response_f.getBody(global._database.hideout.areas);
+  // }
   clientHideoutProductionRecipes(url, info, sessionID) {
     return response_f.getBody(global._database.hideout.production);
   }
@@ -731,7 +732,7 @@ class Responses {
     return response_f.nullResponse();
   }
   playerHealthSync(url, info, sessionID) {
-    const pmcData = profile_f.handler.getPmcProfile(sessionID);
+    const pmcData = AccountController.getPmcProfile(sessionID);
     health_f.handler.saveHealth(pmcData, info, sessionID);
     return response_f.nullResponse();
   }
