@@ -1,5 +1,6 @@
 "use strict";
 const utility = require('../../core/util/utility');
+const { AccountController } = require('../Controllers/AccountController');
 
 class TradeHandler {
 
@@ -83,8 +84,10 @@ class TradeHandler {
     let ragfair_offers_traders = utility.DeepCopy(_database.ragfair_offers);
     let offers = body.offers;
 
+    if(pmcData === undefined)
+      pmcData = AccountController.getPmcProfile(sessionID);
+
     for (let offer of offers) {
-      pmcData = profile_f.handler.getPmcProfile(sessionID);
       body = {
         Action: "TradingConfirm",
         type: "buy_from_trader",
@@ -106,12 +109,12 @@ class TradeHandler {
     return;
   }
 
-  static updateAssort(traderAssort, body){
+  static updateAssort(traderAssort, body) {
     for (const traderItem of traderAssort.items) {
       if (traderItem._id === body.item_id) {
         const updatedStackObjectCount = traderItem.upd.StackObjectsCount - body.count;
         if (updatedStackObjectCount < 0) {
-          logger.logError(`You shouldn't be able to buy more than the trader has !!!!!1!`);
+          logger.logError(`You shouldn't be able to buy more than the trader has`);
           return false
         }
   
@@ -122,7 +125,7 @@ class TradeHandler {
             traderItem.upd.BuyRestrictionCurrent = updatedCurrentRestriction;
             return true
           } else {
-            logger.logError(`You shouldn't be able to go further than the buying restriction !!!!!1!`);
+            logger.logError(`You shouldn't be able to go further than the buying restriction`);
             return false
           }
         } else {
@@ -131,6 +134,9 @@ class TradeHandler {
         }
       }
     }
+
+    return true;
+
   }
 }
 
