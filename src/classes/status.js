@@ -1,7 +1,9 @@
 "use strict";
 
 const { logger } = require("../../core/util/logger");
+const { AccountController } = require("../Controllers/AccountController");
 const { DatabaseController } = require("../Controllers/DatabaseController");
+const { ItemController } = require("../Controllers/ItemController");
 const { TradingController } = require("../Controllers/TradingController");
 
 function foldItem(pmcData, body, sessionID) {
@@ -66,7 +68,7 @@ function examineItem(pmcData, body, sessionID) {
   let itemID = body.item;
   let pmcItems = pmcData !== undefined && pmcData.Inventory !== undefined ? pmcData.Inventory.items : [];
   if(pmcData === undefined || pmcData.Inventory === undefined) {
-    pmcData = profile_f.handler.getPmcProfile(sessionID);
+    pmcData = AccountController.getPmcProfile(sessionID);
   }
 
   if(pmcItems.length > 0) {
@@ -107,6 +109,9 @@ function examineItem(pmcData, body, sessionID) {
       itemID = preset._items[0]._id;
       pmcData.Info.Experience += templateItem._props.ExamineExperience;
       pmcData.Encyclopedia[itemID] = true;
+      // for(const childItem of ItemController.enumerateItemChildrenRecursively(preset._items[0], preset._items)) {
+      //   examineItem(pmcData, { item: childItem._id }, sessionID);
+      // }
       return item_f.handler.getOutput(sessionID);
     }
   }
@@ -122,6 +127,16 @@ function examineItem(pmcData, body, sessionID) {
   if(item !== undefined) {
     pmcData.Info.Experience += item._props.ExamineExperience;
     pmcData.Encyclopedia[itemID] = true;
+    for(const dbId in global._database.items) {
+      const dbItem = global._database.items[dbId];
+      if(dbItem.parentId === item) {
+        pmcData.Info.Experience += dbItem._props.ExamineExperience;
+        pmcData.Encyclopedia[dbId] = true;
+      }
+    }
+    // for(const childItem of ItemController.enumerateItemChildrenRecursively(item, global._database.items)) {
+    //   examineItem(pmcData, { item: childItem._id }, sessionID);
+    // }
   }
   //logger.logSuccess(`EXAMINED: ${itemID}`);
   return item_f.handler.getOutput(sessionID);
