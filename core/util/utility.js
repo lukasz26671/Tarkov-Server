@@ -332,36 +332,36 @@ exports.generateRandomIdArray = () => {
  * @returns {string} NewId string
  */
 exports.generateNewId = (prefix = "", version = 2) => {
-    if(prefix === "" || prefix === null)
-        prefix = undefined;
+    // if(prefix === "" || prefix === null)
+    //     prefix = undefined;
 
-    let getTime = new Date();
+    // let getTime = new Date();
     let retVal = ""
-    switch(version)
-    {
-        case 1:
-        {
-            if(prefix !== undefined)
-                retVal = prefix
+    // switch(version)
+    // {
+    //     case 1:
+    //     {
+    //         if(prefix !== undefined)
+    //             retVal = prefix
 
-            retVal += getTime.getMonth().toString();
-            retVal += getTime.getDate().toString();
-            retVal += getTime.getHours().toString();
-            retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
-            retVal += this.getRandomInt(1000000, 9999999).toString();
-            retVal += this.makeSign(24 - retVal.length).toString();
-            break;
-        }
-        case 2:
-            if(prefix !== undefined)
-                retVal = `${prefix}-${uuidv4()}`;
-            else 
-            retVal = uuidv4();
+    //         retVal += getTime.getMonth().toString();
+    //         retVal += getTime.getDate().toString();
+    //         retVal += getTime.getHours().toString();
+    //         retVal += (parseInt(getTime.getMinutes()) + parseInt(getTime.getSeconds())).toString();
+    //         retVal += this.getRandomInt(1000000, 9999999).toString();
+    //         retVal += this.makeSign(24 - retVal.length).toString();
+    //         break;
+    //     }
+    //     case 2:
+    //         if(prefix !== undefined)
+    //             retVal = `${prefix}-${uuidv4()}`;
+    //         else 
+    //         retVal = uuidv4();
 
-            break;
-        // close to MongoId but not really
-        case 3:
-        {
+    //         break;
+    //     // close to MongoId but not really
+    //     case 3:
+    //     {
             const dateNow = Date.now();
             const dateNow2 = Date.now() * 2;
             const objectIdBinary = Buffer.alloc(12);
@@ -380,48 +380,48 @@ exports.generateNewId = (prefix = "", version = 2) => {
             objectIdBinary[10] = (dateNow2 >> 8) & 0xff;
             objectIdBinary[11] = dateNow2 & 0xff;
             retVal = this.toHexString(objectIdBinary);
-            if(prefix !== undefined && prefix !== "") {
+            if(prefix === "AID") {
                 retVal = prefix + retVal;
             }
-            break;
-        }
-        // new quicker format - does not allow shoddy prefixes so conforms to MongoID
-        case 4:
-        {
-            const dateNow = Date.now();
-            let hex = dateNow.toString(16);
-            const dateNow2 = (Date.now() * 2) + (this.mongoIdCounter++)
-            let hex2 = dateNow2.toString(8);
+    //         break;
+    //     }
+    //     // new quicker format - does not allow shoddy prefixes so conforms to MongoID
+    //     case 4:
+    //     {
+    //         const dateNow = Date.now();
+    //         let hex = dateNow.toString(16);
+    //         const dateNow2 = (Date.now() * 2) + (this.mongoIdCounter++)
+    //         let hex2 = dateNow2.toString(8);
 
-            let newHex = hex.substring(0, 12) + hex2.split("").reverse().join("").substring(0, 12)
-            retVal = newHex.substring(0, 24);
-            // const dateNow = Date.now();
-            // const dateNow2 = Date.now() * 2;
-            // const dateNow3 = Date.now() * 3;
-            // const objectIdBinary = Buffer.alloc(12);
-            // objectIdBinary[0] = (dateNow >> 4) & 0xff;
-            // objectIdBinary[1] = (dateNow >> 8) & 0xff;
-            // objectIdBinary[2] = (dateNow >> 16) & 0xff;
-            // objectIdBinary[3] = (dateNow >> 24) & 0xff;
-            // objectIdBinary[4] = (dateNow2 >> 24) & 0xff;
-            // objectIdBinary[5] = (dateNow2 >> 16) & 0xff;
-            // objectIdBinary[6] = (dateNow2 >> 8) & 0xff;
-            // objectIdBinary[7] = (dateNow2 >> 4) & 0xff;
-            // objectIdBinary[8] = (dateNow3 >> 4) & 0xff;
-            // objectIdBinary[9] = (dateNow3 >> 8) & 0xff;
-            // objectIdBinary[10] = (dateNow3 >> 16) & 0xff;
-            // objectIdBinary[11] = (dateNow3 >> 24) & 0xff;
-            // retVal = this.toHexString(objectIdBinary);
-            break;
-        }
-        // Uses the pre-generated array of Ids
-        case 5:
-        {
-            this.generateRandomIdArray();
-            retVal = this.randomIdArray[Math.floor(Math.random() * (this.randomIdArray.length - 1))]
-            break;
-        }
-    }
+    //         let newHex = hex.substring(0, 12) + hex2.split("").reverse().join("").substring(0, 12)
+    //         retVal = newHex.substring(0, 24);
+    //         // const dateNow = Date.now();
+    //         // const dateNow2 = Date.now() * 2;
+    //         // const dateNow3 = Date.now() * 3;
+    //         // const objectIdBinary = Buffer.alloc(12);
+    //         // objectIdBinary[0] = (dateNow >> 4) & 0xff;
+    //         // objectIdBinary[1] = (dateNow >> 8) & 0xff;
+    //         // objectIdBinary[2] = (dateNow >> 16) & 0xff;
+    //         // objectIdBinary[3] = (dateNow >> 24) & 0xff;
+    //         // objectIdBinary[4] = (dateNow2 >> 24) & 0xff;
+    //         // objectIdBinary[5] = (dateNow2 >> 16) & 0xff;
+    //         // objectIdBinary[6] = (dateNow2 >> 8) & 0xff;
+    //         // objectIdBinary[7] = (dateNow2 >> 4) & 0xff;
+    //         // objectIdBinary[8] = (dateNow3 >> 4) & 0xff;
+    //         // objectIdBinary[9] = (dateNow3 >> 8) & 0xff;
+    //         // objectIdBinary[10] = (dateNow3 >> 16) & 0xff;
+    //         // objectIdBinary[11] = (dateNow3 >> 24) & 0xff;
+    //         // retVal = this.toHexString(objectIdBinary);
+    //         break;
+    //     }
+    //     // Uses the pre-generated array of Ids
+    //     case 5:
+    //     {
+    //         this.generateRandomIdArray();
+    //         retVal = this.randomIdArray[Math.floor(Math.random() * (this.randomIdArray.length - 1))]
+    //         break;
+    //     }
+    // }
 
    
 
