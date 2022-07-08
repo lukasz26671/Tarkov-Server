@@ -1,7 +1,8 @@
 "use strict";
 
+const { AccountController } = require("../Controllers/AccountController");
 const { InsuranceController } = require("../Controllers/InsuranceController");
-const { tradeHandler } = require("./trade");
+const { tradeHandler, TradeHandler } = require("./trade");
 
 class ItemServer {
   constructor() {
@@ -49,7 +50,7 @@ class ItemServer {
       QuestComplete: quest_f.completeQuest,
       QuestHandover: quest_f.handoverQuest,
       RagFairAddOffer: ragfair_f.ragFairAddOffer,
-      RagFairBuyOffer: trade_f.TradeHandler.confirmRagfairTrading,
+      RagFairBuyOffer: TradeHandler.confirmRagfairTrading,
       ReadEncyclopedia: status_f.readEncyclopedia,
       Remove: move_f.discardItem,
       RemoveBuild: weaponbuilds_f.removeBuild,
@@ -61,7 +62,7 @@ class ItemServer {
       Tag: status_f.tagItem,
       Toggle: status_f.toggleItem,
       TraderRepair: repair_f.main,
-      TradingConfirm: trade_f.TradeHandler.confirmTrading,
+      TradingConfirm: TradeHandler.confirmTrading,
       Transfer: move_f.transferItem,
     };
   }
@@ -69,7 +70,7 @@ class ItemServer {
   handleRoutes(info, sessionID) {
     this.resetOutput(sessionID);
     for (let body of info.data) {
-      let pmcData = profile_f.handler.getPmcProfile(sessionID);
+      let pmcData = AccountController.getPmcProfile(sessionID);
       if (body.Action in this.routes) {
         this.routes[body.Action](pmcData, body, sessionID);
       } else {
@@ -94,10 +95,10 @@ class ItemServer {
 
   resetOutput(sessionID) {
     if (sessionID == "" || typeof sessionID == "undefined") {
-      // logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
+      logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
       return;
     }
-    let _profile = profile_f.handler.getPmcProfile(sessionID);
+    let _profile = AccountController.getPmcProfile(sessionID);
     if (utility.isUndefined(_profile)) {
       logger.logError(`[MISSING PROFILE] Profile with sessionID: ${sessionID} is missing?`);
       return;
@@ -108,15 +109,16 @@ class ItemServer {
       profileChanges: {},
     };
     this.output.profileChanges[_profile._id] = {
-      _id: _profile._id,
+      // _id: _profile._id,
       experience: 0,
+      items: { change: [], new: [], del: [] }, // stash
       quests: [], // are those current accepted quests ??
+      repeatableQuests: [], 
       ragFairOffers: [], // are those current ragfair requests ?
+      traderRelations: [], //_profile.TradersInfo
       builds: [], // are those current weapon builds ??
-      items: { change: [], new: [], del: [] },
       production: null,
       skills: _profile.Skills,
-      traderRelations: [], //_profile.TradersInfo
     };
   }
 }
