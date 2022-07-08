@@ -157,6 +157,31 @@ class ItemController
     const moneyTplArray = ["569668774bdc2da2298b4568", "5696686a4bdc2da3298b456a", "5449016a4bdc2d6f028b456f"];
     return moneyTplArray.findIndex((moneyTlp) => moneyTlp === tpl) !== -1;
   }
+
+  static enumerateItemChildren(item, item_list) {
+    return item_list.filter((child_item) => child_item.parentId === item._id);
+  }
+  
+  /**
+   * Recursively iterates through children of `item` present in `item_list`
+   * @param {*} item 
+   * @param {*} item_list 
+   * @returns {Array} Array of child items found
+   */
+  static enumerateItemChildrenRecursively(item, item_list) {
+  
+    let stack = ItemController.enumerateItemChildren(item, item_list);
+    let child_items = [...stack];
+  
+    while (stack.length > 0) {
+      let child = stack.pop();
+      let children_of_child = ItemController.enumerateItemChildren(child, item_list);
+      stack.push(...children_of_child);
+      child_items.push(...children_of_child);
+    }
+  
+    return child_items;
+  }
 }
 
 module.exports.ItemController = ItemController;
