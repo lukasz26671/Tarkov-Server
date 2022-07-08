@@ -1,7 +1,7 @@
 # Tarkov Emulated Central Server
 
 ## Current known working Tarkov Version
-- 0.12.12.15.*
+- 0.12.12.30.*
 
 ## Disclaimer
 
@@ -62,6 +62,9 @@ Zip the following folders & files
 - [SamSwat Benelli M4-Super-90 (m1014) - New Weapon](https://hub.sp-tarkov.com/files/file/261-l85-sa80-a2-british-assault-rifle/)
 - [SamSwat L85 SA80 AR - New Weapon](https://hub.sp-tarkov.com/files/file/181-benelli-m4-super-90-m1014/)
 - [Nehax MagazineManiac](https://github.com/Nehaxfr/Nehax-MagazineManiac)
+
+## Coop implementation - IN PROGRESS
+- [SIT Coop Server Mod](https://github.com/paulov-t/SIT-Mod-Coop) - Adds routes and functions to make a "Coop Server" together with [SIT Coop Client Module](https://github.com/paulov-t/SIT.Coop.Core)
 
 ## Documentation
 *This is Work in Progress*
