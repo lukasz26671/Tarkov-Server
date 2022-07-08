@@ -135,7 +135,7 @@ function countCategories(response) {
 function getOffers(sessionID, request) {
 
   // console.log(request);
-  require('fs').writeFileSync("ragfairRequest.json", JSON.stringify(request));
+  // require('fs').writeFileSync("ragfairRequest.json", JSON.stringify(request));
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
   let itemsToAdd = [];
   let offers = [];
