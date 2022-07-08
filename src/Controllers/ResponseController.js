@@ -114,7 +114,7 @@ class ResponseController
         const port = req.socket.remotePort || req.socket.localPort;
         // ResponseController.SessionIdToIpMap[sessionID] = `${ip}:${port}`;
         ResponseController.SessionIdToIpMap[sessionID] = `${ip}`;
-
+        AccountController.saveToDisk(sessionID);
     }
 
     static getNotifier = (sessionID) => {
@@ -229,7 +229,6 @@ action: (url, info, sessionID) => {
         const account = AccountController.find(sessionID);
         account.wipe = false;
         AccountController.saveToDisk(sessionID);
-        profile_f.handler.saveToDisk(sessionID);
     }
 },
 {
@@ -274,7 +273,7 @@ action: (url, info, sessionID) => {
         // if the killer is the player
         if(info.killedByAID === sessionID) {
             const account = AccountController.find(sessionID);
-            const profile = profile_f.handler.getPmcProfile(sessionID);
+            const profile = AccountController.getPmcProfile(sessionID);
             
             if(info.diedFaction === "Savage" || info.diedFaction === "Scav")
                 profile.TradersInfo[TradingController.FenceId].standing += killScavChange; 
@@ -451,6 +450,7 @@ action: (url, info, sessionID) => {
     url: "/raid/profile/save",
     action: (url, info, sessionID) => {
         offraid_f.saveProgress(info, sessionID);
+        AccountController.saveToDisk(sessionID);
         return ResponseController.nullResponse();
     }
 },
@@ -783,4 +783,15 @@ const RagfairRoutes = [
     }
 ]
 
+const HideoutRoutes = [
+    {
+        url: "/client/hideout/areas",
+        action: (url, info, sessionID) => {
+            return ResponseController.getBody(DatabaseController.getDatabase().hideout.areas);
+        }
+    }
+    
+]
+
+ResponseController.addRoutes(HideoutRoutes);
 ResponseController.addRoutes(RagfairRoutes);
