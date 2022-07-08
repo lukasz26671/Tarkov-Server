@@ -12,6 +12,7 @@ class AccountController
   static accountFileAge = {};
   static profiles = {};
 
+
   static Instance = new AccountController();
 
   // static accounts = {};
@@ -28,7 +29,9 @@ class AccountController
    * @returns Account_data
    */
     static find(sessionID) {
-      // AccountController needs to be at the top to check for changed accounts.
+
+
+
       AccountController.reloadAccountBySessionID(sessionID);
       for (let accountID in AccountController.accounts) {
         let account = AccountController.accounts[accountID];
@@ -330,7 +333,10 @@ class AccountController
    * If the sessionID is specified, AccountController function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
    * @param {*} sessionID 
    */
-  static saveToDisk(sessionID = 0) {
+  static saveToDisk(sessionID) {
+
+    if(sessionID === undefined)
+      return;
 
     if(!fs.existsSync(`user/profiles/`)) {
       fs.mkdirSync(`user/profiles/`);
@@ -359,15 +365,19 @@ class AccountController
 
     static saveToDiskProfile(sessionID) {
       // Check if a PMC character exists in the server memory.
-      if (AccountController.profiles[sessionID] === undefined)
+      if (AccountController.profiles[sessionID] === undefined) {
+        logger.logError(`Profile ${sessionID} doesn't exist in memory`);
         return;
+      }
 
       const profilePath = AccountController.getPmcPath(sessionID);
       let prof = AccountController.getPmcProfile(sessionID);
-      prof = AccountController.FixTradersInfo(prof);
-      fileIO.write(profilePath, prof);
-
-      logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
+      // prof = AccountController.FixTradersInfo(prof);
+      const diskProf = JSON.stringify(JSON.parse(fs.readFileSync(profilePath)));
+      if(diskProf !== JSON.stringify(prof)) {
+        fileIO.write(profilePath, prof);
+        logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
+      }
     }
 
     /**
