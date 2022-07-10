@@ -542,13 +542,13 @@ function saveProgress(offraidData, sessionID) {
   pmcData.Encyclopedia = offraidData.profile.Encyclopedia;
   pmcData.ConditionCounters = offraidData.profile.ConditionCounters;
   pmcData.Quests = offraidData.profile.Quests;
-
+ 
   // // For some reason, offraidData seems to drop the latest insured items.
   // // It makes more sense to use pmcData's insured items as the source of truth.
   // offraidData.profile.InsuredItems = pmcData.InsuredItems;
 
-  // // add experience points
-  // pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
+  // add experience points
+  pmcData.Info.Experience += pmcData.Stats.TotalSessionExperience;
   // pmcData.Stats.TotalSessionExperience = 0;
 
   // // Remove the Lab card
@@ -561,7 +561,7 @@ function saveProgress(offraidData, sessionID) {
   // //TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insurance.
   // const systemMapName = MapNameConversion(sessionID);
   // const insuranceEnabled = global._database.locations[systemMapName].base.Insurance;
-  // const preRaidGear = getPlayerGear(pmcData.Inventory.items);
+  const preRaidGear = getPlayerGear(pmcData.Inventory.items);
 
   // if (insuranceEnabled) {
   //   // insurance_f.handler.storeLostGear(pmcData, offraidData, preRaidGear, sessionID);
@@ -591,7 +591,7 @@ function saveProgress(offraidData, sessionID) {
 
   AccountController.profiles[sessionID]["pmc"] = pmcData;
   // Ensure the profile saves!
-  // AccountController.saveToDisk(sessionID);
+  AccountController.saveToDisk(sessionID);
 }
 
 //takes a profile and checks/remove for completed conditions in profile's quests section, that are
