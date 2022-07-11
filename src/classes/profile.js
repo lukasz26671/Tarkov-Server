@@ -62,37 +62,37 @@ class ProfileServer {
     logger.logSuccess(`Loaded profile for AID ${sessionID} successfully.`);
   }
 
-  /**
-   * Reload the profile from disk if the profile was changed by another server.
-   * @param {*} sessionID 
-   */
-  reloadProfileBySessionID(sessionID) {
-    if (sessionID === undefined) {
-      logger.throwErr("Session ID is undefined");
-      return;
-    }
-    try {
+  // /**
+  //  * Reload the profile from disk if the profile was changed by another server.
+  //  * @param {*} sessionID 
+  //  */
+  // reloadProfileBySessionID(sessionID) {
+  //   if (sessionID === undefined) {
+  //     logger.throwErr("Session ID is undefined");
+  //     return;
+  //   }
+  //   try {
 
-      // Check if the profile file exists
-      if (global.internal.fs.existsSync(getPmcPath(sessionID))) {
-          //Load the PMC profile from disk.
-          AccountController.profiles[sessionID]["pmc"] = fileIO.readParsed(getPmcPath(sessionID));
+  //     // Check if the profile file exists
+  //     if (global.internal.fs.existsSync(getPmcPath(sessionID))) {
+  //         //Load the PMC profile from disk.
+  //         AccountController.profiles[sessionID]["pmc"] = fileIO.readParsed(getPmcPath(sessionID));
         
-          logger.logWarning(`Profile for AID ${sessionID} was modified elsewhere. Profile was reloaded successfully.`)
-      }
-    } catch (e) {
-      if (e instanceof SyntaxError) {
-        return logger.logError(
-          `There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
-        );
-      } else {
-        logger.logData(sessionID);
-        logger.logError(`There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
-        logger.logData(e);
-        return;
-      }
-    }
-  }
+  //         logger.logWarning(`Profile for AID ${sessionID} was modified elsewhere. Profile was reloaded successfully.`)
+  //     }
+  //   } catch (e) {
+  //     if (e instanceof SyntaxError) {
+  //       return logger.logError(
+  //         `There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
+  //       );
+  //     } else {
+  //       logger.logData(sessionID);
+  //       logger.logError(`There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
+  //       logger.logData(e);
+  //       return;
+  //     }
+  //   }
+  // }
 
   /**
    * Check if the sessionID is loaded.

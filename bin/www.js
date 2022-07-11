@@ -11,7 +11,7 @@ const app = require('../express/app');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-const ws = require('ws');
+// const ws = require('ws');
 const { certificate } = require('./../core/server/certGenerator');
 const { ConfigController } = require('./../src/Controllers/ConfigController')
 var serverIp = "127.0.0.1";
@@ -44,15 +44,15 @@ const httpsServer = https.createServer({
   cert: certs.cert
 }, app);
 
-const io = require('socket.io')(httpsServer,{
-  perMessageDeflate :false
-});
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
+// const io = require('socket.io')(httpsServer,{
+//   perMessageDeflate :false
+// });
+// io.on('connection', (socket) => {
+//   console.log('a user connected');
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected');
+//   });
+// });
 
 /** ======================================================================================================
  * Https Server running on whatever port determined by outcome above

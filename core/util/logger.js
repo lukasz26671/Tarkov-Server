@@ -31,12 +31,17 @@ const colorData = [
 class Logger {
   constructor() {
     let file = utility.getDate() + "_" + utility.getTime() + ".log";
+    
+    if (!fileIO.exist('user')) {
+      fileIO.mkDir('user');
+    }
+
     let folder = "user/logs/";
     let filepath = folder + file;
 
     // create log folder
     if (!fileIO.exist(folder)) {
-      +fileIO.mkDir(folder);
+      fileIO.mkDir(folder);
     }
 
     // create log file

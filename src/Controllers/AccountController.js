@@ -101,19 +101,20 @@ class AccountController
           return fullyLoadedAccounts;
         }
 
-        static  reloadAccountBySessionID(sessionID) {
+        static reloadAccountBySessionID(sessionID) {
           if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
             logger.logWarning(`Account file for account ${sessionID} does not exist.`);
           } else {
             // Does the session exist?
-            if (!AccountController.accounts[sessionID]) {
+            if (AccountController.accounts[sessionID] === undefined) {
               logger.logWarning(`Tried to load session ${sessionID} but it wasn't cached, loading.`);
               // Reload the account from disk.
               AccountController.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-            } else {
-              // Reload the account from disk.
-              AccountController.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-            }
+            } 
+            // else {
+            //   // Reload the account from disk.
+            //   AccountController.accounts[sessionID] = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
+            // }
           }
         }
 
@@ -228,11 +229,10 @@ class AccountController
     }
 
     static getPmcPath(sessionID) {
-      let pmcPath = db.user.profiles.character;
-      return pmcPath.replace("__REPLACEME__", sessionID);
+      const path = `${process.cwd()}/user/profiles/${sessionID}/character.json`;
+      // console.log(path);
+      return path;
     }
-
-    
 
     /*
    * Get profile with sessionID of type (profile type in string, i.e. 'pmc').
@@ -333,7 +333,7 @@ class AccountController
    * If the sessionID is specified, AccountController function will save the specified account file to disk, if the file wasn't modified elsewhere and the current memory content differs from the content on disk.
    * @param {*} sessionID 
    */
-  static saveToDisk(sessionID) {
+  static saveToDisk(sessionID, force = false, releaseMemory = false) {
 
     if(sessionID === undefined)
       return;
@@ -342,11 +342,16 @@ class AccountController
       fs.mkdirSync(`user/profiles/`);
     }
 
-    AccountController.saveToDiskAccount(sessionID);
-    AccountController.saveToDiskProfile(sessionID);
+    AccountController.saveToDiskAccount(sessionID, force);
+    AccountController.saveToDiskProfile(sessionID, force);
+    if(releaseMemory) {
+      delete AccountController.accounts[sessionID];
+      delete AccountController.profiles[sessionID];
+      logger.logSuccess(sessionID + " has been released from memory.")
+    }
   }
 
-  static saveToDiskAccount(sessionID) {
+  static saveToDiskAccount(sessionID, force = false) {
     // Does the account file exist? (Required for new accounts)
     if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
       logger.logInfo(`Registering New account ${sessionID}.`);
@@ -355,7 +360,7 @@ class AccountController
     } else {
       let currentAccount = AccountController.accounts[sessionID];
       let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
-      if (JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
+      if (force || JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
         // Save memory content to disk
         fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountController.accounts[sessionID]);
         logger.logSuccess(`Account file for account ${sessionID} was saved to disk.`);
@@ -363,10 +368,10 @@ class AccountController
     }
   }
 
-    static saveToDiskProfile(sessionID) {
+    static saveToDiskProfile(sessionID, force = false)  {
       // Check if a PMC character exists in the server memory.
       if (AccountController.profiles[sessionID] === undefined) {
-        logger.logError(`Profile ${sessionID} doesn't exist in memory`);
+        // logger.logError(`Profile ${sessionID} doesn't exist in memory`);
         return;
       }
 
@@ -374,7 +379,7 @@ class AccountController
       let prof = AccountController.getPmcProfile(sessionID);
       // prof = AccountController.FixTradersInfo(prof);
       const diskProf = JSON.stringify(JSON.parse(fs.readFileSync(profilePath)));
-      if(diskProf !== JSON.stringify(prof)) {
+      if(force || diskProf !== JSON.stringify(prof)) {
         fileIO.write(profilePath, prof);
         logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
       }
@@ -441,8 +446,8 @@ class AccountController
    * @param {*} sessionID 
    */
   static createProfile(info, sessionID) {
-console.log("createProfile");
-console.log(info);
+// console.log("createProfile");
+// console.log(info);
 
     // Load account data //
     const account = AccountController.find(sessionID);
@@ -500,7 +505,7 @@ console.log(info);
     // AccountController.setWipe(account.id, false);
     account.wipe = false;
     AccountController.initializeProfile(sessionID);
-    AccountController.saveToDisk(sessionID);
+    // AccountController.saveToDisk(sessionID);
   }
 
   /**
@@ -584,7 +589,7 @@ console.log(info);
     // AccountController needs to be at the top to check for changed accounts.
     AccountController.reloadAccountBySessionID(sessionID);
     let account = AccountController.find(sessionID);
-    if (typeof account.lang == "undefined") {
+    if (account.lang === undefined) {
       account.lang = "en";
       AccountController.saveToDisk(sessionID);
     }
@@ -596,29 +601,14 @@ console.log(info);
    * @param {*} sessionID 
    */
    static reloadProfileBySessionID(sessionID) {
-    if (sessionID === undefined) {
-      logger.throwErr("Session ID is undefined");
-      return;
-    }
-    try {
+    if(AccountController.profiles[sessionID] === undefined) {
 
-      // Check if the profile file exists
-      if (global.internal.fs.existsSync(AccountController.getPmcPath(sessionID))) {
+      if (fs.existsSync(AccountController.getPmcPath(sessionID))) {
           //Load the PMC profile from disk.
           AccountController.profiles[sessionID]["pmc"] = fileIO.readParsed(AccountController.getPmcPath(sessionID));
       }
-    } catch (e) {
-      if (e instanceof SyntaxError) {
-        return logger.logError(
-          `There is a syntax error in the character.json file for AID ${sessionID}. This likely means you edited something improperly. Call stack: \n${e.stack}`
-        );
-      } else {
-        logger.logData(sessionID);
-        logger.logError(`There was an issue loading the user profile with session ID ${sessionID}. Call stack:`);
-        logger.logData(e);
-        return;
-      }
     }
+   
   }
 }
 

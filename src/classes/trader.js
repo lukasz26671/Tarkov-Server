@@ -80,7 +80,7 @@ class TraderServer {
     const pmcData = AccountController.getPmcProfile(sessionID);
     const TraderLevel = TradingController.getLoyalty(pmcData, traderID);
 
-    if (TraderLevel !== "ragfair") {
+    if (TraderLevel !== "ragfair" && traderID !== "ragfair") {
       // 1 is min level, 4 is max level
       let questassort = global._database.traders[traderID].questassort;
 

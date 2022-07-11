@@ -418,7 +418,11 @@ static getLoyalty(pmcData, traderID) {
         break;
       }
     }
-  } else { return "ragfair" }
+  } 
+  else { 
+    // return "ragfair" 
+    return playerLevel;
+  }
 
   return calculatedLoyalty;
 }
@@ -475,42 +479,46 @@ static getLoyalty(pmcData, traderID) {
         const assort = TradingController.getTraderAssort(traderId, sessionID);
         const pmcData = AccountController.getPmcProfile(sessionID);
         const traderLevel = TradingController.getLoyalty(pmcData, traderId);
-        let traderQuestAssort = global._database.traders[traderId].questassort;
+        if (traderLevel !== "ragfair" 
+          && traderId !== "ragfair"
+          && global._database.traders[traderId].questassort !== undefined) {
+          let traderQuestAssort = global._database.traders[traderId].questassort;
 
-        // Get all items filtered by level
-        for (const key in assort.loyal_level_items) {
-          const requiredLevel = assort.loyal_level_items[key];
-          if(requiredLevel <= traderLevel) {
-            const itemIndex = assort.items.findIndex(x=>x._id === key);
-            if(itemIndex !== -1) {
-              const questStatus = quest_f.getQuestStatus(pmcData, traderQuestAssort.started[key]);
+          // Get all items filtered by level
+          for (const key in assort.loyal_level_items) {
+            const requiredLevel = assort.loyal_level_items[key];
+            if(requiredLevel <= traderLevel) {
+              const itemIndex = assort.items.findIndex(x=>x._id === key);
+              if(itemIndex !== -1) {
+                const questStatus = quest_f.getQuestStatus(pmcData, traderQuestAssort.started[key]);
 
-              if (
-                key in traderQuestAssort.started && questStatus !== "Started"
-              ) {
-                continue;
+                if (
+                  key in traderQuestAssort.started && questStatus !== "Started"
+                ) {
+                  continue;
+                }
+        
+                if (
+                  key in traderQuestAssort.success &&
+                  quest_f.getQuestStatus(pmcData, traderQuestAssort.success[key]) !==
+                  "Success"
+                ) {
+                  continue;
+                }
+        
+                if (
+                  key in traderQuestAssort.fail &&
+                  quest_f.getQuestStatus(pmcData, traderQuestAssort.fail[key]) !== "Fail"
+                ) {
+                  continue;
+                }
+
+                newAssort.barter_scheme[key] = assort.barter_scheme[key];
+                newAssort.loyal_level_items[key] = requiredLevel;
+
+                const assortItem = assort.items[itemIndex];
+                newAssort.items.push(assortItem);
               }
-      
-              if (
-                key in traderQuestAssort.success &&
-                quest_f.getQuestStatus(pmcData, traderQuestAssort.success[key]) !==
-                "Success"
-              ) {
-                continue;
-              }
-      
-              if (
-                key in traderQuestAssort.fail &&
-                quest_f.getQuestStatus(pmcData, traderQuestAssort.fail[key]) !== "Fail"
-              ) {
-                continue;
-              }
-
-              newAssort.barter_scheme[key] = assort.barter_scheme[key];
-              newAssort.loyal_level_items[key] = requiredLevel;
-
-              const assortItem = assort.items[itemIndex];
-              newAssort.items.push(assortItem);
             }
           }
         }

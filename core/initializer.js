@@ -354,7 +354,8 @@ class Initializer {
     for (let file of loadOrder) {
       loadedModules += file.replace(".js", ", ");
       let name = file.replace(".js", "").toLowerCase() + "_f"; // fixes the weaponbuilds.js file bug ... lol
-      global[name] = require(process.cwd() + "/src/classes/" + file);
+      // global[name] = require(process.cwd() + "/src/classes/" + file);
+      global[name] = require(__dirname + "/../src/classes/" + file);
     }
     // logger.logInfo("[Modules] " + loadedModules.slice(0, -2));
   }

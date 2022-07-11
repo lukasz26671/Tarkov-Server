@@ -376,7 +376,7 @@ class Responses {
   }
   clientGameProfileItemsMoving(url, info, sessionID) {
     const data = item_f.handler.handleRoutes(info, sessionID);
-    AccountController.saveToDisk(sessionID);
+    AccountController.saveToDisk(sessionID, true);
     return response_f.getBody(data);
   }
   clientGameProfileList(url, info, sessionID) {

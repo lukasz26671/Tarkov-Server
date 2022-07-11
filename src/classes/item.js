@@ -69,8 +69,9 @@ class ItemServer {
 
   handleRoutes(info, sessionID) {
     this.resetOutput(sessionID);
+    let pmcData = AccountController.getPmcProfile(sessionID);
+
     for (let body of info.data) {
-      let pmcData = AccountController.getPmcProfile(sessionID);
       if (body.Action in this.routes) {
         this.routes[body.Action](pmcData, body, sessionID);
       } else {
@@ -95,12 +96,12 @@ class ItemServer {
 
   resetOutput(sessionID) {
     if (sessionID == "" || typeof sessionID == "undefined") {
-      logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
+      // logger.logError(`[MISSING SESSION ID] resetOutput(sessionID) is blank or undefined; returning.`);
       return;
     }
     let _profile = AccountController.getPmcProfile(sessionID);
     if (utility.isUndefined(_profile)) {
-      logger.logError(`[MISSING PROFILE] Profile with sessionID: ${sessionID} is missing?`);
+      // logger.logError(`[MISSING PROFILE] Profile with sessionID: ${sessionID} is missing?`);
       return;
     }
     

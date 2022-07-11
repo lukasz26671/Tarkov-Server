@@ -228,7 +228,7 @@ action: (url, info, sessionID) => {
     action: (url, info, sessionID) => {
         const account = AccountController.find(sessionID);
         account.wipe = false;
-        AccountController.saveToDisk(sessionID);
+        AccountController.saveToDisk(sessionID, true, true);
     }
 },
 {

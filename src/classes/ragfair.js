@@ -3,6 +3,7 @@
 const { ConfigController } = require('../Controllers/ConfigController');
 const { DatabaseController } = require('../Controllers/DatabaseController');
 const { ItemController } = require('../Controllers/ItemController');
+const { TradingController } = require('../Controllers/TradingController');
 
 function sortOffersByID(a, b) {
   return a.intId - b.intId;
@@ -147,6 +148,7 @@ function getOffers(sessionID, request) {
 
   if (!request.linkedSearchId && !request.neededSearchId) {
     response.categories = trader_f.handler.getAssort(sessionID, "ragfair").loyal_level_items;
+    // response.categories = TradingController.getTraderAssort("ragfair", sessionID).loyal_level_items;
   }
 
   if (request.buildCount) {
@@ -174,9 +176,6 @@ function getOffers(sessionID, request) {
 
   for (let item of itemsToAdd) {
     offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
-/*     if (request.offerOwnerType === 0) {
-        delete offers.buyRestrictionMax;
-    } */
   }
 
   // merge trader offers with player offers display offers is set to 'ALL'
@@ -245,7 +244,7 @@ function getOffersFromTraders(sessionID, request) {
         // check if offer is really available, removes any quest locked items not in current assort of a trader
         const tmpOffer = jsonToReturn.offers[offer];
         const traderId = tmpOffer.user.id;
-        const traderAssort = trader_f.handler.getAssort(sessionID, traderId).items;
+        const traderAssort = TradingController.getTraderAssort(traderId, sessionID).items;
         for (let item of traderAssort) {
           if (item._id === tmpOffer.root) {
             jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = 30; //(tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
