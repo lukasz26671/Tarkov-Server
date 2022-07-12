@@ -1,5 +1,6 @@
 "use strict";
 
+const { AccountController } = require('../Controllers/AccountController');
 const { ConfigController } = require('../Controllers/ConfigController');
 const { DatabaseController } = require('../Controllers/DatabaseController');
 const { ItemController } = require('../Controllers/ItemController');
@@ -135,6 +136,13 @@ function countCategories(response) {
 
 function getOffers(sessionID, request) {
 
+  const BSGConfig_FleaMarketEnabled = _database.globals.config.RagFair.enabled;
+  const BSGConfig_MinLevel = _database.globals.config.RagFair.minUserLevel;
+  const SITConfig_UseFleaMarketLevelLock = ConfigController.Configs["gameplay"].trading.fleaMarket.UseFleaMarketLevelLock;
+  const pmcProfile = AccountController.getPmcProfile(sessionID);
+  const pmcLevel = AccountController.getPmcProfile(sessionID).Info.Level;
+
+
   // console.log(request);
   // require('fs').writeFileSync("ragfairRequest.json", JSON.stringify(request));
   let response = { categories: {}, offers: [], offersCount: 10, selectedCategory: "5b5f78dc86f77409407a7f8e" };
@@ -174,8 +182,12 @@ function getOffers(sessionID, request) {
     }
   }
 
-  for (let item of itemsToAdd) {
-    offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
+ 
+  if(SITConfig_UseFleaMarketLevelLock === true
+    && pmcLevel > BSGConfig_MinLevel) {
+    for (let item of itemsToAdd) {
+      offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
+    }
   }
 
   // merge trader offers with player offers display offers is set to 'ALL'
@@ -340,23 +352,19 @@ function getCategoryList(handbookId) {
 }
 
 /** Create a list of offers
- * Notes:
- * offer.items[0].upd.StackObjectsCount = utility.getRandomInt(1, 25);
- * We need to create a maxInt for categories to avoid too many offers
- * 
  * @param {*} template - ItemID
  * @param {*} onlyFunc - filter function
  * @param {*} usePresets - use presets
  * @returns {object}
  */
 function createOffer(template, onlyFunc, usePresets = true) {
-  //console.log("createOffer is called")
-  // Some slot filters reference bad items
   if (!(template in global._database.items)) {
     logger.logWarning(`Item ${template} does not exist`);
     return [];
   }
 
+ 
+  
   const item = ItemController.tryGetItem(template);
   if(item !== undefined) {
     if(ConfigController.Configs["gameplay"].trading.fleaMarket.UseFleaMarketTradingBlacklist === true

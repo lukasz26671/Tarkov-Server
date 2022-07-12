@@ -617,7 +617,6 @@ function loadRagfair() {
       }
     }
   }
-  logger.logDebug(`[Ragfair Cache] Generated ${counter} offers inluding all traders assort`);
   _database.ragfair_offers = response;
 }
 
