@@ -11891,14 +11891,6 @@
                                         "value": "1",
                                         "id": "5967379786f774620e763ea8"
                                     }
-                                }, {
-                                    "_parent": "Location",
-                                    "_props": {
-                                        "target": [
-                                            "bigmap"
-                                        ],
-                                        "id": "5976026886f7745659461f2b"
-                                    }
                                 }
                             ]
                         },
@@ -11954,7 +11946,7 @@
         "name": "5936d90786f7742b1420ba5b name",
         "note": "5936d90786f7742b1420ba5b note",
         "traderId": "54cb50c76803fa8b248b4571",
-        "location": "56f40101d2720b2a4d8b45d6",
+        "location": "any",
         "image": "/files/quest/icon/596b465486f77457ca186188.jpg",
         "type": "Elimination",
         "isKey": false,
