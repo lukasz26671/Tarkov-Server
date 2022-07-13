@@ -300,8 +300,10 @@ class HealthServer {
     for (let item of keys) {
       if (item !== "Hydration" && item !== "Energy") {
         /* set body part health */
-        bodyParts[item].Health.Current =
-          nodeHealth[item] <= 0 ? ~~ (bodyParts[item].Health.Maximum * 0.1) : nodeHealth[item];
+        if(bodyParts[item] !== undefined) {
+          bodyParts[item].Health.Current =
+            nodeHealth[item] <= 0 ? ~~ (bodyParts[item].Health.Maximum * 0.1) : nodeHealth[item];
+        }
       } else {
         /* set resources */
         pmcHealth[item].Current = nodeHealth[item];
