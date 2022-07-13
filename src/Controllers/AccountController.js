@@ -356,14 +356,14 @@ class AccountController
     if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
       logger.logInfo(`Registering New account ${sessionID}.`);
       fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountController.accounts[sessionID]);
-      logger.logSuccess(`New account ${sessionID} registered and was saved to disk.`);
+      logger.logSuccess(`New account ${sessionID} has been registered.`);
     } else {
       let currentAccount = AccountController.accounts[sessionID];
       let savedAccount = fileIO.readParsed(`./user/profiles/${sessionID}/account.json`);
       if (force || JSON.stringify(currentAccount) !== JSON.stringify(savedAccount)) {
         // Save memory content to disk
         fileIO.write(`./user/profiles/${sessionID}/account.json`, AccountController.accounts[sessionID]);
-        logger.logSuccess(`Account file for account ${sessionID} was saved to disk.`);
+        logger.logSuccess(`${sessionID} Account was saved.`);
       }
     }
   }
@@ -381,7 +381,7 @@ class AccountController
       const diskProf = JSON.stringify(JSON.parse(fs.readFileSync(profilePath)));
       if(force || diskProf !== JSON.stringify(prof)) {
         fileIO.write(profilePath, prof);
-        logger.logSuccess(`Profile for AID ${sessionID} was saved.`);
+        logger.logSuccess(`${sessionID} Profile was saved.`);
       }
     }
 
