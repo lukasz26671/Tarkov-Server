@@ -283,8 +283,14 @@ function createForcedDynamicStruct(item_data) {
     GroupPositions = item_data.GroupPositions;
   }
 
+  let Root =
+    typeof item_data.Items[0] == "string"
+      ? item_data.id
+      : item_data.Items[0]._id;
+  item_data.Items = item_data.Items.splice(0, 1);
+
   return {
-    Id: item_data.id,
+    Id: item_data.id !== undefined ? item_data.id : item_data.Id,
     IsStatic: isStatic,
     useGravity: useGravity,
     randomRotation: randomRotation,
@@ -329,6 +335,8 @@ function createStaticMountedStruct(item_data) {
     typeof item_data.Items[0] == "string"
       ? item_data.id
       : item_data.Items[0]._id;
+
+  item_data.Items = item_data.Items.splice(0, 1);
   return {
     Id: item_data.id !== undefined ? item_data.id : item_data.Id,
     IsStatic: isStatic,
@@ -348,20 +356,48 @@ function loadLocationData() {
   for (let name in db.locations.base) {
     let _location = { "base": {}, "loot": {} };
     _location.base = fileIO.readParsed(db.locations.base[name]);
+
+    // initialised internal loot
     _location.loot = { forced: [], mounted: [], static: [], dynamic: [] };
+
+    // Do stuff with in file Loot table
+    if(_location.base.Loot !== undefined && _location.base.Loot.length > 0) {
+      for(const item of _location.base.Loot) {
+        const type = item.IsStatic && item.Items[0]._id === item.Root ? "static" : "dynamic";
+        if(
+          _location.loot["static"].findIndex(x=>x.Id === item.Id) === -1
+          && _location.loot["dynamic"].findIndex(x=>x.Id === item.Id) === -1)
+        {
+          _location.loot[type].push(
+            type == "static" ?  createStaticMountedStruct(item) : createForcedDynamicStruct(item)
+            );
+        }
+      }
+    }
+    
     if (typeof db.locations.loot[name] != "undefined") {
       let loot_data = fileIO.readParsed(db.locations.loot[name]);
       for (let type in loot_data) {
         for (let item of loot_data[type]) {
-          if (type == "static" || type == "mounted") {
-            _location.loot[type].push(createStaticMountedStruct(item));
-            continue;
+
+          if(_location.loot[type].findIndex(x=>x.Id === item.Id) === -1)
+          {
+            if (type == "static" || type == "mounted") {
+              
+              _location.loot[type].push(createStaticMountedStruct(item));
+              continue;
+            }
+            _location.loot[type].push(createForcedDynamicStruct(item));
+          
           }
-          _location.loot[type].push(createForcedDynamicStruct(item));
+
         }
       }
     }
     _database.locations[name] = _location;
+    if(name.includes("lighthouse")) {
+      console.log(_location);
+    }
   }
   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
   _database.locationConfigs = {};
