@@ -148,6 +148,19 @@
       "OpenZones": ""
     },
     {
+      "number": 10,
+      "time_min": 20,
+      "time_max": 31,
+      "slots_min": 1,
+      "slots_max": 1,
+      "SpawnPoints": "ZoneHouse",
+      "BotSide": "Usec",
+      "BotPreset": "normal",
+      "WildSpawnType": "pmcBot",
+      "isPlayers": false,
+      "OpenZones": ""
+    },
+    {
       "number": 0,
       "time_min": 140,
       "time_max": 160,
@@ -453,7 +466,7 @@
   "BossLocationSpawn": [
     {
       "BossName": "bossKnight",
-      "BossChance": 8,
+      "BossChance": 99,
       "BossZone": "ZoneScavBase2",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -508,6 +521,19 @@
       "BossEscortType": "followerKojaniy",
       "BossEscortDifficult": "normal",
       "BossEscortAmount": "2",
+      "Time": -1,
+      "Supports": null,
+      "RandomTimeSpawn": false
+    },
+    {
+      "BossName": "pmcBot",
+      "BossChance": 100,
+      "BossZone": "ZoneWoodCutter",
+      "BossPlayer": false,
+      "BossDifficult": "normal",
+      "BossEscortType": "pmcBot",
+      "BossEscortDifficult": "normal",
+      "BossEscortAmount": "1,1,1,1,2",
       "Time": -1,
       "Supports": null,
       "RandomTimeSpawn": false
@@ -583,10 +609,11 @@
       },
       "Rotation": 106.22,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -642,10 +669,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -731,10 +759,11 @@
       },
       "Rotation": 238.74,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -910,10 +939,11 @@
       },
       "Rotation": 164.48,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -939,10 +969,11 @@
       },
       "Rotation": 76.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1058,10 +1089,11 @@
       },
       "Rotation": 93.46,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1087,10 +1119,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1176,10 +1209,11 @@
       },
       "Rotation": 72.46,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1205,10 +1239,11 @@
       },
       "Rotation": 120.210007,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1234,10 +1269,11 @@
       },
       "Rotation": 192.91,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1263,10 +1299,11 @@
       },
       "Rotation": 152.43,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1412,10 +1449,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1621,10 +1659,11 @@
       },
       "Rotation": 36.98,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1680,10 +1719,11 @@
       },
       "Rotation": 222.64,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1709,10 +1749,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1738,10 +1779,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1827,10 +1869,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -1916,10 +1959,11 @@
       },
       "Rotation": 10.29,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2005,10 +2049,11 @@
       },
       "Rotation": 335.01,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2034,10 +2079,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2093,10 +2139,11 @@
       },
       "Rotation": 152.9,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2152,10 +2199,11 @@
       },
       "Rotation": 282.6,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2211,10 +2259,11 @@
       },
       "Rotation": 151.22,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2300,10 +2349,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2449,10 +2499,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2478,10 +2529,11 @@
       },
       "Rotation": 287.409973,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2657,10 +2709,11 @@
       },
       "Rotation": 182.85,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2716,10 +2769,11 @@
       },
       "Rotation": 165.36,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2745,10 +2799,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 1700,
@@ -2804,10 +2859,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2863,10 +2919,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2892,10 +2949,11 @@
       },
       "Rotation": 295.57,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -2921,10 +2979,11 @@
       },
       "Rotation": 151.22,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3100,10 +3159,11 @@
       },
       "Rotation": 165.36,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3129,10 +3189,11 @@
       },
       "Rotation": 295.57,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3218,10 +3279,11 @@
       },
       "Rotation": 169.16,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3247,10 +3309,11 @@
       },
       "Rotation": 157.57,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3366,10 +3429,11 @@
       },
       "Rotation": 76.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3455,10 +3519,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3514,10 +3579,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3753,10 +3819,11 @@
       },
       "Rotation": 151.22,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3782,10 +3849,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -3841,10 +3909,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4020,10 +4089,11 @@
       },
       "Rotation": 72.46,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4079,10 +4149,11 @@
       },
       "Rotation": 102.45,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4168,10 +4239,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4197,10 +4269,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4376,10 +4449,11 @@
       },
       "Rotation": 199.23,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4405,10 +4479,11 @@
       },
       "Rotation": 76.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4554,10 +4629,11 @@
       },
       "Rotation": 62.2,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4583,10 +4659,11 @@
       },
       "Rotation": 190.98,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4672,10 +4749,11 @@
       },
       "Rotation": 295.57,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4701,10 +4779,11 @@
       },
       "Rotation": 188.07,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4820,10 +4899,11 @@
       },
       "Rotation": 295.57,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4849,10 +4929,11 @@
       },
       "Rotation": 165.36,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4968,10 +5049,11 @@
       },
       "Rotation": 218.52,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -4997,10 +5079,11 @@
       },
       "Rotation": 238.74,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -5146,10 +5229,11 @@
       },
       "Rotation": 157.57,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -5355,10 +5439,11 @@
       },
       "Rotation": 164.48,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -5444,10 +5529,11 @@
       },
       "Rotation": 83.36,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -5593,10 +5679,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -5652,10 +5739,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6041,10 +6129,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6100,10 +6189,11 @@
       },
       "Rotation": 283.99,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6189,10 +6279,11 @@
       },
       "Rotation": 321.01,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6218,10 +6309,11 @@
       },
       "Rotation": 201.28,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6277,10 +6369,11 @@
       },
       "Rotation": 238.74,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6606,10 +6699,11 @@
       },
       "Rotation": 165.36,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -6785,10 +6879,11 @@
       },
       "Rotation": 190.98,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7054,10 +7149,11 @@
       },
       "Rotation": 218.52,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7263,10 +7359,11 @@
       },
       "Rotation": 29.94,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7292,10 +7389,11 @@
       },
       "Rotation": 10.29,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7321,10 +7419,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7350,10 +7449,11 @@
       },
       "Rotation": 76.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7439,10 +7539,11 @@
       },
       "Rotation": 29.94,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7588,10 +7689,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7677,10 +7779,11 @@
       },
       "Rotation": 236.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7736,10 +7839,11 @@
       },
       "Rotation": 76.87,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7915,10 +8019,11 @@
       },
       "Rotation": 29.94,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -7944,10 +8049,11 @@
       },
       "Rotation": 212.4,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -8093,10 +8199,11 @@
       },
       "Rotation": 0,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -8152,10 +8259,11 @@
       },
       "Rotation": 165.36,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -8181,10 +8289,11 @@
       },
       "Rotation": 323.97998,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
@@ -8210,10 +8319,11 @@
       },
       "Rotation": 287.409973,
       "Sides": [
-        "Savage"
+        "All"
       ],
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "Infiltration": "",
       "DelayToCanSpawnSec": 4,
