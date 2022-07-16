@@ -473,51 +473,7 @@ function saveProgress(offraidData, sessionID) {
   }
 
   let pmcData = AccountController.getPmcProfile(sessionID);
-  // const currentProfile = AccountController.getPmcProfile(sessionID);
-  // const currentProfileInventoryItems = utility.DeepCopy(currentProfile.Inventory.items);
-  // const currentProfileGearItems = utility.DeepCopy(getPlayerGear(currentProfile.Inventory.items));
-  // const raidProfile = offraidData.profile;
-  // const raidProfileGearItems = utility.DeepCopy(getPlayerGear(raidProfile.Inventory.items));
-
-  // const newItems = [];
-  // const gearSlots = getGearSlots();
-  // for(const item of currentProfileInventoryItems) {
-  //   if(item.slotId === undefined && item.parentId === undefined) {
-  //     // console.log(item);
-  //     newItems.push(item);
-  //   }
-  // }
-  // const oldItemsInHideout = [];
-  // for(const item of currentProfileInventoryItems) {
-  //   if(item.slotId === "hideout") {
-  //     // console.log(item);
-  //     oldItemsInHideout.push(item);
-  //   }
-  // }
-  // for(const item of currentProfileInventoryItems) {
-  //   if(item.slotId !== "hideout" 
-  //       && oldItemsInHideout.findIndex( x => x._id === item.parentId) !== -1) {
-  //     newItems.push(item);
-  //   }
-  // }
-  // for(const item of oldItemsInHideout) {
-  //   newItems.push(item);
-  // }
-  // for(const item of raidProfileGearItems) {
-  //   if(newItems.findIndex(x=>x._id === item._id) === -1)
-  //     newItems.push(item);
-  // }
-  // currentProfile.Inventory.items = newItems;
-
-  // currentProfile.Info.Level = raidProfile.Info.Level;
-  // currentProfile.Skills = raidProfile.Skills;
-  // currentProfile.Stats = raidProfile.Stats;
-  // currentProfile.Encyclopedia = raidProfile.Encyclopedia;
-  // currentProfile.ConditionCounters = raidProfile.ConditionCounters;
-  // currentProfile.Quests = raidProfile.Quests;
-  // currentProfile.Info.Experience += raidProfile.Stats.TotalSessionExperience;
-  // currentProfile.Stats.TotalSessionExperience = 0;
-
+  
   // if (offraidData.exit === "survived") {
   //   // mark found items and replace item ID's if the player survived
     // offraidData.profile = markFoundItems(pmcData, offraidData.profile, isPlayerScav);
