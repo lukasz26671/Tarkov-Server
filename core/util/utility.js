@@ -308,7 +308,7 @@ const { v4: uuidv4 } = require('uuid')
 //     return retVal;
 // }
 
-exports.mongoIdCounter = 0;
+exports.mongoIdCounter = 110000000000;
 exports.randomIdArray = [];
 
 /**
@@ -362,56 +362,64 @@ exports.generateNewId = (prefix = "", version = 2) => {
     //     // close to MongoId but not really
     //     case 3:
     //     {
-            const dateNow = Date.now();
-            const dateNow2 = Date.now() * 2;
-            const objectIdBinary = Buffer.alloc(12);
-            const randomBytes = crypto.randomBytes(5);
+            // const dateNow = Date.now();
+            // const dateNow2 = Date.now() * 2;
+            // const objectIdBinary = Buffer.alloc(12);
+            // const randomBytes = crypto.randomBytes(5);
 
-            objectIdBinary[3] = (dateNow >> 4) & 0xff;
-            objectIdBinary[2] = (dateNow >> 8) & 0xff;
-            objectIdBinary[1] = (dateNow >> 16) & 0xff;
-            objectIdBinary[0] = (dateNow >> 24) & 0xff;
-            objectIdBinary[4] = randomBytes[0];
-            objectIdBinary[5] = randomBytes[1];
-            objectIdBinary[6] = randomBytes[2];
-            objectIdBinary[7] = randomBytes[3];
-            objectIdBinary[8] = randomBytes[4];
-            objectIdBinary[9] = (dateNow2 >> 4) & 0xff;
-            objectIdBinary[10] = (dateNow2 >> 8) & 0xff;
-            objectIdBinary[11] = dateNow2 & 0xff;
-            retVal = this.toHexString(objectIdBinary);
-            if(prefix === "AID") {
-                retVal = prefix + retVal;
-            }
+            // objectIdBinary[3] = (dateNow >> 4) & 0xff;
+            // objectIdBinary[2] = (dateNow >> 8) & 0xff;
+            // objectIdBinary[1] = (dateNow >> 16) & 0xff;
+            // objectIdBinary[0] = (dateNow >> 24) & 0xff;
+            // objectIdBinary[4] = randomBytes[0];
+            // objectIdBinary[5] = randomBytes[1];
+            // objectIdBinary[6] = randomBytes[2];
+            // objectIdBinary[7] = randomBytes[3];
+            // objectIdBinary[8] = randomBytes[4];
+            // objectIdBinary[9] = (dateNow2 >> 4) & 0xff;
+            // objectIdBinary[10] = (dateNow2 >> 8) & 0xff;
+            // objectIdBinary[11] = dateNow2 & 0xff;
+            // retVal = this.toHexString(objectIdBinary);
+            // if(prefix === "AID") {
+            //     retVal = prefix + retVal;
+            // }
     //         break;
     //     }
     //     // new quicker format - does not allow shoddy prefixes so conforms to MongoID
     //     case 4:
     //     {
-    //         const dateNow = Date.now();
-    //         let hex = dateNow.toString(16);
-    //         const dateNow2 = (Date.now() * 2) + (this.mongoIdCounter++)
-    //         let hex2 = dateNow2.toString(8);
+        const randomBytes = crypto.randomBytes(6);
+        retVal = this.toHexString(randomBytes) + (this.mongoIdCounter++);
+            // const dateNow = Date.now();
+            // let hex = dateNow.toString(16);
+            // const dateNow2 = (Date.now() * 2) + (this.mongoIdCounter++)
+            // let hex2 = dateNow2.toString(8);
 
-    //         let newHex = hex.substring(0, 12) + hex2.split("").reverse().join("").substring(0, 12)
-    //         retVal = newHex.substring(0, 24);
-    //         // const dateNow = Date.now();
-    //         // const dateNow2 = Date.now() * 2;
-    //         // const dateNow3 = Date.now() * 3;
-    //         // const objectIdBinary = Buffer.alloc(12);
-    //         // objectIdBinary[0] = (dateNow >> 4) & 0xff;
-    //         // objectIdBinary[1] = (dateNow >> 8) & 0xff;
-    //         // objectIdBinary[2] = (dateNow >> 16) & 0xff;
-    //         // objectIdBinary[3] = (dateNow >> 24) & 0xff;
-    //         // objectIdBinary[4] = (dateNow2 >> 24) & 0xff;
-    //         // objectIdBinary[5] = (dateNow2 >> 16) & 0xff;
-    //         // objectIdBinary[6] = (dateNow2 >> 8) & 0xff;
-    //         // objectIdBinary[7] = (dateNow2 >> 4) & 0xff;
-    //         // objectIdBinary[8] = (dateNow3 >> 4) & 0xff;
-    //         // objectIdBinary[9] = (dateNow3 >> 8) & 0xff;
-    //         // objectIdBinary[10] = (dateNow3 >> 16) & 0xff;
-    //         // objectIdBinary[11] = (dateNow3 >> 24) & 0xff;
-    //         // retVal = this.toHexString(objectIdBinary);
+            // let newHex = hex.substring(0, 12) + hex2.split("").reverse().join("").substring(0, 12)
+            // retVal = newHex.substring(0, 24);
+            if(prefix === "AID") {
+                retVal = prefix + retVal;
+            }
+            // if(prefix === "I") {
+            //     retVal = prefix + retVal;
+            // }
+            // const dateNow = Date.now();
+            // const dateNow2 = Date.now() * 2;
+            // const dateNow3 = Date.now() * 3;
+            // const objectIdBinary = Buffer.alloc(12);
+            // objectIdBinary[0] = (dateNow >> 4) & 0xff;
+            // objectIdBinary[1] = (dateNow >> 8) & 0xff;
+            // objectIdBinary[2] = (dateNow >> 16) & 0xff;
+            // objectIdBinary[3] = (dateNow >> 24) & 0xff;
+            // objectIdBinary[4] = (dateNow2 >> 24) & 0xff;
+            // objectIdBinary[5] = (dateNow2 >> 16) & 0xff;
+            // objectIdBinary[6] = (dateNow2 >> 8) & 0xff;
+            // objectIdBinary[7] = (dateNow2 >> 4) & 0xff;
+            // objectIdBinary[8] = (dateNow3 >> 4) & 0xff;
+            // objectIdBinary[9] = (dateNow3 >> 8) & 0xff;
+            // objectIdBinary[10] = (dateNow3 >> 16) & 0xff;
+            // objectIdBinary[11] = (dateNow3 >> 24) & 0xff;
+            // retVal = this.toHexString(objectIdBinary);
     //         break;
     //     }
     //     // Uses the pre-generated array of Ids
