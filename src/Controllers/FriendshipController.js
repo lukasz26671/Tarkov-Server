@@ -89,7 +89,11 @@ static getFriendRequestOutbox(sessionID) {
    */
   for(const friendR of acc.friendRequestOutbox) {
 	  const friendRequestInst = new FriendRequest(friendR._id, friendR.from, friendR.to, friendR.date, friendR.profile);
-	resultArray.push(friendRequestInst.toFriendRequestResponse(friendR._id));
+	  const r = friendRequestInst.toFriendRequestResponse(friendR._id);
+	  if(r === undefined)
+	  	continue;
+		
+	resultArray.push(r);
   }
 
   return resultArray;
