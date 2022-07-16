@@ -722,30 +722,33 @@ class LocationLootGenerator {
     }
     return count;
   }
-  lootStatics(typeArray, output, locationLootChanceModifier, MapName) {
-    let count = 0;
-    let dateStarted = Date.now();
-    for (let i in typeArray) {
-      let data = typeArray[i];
-      dateStarted = Date.now();
-      // _GenerateContainerLoot(data.Items, locationLootChanceModifier, MapName);
-      // count++;
-      if(LootController.GenerateContainerLoot(data, locationLootChanceModifier, MapName))
-        count++;
+  // lootStatics(typeArray, output, locationLootChanceModifier, MapName) {
+  //   let count = 0;
+  //   let dateStarted = Date.now();
+  //   for (let i in typeArray) {
+  //     let data = typeArray[i];
+  //     dateStarted = Date.now();
+
+  //     // Do not regenerate the same container twice
+  //     if(LootController.PreviouslyGeneratedContainers.findIndex(x=>x.Id === data.Items[0]._tpl) !== -1)
+  //       continue;
+
+  //     if(LootController.GenerateContainerLoot(data, locationLootChanceModifier, MapName))
+  //       count++;
 
 
 
 
 
 
-      if (Date.now() - dateStarted > 50) logger.logInfo(`Slow Container ${data.Id} [${Date.now() - dateStarted}ms]`);
-      dateStarted = Date.now();
-      data.Root = data.Items[0]._id;
-      output.Loot.push(data);
-      // count++;
-    }
-    return count;
-  }
+  //     if (Date.now() - dateStarted > 50) logger.logInfo(`Slow Container ${data.Id} [${Date.now() - dateStarted}ms]`);
+  //     dateStarted = Date.now();
+  //     data.Root = data.Items[0]._id;
+  //     output.Loot.push(data);
+  //     // count++;
+  //   }
+  //   return count;
+  // }
   // lootDynamic(typeArray, output, locationLootChanceModifier, MapName) {
   //   let count = 0;
 
@@ -929,6 +932,7 @@ class LocationServer {
     // Clear Loot Rarities
     LootController.LootRarities = {};
     LootController.PreviouslyGeneratedItems = [];
+    LootController.PreviouslyGeneratedContainers = [];
 
     // const lootGenerator = new Generator();
     let dateNow = Date.now();
@@ -1014,7 +1018,8 @@ class LocationServer {
 
     counters.push(count);
     count = 0;
-    count = this.lootGenerator.lootStatics(statics, output, _location.base.GlobalLootChanceModifier, name);
+    // count = this.lootGenerator.lootStatics(statics, output, _location.base.GlobalLootChanceModifier, name);
+    count = LootController.GenerateStaticLoot(statics, output, _location.base.GlobalLootChanceModifier, name);
    
     counters[1] = LootController.GenerateForcedLootInContainers(forced, output.Loot);
     counters[1] += LootController.GenerateForcedLootLoose(forced, output);

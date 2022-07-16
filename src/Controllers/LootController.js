@@ -11,7 +11,7 @@ const mathjs = require('mathjs');
 class LootController 
 {
   /**
-   * 
+   * DO NOT USE - Created via Loot generation
    */
     static LootRarities = {};
     /**
@@ -29,9 +29,14 @@ class LootController
     };
 
     /**
-     * 
+     * DO NOT USE - Only for Loot generation
      */
     static PreviouslyGeneratedItems = [];
+
+    /**
+     * DO NOT USE - Only for Loot generation
+     */
+    static PreviouslyGeneratedContainers = [];
 
     /**
      * 
@@ -267,18 +272,16 @@ class LootController
         const _items = in_data.Items;
         const newContainerId = utility.generateNewItemId();
 
-        let isAirdrop = false;
-        if(containerData.Id.includes("Scripts") || containerData.Id.includes("scripts")) {
-          // console.log("container is Airdop!");
-          // console.log(containerData);
-          isAirdrop = true;
-        }
 
         /** String Tpl Id
          * {string}
          */
         const ContainerId = _items[0]._tpl;
+        LootController.PreviouslyGeneratedContainers.push(ContainerId);
 
+        const isWeaponBox = (ContainerId === "5909d5ef86f77467974efbd8");
+        
+        const isAirdrop = containerData.Id.includes("Scripts") || containerData.Id.includes("scripts");
 
         const LootContainerIdTable = Object.keys(global._database.locationConfigs.StaticLootTable);
         if (!LootContainerIdTable.includes(ContainerId)) {
@@ -295,6 +298,9 @@ class LootController
         if(isAirdrop) {
           LootListItems = LootController.GenerateAirdropLootList(ContainerId, in_mapName, container2D);
           logger.logInfo(`Airdrop container contains ${LootListItems.length} items!`);
+        }
+        if(isWeaponBox) {
+          logger.logInfo(`This is a weapon box container`);
         }
        
 
@@ -354,19 +360,19 @@ class LootController
                   itemWidth = rolledRandomItemToPlace._props.Width;
                   itemHeight = rolledRandomItemToPlace._props.Height;
                   // check if item is a preset
-                  if (rolledRandomItemToPlace.preset != null) {
-                    // Prevent the same preset from spawning twice (it makes the client mad)
-                    if (addedPresets.includes(rolledRandomItemToPlace.preset._id)) {
-                      maxAttempts--;
-                      continue;
-                    }
-                    addedPresets.push(rolledRandomItemToPlace.preset._id);
-                    const size = helper_f.getItemSize(rolledRandomItemToPlace._id, rolledRandomItemToPlace.preset._items[0]._id, rolledRandomItemToPlace.preset._items);
-                    // Guns will need to load a preset of items
-                    rolledRandomItemToPlace._props.presetId = rolledRandomItemToPlace.preset._id;
-                    itemWidth = size[0];
-                    itemHeight = size[1];
-                  }
+                  // if (rolledRandomItemToPlace.preset != null) {
+                  //   // Prevent the same preset from spawning twice (it makes the client mad)
+                  //   if (addedPresets.includes(rolledRandomItemToPlace.preset._id)) {
+                  //     maxAttempts--;
+                  //     continue;
+                  //   }
+                  //   addedPresets.push(rolledRandomItemToPlace.preset._id);
+                  //   const size = helper_f.getItemSize(rolledRandomItemToPlace._id, rolledRandomItemToPlace.preset._items[0]._id, rolledRandomItemToPlace.preset._items);
+                  //   // Guns will need to load a preset of items
+                  //   rolledRandomItemToPlace._props.presetId = rolledRandomItemToPlace.preset._id;
+                  //   itemWidth = size[0];
+                  //   itemHeight = size[1];
+                  // }
                   result = helper_f.findSlotForItem(container2D, itemWidth, itemHeight);
                   maxAttempts--;
                 }
@@ -387,39 +393,41 @@ class LootController
                 container2D = helper_f.fillContainerMapWithItem(container2D, result.x, result.y, itemWidth, itemHeight, result.rotation);
                 let rot = result.rotation ? 1 : 0;
           
-                if (rolledRandomItemToPlace._props.presetId) {
-                  // Process gun preset into container items
-                  let preset = helper_f.getPreset(rolledRandomItemToPlace._props.presetId);
-                  if (preset == null) continue;
-                  preset._items[0].parentId = parentId;
-                  preset._items[0].slotId = "main";
-                  preset._items[0].location = { x: result.x, y: result.y, r: rot };
+                // if (rolledRandomItemToPlace._props.presetId) {
+                //   // Process gun preset into container items
+                //   let preset = helper_f.getPreset(rolledRandomItemToPlace._props.presetId);
+                //   if (preset == null) continue;
+                //   preset._items[0].parentId = parentId;
+                //   preset._items[0].slotId = "main";
+                //   preset._items[0].location = { x: result.x, y: result.y, r: rot };
           
-                  for (var p in preset._items) {
+                //   for (var p in preset._items) {
           
-                    _items.push(DeepCopy(preset._items[p]));
+                //     _items.push(DeepCopy(preset._items[p]));
           
-                    if (preset._items[p].slotId === "mod_magazine") {
-                      let mag = helper_f.getItem(preset._items[p]._tpl)[1];
-                      let cartridges = {
-                        _id: idPrefix + idSuffix.toString(16),
-                        _tpl: rolledRandomItemToPlace._props.defAmmo,
-                        parentId: preset._items[p]._id,
-                        slotId: "cartridges",
-                        upd: { StackObjectsCount: mag._props.Cartridges[0]._max_count },
-                      };
+                //     if (preset._items[p].slotId === "mod_magazine") {
+                //       let mag = helper_f.getItem(preset._items[p]._tpl)[1];
+                //       let cartridges = {
+                //         // _id: utility.generateNewId(),
+                //         _id: idPrefix + idSuffix.toString(16),
+                //         _tpl: rolledRandomItemToPlace._props.defAmmo,
+                //         parentId: preset._items[p]._id,
+                //         slotId: "cartridges",
+                //         upd: { StackObjectsCount: mag._props.Cartridges[0]._max_count },
+                //       };
           
-                      _items.push(cartridges);
-                      idSuffix++;
-                    }
-                  }
-                  continue;
-                }
+                //       _items.push(cartridges);
+                //       // idSuffix++;
+                //     }
+                //   }
+                //   continue;
+                // }
           
           
           
                 containerItem = {
-                  _id: idPrefix + idSuffix.toString(16),
+                  _id: utility.generateNewId(),
+                  // _id: idPrefix + idSuffix.toString(16),
                   // _id: utility.generateNewId(undefined, 3),
                   _tpl: rolledRandomItemToPlace._id,
                   parentId: parentId,
@@ -590,6 +598,7 @@ class LootController
 
       static GenerateWeaponLoot(ContainerId, _items) {
         // Check if static weapon.
+        
         if (ContainerId != "5cdeb229d7f00c000e7ce174" && ContainerId != "5d52cc5ba4b9367408500062") {
           logger.logWarning("GetLootContainerData is null something goes wrong please check if container template: " + _items[0]._tpl + " exists");
           return;
@@ -955,6 +964,43 @@ class LootController
        
         }
         
+        return count;
+      }
+
+
+      /**
+       * Generates the "Static" loot. Usually containers, airdrops, or weapons
+       * @param {*} typeArray 
+       * @param {*} output 
+       * @param {*} locationLootChanceModifier 
+       * @param {*} MapName 
+       * @returns {Number} number of items generated
+       */
+      static GenerateStaticLoot(typeArray, output, locationLootChanceModifier, MapName) {
+        let count = 0;
+        let dateStarted = Date.now();
+        for (let i in typeArray) {
+          let data = typeArray[i];
+          dateStarted = Date.now();
+    
+          // Do not regenerate the same container twice
+          if(LootController.PreviouslyGeneratedContainers.findIndex(x=>x.Id === data.Items[0]._tpl) !== -1)
+            continue;
+    
+          if(LootController.GenerateContainerLoot(data, locationLootChanceModifier, MapName))
+            count++;
+    
+    
+    
+    
+    
+    
+          if (Date.now() - dateStarted > 50) logger.logInfo(`Slow Container ${data.Id} [${Date.now() - dateStarted}ms]`);
+          dateStarted = Date.now();
+          data.Root = data.Items[0]._id;
+          output.Loot.push(data);
+          // count++;
+        }
         return count;
       }
 }
