@@ -395,9 +395,9 @@ function loadLocationData() {
       }
     }
     _database.locations[name] = _location;
-    if(name.includes("lighthouse")) {
-      console.log(_location);
-    }
+    // if(name.includes("lighthouse")) {
+    //   console.log(_location);
+    // }
   }
   _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
   _database.locationConfigs = {};
