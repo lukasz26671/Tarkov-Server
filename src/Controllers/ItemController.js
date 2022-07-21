@@ -205,7 +205,7 @@ class ItemController
 
   static hasPreset(templateId) {
         
-    return templateId in ItemController.lookup;
+    return templateId in ItemController.presetLookup;
   }
 
   static isPreset(id) {
