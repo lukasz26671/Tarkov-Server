@@ -284,6 +284,9 @@ class AccountController
   
         //Load the PMC profile from disk.
         let loadedProfile = fileIO.readParsed(AccountController.getPmcPath(sessionID));
+
+        // --------------------------------------------------------
+        // Fix the GUID system used by JET and replace with MongoId
         const changedIds = {};
         for(const item of loadedProfile.Inventory.items) {
           if(item._id.length > 24) {
@@ -299,6 +302,7 @@ class AccountController
             item.parentId = changedIds[item.parentId];
           }
         }
+        // --------------------------------------------------------
         
         // In patch 0.12.12.30 . BSG introduced "Special Slots" for PMCs.
         // To cater for old/broken accounts, we remove the old "Pockets" (557ffd194bdc2d28148b457f) and replace with the new (627a4e6b255f7527fb05a0f6)
