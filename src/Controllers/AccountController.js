@@ -286,7 +286,7 @@ class AccountController
         let loadedProfile = fileIO.readParsed(AccountController.getPmcPath(sessionID));
         const changedIds = {};
         for(const item of loadedProfile.Inventory.items) {
-          if(item._id.length > 24 || item._id.includes("0000")) {
+          if(item._id.length > 24) {
             const oldId = item._id;
             const newId = utility.generateNewId(undefined, 3);
             console.log(`${oldId} is becoming ${newId}`);
