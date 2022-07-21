@@ -651,15 +651,19 @@ action: (url, info, sessionID) => {
 
     /**
      * Add a new route to the Response Controller. If route already exists, do nothing
-     * @param {string} url 
-     * @param {function} action 
+     * @param {string} in_url 
+     * @param {function} in_action 
      */
-    static addRoute = (url, action) => {
-        var existingRoute = ResponseController.Routes.find(x=>x.url == url);
-        if(existingRoute === undefined)
-            ResponseController.Routes.push({ url: url, action: action });
-        else
-            throw `ResponseController already has a route of the url: ${url}`;
+    static addRoute = (in_url, in_action) => {
+        var existingRoute = ResponseController.Routes.find(x=>x.url == in_url);
+        if(existingRoute === undefined) {
+            // console.log("adding route " + in_url);
+            ResponseController.Routes.push({ url: in_url, action: in_action });
+        }
+        else {
+            logger.logError(`ResponseController already has a route of the url: ${in_url}`);
+            throw `ResponseController already has a route of the url: ${in_url}`;
+        }
     }
 
     /**
