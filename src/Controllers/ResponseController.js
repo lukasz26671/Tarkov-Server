@@ -808,6 +808,17 @@ const QuestRoutes = [
     
 ]
 
+const SITValidatorRoutes = [
+    {
+        url: "/client/sit-validator",
+        action: (url, info, sessionID) => {
+            return JSON.stringify(true);
+        }
+    }
+    
+]
+
 ResponseController.addRoutes(HideoutRoutes);
 ResponseController.addRoutes(QuestRoutes);
 ResponseController.addRoutes(RagfairRoutes);
+ResponseController.addRoutes(SITValidatorRoutes);
