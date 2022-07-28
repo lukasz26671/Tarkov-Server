@@ -1,11 +1,11 @@
-const EventEmitter = require('events');
+//const EventEmitter = require('events');
 const fs = require('fs');
 const { logger } = require('../../core/util/logger');
 const util = require('../../core/util/utility');
 const { AccountController } = require('./AccountController');
 const { ConfigController } = require('./ConfigController');
 const { TradingController } = require('./TradingController');
-class QuestEvent extends EventEmitter {}
+//class QuestEvent extends EventEmitter {}
 
 class QuestController {
 
@@ -398,6 +398,6 @@ class QuestController {
     };
 }
 
-module.exports.QuestEvent = new QuestEvent();
+//module.exports.QuestEvent = new QuestEvent();
 module.exports.QuestController = QuestController;
 
