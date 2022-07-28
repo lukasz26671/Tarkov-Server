@@ -1,6 +1,7 @@
 const fs = require('fs');
 const utility = require('./../../core/util/utility');
 const { logger } = require('../../core/util/logger');
+const dialogue = require('../classes/dialogue');
 
 /**
  * Account Controller. 
@@ -339,6 +340,7 @@ class AccountController
 
     AccountController.saveToDiskAccount(sessionID, force);
     AccountController.saveToDiskProfile(sessionID, force);
+    dialogue.handler.saveToDisk(sessionID);
     if(releaseMemory) {
       delete AccountController.accounts[sessionID];
       delete AccountController.profiles[sessionID];

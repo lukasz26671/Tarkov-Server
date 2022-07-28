@@ -12,6 +12,7 @@ class NotifierService {
 
 	/* Get messageQueue for a particular sessionID. */
 	getMessageQueue(sessionID) {
+		console.log("getMessageQueue");
 		if (!this.hasMessageQueue(sessionID)) {
 			return [];
 		}

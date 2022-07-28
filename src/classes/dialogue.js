@@ -1,4 +1,8 @@
 "use strict";
+const utility = require('../../core/util/utility');
+const notifier = require('./notifier');
+const fs = require('fs');
+const { logger } = require('./../../core/util/logger');
 
 class DialogueServer {
   constructor() {
@@ -11,8 +15,9 @@ class DialogueServer {
    * @param {*} sessionID 
    */
   initializeDialogue(sessionID) {
+
     // Check if the profile file exists
-    if (!global.internal.fs.existsSync(getPath(sessionID))) {
+    if (!fs.existsSync(getPath(sessionID))) {
       // logger.logError(`Dialogue file for session ID ${sessionID} not found.`);
       return false;
     }
@@ -33,7 +38,7 @@ class DialogueServer {
    */
   reloadDialogue(sessionID) {
     // Check if the dialogue save file exists
-    if (global.internal.fs.existsSync(getPath(sessionID))) {
+    if (fs.existsSync(getPath(sessionID))) {
 
       // Compare the file age saved in memory with the file age on disk.
       // let stats = global.internal.fs.statSync(getPath(sessionID));
@@ -54,40 +59,17 @@ class DialogueServer {
     // Check if dialogues exist in the server memory.
     if (sessionID in this.dialogues) {
       // Check if the dialogue file exists.
-      if (global.internal.fs.existsSync(getPath(sessionID))) {
-        // Check if the file was modified elsewhere.
-        let statsPreSave = global.internal.fs.statSync(getPath(sessionID));
-        if (statsPreSave.mtimeMs == this.dialogueFileAge[sessionID]) {
+      if (fs.existsSync(getPath(sessionID))) {
 
           // Compare the dialogues from server memory with the ones saved on disk.
           let currentDialogues = this.dialogues[sessionID];
           let savedDialogues = fileIO.readParsed(getPath(sessionID));
           if (JSON.stringify(currentDialogues) !== JSON.stringify(savedDialogues)) {
-            // Save the dialogues stored in memory to disk.
             fileIO.write(getPath(sessionID), this.dialogues[sessionID]);
-
-            // Reset the file age for the sessions dialogues.
-            let stats = global.internal.fs.statSync(getPath(sessionID));
-            this.dialogueFileAge[sessionID] = stats.mtimeMs;
-            logger.logSuccess(`Dialogues for AID ${sessionID} was saved.`);
+            logger.logSuccess(`${sessionID} Dialogues was saved.`);
           }
-        } else {
-          //Load saved dialogues from disk.
-          this.dialogues[sessionID] = fileIO.readParsed(getPath(sessionID));
-
-          // Reset the file age for the sessions dialogues.
-          let stats = global.internal.fs.statSync(getPath(sessionID));
-          this.dialogueFileAge[sessionID] = stats.mtimeMs;
-          logger.logWarning(`Dialogues for AID ${sessionID} were modified elsewhere. Dialogue was reloaded successfully.`)
-        }
       } else {
-        // Save the dialogues stored in memory to disk.
-        fileIO.write(getPath(sessionID), this.dialogues[sessionID]);
-
-        // Reset the file age for the sessions dialogues.
-        let stats = global.internal.fs.statSync(getPath(sessionID));
-        this.dialogueFileAge[sessionID] = stats.mtimeMs;
-        logger.logSuccess(`Dialogues for AID ${sessionID} was created and saved.`);
+        logger.logError(`Unable to save Dialogues for AID ${sessionID}. File doesn't exist!`);
       }
     }
   }
@@ -194,12 +176,12 @@ class DialogueServer {
     }
 
     let message = {
-      _id: utility.generateNewDialogueId(),
+      _id: utility.generateNewId(),
       uid: dialogueID,
       type: messageContent.type,
       dt: Date.now() / 1000,
       templateId: messageContent.templateId,
-      text: messageContent.text,
+      text: messageContent.text ?? "",
       hasRewards: rewards.length > 0,
       rewardCollected: false,
       items: stashItems,
@@ -207,10 +189,14 @@ class DialogueServer {
       systemData: messageContent.systemData,
     };
 
-    dialogue.messages.push(message);
+    if (messageContent.text)
+    {
+        message.text = messageContent.text;
+    }
 
-    let notificationMessage = notifier_f.createNewMessageNotification(message);
-    notifier_f.handler.addToMessageQueue(notificationMessage, sessionID);
+    dialogue.messages.push(message);
+    let notificationMessage = notifier.createNewMessageNotification(message);
+    notifier.handler.addToMessageQueue(notificationMessage, sessionID);
   }
 
   /*
