@@ -175,7 +175,7 @@ function getQuestsForPlayer(url, info, sessionID) {
 
     count++;
   }
-  console.log(quests);
+  // console.log(quests);
   return quests;
 }
 
