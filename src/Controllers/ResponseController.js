@@ -10,6 +10,7 @@ const { InsuranceController } = require('./InsuranceController');
 const { logger } = require('../../core/util/logger');
 const { responses } = require('./../functions/response');
 const { CustomizationController } = require('./CustomizationController');
+const { QuestController } = require('./QuestController');
 
 
 /**
@@ -797,5 +798,16 @@ const HideoutRoutes = [
     
 ]
 
+const QuestRoutes = [
+    {
+        url: "/client/repeatalbeQuests/activityPeriods",
+        action: (url, info, sessionID) => {
+            return ResponseController.getBody(QuestController.getRepeatableQuests(info, sessionID));
+        }
+    }
+    
+]
+
 ResponseController.addRoutes(HideoutRoutes);
+ResponseController.addRoutes(QuestRoutes);
 ResponseController.addRoutes(RagfairRoutes);
