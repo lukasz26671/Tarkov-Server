@@ -19,19 +19,8 @@ You can obtain it here. [https://www.escapefromtarkov.com](https://www.escapefro
 - Wait until Server.exe appears / Process completes
 
 ## Distribution
-Zip the following folders & files
-
-- core (this is likely unwanted but pkg is not handling this correctly yet)
-- db
-- dbViewer
-- express
-- node_modules
-- out
-- public
-- res
-- src
-- user
-- Server.exe
+Compile to EXE.
+Deploy with db, dbViewer, out, res, user & server.exe
 
 ## How to use (if not compiling yourself or using a release)
 - Download the latest release
@@ -49,7 +38,7 @@ Zip the following folders & files
 ## Features
 - A modified Tarkov experience where you can host your own server and play alone or with others (working Client also required see [SIT.Tarkov.Launcher](https://github.com/paulov-t/SIT.Tarkov.Launcher) for details)
 - A set of configurations to tailor your gameplay
-- Airdrops (must have accompanying BepInEx plugin)
+- ~~Airdrops (must have accompanying BepInEx plugin)~~ - CURRENTLY NOT WORKING AS OF 0.12.12.30! :(
 - AI PMCs
 - Listens to extra Client Events
 - JET Mod Support
@@ -76,10 +65,10 @@ Zip the following folders & files
 - You can find the DBViewer at https://localhost:443/db
 
 ## Thanks list
-- TheMaoci / MaoMao
+- Aki Team (Chomp, CWX and Bepis)
+- JET / TheMaoci / MaoMao
 - CQ
 - King
 - Nehax
-- CWX (Traders/Airdrop)
 
  
