@@ -80,7 +80,7 @@ class ConfigController {
         if(changesMade)
           fs.writeFileSync(configFileLocation, JSON.stringify(globalVariable, null, 1));
     }
-
+/*
     static refreshServerConfigFromBase() {
         if(!fs.existsSync(process.cwd() + "/user/configs/server_base.json"))
           throw "Could not find " + process.cwd() + "/user/configs/server_base.json";
@@ -129,7 +129,7 @@ class ConfigController {
         if(changesMade)
           fs.writeFileSync("user/configs/gameplay.json", JSON.stringify(gpjson));
       }
-
+*/
       static mergeRecursiveIgnoringExisting(targetObject, sourceObject) {
         let changesMade = false;
         for(const key of Object.keys(sourceObject))

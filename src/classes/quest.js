@@ -1,5 +1,5 @@
 "use strict";
-const { QuestEvent } = require('../Controllers/QuestController')
+//const { QuestEvent } = require('../Controllers/QuestController')
 const { AccountController } = require('./../Controllers/AccountController')
 
 /*
@@ -361,7 +361,7 @@ function acceptQuest(pmcData, body, sessionID) {
   }
   dialogue_f.handler.addDialogueMessage(quest.traderId, messageContent, sessionID, questRewards);
 
-  QuestEvent.emit('accepted', quest);
+  //QuestEvent.emit('accepted', quest);
 
   return item_f.handler.getOutput(sessionID);
 }

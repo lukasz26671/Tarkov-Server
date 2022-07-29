@@ -106,7 +106,7 @@ class LootController
           const unlootable = itemTemplate._props.Unlootable;
       
           let itemRarityType = "COMMON";
-          const itemName = itemTemplate._props !== undefined && typeof(itemTemplate._props.Name) === "string" ? itemTemplate._props.Name : "";
+          //const itemName = itemTemplate._props !== undefined && typeof(itemTemplate._props.Name) === "string" ? itemTemplate._props.Name : "";
       
           let item_price = ItemController.getTemplatePrice(itemTemplate._id);
           if(itemTemplate._props.ammoType !== undefined) {

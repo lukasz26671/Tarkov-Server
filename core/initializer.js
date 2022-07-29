@@ -12,8 +12,6 @@ class Initializer {
     this.initializeItemRoute();
     // this.initializeCacheCallbacks();
 
-    // start watermark and server
-    // require("./watermark.js").run();
     global.consoleResponse = require("./console.js").consoleResponse;
     // server.start();
 
@@ -72,10 +70,10 @@ class Initializer {
     ConfigController.rebuildFromBaseConfigs();
     // -------------------------------------------------------
     // Rebuild user/configs/server.json from user/configs/server_base.json
-    this.refreshServerConfigFromBase();
+    //this.refreshServerConfigFromBase();
     // -------------------------------------------------------
     // Rebuild user/configs/gameplay.json from user/configs/gameplay_base.json
-    this.refreshGameplayConfigFromBase();
+    //this.refreshGameplayConfigFromBase();
 
     // -------------------------------------------------------
     // Build the "db" object network from the root db folder (this is NOT the actual database)
@@ -115,17 +113,6 @@ class Initializer {
           global._database.items[itemVar] = item;
         }
     }
-    // -------------------------------------------------------
-
-
-
-    // -------------------------------------------------------
-    // NOTE/TODO: This needs to be removed!
-    //
-    // global.router = require("./server/router.js").router;
-    // global.events = require("./server/events.js");
-    // global.server = require("./server/server.js").server;
-
   }
 
   /**

@@ -1,7 +1,5 @@
 "use strict";
 
-let weather = undefined;
-
 function generate() {
   let output = {};
 

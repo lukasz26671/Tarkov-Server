@@ -417,7 +417,7 @@ function loadLocationData() {
   _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
 }
 
-const loadTraderAssort = (traderId) => {
+function loadTraderAssort(traderId) {
 
   let base = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
   if(traderId == "579dc571d53a0658a154fbec")
