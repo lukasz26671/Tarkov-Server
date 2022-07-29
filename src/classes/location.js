@@ -943,6 +943,21 @@ class LocationServer {
       return;
     }
     let _location = global._database.locations[name];
+    for(const spawnPointParam of _location.base.SpawnPointParams) {
+      if(spawnPointParam.Categories.findIndex(x => x === 'Bot') !== -1 && spawnPointParam.Categories.findIndex(x => x === 'Boss') === -1) {
+        spawnPointParam.Categories.push("Boss");
+      }
+
+      if(spawnPointParam.Categories.findIndex(x => x === 'Bot') !== -1
+        && spawnPointParam.Sides.findIndex(x => x === 'Usec') === -1) { 
+          spawnPointParam.Sides.push('Usec');
+        }
+
+      if(spawnPointParam.Categories.findIndex(x => x === 'Bot') !== -1
+        && spawnPointParam.Sides.findIndex(x => x === 'Bear') === -1) { 
+          spawnPointParam.Sides.push('Bear');
+        }
+    }
 
     // Paulo: Added this so it can be applied across the entire generator
     // TODO: Should pass through params rather than a global but I am lazy
@@ -950,22 +965,6 @@ class LocationServer {
 
     if(global._database.gameplayConfig === undefined && global._database.gameplay !== undefined)
       global._database.gameplayConfig = global._database.gameplay;
-
-    // if (global._database.gameplayConfig.locationloot.useDynamicLootMultiplier) {
-    //   if (sessionID != "" && typeof sessionID != "undefined") {
-    //     let exfilData = profile_f.handler.getProfileExfilsById(sessionID);
-
-    //     let sumExfils = 0;
-    //     for (const key in exfilData) {
-    //       sumExfils += exfilData[key];
-    //     }
-    //     if (sumExfils != 0) {
-    //       _location.base.GlobalLootChanceModifier = sumExfils / (sumExfils + exfilData[name]);
-    //     } else {
-    //       _location.base.GlobalLootChanceModifier = 1;
-    //     }
-    //   }
-    // }
 
     let output = _location.base;
     let ids = {};
