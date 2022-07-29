@@ -308,7 +308,8 @@ const { v4: uuidv4 } = require('uuid')
 //     return retVal;
 // }
 
-exports.mongoIdCounter = 110000000000;
+// exports.mongoIdCounter = 110000000000;
+exports.mongoIdCounter = 100001;
 exports.randomIdArray = [];
 
 /**
@@ -388,8 +389,17 @@ exports.generateNewId = (prefix = "", version = 2) => {
     //     // new quicker format - does not allow shoddy prefixes so conforms to MongoID
     //     case 4:
     //     {
+        if(this.mongoIdCounter > 999999)
+            this.mongoIdCounter = 100000;
+
+        // console.log(Date.now());
+
         const randomBytes = crypto.randomBytes(6);
-        retVal = this.toHexString(randomBytes) + (this.mongoIdCounter++);
+        const randomBytes2 = crypto.randomBytes(6);
+        // retVal = this.toHexString(randomBytes) + (this.mongoIdCounter++) + this.toHexString(randomBytes2).substring(0, 6)
+        retVal = (this.toHexString(randomBytes) + (Date.now())).substring(0, 24)
+        // console.log(retVal);
+        // console.log(retVal.length);
             // const dateNow = Date.now();
             // let hex = dateNow.toString(16);
             // const dateNow2 = (Date.now() * 2) + (this.mongoIdCounter++)
