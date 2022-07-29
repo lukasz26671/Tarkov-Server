@@ -11,9 +11,11 @@ const app = require('../express/app');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-// const ws = require('ws');
 const { certificate } = require('./../core/server/certGenerator');
-const { ConfigController } = require('./../src/Controllers/ConfigController')
+const { ConfigController } = require('./../src/Controllers/ConfigController');
+const { WebSocket } = require('ws');
+const { logger } = require('../core/util/logger');
+const utility = require('./../core/util/utility');
 var serverIp = "127.0.0.1";
 
 /**
@@ -75,15 +77,54 @@ if(serverConfig.runSimpleHttpServer === true) {
 //   socket.on('message', message => console.log(message));
 // });
 
+
+// const wss = new WebSocket.Server({ server: httpsServer, path: "/websocket" });
+
 httpsServer.on('error', onError);
-httpsServer.on('listening', () => { console.log("HTTPS Server listening on " + httpsServer.address().address + ":" + httpsServer.address().port) });
-// httpsServer.on('upgrade', (request, socket, head) => {
-//   wsServer.handleUpgrade(request, socket, head, socket => {
-//     wsServer.emit('connection', socket, request);
-//   });
-// });
+httpsServer.on('listening', () => { logger.logSuccess("HTTPS Server listening on " + httpsServer.address().address + ":" + httpsServer.address().port) });
 httpsServer.listen(port, serverIp, ()=>{
 });
+httpsServer.on("upgrade", (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (websocket) => {
+    wss.emit("connection", websocket, request);
+  });
+});
+const wss = new WebSocket.Server({ host: serverIp, port: port + 1 });
+wss.NextChannelId = utility.generateNewId();
+wss.LastChannelId = utility.generateNewId();
+// const wss = new WebSocket.Server({ server: httpsServer });
+wss.on('listening', ws => {
+  logger.logInfo("WebSocket listening on " + wss.address().address + ":" + wss.address().port);
+});
+wss.on('connection', (ws, request, client) => {
+  // console.log(ws);
+  console.log(request);
+  // console.log(client);
+
+  if(wss.NextChannelId === wss.LastChannelId)
+    wss.NextChannelId = utility.generateNewId();
+
+  ws.ChannelId = wss.NextChannelId;
+  // Notify of Client connected
+  logger.logSuccess('WebSocket Client connected ');
+  // Send "ping" type back to the Client to make it happy
+  ws.send(JSON.stringify({ type: "ping", eventId: wss.ChannelId }));
+  // setInterval(()=>{ 
+  //   ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
+  // }, 1000);
+  wss.LastChannelId = wss.NextChannelId;
+  // Respond to messages
+  ws.on('message', function message(data) {
+    logger.logInfo(`Received message ${data} from user ${client}`);
+  });
+  ws.on('upgrade', function message(data) {
+    logger.logInfo(`Received upgrade`);
+  });
+});
+wss.on('upgrade', function message(data) {
+  logger.logInfo(`Received upgrade`);
+});
+global.WebSocketServer = wss;
 
 // /**
 //  * Normalize a port into a number, string, or false.

@@ -1,4 +1,3 @@
-const { Server } = require("../../core/server/server");
 const { logger } = require("../../core/util/logger");
 const { AccountController } = require('../../src/Controllers/AccountController');
 const { CustomizationController } = require("../Controllers/CustomizationController");

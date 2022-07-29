@@ -41,10 +41,22 @@ class ResponseController
 
     static getWebSocketUrl()
     {
-        ConfigController.rebuildFromBaseConfigs();
-        var ws = ResponseController.getBackendUrl().replace("https", "ws");
-        // console.log("getWebSocketUrl:" + ws)
-        return ws;
+        const wss = global.WebSocketServer;
+        return `ws://${ResponseController.getWebSocketUrlWithoutWs()}`;
+        // ConfigController.rebuildFromBaseConfigs();
+        // var ws = ResponseController.getBackendUrl().replace("https", "wss");
+        // // console.log("getWebSocketUrl:" + ws)
+        // return ws;
+    }
+
+    static getWebSocketUrlWithoutWs()
+    {
+        const wss = global.WebSocketServer;
+        return `${wss.address().address}:${wss.address().port}`;
+        // ConfigController.rebuildFromBaseConfigs();
+        // var ws = ResponseController.getBackendUrl().replace("https", "wss");
+        // // console.log("getWebSocketUrl:" + ws)
+        // return ws;
     }
 
   static getMainUrl() {
@@ -119,12 +131,19 @@ class ResponseController
     }
 
     static getNotifier = (sessionID) => {
+        // return {
+        //     server: ResponseController.getBackendUrl(), // this.httpServerHelper.buildUrl(),
+        //     channel_id: sessionID,
+        //     url: `${ResponseController.getBackendUrl()}/notifierServer/get/${sessionID}`,
+        //     notifierServer: `${ResponseController.getBackendUrl()}/notifierServer/get/${sessionID}`,
+        //     ws: `${ResponseController.getWebSocketUrl()}/notifierServer/getwebsocket/${sessionID}`
+        // }
+        global.WebSocketServer.NextChannelId = sessionID;
         return {
             server: ResponseController.getBackendUrl(), // this.httpServerHelper.buildUrl(),
             channel_id: sessionID,
-            url: `${ResponseController.getBackendUrl()}/notifierServer/get/${sessionID}`,
-            notifierServer: `${ResponseController.getBackendUrl()}/notifierServer/get/${sessionID}`,
-            ws: `${ResponseController.getWebSocketUrl()}/notifierServer/getwebsocket/${sessionID}`
+            // url: `notifierServer/${sessionID}`, // url can be empty if we are using Web Sockets
+            ws: `${ResponseController.getWebSocketUrlWithoutWs()}`
         }
     }
 
@@ -138,8 +157,6 @@ class ResponseController
             action: (url, info, sessionID) => {
                 return ResponseController.getBody({
                     "status": "ok",
-                    "notifier": ResponseController.getNotifier(sessionID),
-                    "notifierServer": ResponseController.getNotifier(sessionID).notifierServer
                 });
             }
         },
@@ -808,11 +825,19 @@ const QuestRoutes = [
     
 ]
 
-const SITValidatorRoutes = [
+const SITRoutes = [
     {
         url: "/client/sit-validator",
         action: (url, info, sessionID) => {
             return JSON.stringify(true);
+        }
+    },
+    {
+        url: "/client/WebSocketAddress",
+        action: (url, info, sessionID) => {
+            // const wss = global.WebSocketServer;
+            // return JSON.stringify(`ws://${wss.address().address}:${wss.address().port}`);
+            return ResponseController.getWebSocketUrl();
         }
     }
     
@@ -821,4 +846,4 @@ const SITValidatorRoutes = [
 ResponseController.addRoutes(HideoutRoutes);
 ResponseController.addRoutes(QuestRoutes);
 ResponseController.addRoutes(RagfairRoutes);
-ResponseController.addRoutes(SITValidatorRoutes);
+ResponseController.addRoutes(SITRoutes);
