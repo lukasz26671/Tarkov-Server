@@ -654,7 +654,7 @@ class Responses {
   //   // return response_f.getBody(ragfair_f.getOffers(sessionID, info));
   // }
   clientRagfairItemMarketPrice(url, info, sessionID) {
-    return response_f.getBody(ragfair_f.itemMarKetPrice(info));
+    return response_f.getBody(ragfair_f.getRagfairMarketPrice(info));
   }
   clientRagfairSearch(url, info, sessionID) {
     return response_f.getBody(ragfair_f.getOffers(sessionID, info));

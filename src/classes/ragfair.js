@@ -441,8 +441,8 @@ function createOffer(template, onlyFunc, usePresets = true) {
   return offers;
 }
 
-function itemMarKetPrice(request) {
-  return null;
+function getRagfairMarketPrice(request) {
+  return { min: 0, max: 0, avg: 0 };
 }
 
 function ragFairAddOffer(request) {
@@ -451,4 +451,3 @@ function ragFairAddOffer(request) {
 
 module.exports.getOffers = getOffers;
 module.exports.ragFairAddOffer = ragFairAddOffer;
-module.exports.itemMarKetPrice = itemMarKetPrice;

@@ -802,6 +802,12 @@ const RagfairRoutes = [
         action: (url, info, sessionID) => {
             return ResponseController.getBody(ragfair_f.getOffers(sessionID, info));
         }
+    },
+    {
+        url: "/client/ragfair/itemMarketPrice",
+        action: (url, info, sessionID) => {
+            return ResponseController.getBody(TradingController.getRagfairMarketPrice(info));
+        }
     }
 ]
 

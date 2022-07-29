@@ -89,14 +89,24 @@ httpsServer.on("upgrade", (request, socket, head) => {
     wss.emit("connection", websocket, request);
   });
 });
+
+
+// ------------------------------------------------------------------------------
+// -------------- WEB SOCKETS ---------------------------------------------------
 const wss = new WebSocket.Server({ host: serverIp, port: port + 1 });
 wss.NextChannelId = utility.generateNewId();
 wss.LastChannelId = utility.generateNewId();
+
+global.webSocketClients = [];
+global.webSocketClientBySessionId = {};
+
 // const wss = new WebSocket.Server({ server: httpsServer });
 wss.on('listening', ws => {
   logger.logInfo("WebSocket listening on " + wss.address().address + ":" + wss.address().port);
 });
-wss.on('connection', (ws, request, client) => {
+wss.on('connection', (ws, request) => {
+
+  global.webSocketClients.push(ws);
   // console.log(ws);
   console.log(request);
   // console.log(client);
@@ -105,10 +115,12 @@ wss.on('connection', (ws, request, client) => {
     wss.NextChannelId = utility.generateNewId();
 
   ws.ChannelId = wss.NextChannelId;
+  global.webSocketClientBySessionId[ws.ChannelId] = ws;
+
   // Notify of Client connected
-  logger.logSuccess('WebSocket Client connected ');
+  logger.logSuccess('WebSocket Client connected ' + ws.ChannelId);
   // Send "ping" type back to the Client to make it happy
-  ws.send(JSON.stringify({ type: "ping", eventId: wss.ChannelId }));
+  ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
   // setInterval(()=>{ 
   //   ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
   // }, 1000);

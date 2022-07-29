@@ -2,6 +2,7 @@
 
 const { AccountController } = require("../Controllers/AccountController");
 const { InsuranceController } = require("../Controllers/InsuranceController");
+const { TradingController } = require("../Controllers/TradingController");
 const { tradeHandler, TradeHandler } = require("./trade");
 
 class ItemServer {
@@ -49,7 +50,7 @@ class ItemServer {
       QuestAccept: quest_f.acceptQuest,
       QuestComplete: quest_f.completeQuest,
       QuestHandover: quest_f.handoverQuest,
-      RagFairAddOffer: ragfair_f.ragFairAddOffer,
+      RagFairAddOffer: TradingController.addFleaMarketOffer,
       RagFairBuyOffer: TradeHandler.confirmRagfairTrading,
       ReadEncyclopedia: status_f.readEncyclopedia,
       Remove: move_f.discardItem,

@@ -4,6 +4,8 @@ const { LootController } = require('./LootController');
 const utility = require('./../../core/util/utility');
 const mathjs = require('mathjs');
 const { AccountController } = require('./AccountController');
+const { logger } = require('../../core/util/logger');
+const { ItemController } = require('./ItemController');
 
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
@@ -582,6 +584,26 @@ static getLoyalty(pmcData, traderID) {
       static saveTraderToDisk(traderId) {
         const trader = TradingController.getTrader(traderId);
         
+      }
+
+      static getRagfairMarketPrice(data) {
+
+        const avg = ItemController.getTemplatePrice(data.templateId);
+        return { min: 0, max: 0, avg: avg };
+      }
+
+      static addFleaMarketOffer(pmcData, body, sessionID) {
+
+        logger.logWarning("Adding a Flea Market offer is not yet supported by SIT");
+        // console.log("addFleaMarketOffer");
+        const ragfairAssort = TradingController.getTraderAssort("ragfair", sessionID);
+        if(global.webSocketClientBySessionId[sessionID]) {
+          global.webSocketClientBySessionId[sessionID].send(
+            JSON.stringify({ type: "RagfairOfferSold"
+            , offerId: utility.generateNewId()
+            , count: 1
+            , handbookId: body.items[0]}));
+        }
       }
 }
 
