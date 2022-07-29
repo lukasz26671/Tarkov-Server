@@ -4,6 +4,7 @@ const fs = require('fs');
 const utility = require('./../../core/util/utility');
 const e = require('express');
 const mathjs = require('mathjs');
+const { DatabaseController } = require('./DatabaseController');
 
 /**
  * 
@@ -306,7 +307,7 @@ class LootController
           logger.logInfo(`Airdrop container contains ${LootListItems.length} items!`);
         }
         if(isWeaponBox) {
-          logger.logInfo(`This is a weapon box container`);
+          // logger.logInfo(`This is a weapon box container`);
         }
        
 
@@ -339,7 +340,7 @@ class LootController
               // we finished generating spawn for this container now its time to roll items to put in container
               let itemWidth = 0;
               let itemHeight = 0;
-              for (let i = 0; i < minCount; i++) {
+              mainIterator: for (let i = 0; i < minCount; i++) {
                 //let item = {};
                 let containerItem = {};
           
@@ -404,12 +405,25 @@ class LootController
           
                 const hasP = ItemController.hasPreset(rolledRandomItemToPlace._id);
                 if(hasP) {
-                  console.log("preset in box?");
+                  const possibleWeaponPreset = ItemController.getStandardPreset(rolledRandomItemToPlace._id);
+                  // console.log("preset in box?");
+                  presetIterator: for(const itId of possibleWeaponPreset._items) {
+                    const present_item = ItemController.tryGetItem(itId._tpl);
+                    result = helper_f.findSlotForItem(container2D, present_item._props.Width, present_item._props.Height);
+                    if(!result)
+                      break presetIterator;
 
+                    _items.push({
+                      _id: utility.generateNewId(),
+                      _tpl: present_item._id,
+                      parentId: parentId,
+                      slotId: "main",
+                      location: { x: result.x, y: result.y, r: result.rotation }});
+                    
+                  }
+                  break mainIterator;
                 }
-          
-          
-          
+
                 containerItem = {
                   _id: utility.generateNewId(),
                   // _id: idPrefix + idSuffix.toString(16),
@@ -820,82 +834,11 @@ class LootController
             Items: [createdItem],
           };
 
-          // console.log(createEndLootData);
-          
-          // createEndLootData.Items.push(createdItem);
-          // // now add other things like cartriges etc.
           if(ItemController.isAmmoBox(randomItem._id))
           {
             // this is not working, ignoring for now
             continue;
-            // createEndLootData.Items = [];
-            // const ammoBoxItems = ItemController.createAmmoBox(randomItem._id);
-            // for(const ammoBoxItem of ammoBoxItems)
-            //   createEndLootData.Items.push(ammoBoxItem);
           }
-    
-          // // AMMO BOXES !!!
-          // let isAmmoBox = global._database.items[createEndLootData.Items[0]._tpl]._parent == "543be5cb4bdc2deb348b4568";
-          // if (isAmmoBox) {
-          //   const ammoTemplate = global._database.items[createEndLootData.Items[0]._tpl]._props.StackSlots[0]._props.filters[0].Filter[0];
-          //   const ammoMaxStack = global._database.items[ammoTemplate]._props.StackMaxSize;
-          //   const randomizedBulletsCount = utility.getRandomInt(
-          //     global._database.items[createEndLootData.Items[0]._tpl]._props.StackMinRandom,
-          //     global._database.items[createEndLootData.Items[0]._tpl]._props.StackMaxRandom
-          //   );
-          //   let locationCount = 0;
-          //   for (let i = 0; i < randomizedBulletsCount; i += ammoMaxStack) {
-          //     const currentStack = i + ammoMaxStack > randomizedBulletsCount ? randomizedBulletsCount - i : ammoMaxStack;
-          //     createEndLootData.Items.push({
-          //       _id: utility.generateNewItemId(),
-          //       _tpl: ammoTemplate,
-          //       parentId: createEndLootData.Items[0]._id,
-          //       slotId: "cartridges",
-          //       location: locationCount,
-          //       upd: {
-          //         StackObjectsCount: currentStack,
-          //       },
-          //     });
-          //     locationCount++;
-          //   }
-          // }
-          // // Preset weapon
-          // const PresetData = FindIfItemIsAPreset(createEndLootData.Items[0]._tpl);
-          // if (PresetData != null) {
-          //   let preset = PresetData[utility.getRandomInt(0, PresetData.length)];
-          //   if (preset == null) continue;
-    
-          //   let oldBaseItem = preset._items[0];
-          //   preset._items = preset._items.splice(0, 1);
-          //   let idSuffix = 0;
-          //   let OldIds = {};
-          //   for (var p in preset._items) {
-          //     let currentItem = DeepCopy(preset._items[p]);
-          //     OldIds[currentItem.id] = utility.generateNewItemId();
-          //     if (currentItem.parentId == oldBaseItem._id) currentItem.parentId = createEndLootData.Items[0]._id;
-          //     if (typeof OldIds[currentItem.parentId] != "undefined") currentItem.parentId = OldIds[currentItem.parentId];
-    
-          //     currentItem.id = OldIds[currentItem.id];
-          //     createEndLootData.Items.push(currentItem);
-    
-          //     if (preset._items[p].slotId === "mod_magazine") {
-          //       let mag = helper_f.getItem(preset._items[p]._tpl)[1];
-          //       let cartridges = {
-          //         _id: currentItem.id + "_" + idSuffix,
-          //         _tpl: item._props.defAmmo,
-          //         parentId: preset._items[p]._id,
-          //         slotId: "cartridges",
-          //         upd: { StackObjectsCount: mag._props.Cartridges[0]._max_count },
-          //       };
-    
-          //       createEndLootData.Items.push(cartridges);
-          //       idSuffix++;
-          //     }
-          //   }
-          // }
-    
-          // // Remove overlapping items by doing this simple check
-          // // if(!isAmmoBox && PresetData == null 
     
           let similarUsedPosition = currentUsedPositions.find(p => 
             mathjs.round(p.x, 3) == mathjs.round(lootData.Position.x, 3)
@@ -905,53 +848,20 @@ class LootController
           if(similarUsedPosition !== undefined
             ) {
     
-            // console.log("filtering dynamic item due to location");
-            // console.log(lootData.Position);
-            // console.log(similarUsedPosition);
             continue;
           }
     
-          // let modifierDynamicChanceMin = 20;
-          // let modifierDynamicChanceMax = 99;
-          // if (global._database.gameplayConfig.locationloot.DynamicChance != undefined) {
-          //     modifierDynamicChanceMin = global._database.gameplayConfig.locationloot.DynamicChance.Min;
-          //     modifierDynamicChanceMax = global._database.gameplayConfig.locationloot.DynamicChance.Max;
-    
-          //     if (modifierDynamicChanceMin == undefined) {
-          //         modifierDynamicChanceMin = 20;
-          //     }
-          //     if (modifierDynamicChanceMax == undefined) {
-          //         modifierDynamicChanceMax = 99;
-          //     }
-          // }
-    
-          // // spawn chance calculation
-          // let randomNumber = utility.getRandomInt(
-          //     modifierDynamicChanceMin,
-          //     modifierDynamicChanceMax
-          // );
-    
-          // let actualItem = helper_f.getItem(createdItem._tpl)[1];
-          // if(actualItem !== undefined) {
-          //   const actualItemLootExperience 
-          //   = actualItem["_props"]["LootExperience"] + actualItem["_props"]["ExamineExperience"];
-          //   const isUnbuyable = actualItem["_props"]["Unbuyable"];
-          //   const isQuestItem = actualItem["_props"]["QuestItem"];
           
-            let filterByRarityOutput = {};
-          //   if(!isQuestItem 
-          //     && !isUnbuyable 
-          //     && !FilterItemByRarity(actualItem, filterByRarityOutput, 1.2))
-          //     continue;
+          let filterByRarityOutput = {};
+      
           const looseLootMultiplier = ConfigController.Configs["gameplay"].locationloot.DynamicLooseLootMultiplier;
           if(!this.FilterItemByRarity(randomItem, filterByRarityOutput, looseLootMultiplier))
             continue;
     
-              count++;
-              output.Loot.push(createEndLootData);
-              currentUsedPositions.push(createEndLootData.Position);
-              currentUsedItems.push(createEndLootData);
-          // }
+            count++;
+            output.Loot.push(createEndLootData);
+            currentUsedPositions.push(createEndLootData.Position);
+            currentUsedItems.push(createEndLootData);
        
         }
         
