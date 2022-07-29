@@ -566,7 +566,7 @@ class Generator {
 
   generateEquipment(equipmentSlot, equipmentPool, modPool, spawnChances, botRole) {
 
-    const p1 = performance.now();
+    // const p1 = performance.now();
 
     const spawnChance = [EquipmentSlots.Pockets, EquipmentSlots.SecuredContainer].includes(equipmentSlot) ? 100 : spawnChances.equipment[equipmentSlot];
     if (typeof spawnChance === "undefined") {
@@ -607,7 +607,7 @@ class Generator {
       }
     }
 
-    const p2 = performance.now();
+    // const p2 = performance.now();
     // console.log(`generateEquipment(${equipmentSlot},${equipmentPool},${modPool},${spawnChances},${botRole}) ${p2 - p1} ms`)
   }
 
