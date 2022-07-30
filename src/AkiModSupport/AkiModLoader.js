@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { logger } = require('../../core/util/logger');
 const { DbController, DatabaseController } = require('../Controllers/DatabaseController');
-const database = require('./../../src/functions/database');
 
 /**
  * The very simple Aki Mod Loader and Aki class shim
