@@ -2,6 +2,7 @@
 
 const { AccountController } = require("../Controllers/AccountController");
 const { InsuranceController } = require("../Controllers/InsuranceController");
+const { QuestController } = require("../Controllers/QuestController");
 const { TradingController } = require("../Controllers/TradingController");
 const { tradeHandler, TradeHandler } = require("./trade");
 
@@ -57,6 +58,7 @@ class ItemServer {
       RemoveBuild: weaponbuilds_f.removeBuild,
       RemoveFromWishList: wishlist_f.removeFromWishList,
       Repair: repair_f.main,
+      RepeatableQuestChange: QuestController.changeRepeatableQuest,
       SaveBuild: weaponbuilds_f.saveBuild,
       Split: move_f.splitItem,
       Swap: move_f.swapItem,
@@ -87,6 +89,15 @@ class ItemServer {
     if (this.output === "") {
       this.resetOutput(sessionID);
     }
+    if(this.output.profileChanges === undefined)
+      this.output.profileChanges = {};
+
+    if(this.output.profileChanges[sessionID] === undefined)
+      this.output.profileChanges[sessionID] = {};
+
+    if (this.output.profileChanges[sessionID].items === undefined) {
+      this.output.profileChanges[sessionID].items = {};
+    }
 
     return this.output;
   }
@@ -111,7 +122,6 @@ class ItemServer {
       profileChanges: {},
     };
     this.output.profileChanges[_profile._id] = {
-      // _id: _profile._id,
       experience: 0,
       items: { change: [], new: [], del: [] }, // stash
       quests: [], // are those current accepted quests ??
@@ -125,4 +135,6 @@ class ItemServer {
   }
 }
 
-module.exports.handler = new ItemServer();
+const itemServer = new ItemServer();
+module.exports.handler = itemServer;
+module.exports.ItemRouter = itemServer;

@@ -15,8 +15,8 @@ class RepeatableQuest {
     constructor() {
         this._id = util.generateNewId();
 			this.traderId = "5935c25fb3acc3127c3d8cd9";
-			this.location = null;
-			this.image = "/files/quest/icon/616d993bc8c5ad2ab30ff6ba.jpg";
+			this.location = "any";
+			this.image = "/files/quest/icon/596b465486f77457ca186188.jpg",
 			this.type = "Elimination";
 			this.isKey= false;
 			this.restartable= true;
@@ -25,44 +25,48 @@ class RepeatableQuest {
 			this.canShowNotificationsInGame = true;
 			this.rewards = {
 				Started : [],
-				Success : [],
+				Success : [
+                    {
+                        "value": "1700",
+                        "id": util.generateNewId(),
+                        "type": "Experience",
+                        "index": 0
+                    }
+                ],
 				Fail : []
 			};
 			this.conditions = {
 				AvailableForStart: [],
 				AvailableForFinish: [
 					{
-						_props: {
-							id: "618c1de4d4cd91439f3de4ae",
-							parentId: "",
-							dynamicLocale: true,
-							index: 0,
-							visibilityConditions: [],
-							value: 1,
-							type: "Elimination",
-							oneSessionOnly: false,
-							doNotResetIfCounterCompleted: false,
-							counter: {
-								id: "618c1de4d4cd91439f3de4ac",
-								conditions: [
-									{
-										_props: {
-											target: "Savage",
-											value: 1,
-											savageRole: [
-												"bossBully"
-											],
-											id: "618c1de4d4cd91439f3de4ad",
-											dynamicLocale: true
-										},
-										_parent: "Kills"
-									}
-								]
-							}
+						"_props": {
+						  "id": util.generateNewId(),
+						  "parentId": "",
+						  "dynamicLocale": true,
+						  "index": 0,
+						  "visibilityConditions": [],
+						  "value": "5",
+						  "type": "Elimination",
+						  "oneSessionOnly": false,
+						  "doNotResetIfCounterCompleted": false,
+						  "counter": {
+							"id": util.generateNewId(),
+							"conditions": [
+							  {
+								"_parent": "Kills",
+								"_props": {
+								  "target": "Savage",
+								  "compareMethod": ">=",
+								  "value": "1",
+								  "id": util.generateNewId()
+								}
+							  }
+							]
+						  }
 						},
-						_parent: "CounterCreator",
-						dynamicLocale: true
-					}
+						"_parent": "CounterCreator",
+						"dynamicLocale": true
+					  }
 				],
 				Fail: []
 			};
