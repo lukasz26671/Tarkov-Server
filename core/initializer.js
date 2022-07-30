@@ -3,6 +3,7 @@ const { AccountController } = require('../src/Controllers/AccountController');
 const { ConfigController } = require('../src/Controllers/ConfigController');
 const database = require('./../src/functions/database')
 const tests = require('../tests/RaidSaveProfileTests');
+const { DatabaseController } = require('../src/Controllers/DatabaseController');
 
 class Initializer {
   constructor() {
@@ -80,7 +81,7 @@ class Initializer {
     Initializer.buildReadOnlyDbFolder();
     // -------------------------------------------------------
     // Build the In-Memory database from db object network
-    database.load();
+    DatabaseController.loadDatabase();
     
     // -------------------------------------------------------
     // Load the mods
