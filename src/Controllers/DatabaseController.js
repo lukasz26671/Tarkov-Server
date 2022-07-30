@@ -1,19 +1,31 @@
-const oldDb = require('./../functions/database');
 const { ConfigController } = require('./ConfigController');
 const fs = require('fs');
+const fileIO = require('./../../core/util/fileIO');
 const utility = require('./../../core/util/utility');
-// import onChange from 'on-change';
-// const onChange = require('on-change');
 
+class Database {
+    constructor() {
+        this.bots = {};
+        this.core = {};
+        this.customization = {};
+        this.gameplay = {};
+        this.globals = {};
+        this.hideout = {};
+        this.items = {};
+        this.itemPriceTable = {};
+        this.quests = []; // Note Array
+        this.repeatableQuests = [];
+        this.languages = {};
+        this.locales = {};
+        this.locations = {};
+        this.traders = {};
+        this.weather = [];
+    }
+}
 /**
  * 
  */
-global._database = {}
-/**
- * 
- */
-global._database.items = {};
-
+global._database = new Database();
 
 /**
  * 
@@ -23,16 +35,10 @@ class DatabaseController
     /**
      * The In-Memory Database
      */
-    static Database = 
-    { 
-        /**
-         * 
-         */
-        items: {} 
-    };
+    static Database = new Database();
 
     static createGlobalDatabase() {
-        // const watchedDb = onChange(global._database, function (path, value, previousValue, applyData) {
+        // const watchedDb = onChange(database, function (path, value, previousValue, applyData) {
         //     console.log('Object changed:', ++index);
         //     console.log('this:', this);
         //     console.log('path:', path);
@@ -44,12 +50,12 @@ class DatabaseController
 
     /**
      * Retrieves the global in memory database
-     * @returns {*} the globally defined Database
+     * @returns {Database} the globally defined Database
      */
     static getDatabase() {
         ConfigController.init();
         if(global._database === undefined || global._database.traders === undefined) {
-            oldDb.load();
+            DatabaseController.loadDatabase();
         }
 
         return global._database;
@@ -64,174 +70,156 @@ module.exports.DatabaseController = DatabaseController;
 module.exports.DbController = new DatabaseController();
 
 function loadGlobals() {
-  _database.globals = fileIO.readParsed("./" + db.base.globals);
-  //allow to use file with {data:{}} as well as {}
-  if (typeof _database.globals.data != "undefined") _database.globals = _database.globals.data;
-}
-
-function loadClusterConfig() {
-  _database.clusterConfig = fileIO.readParsed("./" + db.user.configs.cluster);
+    const database = DatabaseController.getDatabase();
+    database.globals = fileIO.readParsed("./" + db.base.globals);
+    //allow to use file with {data:{}} as well as {}
+    if (database.globals.data !== undefined) database.globals = database.globals.data;
 }
 
 function loadGameplayConfig() {
-  global._database.gameplay = fileIO.readParsed("./user/configs/gameplay_base.json");
-}
+    const database = DatabaseController.getDatabase();
 
-function loadBlacklistConfig() {
-  _database.blacklist = fileIO.readParsed("./" + db.user.configs.blacklist);
+    database.gameplay = fileIO.readParsed("./user/configs/gameplay_base.json");
 }
 
 function loadBotsData() {
-  _database.bots = {};
-  for (let botType in db.bots) {
-    _database.bots[botType] = {};
-    let difficulty_easy = null;
-    let difficulty_normal = null;
-    let difficulty_hard = null;
-    let difficulty_impossible = null;
-    if (typeof db.bots[botType].difficulty != "undefined") {
-      if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
-      if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
-      if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
-      if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
-    }
-    _database.bots[botType].difficulty = {
-      easy: difficulty_easy,
-      normal: difficulty_normal,
-      hard: difficulty_hard,
-      impossible: difficulty_impossible,
-    };
-    if(db.bots[botType].profile !== undefined) {
-      _database.bots[botType].appearance = { body: [], feet: [], hands: [], head: [], voice: []};
-      _database.bots[botType].chances = {};
-      _database.bots[botType].generation = {};
-      _database.bots[botType].health = {};
-      _database.bots[botType].inventory = {};
-
-      for(const p in db.bots[botType].profile) {
-        const fileLocation = db.bots[botType].profile[p];
-        if(fs.existsSync(fileLocation)) {
-          const data = JSON.parse(fs.readFileSync(fileLocation)).data;
-          _database.bots[botType].profile = data;
-          _database.bots[botType].appearance.body.push(data.Customization.Body);
-          _database.bots[botType].appearance.feet.push(data.Customization.Feet);
-          _database.bots[botType].appearance.hands.push(data.Customization.Hands);
-          _database.bots[botType].appearance.head.push(data.Customization.Head);
-          _database.bots[botType].appearance.voice.push(data.Customization.Voice);
-          _database.bots[botType].health = data.Health;
-          // load inventory
-          _database.bots[botType].inventory["0_80"] = data.Inventory;
+    const database = DatabaseController.getDatabase();
+    database.bots = {};
+    for (let botType in db.bots) {
+        database.bots[botType] = {};
+        let difficulty_easy = null;
+        let difficulty_normal = null;
+        let difficulty_hard = null;
+        let difficulty_impossible = null;
+        if (typeof db.bots[botType].difficulty != "undefined") {
+        if (typeof db.bots[botType].difficulty.easy != "undefined") difficulty_easy = fileIO.readParsed("./" + db.bots[botType].difficulty.easy);
+        if (typeof db.bots[botType].difficulty.normal != "undefined") difficulty_normal = fileIO.readParsed("./" + db.bots[botType].difficulty.normal);
+        if (typeof db.bots[botType].difficulty.hard != "undefined") difficulty_hard = fileIO.readParsed("./" + db.bots[botType].difficulty.hard);
+        if (typeof db.bots[botType].difficulty.impossible != "undefined") difficulty_impossible = fileIO.readParsed("./" + db.bots[botType].difficulty.impossible);
         }
-      }
-      // console.log(_database.bots[botType]);
+        database.bots[botType].difficulty = {
+        easy: difficulty_easy,
+        normal: difficulty_normal,
+        hard: difficulty_hard,
+        impossible: difficulty_impossible,
+        };
+        if(db.bots[botType].profile !== undefined) {
+            database.bots[botType].appearance = { body: [], feet: [], hands: [], head: [], voice: []};
+            database.bots[botType].chances = {};
+            database.bots[botType].generation = {};
+            database.bots[botType].health = {};
+            database.bots[botType].inventory = {};
+
+            for(const p in db.bots[botType].profile) {
+                const fileLocation = db.bots[botType].profile[p];
+                if(fs.existsSync(fileLocation)) {
+                    const data = JSON.parse(fs.readFileSync(fileLocation)).data;
+                    database.bots[botType].profile = data;
+                    database.bots[botType].appearance.body.push(data.Customization.Body);
+                    database.bots[botType].appearance.feet.push(data.Customization.Feet);
+                    database.bots[botType].appearance.hands.push(data.Customization.Hands);
+                    database.bots[botType].appearance.head.push(data.Customization.Head);
+                    database.bots[botType].appearance.voice.push(data.Customization.Voice);
+                    database.bots[botType].health = data.Health;
+                    // load inventory
+                    database.bots[botType].inventory["0_80"] = data.Inventory;
+                }
+            }
+        }
+        else {
+            database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
+            database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
+            database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
+            database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
+            database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
+            database.bots[botType].inventory = {};
+            for (const name in db.bots[botType].inventory) {
+                database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
+            }
+        }
     }
-    else {
-      _database.bots[botType].appearance = fileIO.readParsed("./" + db.bots[botType].appearance);
-      _database.bots[botType].chances = fileIO.readParsed("./" + db.bots[botType].chances);
-      _database.bots[botType].experience = fileIO.readParsed("./" + db.bots[botType].experience);
-      _database.bots[botType].generation = fileIO.readParsed("./" + db.bots[botType].generation);
-      _database.bots[botType].health = fileIO.readParsed("./" + db.bots[botType].health);
-      _database.bots[botType].inventory = {};
-      for (const name in db.bots[botType].inventory) {
-        _database.bots[botType].inventory[name] = fileIO.readParsed("./" + db.bots[botType].inventory[name]);
-      }
-      // console.log( _database.bots[botType]);
-    }
-  }
-  _database.bots.names = fileIO.readParsed("./" + db.base.botNames);
+    database.bots.names = fileIO.readParsed("./" + db.base.botNames);
 }
 
 function loadCoreData() {
-  _database.core = {};
-  _database.core.botBase = fileIO.readParsed("./" + db.base.botBase);
-  _database.core.botCore = fileIO.readParsed("./" + db.base.botCore);
-  _database.core.fleaOffer = fileIO.readParsed("./" + db.base.fleaOffer);
-  _database.core.matchMetrics = fileIO.readParsed("./" + db.base.matchMetrics);
+    const database = DatabaseController.getDatabase();
+    database.core = {};
+    database.core.botBase = fileIO.readParsed("./" + db.base.botBase);
+    database.core.botCore = fileIO.readParsed("./" + db.base.botCore);
+    database.core.fleaOffer = fileIO.readParsed("./" + db.base.fleaOffer);
+    database.core.matchMetrics = fileIO.readParsed("./" + db.base.matchMetrics);
 }
 
 function loadItemsData() {
 
-  var gameplayConfig = ConfigController.Configs["gameplay"];
-  global._database.items = fileIO.readParsed(db.items["_items"]);
+    const database = DatabaseController.getDatabase();
+    var gameplayConfig = ConfigController.Configs["gameplay"];
+    database.items = fileIO.readParsed(db.items["Items"]);
 
+    database.templates = {};
+    database.templates.Categories = fileIO.readParsed(db.templates.categories)
+    database.templates.Items = fileIO.readParsed(db.templates.items);
 
-  // gather all items into memory db
-  // const itemNodeFiles = db.items;
-  // for (const file in itemNodeFiles) {
-  //   for (const items of fileIO.readParsed(itemNodeFiles[file])) {
-  //     if (items._id == undefined) {
-  //       logger.logWarning(`[Loading ItemsDB] file: ${file} looks to contain corrupted data`)
-  //       continue;
-  //     }
-  //     global._database.items[items._id] = items;
-  //   }
-  // }
-
-  
-  
-
-
-  global._database.templates = {};
-  global._database.templates.Categories = fileIO.readParsed(db.templates.categories)
-  global._database.templates.Items = fileIO.readParsed(db.templates.items);
-
-  const itemHandbook = _database.templates.Items;
-  _database.itemPriceTable = {};
-  for (let item of itemHandbook) {
-    _database.itemPriceTable[item.Id] = item.Price;
-  }
+    const itemHandbook = database.templates.Items;
+    database.itemPriceTable = {};
+    for (let item of itemHandbook) {
+        database.itemPriceTable[item.Id] = item.Price;
+    }
 }
 
 function loadHideoutData() {
+    const database = DatabaseController.getDatabase();
 
-  _database.hideout = { settings: {}, areas: [], production: [], scavcase: [] };
+    database.hideout = { settings: {}, areas: [], production: [], scavcase: [] };
 
-  _database.hideout.settings = fileIO.readParsed("./" + db.hideout.settings);
-  // if (typeof _database.hideout.settings.data != "undefined") {
-  //   _database.hideout.settings = _database.hideout.settings.data;
+    database.hideout.settings = fileIO.readParsed("./" + db.hideout.settings);
+  // if (typeof database.hideout.settings.data != "undefined") {
+  //   database.hideout.settings = database.hideout.settings.data;
   // }
   const dbAreas = JSON.parse(fs.readFileSync("./" + db.hideout.areas["_items"]));
-  _database.hideout.areas = dbAreas;
+  database.hideout.areas = dbAreas;
   // for (let area in dbAreas) {
-  //   _database.hideout.areas.push(dbAreas[area]);
+  //   database.hideout.areas.push(dbAreas[area]);
   // }
   // for (let area in db.hideout.areas) {
   //   if(area !== "_items")
-  //     _database.hideout.areas.push(fileIO.readParsed("./" + db.hideout.areas[area]));
+  //     database.hideout.areas.push(fileIO.readParsed("./" + db.hideout.areas[area]));
   // }
   for (let production in db.hideout.production) {
-    _database.hideout.production.push(fileIO.readParsed("./" + db.hideout.production[production]));
+    database.hideout.production.push(fileIO.readParsed("./" + db.hideout.production[production]));
   }
   for (let scavcase in db.hideout.scavcase) {
-    _database.hideout.scavcase.push(fileIO.readParsed("./" + db.hideout.scavcase[scavcase]));
+    database.hideout.scavcase.push(fileIO.readParsed("./" + db.hideout.scavcase[scavcase]));
   }
 
   // apply production time divider
-  // for (const area of _database.hideout.areas) {
+  // for (const area of database.hideout.areas) {
   //   for (const stageIndex in area.stages) {
   //     const stage = area.stages[stageIndex];
-  //     if (stage.constructionTime != 0 && stage.constructionTime > _database.gameplay.hideout.productionTimeDivide_Areas) {
-  //       // stage.constructionTime = stage.constructionTime / _database.gameplay.hideout.productionTimeDivide_Areas;
+  //     if (stage.constructionTime != 0 && stage.constructionTime > database.gameplay.hideout.productionTimeDivide_Areas) {
+  //       // stage.constructionTime = stage.constructionTime / database.gameplay.hideout.productionTimeDivide_Areas;
   //     }
   //   }
   // }
-  for (let id in _database.hideout.production) {
-    if (_database.hideout.production[id].productionTime != 0 && _database.hideout.production[id].productionTime > _database.gameplay.hideout.productionTimeDivide_Production) {
-      _database.hideout.production[id].productionTime = _database.hideout.production[id].productionTime / _database.gameplay.hideout.productionTimeDivide_Production;
+  for (let id in database.hideout.production) {
+    if (database.hideout.production[id].productionTime != 0 && database.hideout.production[id].productionTime > database.gameplay.hideout.productionTimeDivide_Production) {
+        database.hideout.production[id].productionTime = database.hideout.production[id].productionTime / database.gameplay.hideout.productionTimeDivide_Production;
     }
   }
-  for (let id in _database.hideout.scavcase) {
-    if (_database.hideout.production[id].ProductionTime != 0 && _database.hideout.production[id].ProductionTime > _database.gameplay.hideout.productionTimeDivide_ScavCase) {
-      _database.hideout.production[id].ProductionTime = _database.hideout.production[id].ProductionTime / _database.gameplay.hideout.productionTimeDivide_ScavCase;
+  for (let id in database.hideout.scavcase) {
+    if (database.hideout.production[id].ProductionTime != 0 && database.hideout.production[id].ProductionTime > database.gameplay.hideout.productionTimeDivide_ScavCase) {
+        database.hideout.production[id].ProductionTime = database.hideout.production[id].ProductionTime / database.gameplay.hideout.productionTimeDivide_ScavCase;
     }
   }
 }
 
 function loadQuestsData() {
-  // _database.quests = fileIO.readParsed("./" + db.quests.quests);
-  // if (typeof _database.quests.data != "undefined") _database.quests = _database.quests.data;
+    const database = DatabaseController.getDatabase();
 
-  _database.quests = [];
+  // database.quests = fileIO.readParsed("./" + db.quests.quests);
+  // if (typeof database.quests.data != "undefined") database.quests = database.quests.data;
+
+  database.quests = [];
   const oldQuests = fileIO.readParsed("./" + db.quests.quests);
 
   // - Convert Aki's working Quests to JETs quest array // 
@@ -245,80 +233,46 @@ function loadQuestsData() {
           quest.conditions.AvailableForStart = oldQuest.conditions.AvailableForStart;
         }
       }
-      _database.quests.push(quest);
+      database.quests.push(quest);
     }
   }
 
-  _database.repeatableQuests = fileIO.readParsed("./" + db.quests.repeatableQuests);
+  database.repeatableQuests = fileIO.readParsed("./" + db.quests.repeatableQuests);
   
-  // const objectQData = fileIO.readParsed("./" + db.quests.quests3);
-  // if(objectQData !== undefined) {
-  //   _database.quests = [];
-  //   for(const q in objectQData) {
-  //     _database.quests.push(objectQData[q]);
-  //   }
-  // }
-
-  /*   // this should load quests depending on file content if its single quest it will be pushed to the list
-    // if its quests array containing more then 1 quest it will be loaded as for loop push 
-    // unless database quests array is empty then it will just everride the empty array
-    _database.quests = [];
-    for (let quest in db.quests) {
-      let questData = fileIO.readParsed("./" + db.quests[quest]);
-      if (typeof questData.length != "undefined") {
-        if (_database.quests.length == 0) {
-          _database.quests = questData;
-        } else {
-          for (let q in questData) {
-            _database.quests.push(questData[q]);
-          }
-        }
-      } else {
-        _database.quests.push(questData);
-      }
-    } */
 }
 
 function loadCustomizationData() {
+    const database = DatabaseController.getDatabase();
 
-  _database.customization = {};
+    database.customization = {};
   let data = JSON.parse(fs.readFileSync(db.customization["_items"]));
   for(let id in data) {
-    _database.customization[id] = data[id];
+    database.customization[id] = data[id];
   }
-  // for (let file in db.customization) {
-  //   let data = fileIO.readParsed(db.customization[file]);
-  //   // make sure it has _id so we gonna use that
-  //   if (Object.keys(data)[0].length == 24) {
-  //     for (let q in data) {
-  //       _database.customization[q] = data[q];
-  //     }
-  //   } else {
-  //     // if sile doesnt contain _id use file name
-  //     _database.customization[file] = data;
-  //   }
-  // }
+ 
 }
 
 function loadLocaleData() {
-  _database.languages = fileIO.readParsed("./" + db.locales.languages);
-  // provide support for using dumps
-  if (typeof _database.languages.data != "undefined") _database.languages = _database.languages.data;
+    const database = DatabaseController.getDatabase();
 
-  _database.locales = { menu: {}, global: {} };
+    database.languages = fileIO.readParsed("./" + db.locales.languages);
+  // provide support for using dumps
+  if (database.languages.data !== undefined) database.languages = database.languages.data;
+
+  database.locales = { menu: {}, global: {} };
 
   for (let lang in db.locales) {
     if (lang == "languages") { continue; }
 
     lang = lang.toLowerCase(); // make sure its always lower case
 
-    _database.locales.menu[lang] = fileIO.readParsed("./" + db.locales[lang].menu);
-    if (typeof _database.locales.menu[lang].data != "undefined") {
-      _database.locales.menu[lang] = _database.locales.menu[lang].data;
+    database.locales.menu[lang] = fileIO.readParsed("./" + db.locales[lang].menu);
+    if (typeof database.locales.menu[lang].data != "undefined") {
+        database.locales.menu[lang] = database.locales.menu[lang].data;
     }
-    _database.locales.global[lang] = fileIO.readParsed("./" + db.locales[lang].locale);
-    if (typeof _database.locales.global[lang].data != "undefined") {
-      _database.locales.global[lang] = _database.locales.global[lang].data;
+    database.locales.global[lang] = fileIO.readParsed("./" + db.locales[lang].locale);
+    if (typeof database.locales.global[lang].data != "undefined") {
+        database.locales.global[lang] = database.locales.global[lang].data;
     }
   }
 }
@@ -422,7 +376,9 @@ function createStaticMountedStruct(item_data) {
 }
 
 function loadLocationData() {
-  _database.locations = {};
+    const database = DatabaseController.getDatabase();
+
+  database.locations = {};
   for (let name in db.locations.base) {
     let _location = { "base": {}, "loot": {} };
     _location.base = fileIO.readParsed(db.locations.base[name]);
@@ -464,18 +420,19 @@ function loadLocationData() {
         }
       }
     }
-    _database.locations[name] = _location;
+    database.locations[name] = _location;
     // if(name.includes("lighthouse")) {
     //   console.log(_location);
     // }
   }
-  _database.core.location_base = fileIO.readParsed("./" + db.base.locations);
-  _database.locationConfigs = {};
-  _database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
-  _database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
+  database.core.location_base = fileIO.readParsed("./" + db.base.locations);
+  database.locationConfigs = {};
+  database.locationConfigs["StaticLootTable"] = fileIO.readParsed("./" + db.locations.StaticLootTable);
+  database.locationConfigs["DynamicLootTable"] = fileIO.readParsed("./" + db.locations.DynamicLootTable);
 }
 
 function loadTraderAssort(traderId) {
+    const database = DatabaseController.getDatabase();
 
   let base = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
   if(traderId == "579dc571d53a0658a154fbec")
@@ -573,73 +530,79 @@ function loadTraderAssort(traderId) {
 }
 
 function loadTradersData() {
-  global._database.traders = {};
+    const database = DatabaseController.getDatabase();
+
+  database.traders = {};
   for (let traderID in db.traders) {
-    global._database.traders[traderID] = { base: {}, assort: {}, categories: {} };
-    global._database.traders[traderID].base = fileIO.readParsed("./" + db.traders[traderID].base);
-    global._database.traders[traderID].categories = global._database.traders[traderID].base.sell_category;
+    database.traders[traderID] = { base: {}, assort: {}, categories: {} };
+    database.traders[traderID].base = fileIO.readParsed("./" + db.traders[traderID].base);
+    database.traders[traderID].categories = database.traders[traderID].base.sell_category;
     if( 
-      global._database.traders[traderID].base.sell_category.length === 0
+      database.traders[traderID].base.sell_category.length === 0
       && fs.existsSync(`./db/traders/${traderID}/categories.json`)
       ) {
-      global._database.traders[traderID].categories = fileIO.readParsed("./" + db.traders[traderID].categories);
-      global._database.traders[traderID].base.sell_category = _database.traders[traderID].categories; // override trader categories
+      database.traders[traderID].categories = fileIO.readParsed("./" + db.traders[traderID].categories);
+      database.traders[traderID].base.sell_category = database.traders[traderID].categories; // override trader categories
     }
 
-    global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
+    database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
 
     // Loading Assort depending if its Fence or not
     // if (traderID == "579dc571d53a0658a154fbec") {
-    //   global._database.traders[traderID].base_assort = loadTraderAssort(traderID);
-    //   global._database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
+    //   database.traders[traderID].base_assort = loadTraderAssort(traderID);
+    //   database.traders[traderID].assort = { nextResupply: 0, items: [], barter_scheme: {}, loyal_level_items: {} };
     // } else {
-      global._database.traders[traderID].assort = loadTraderAssort(traderID);
+      database.traders[traderID].assort = loadTraderAssort(traderID);
     // }
     // Loading Player Customizations For Buying
     if ("suits" in db.traders[traderID]) {
       if (typeof db.traders[traderID].suits == "string") {
-        global._database.traders[traderID].suits = fileIO.readParsed(db.traders[traderID].suits);
+        database.traders[traderID].suits = fileIO.readParsed(db.traders[traderID].suits);
       } else {
         let suitsTable = [];
         for (let file in db.traders[traderID].suits) {
           suitsTable.push(fileIO.readParsed(db.traders[traderID].suits[file]));
         }
-        global._database.traders[traderID].suits = suitsTable;
+        database.traders[traderID].suits = suitsTable;
       }
     }
 
     // Loading Trader Quests
     if (typeof db.traders[traderID].questassort != "undefined") {
-      _database.traders[traderID].questassort = fileIO.readParsed("./" + db.traders[traderID].questassort);
+      database.traders[traderID].questassort = fileIO.readParsed("./" + db.traders[traderID].questassort);
     }
 
-    if (global._database.traders[traderID].base.repair.price_rate === 0) {
-      global._database.traders[traderID].base.repair.price_rate = 100;
-      global._database.traders[traderID].base.repair.price_rate *= global.global._database.gameplay.trading.repairMultiplier;
-      global._database.traders[traderID].base.repair.price_rate -= 100;
+    if (database.traders[traderID].base.repair.price_rate === 0) {
+      database.traders[traderID].base.repair.price_rate = 100;
+      database.traders[traderID].base.repair.price_rate *= database.gameplay.trading.repairMultiplier;
+      database.traders[traderID].base.repair.price_rate -= 100;
     } else {
-      global._database.traders[traderID].base.repair.price_rate *= global.global._database.gameplay.trading.repairMultiplier;
-      if (global._database.traders[traderID].base.repair.price_rate == 0) global._database.traders[traderID].base.repair.price_rate = -1;
+      database.traders[traderID].base.repair.price_rate *= database.gameplay.trading.repairMultiplier;
+      if (database.traders[traderID].base.repair.price_rate == 0) database.traders[traderID].base.repair.price_rate = -1;
     }
-    if (global._database.traders[traderID].base.repair.price_rate < 0) {
-      global._database.traders[traderID].base.repair.price_rate = -100;
+    if (database.traders[traderID].base.repair.price_rate < 0) {
+      database.traders[traderID].base.repair.price_rate = -100;
     }
   }
 }
 
 function loadWeatherData() {
-  _database.weather = [];
+    const database = DatabaseController.getDatabase();
+
+  database.weather = [];
   let i = 0;
   for (let file in db.weather) {
     let filePath = db.weather[file];
     let fileData = fileIO.readParsed(filePath);
 
     // logger.logInfo("Loaded Weather: ID: " + i++ + ", Name: " + file.replace(".json", ""));
-    _database.weather.push(fileData);
+    database.weather.push(fileData);
   }
 }
 
 function loadRagfair() {
+    const database = DatabaseController.getDatabase();
+
 
   const findChildren = (itemIdToFind, assort) => {
     let Array = [];
@@ -651,11 +614,11 @@ function loadRagfair() {
     }
     return Array;
   }
-  const fleaOfferTemplate = global._database.core.fleaOffer;
+  const fleaOfferTemplate = database.core.fleaOffer;
   const convertToRagfairAssort = (itemsToSell, barter_scheme, loyal_level, trader, counter = 911) => {
 
     let offer = utility.DeepCopy(fleaOfferTemplate);
-    const traderObj = global._database.traders[trader].base;
+    const traderObj = database.traders[trader].base;
     offer._id = itemsToSell[0]._id;
     offer.intId = counter;
     offer.user = {
@@ -685,7 +648,7 @@ function loadRagfair() {
     if (trader === "ragfair" || trader === "579dc571d53a0658a154fbec") {
       continue;
     }
-    const allAssort = global._database.traders[trader].assort;
+    const allAssort = database.traders[trader].assort;
 
     for (let itemAssort of allAssort.items) {
       if (itemAssort.slotId === "hideout") {
@@ -723,43 +686,45 @@ function loadRagfair() {
       }
     }
   }
-  _database.ragfair_offers = response;
+  database.ragfair_offers = response;
 }
 
 DatabaseController.loadDatabase = () => {
-  ConfigController.init();
+    ConfigController.init();
+    database = new Database();
+    DatabaseController.Database = new Database();
 
-  logger.logDebug("Load: 'Core'");
-  loadCoreData();
-  logger.logDebug("Load: 'Globals'");
-  loadGlobals();
-  // logger.logDebug("Load: 'Cluster Config'")
-  // loadClusterConfig();
-  // logger.logDebug("Load: 'Blacklist'")
-  // loadBlacklistConfig();
-  logger.logDebug("Load: 'Gameplay'");
-  loadGameplayConfig();
-  logger.logDebug("Load: 'Bots'");
-  loadBotsData();
-  logger.logDebug("Load: 'Hideout'");
-  loadHideoutData();
-  logger.logDebug("Load: 'Quests'");
-  loadQuestsData();
-  logger.logDebug("Load: 'Items'");
-  loadItemsData();
-  logger.logDebug("Load: 'Customizations'");
-  loadCustomizationData();
-  logger.logDebug("Load: 'Locales'");
-  loadLocaleData();
-  logger.logDebug("Load: 'Locations'");
-  loadLocationData();
-  logger.logDebug("Load: 'Traders'");
-  loadTradersData();
-  logger.logDebug("Load: 'Flea Market'");
-  loadRagfair();
-  logger.logDebug("Load: 'Weather'");
-  loadWeatherData();
-  // logger.logInfo("Database loaded");
+    logger.logDebug("Load: 'Core'");
+    loadCoreData();
+    logger.logDebug("Load: 'Globals'");
+    loadGlobals();
+    // logger.logDebug("Load: 'Cluster Config'")
+    // loadClusterConfig();
+    // logger.logDebug("Load: 'Blacklist'")
+    // loadBlacklistConfig();
+    logger.logDebug("Load: 'Gameplay'");
+    loadGameplayConfig();
+    logger.logDebug("Load: 'Bots'");
+    loadBotsData();
+    logger.logDebug("Load: 'Hideout'");
+    loadHideoutData();
+    logger.logDebug("Load: 'Quests'");
+    loadQuestsData();
+    logger.logDebug("Load: 'Items'");
+    loadItemsData();
+    logger.logDebug("Load: 'Customizations'");
+    loadCustomizationData();
+    logger.logDebug("Load: 'Locales'");
+    loadLocaleData();
+    logger.logDebug("Load: 'Locations'");
+    loadLocationData();
+    logger.logDebug("Load: 'Traders'");
+    loadTradersData();
+    logger.logDebug("Load: 'Flea Market'");
+    loadRagfair();
+    logger.logDebug("Load: 'Weather'");
+    loadWeatherData();
+    // logger.logInfo("Database loaded");
 };
 
 

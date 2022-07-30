@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { logger } = require('../../core/util/logger');
-const { DbController } = require('../Controllers/DatabaseController');
+const { DbController, DatabaseController } = require('../Controllers/DatabaseController');
 const database = require('./../../src/functions/database');
 
 /**
@@ -11,6 +11,8 @@ class AkiModLoader
     static IsAkiShimmed = false;
 
     static supportAki() {
+
+        const database = DatabaseController.getDatabase();
         global.JsonUtil = {};
         global.JsonUtil.clone = (item) => 
         { 
@@ -28,10 +30,10 @@ class AkiModLoader
 
         global.DatabaseServer = {};
         DatabaseServer.tables = {};
-        DatabaseServer.tables = JsonUtil.clone(global._database);
-        DatabaseServer.tables.templates.categories = JsonUtil.clone(global._database.templates.Categories);
-        DatabaseServer.tables.templates.items = JsonUtil.clone(global._database.items);
-        DatabaseServer.tables.templates.handbook = { Items: JsonUtil.clone(global._database.templates.Items) };
+        DatabaseServer.tables = JsonUtil.clone(database);
+        DatabaseServer.tables.templates.categories = JsonUtil.clone(database.templates.Categories);
+        DatabaseServer.tables.templates.items = JsonUtil.clone(database.items);
+        DatabaseServer.tables.templates.handbook = { Items: JsonUtil.clone(database.templates.Items) };
         DatabaseServer.tables.templates.prices = {};
 
         DatabaseServer.tables.templates.quests = {};
