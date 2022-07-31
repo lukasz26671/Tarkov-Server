@@ -8,6 +8,10 @@
 This is by no means designed for cheats or illegally downloading the game. This is purely for educational and game modification purposes. You must buy the game to use this. 
 You can obtain it here. [https://www.escapefromtarkov.com](https://www.escapefromtarkov.com)
 
+## Discord
+
+You can [join here](https://discord.gg/WhVmwUNvm5). Please by aware there is a strict NO PIRACY policy to this project. Any piracy talk in the discord is a bannable offence. Do not join unless you own the game!
+
 ## Debugging
 - Download and Install [Visual Studio Code](https://code.visualstudio.com/) 
 - Open the Directory (can be done in several ways)
@@ -65,10 +69,8 @@ Deploy with db, dbViewer, out, res, user & server.exe
 - You can find the DBViewer at https://localhost:443/db
 
 ## Thanks list
-- Aki Team (Chomp, CWX and Bepis)
-- JET / TheMaoci / MaoMao
-- CQ
-- King
-- Nehax
+- SPT-Aki Team (Chomp, CWX and Bepis)
+- JustEmuTarkov team
+- Altered Escape team
 
  
