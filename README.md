@@ -10,7 +10,7 @@ You can obtain it here. [https://www.escapefromtarkov.com](https://www.escapefro
 
 ## Discord
 
-You can [join here](shorturl.at/abHVW). Please be aware there is a strict NO PIRACY policy to this project. Any piracy talk in the discord is a bannable offence. Do not join unless you own the game!
+You can [join here](https://shorturl.at/abHVW). Please be aware there is a strict NO PIRACY policy to this project. Any piracy talk in the discord is a bannable offence. Do not join unless you own the game!
 
 ## Debugging
 - Download and Install [Visual Studio Code](https://code.visualstudio.com/) 
