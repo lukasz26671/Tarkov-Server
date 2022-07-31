@@ -38,7 +38,7 @@ class FriendshipController {
 				}
 				else {
 					logger.logError(`Unable to find friend's account by its Id (${id}), does it still exist? Removing!`);
-					myAccount.friends = myAccount.friends.filter(x=>x._id !== id);
+					myAccount.friends = myAccount.friends.filter(x=> x !== undefined && x._id !== id);
 				}
 			}
 		}
