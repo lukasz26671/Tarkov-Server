@@ -810,9 +810,27 @@ class LootController
           const mapDynamicLootGeneratorItem = mapDynamicLootTable[lootData.Id];
     
           const generatedItemId = utility.generateNewItemId();
-          const randomItem = randomItems[utility.getRandomInt(0, randomItems.length - 1)];
-          if(randomItem === undefined)
-            continue;
+          let randomItem = randomItems[utility.getRandomInt(0, randomItems.length - 1)];
+          if(randomItem === undefined) {
+            const dbItems = ItemController.getDatabaseItems();
+            const dbItemKeys = Object.keys(dbItems);
+            while(randomItem === undefined)
+            {
+              const dbHideoutAreas = DatabaseController.getDatabase().hideout.areas;
+              const randomArea = dbHideoutAreas[utility.getRandomInt(0, dbHideoutAreas.length - 1)];
+              const randomAreaStageKeys = Object.keys(randomArea.stages);
+              const randomAreaStageKey = randomAreaStageKeys[utility.getRandomInt(0, randomAreaStageKeys.length - 1)];
+              const randomAreaStage = randomArea.stages[randomAreaStageKey];
+              if(randomAreaStage.requirements.length > 0) {
+                const randomAreaStageTemplateItems = randomAreaStage.requirements.filter(x=>x.templateId !== undefined);
+                const randomAreaStageTemplate = randomAreaStageTemplateItems[utility.getRandomInt(0, randomAreaStageTemplateItems.length - 1)];
+                randomItem = dbItems[randomAreaStageTemplate.templateId];
+              }
+            } 
+
+            // if(randomItem === undefined)
+            //   continue;
+          }
 
           const createdItem = {
             _id: generatedItemId,
