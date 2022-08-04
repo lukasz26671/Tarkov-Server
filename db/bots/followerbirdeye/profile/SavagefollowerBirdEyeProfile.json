@@ -35,9 +35,9 @@
             "IsStreamerModeAvailable": false
         },
         "Customization": {
-            "Head": "5d5f8ba486f77431254e7fd2",
-            "Body": "5d5e7c9186f774393602d6f9",
-            "Feet": "5d5e7f3c86f7742797262063",
+            "Head": "628b57d800f171376e7b2634",
+            "Body": "628a6801805c5b6c100cc200",
+            "Feet": "628a4645c9327c7587388849",
             "Hands": "5cc2e68f14c02e28b47de290"
         },
         "Health": {
@@ -516,15 +516,16 @@
                     }
                 },
                 {
-                    "_id": "628de5a185cca81dce0bbc3a",
-                    "_tpl": "60a3c68c37ea821725773ef5",
+                    "_id": "628de5a185cca81dce0bbc3b",
+                    "_tpl": "609e8540d5c319764c2bc2e9",
                     "parentId": "628de5a185cca81dce0bbbfb",
-                    "slotId": "TacticalVest",
-                    "upd": {
-                        "Repairable": {
-                            "Durability": 55
-                        }
-                    }
+                    "slotId": "ArmorVest"
+                },
+                {
+                    "_id": "628de5a185cca81dce0bbc3a",
+                    "_tpl": "628baf0b967de16aab5a4f36",
+                    "parentId": "628de5a185cca81dce0bbbfb",
+                    "slotId": "TacticalVest"
                 },
                 {
                     "_id": "628de5a185cca81dce0bbc42",
@@ -607,35 +608,6 @@
                     }
                 },
                 {
-                    "_id": "628de5a185cca81dce0bbc3b",
-                    "_tpl": "5a16bb52fcdbcb001a3b00dc",
-                    "parentId": "628de5a185cca81dce0bbbfb",
-                    "slotId": "Headwear"
-                },
-                {
-                    "_id": "628de5a185cca81dce0bbc3c",
-                    "_tpl": "5a16b8a9fcdbcb00165aa6ca",
-                    "parentId": "628de5a185cca81dce0bbc3b",
-                    "slotId": "mod_nvg"
-                },
-                {
-                    "_id": "628de5a185cca81dce0bbc3d",
-                    "_tpl": "5a16b93dfcdbcbcae6687261",
-                    "parentId": "628de5a185cca81dce0bbc3c",
-                    "slotId": "mod_nvg"
-                },
-                {
-                    "_id": "628de5a185cca81dce0bbc3e",
-                    "_tpl": "57235b6f24597759bf5a30f1",
-                    "parentId": "628de5a185cca81dce0bbc3d",
-                    "slotId": "mod_nvg",
-                    "upd": {
-                        "Togglable": {
-                            "On": true
-                        }
-                    }
-                },
-                {
                     "_id": "628de5a185cca81dce0bbc3f",
                     "_tpl": "5bffe7930db834001b734a39",
                     "parentId": "628de5a185cca81dce0bbbfb",
@@ -643,7 +615,7 @@
                 },
                 {
                     "_id": "628de5a185cca81dce0bbc40",
-                    "_tpl": "5ca20d5986f774331e7c9602",
+                    "_tpl": "628bc7fb408e2b2e9c0801b1",
                     "parentId": "628de5a185cca81dce0bbbfb",
                     "slotId": "Backpack"
                 },
