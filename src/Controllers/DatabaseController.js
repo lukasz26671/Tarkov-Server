@@ -220,19 +220,19 @@ function loadQuestsData() {
   // if (typeof database.quests.data != "undefined") database.quests = database.quests.data;
 
   database.quests = [];
-  const oldQuests = fileIO.readParsed("./" + db.quests.quests);
+  // const oldQuests = fileIO.readParsed("./" + db.quests.quests);
 
   // - Convert Aki's working Quests to JETs quest array // 
-  const objectQData = fileIO.readParsed("./" + db.quests["quests.0.12.12.30"]);
+  const objectQData = fileIO.readParsed("./" + db.quests["quests.aki.0.12.12.30"]);
   if(objectQData !== undefined) {
     for(const q in objectQData) {
       const quest = objectQData[q];
-      if(quest.conditions.AvailableForStart.length === 0) {
-        const oldQuest = oldQuests.find(x=>x._id === quest._id);
-        if(oldQuest && oldQuest.conditions.AvailableForStart.length > 0) {
-          quest.conditions.AvailableForStart = oldQuest.conditions.AvailableForStart;
-        }
-      }
+      // if(quest.conditions.AvailableForStart.length === 0) {
+      //   const oldQuest = oldQuests.find(x=>x._id === quest._id);
+      //   if(oldQuest && oldQuest.conditions.AvailableForStart.length > 0) {
+      //     quest.conditions.AvailableForStart = oldQuest.conditions.AvailableForStart;
+      //   }
+      // }
       database.quests.push(quest);
     }
   }
