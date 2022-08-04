@@ -1,6 +1,7 @@
 "use strict";
 const utility = require('../../core/util/utility');
 const { AccountController } = require('../Controllers/AccountController');
+const { DatabaseController } = require('../Controllers/DatabaseController');
 
 class TradeHandler {
 
@@ -15,10 +16,11 @@ class TradeHandler {
       tid: body.tid,
     };
   
-    const traderAssort = global._database.traders[body.tid].assort;
+    
+    const traderAssort = DatabaseController.getDatabase().traders[body.tid].assort;
   
     if (!TradeHandler.updateAssort(traderAssort, body)) {
-      return
+      return;
     }
 
     if (!helper_f.payMoney(pmcData, body, sessionID)) {

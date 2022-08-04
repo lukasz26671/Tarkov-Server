@@ -304,6 +304,8 @@ const getPath = (sessionID) => `user/profiles/${sessionID}/dialogue.json`;
 
 const messageTypes = {
   npcTrader: 2,
+  auctionMessage: 3,
+  fleamarketMessage: 4,
   insuranceReturn: 8,
   questStart: 10,
   questFail: 11,

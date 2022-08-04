@@ -183,8 +183,14 @@ function getOffers(sessionID, request) {
   }
 
  
-  if(SITConfig_UseFleaMarketLevelLock === true
-    && pmcLevel > BSGConfig_MinLevel) {
+  if(
+    // Flea Market lock on
+    (SITConfig_UseFleaMarketLevelLock === true
+    && pmcLevel > BSGConfig_MinLevel)
+    // Flea Market lock off
+    || SITConfig_UseFleaMarketLevelLock === false
+  )
+    {
     for (let item of itemsToAdd) {
       offers = offers.concat(createOffer(item, request.onlyFunctional, request.buildCount === 0));
     }
@@ -195,7 +201,16 @@ function getOffers(sessionID, request) {
     const traderOffers = getOffersFromTraders(sessionID, request).offers;
 
     offers = [...offers, ...traderOffers];
+
+    const playerOffers = getFleaMarketOffersFromPlayers(sessionID, request).offers;
+    // console.log(playerOffers);
+    // console.log(offers);
+    offers = [...offers, ...playerOffers];
+    // console.log(offers);
+
   }
+
+
 
 
   response.offers = sortOffers(request, offers);
@@ -208,7 +223,7 @@ function getOffers(sessionID, request) {
 
 function getOffersFromTraders(sessionID, request) {
   //let jsonToReturn = fileIO.readParsed(db.user.cache.ragfair_offers)
-  let jsonToReturn = utility.DeepCopy(_database.ragfair_offers);
+  let jsonToReturn = utility.DeepCopy(DatabaseController.getDatabase().ragfair_offers);
   let offersFilters = []; //this is an array of item tpl who filter only items to show
 
   jsonToReturn.categories = {};
@@ -272,6 +287,8 @@ function getOffersFromTraders(sessionID, request) {
 
   return jsonToReturn;
 }
+
+
 
 function fillCategories(response, filters) {
   response.categories = {};
@@ -363,24 +380,21 @@ function createOffer(template, onlyFunc, usePresets = true) {
     return [];
   }
 
+  const useFleaMarketTradingBlacklist = ConfigController.Configs["gameplay"].trading.fleaMarket.UseFleaMarketTradingBlacklist;
  
   
   const item = ItemController.tryGetItem(template);
   if(item !== undefined) {
-    if(ConfigController.Configs["gameplay"].trading.fleaMarket.UseFleaMarketTradingBlacklist === true
-        && item._props.CanSellOnRagfair === false)
+    if(useFleaMarketTradingBlacklist === true
+        && item._props.CanSellOnRagfair === false
+        )
       return [];
     if(item._props.IsUnbuyable === true)
       return [];
-    if(item._props.QuestItem === true)
+    if(useFleaMarketTradingBlacklist 
+      && item._props.QuestItem === true)
       return [];
   }
-
-  // Remove items that don't exist in assort
-  // if (Object.values(global._database.traders.ragfair.assort.items).filter(tItem => tItem._tpl == template || tItem._id == template).length == 0) {
-  //   logger.logWarning(`Item ${template} does not exist in ragfair assort, ignoring...`);
-  //   return [];
-  // }
 
   const offerBase = utility.DeepCopy(_database.core.fleaOffer);
   const offers = [];
@@ -434,12 +448,83 @@ function createOffer(template, onlyFunc, usePresets = true) {
     offer.summaryCost = rubPrice;
     delete offer.buyRestrictionMax
     // randomize the name
-    offer.user.nickname = global.utility.getArrayValue(global._database.bots.names.normal);
+    offer.user.nickname = global.utility.getArrayValue(DatabaseController.getDatabase().bots.names.normal);
     offers.push(offer);
   }
 
   return offers;
 }
+
+function getFleaMarketOffersFromPlayers(sessionID, request) {
+  let jsonToReturn = { categories: {}, offers: [] }
+
+  for(const acc of AccountController.getAllAccounts()) {
+
+    const profile = AccountController.getPmcProfile(acc._id);
+    if(profile.FleaOffers)
+      jsonToReturn.offers = [...jsonToReturn.offers, ...profile.FleaOffers];
+  }
+
+  let offersFilters = []; //this is an array of item tpl who filter only items to show
+
+  if (request.buildCount) {
+    // Case: weapon builds
+    offersFilters = Object.keys(request.buildItems);
+    jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+  } else {
+    // Case: search
+    if (request.linkedSearchId) {
+      //offersFilters.concat( getLinkedSearchList(request.linkedSearchId) );
+      offersFilters = [...offersFilters, ...getLinkedSearchList(request.linkedSearchId)];
+      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+    } else if (request.neededSearchId) {
+      offersFilters = [...offersFilters, ...getNeededSearchList(request.neededSearchId)];
+      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+    }
+
+    if (request.removeBartering == true) {
+      jsonToReturn = removeBarterOffers(jsonToReturn);
+      jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+    }
+
+    // Case: category
+    if (request.handbookId) {
+      let handbookList = getCategoryList(request.handbookId);
+
+      if (offersFilters.length) {
+        offersFilters = helper_f.arrayIntersect(offersFilters, handbookList);
+      } else {
+        offersFilters = handbookList;
+      }
+    }
+  }
+
+  let offersToKeep = jsonToReturn.offers;
+  // for (let offer in jsonToReturn.offers) {
+  //   for (let tplTokeep of offersFilters) {
+  //     if (jsonToReturn.offers[offer].items[0]._tpl == tplTokeep) {
+  //       offersToKeep.push(jsonToReturn.offers[offer]);
+  //       break;
+  //       // check if offer is really available, removes any quest locked items not in current assort of a trader
+  //       // const tmpOffer = jsonToReturn.offers[offer];
+  //       // const traderId = tmpOffer.user.id;
+  //       // const traderAssort = TradingController.getTraderAssort(traderId, sessionID).items;
+  //       // for (let item of traderAssort) {
+  //       //   if (item._id === tmpOffer.root) {
+  //       //     jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = 30; //(tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
+  //       //     offersToKeep.push(jsonToReturn.offers[offer]);
+  //       //     break;
+  //       //   }
+  //       // }
+  //     }
+  //   }
+  // }
+  jsonToReturn.offers = offersToKeep;
+  jsonToReturn.offers = sortOffers(request, jsonToReturn.offers);
+
+  return jsonToReturn;
+}
+
 
 function getRagfairMarketPrice(request) {
   return { min: 0, max: 0, avg: 0 };

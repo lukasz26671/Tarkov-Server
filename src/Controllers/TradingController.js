@@ -6,6 +6,7 @@ const mathjs = require('mathjs');
 const { AccountController } = require('./AccountController');
 const { logger } = require('../../core/util/logger');
 const { ItemController } = require('./ItemController');
+const { DialogueController } = require('./DialogueController');
 
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
@@ -592,18 +593,216 @@ static getLoyalty(pmcData, traderID) {
         return { min: 0, max: 0, avg: avg };
       }
 
+      static getFleaMarketOfferBase() {
+
+        const offerBase = utility.DeepCopy(DatabaseController.getDatabase().core.fleaOffer);
+        return offerBase;
+      }
+
       static addFleaMarketOffer(pmcData, body, sessionID) {
 
-        logger.logWarning("Adding a Flea Market offer is not yet supported by SIT");
-        // console.log("addFleaMarketOffer");
-        const ragfairAssort = TradingController.getTraderAssort("ragfair", sessionID);
-        if(global.webSocketClientBySessionId[sessionID]) {
-          global.webSocketClientBySessionId[sessionID].send(
-            JSON.stringify({ type: "RagfairOfferSold"
-            , offerId: utility.generateNewId()
-            , count: 1
-            , handbookId: body.items[0]}));
+        // console.log(body);
+
+        const offerBase = TradingController.getFleaMarketOfferBase();
+
+        if(!pmcData.FleaOffers) {
+          pmcData.FleaOffers = [];
         }
+        let offer = utility.DeepCopy(offerBase);
+
+        offer.intId = utility.getRandomInt(0, 214712343);
+        offer._id = utility.generateNewId();
+        const offerItemBase = utility.DeepCopy(offer.items[0]);
+        offer.items = [];
+        // offer.items[0]._tpl = template;
+        //   offer.items[0].upd.StackObjectsCount = 1;
+        offer.root = utility.generateNewId();
+        for(const it of body.items) {
+          const offerItem = utility.DeepCopy(offerItemBase);
+          offerItem._id = utility.generateNewId();
+          const matchingItemsInInventory = pmcData.Inventory.items.filter(x => x._id === it);
+          if(matchingItemsInInventory) {
+            const itemInInventory = matchingItemsInInventory[0];
+            offerItem._tpl = itemInInventory._tpl;
+            offerItem.upd.StackObjectsCount = 1;
+            offerItem.parentId = 'hideout';
+            offerItem.slotId = 'hideout';
+            offer.items.push(offerItem);
+            move_f.removeItemFromProfile(pmcData, it, sessionID);
+          }
+        }
+        offer.items[0]._id = offer.root;
+        offer.item = offer.items[0];
+
+        offer.requirements = body.requirements;
+        offer.itemsCost = body.requirements[0].count;
+        offer.requirementsCost = body.requirements[0].count;
+        offer.summaryCost = body.requirements[0].count;
+        offer.user.id = pmcData.aid;
+        offer.user.nickname = pmcData.Info.Nickname;
+
+        // logger.logWarning("Adding a Flea Market offer is not yet supported by SIT");
+        pmcData.FleaOffers.push(offer);
+
+
+        // console.log("addFleaMarketOffer");
+        // const ragfairAssort = TradingController.getTraderAssort("ragfair", sessionID);
+        // if(global.webSocketClientBySessionId[sessionID]) {
+        //   global.webSocketClientBySessionId[sessionID].send(
+        //     JSON.stringify({ type: "RagfairOfferSold"
+        //     , offerId: utility.generateNewId()
+        //     , count: 1
+        //     , handbookId: body.items[0]}));
+        // }
+
+        return item_f.handler.getOutput(sessionID);
+      }
+
+      static handledOffers = [];
+
+      static checkAIBuyItemsOnFleaMarket() {
+
+        let offers = [];
+        for(const acc of AccountController.getAllAccounts()) {
+          const profile = AccountController.getPmcProfile(acc._id);
+          if(profile.FleaOffers)
+            offers = [...offers, ...profile.FleaOffers];
+        }
+
+        if(offers.length > 0) {
+          // console.log(offers);
+          for(const offer of offers) {
+
+            if(TradingController.handledOffers.includes(offer._id))
+              continue;
+
+            TradingController.handledOffers.push(offer._id);
+
+            let offerRank = 0;
+            const currentFleaMarketPrices = TradingController.getRagfairMarketPrice({ templateId: offer.items[0]._tpl });
+            const currentTradingPrice = ItemController.getTemplatePrice(offer.items[0]._tpl);
+            const currentRagfairPrice = currentTradingPrice * 4;
+            offerRank = Math.min(100, Math.max(0, ((currentRagfairPrice / offer.summaryCost) * 100)));
+            const randomNumber = utility.getRandomInt(0, 100);
+            if(offerRank >= randomNumber) {
+              // console.log("buy it!");
+              if(global.webSocketClientBySessionId[offer.user.id]) {
+                global.webSocketClientBySessionId[offer.user.id].send(
+                  JSON.stringify({ type: "RagfairOfferSold"
+                  , offerId: offer._id
+                  , count: 1
+                  , handbookId: offer.items[0]._tpl}));
+              }
+
+              const rewards = [];
+              for(const req of offer.requirements) {
+                rewards.push({
+                  _id: utility.generateNewId(),
+                  _tpl: req._tpl,
+                  upd: {
+                    StackObjectsCount: req.count,
+                    SpawnedInSession: true
+                  }
+                });
+              }
+
+              const dbItems = ItemController.getDatabaseItems();
+              const itemSold = dbItems[offer.items[0]._tpl];
+              const itemName = DatabaseController.getDatabase().locales.global.en.templates[offer.items[0]._tpl].Name;
+
+              let messageContent = {
+                templateId: "",
+                type: dialogue_f.getMessageTypeValue("fleamarketMessage"),
+                maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
+                text: `Hello! Your ${itemName} has been sold on the Flea Market!`
+              }
+
+              DialogueController.AddDialogueMessage(
+                TradingController.TraderIdToNameMap['Ragman'],
+                messageContent,
+                offer.user.id,
+                rewards
+                );
+
+            }
+          }
+        }
+
+        for(const acc of AccountController.getAllAccounts()) {
+          const profile = AccountController.getPmcProfile(acc._id);
+          profile.FleaOffers = [];
+        }
+      }
+
+
+      static getFleaMarketOffersFromPlayers(sessionID, request) {
+        let jsonToReturn = { categories: {}, offers: [] }
+      
+        for(const acc of AccountController.getAllAccounts()) {
+      
+          const profile = AccountController.getPmcProfile(acc._id);
+          if(profile.FleaOffers)
+            jsonToReturn.offers = [...jsonToReturn.offers, ...profile.FleaOffers];
+        }
+      
+        let offersFilters = []; //this is an array of item tpl who filter only items to show
+      
+        if (request.buildCount) {
+          // Case: weapon builds
+          offersFilters = Object.keys(request.buildItems);
+          jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+        } else {
+          // Case: search
+          if (request.linkedSearchId) {
+            //offersFilters.concat( getLinkedSearchList(request.linkedSearchId) );
+            offersFilters = [...offersFilters, ...getLinkedSearchList(request.linkedSearchId)];
+            jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+          } else if (request.neededSearchId) {
+            offersFilters = [...offersFilters, ...getNeededSearchList(request.neededSearchId)];
+            jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+          }
+      
+          if (request.removeBartering == true) {
+            jsonToReturn = removeBarterOffers(jsonToReturn);
+            jsonToReturn = fillCategories(jsonToReturn, offersFilters);
+          }
+      
+          // Case: category
+          if (request.handbookId) {
+            let handbookList = getCategoryList(request.handbookId);
+      
+            if (offersFilters.length) {
+              offersFilters = helper_f.arrayIntersect(offersFilters, handbookList);
+            } else {
+              offersFilters = handbookList;
+            }
+          }
+        }
+      
+        let offersToKeep = jsonToReturn.offers;
+        // for (let offer in jsonToReturn.offers) {
+        //   for (let tplTokeep of offersFilters) {
+        //     if (jsonToReturn.offers[offer].items[0]._tpl == tplTokeep) {
+        //       offersToKeep.push(jsonToReturn.offers[offer]);
+        //       break;
+        //       // check if offer is really available, removes any quest locked items not in current assort of a trader
+        //       // const tmpOffer = jsonToReturn.offers[offer];
+        //       // const traderId = tmpOffer.user.id;
+        //       // const traderAssort = TradingController.getTraderAssort(traderId, sessionID).items;
+        //       // for (let item of traderAssort) {
+        //       //   if (item._id === tmpOffer.root) {
+        //       //     jsonToReturn.offers[offer].items[0].upd.StackObjectsCount = 30; //(tmpOffer.items[0].upd.BuyRestrictionMax - tmpOffer.items[0].upd.BuyRestrictionCurrent);
+        //       //     offersToKeep.push(jsonToReturn.offers[offer]);
+        //       //     break;
+        //       //   }
+        //       // }
+        //     }
+        //   }
+        // }
+        jsonToReturn.offers = offersToKeep;
+        jsonToReturn.offers = sortOffers(request, jsonToReturn.offers);
+      
+        return jsonToReturn;
       }
 }
 

@@ -122,6 +122,7 @@ class ResponseController
      */
     static receivedCall = (req, sessionID) => {
         InsuranceController.checkExpiredInsurance();
+        TradingController.checkAIBuyItemsOnFleaMarket();
 
         const ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
         const port = req.socket.remotePort || req.socket.localPort;
