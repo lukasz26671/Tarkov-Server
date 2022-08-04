@@ -669,6 +669,8 @@ static getLoyalty(pmcData, traderID) {
             offers = [...offers, ...profile.FleaOffers];
         }
 
+        const soldOffers = [];
+
         if(offers.length > 0) {
           // console.log(offers);
           for(const offer of offers) {
@@ -710,11 +712,13 @@ static getLoyalty(pmcData, traderID) {
               const itemSold = dbItems[offer.items[0]._tpl];
               const itemName = DatabaseController.getDatabase().locales.global.en.templates[offer.items[0]._tpl].Name;
 
+              soldOffers.push(offer._id);
+
               let messageContent = {
                 templateId: "",
                 type: dialogue_f.getMessageTypeValue("fleamarketMessage"),
                 maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
-                text: `Hello! Your ${itemName} has been sold on the Flea Market!`
+                text: `Hello! Your ${itemName} (x${offer.items.length}) has been sold on the Flea Market!`
               }
 
               DialogueController.AddDialogueMessage(
@@ -730,7 +734,8 @@ static getLoyalty(pmcData, traderID) {
 
         for(const acc of AccountController.getAllAccounts()) {
           const profile = AccountController.getPmcProfile(acc._id);
-          profile.FleaOffers = [];
+          if(profile.FleaOffers)
+            profile.FleaOffers = profile.FleaOffers.filter(x => !soldOffers.includes(x._id));
         }
       }
 
