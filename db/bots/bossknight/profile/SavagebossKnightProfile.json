@@ -35,9 +35,9 @@
       "IsStreamerModeAvailable": false
     },
     "Customization": {
-      "Head": "5d5e805d86f77439eb4c2d0e",
-      "Body": "5d5e7dd786f7744a7a274322",
-      "Feet": "5d5e7f2a86f77427997cfb80",
+      "Head": "62875ad50828252c7a28b95c",
+      "Body": "628796f2af0a053a6672c29a",
+      "Feet": "628771f70828252c7a28b961",
       "Hands": "5cc2e68f14c02e28b47de290"
     },
     "Health": {
@@ -302,7 +302,7 @@
         },
         {
           "_id": "6295f9cdd123e60bf43a7a2c",
-          "_tpl": "544a5caa4bdc2d1a388b4568",
+          "_tpl": "628b9c7d45122232a872358f",
           "parentId": "6295f9cdd123e60bf43a7a09",
           "slotId": "TacticalVest"
         },
@@ -399,7 +399,7 @@
         },
         {
           "_id": "6295f9cdd123e60bf43a7a2d",
-          "_tpl": "5b432b2f5acfc4771e1c6622",
+          "_tpl": "62963c18dbc8ab5f0d382d0b",
           "parentId": "6295f9cdd123e60bf43a7a09",
           "slotId": "FaceCover",
           "upd": {
