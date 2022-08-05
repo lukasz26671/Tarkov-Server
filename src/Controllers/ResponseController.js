@@ -356,78 +356,20 @@ action: (url, info, sessionID) => {
 //     });
 // }
 // },
-{ url: "/client/friend/list", action: (url, info, sessionID) => {
+// { url: "/client/friend/list", action: (url, info, sessionID) => {
 
-    var result = { Friends: [], Ignore: [], InIgnoreList: [] };
-    result.Friends = FriendshipController.getFriends(sessionID);
-    // console.log(result);
-    return ResponseController.getBody(result);
+//     var result = { Friends: [], Ignore: [], InIgnoreList: [] };
+//     result.Friends = FriendshipController.getFriends(sessionID);
+//     // console.log(result);
+//     return ResponseController.getBody(result);
    
-}
-},
+// }
+// },
 { url: "/client/game/profile/search", action:(url, info, sessionID) => {
     return ResponseController.getBody(AccountController.getAllAccounts().filter(x=>x._id != sessionID));
 }
 },
-/**
- * Expects requestId, retryAfter, status
- * @param {*} url 
- * @param {*} info 
- * @param {*} sessionID 
- * @returns {*} { requestId, retryAfter, status }
- */
- { url: "/client/friend/request/send", action:(url, info, sessionID) => {
-    const result = FriendshipController.addFriendRequest(sessionID, info.to);
-    return ResponseController.getBody(result);
-}
- },
-{ url: "/client/friend/request/list/outbox", action: (url, info, sessionID) => {
-    const result = FriendshipController.getFriendRequestOutbox(sessionID);
-    return ResponseController.getBody(result);
 
-}
-},
-{ url: "/client/friend/request/list/inbox", action:(url, info, sessionID) => {
-    const result = FriendshipController.getFriendRequestInbox(sessionID);
-    return ResponseController.getBody(result);
-}
-},
-/**
- * Expects requestId, retryAfter, status
- * @param {*} url 
- * @param {*} info 
- * @param {*} sessionID 
- * @returns {*} { requestId, retryAfter, status }
- */
- { url: "/client/friend/request/cancel", action:(url, info, sessionID) => {
-    const result = FriendshipController.deleteFriendRequest(sessionID, info.requestId);
-    return ResponseController.getBody(result);
-}
- },
- /**
- * Expects requestId, retryAfter, status
- * @param {string} url 
- * @param {object} info 
- * @param {string} sessionID 
- * @returns {object} { requestId, retryAfter, status }
- */
-  { url: "/client/friend/request/accept", action:(url, info, sessionID) => {
-    FriendshipController.acceptAllRequests(sessionID);
-    return ResponseController.getBody("OK");
-  }
- },
-/**
- * Expects requestId, retryAfter, status
- * @param {string} url 
- * @param {object} info 
- * @param {string} sessionID 
- * @returns {object} { requestId, retryAfter, status }
- */
- { url: "/client/friend/request/accept-all", action:(url, info, sessionID) => {
-    FriendshipController.acceptAllRequests(sessionID);
-    return ResponseController.getBody("OK");
-}
- },
 /**
  * 
  * @param {string} url 
@@ -587,45 +529,6 @@ action: (url, info, sessionID) => {
 
     static DynamicRoutes = [
 
-        {
-            url: "/?last_id",
-            action: (url, info, sessionID) => {
-                // return this.notifierCallbacks.notify(url, info, sessionID)
-                console.log("DynamicRoutes:last_id");
-                return ResponseController.getBody({
-                    "status": "ok",
-                });
-            }
-        },
-        {
-            url: "/notifierServer",
-            action: (url, info, sessionID) => {
-                // return this.notifierCallbacks.notify(url, info, sessionID)
-                console.log("DynamicRoutes:notifierServer");
-
-                return ResponseController.getBody({
-                    "status": "ok",
-                });
-            }
-        },
-        {
-            url: "/push/notifier/get/",
-            action: (url, info, sessionID) => {
-                console.log("DynamicRoutes:/push/notifier/get/");
-
-                // return this.notifierCallbacks.getNotifier(url, info, sessionID)
-                return ResponseController.getBody("ok");
-            }
-        },
-        {
-            url: "/push/notifier/getwebsocket/",
-            action: (url, info, sessionID) => {
-                console.log("/push/notifier/getwebsocket/");
-
-                // return this.notifierCallbacks.getNotifier(url, info, sessionID)
-                return ResponseController.getBody("ok");
-            }
-        },
         {
             url: "/client/trading/customization/",
             action: (url, info, sessionID) => {
@@ -850,6 +753,95 @@ const SITRoutes = [
     
 ]
 
+const FriendshipRoutes = [
+    { 
+        url: "/client/friend/list", action: (url, info, sessionID) => {
+
+            var result = { Friends: [], Ignore: [], InIgnoreList: [] };
+            result.Friends = FriendshipController.getFriends(sessionID);
+            return ResponseController.getBody(result);
+       
+        }
+    },
+    {
+        url: "/client/friend/request/decline",
+        action: (url, info, sessionID) => {
+
+            const myAccount = AccountController.find(sessionID);
+            FriendshipController.deleteFriendRequest(sessionID, info.request_id);
+
+            return ResponseController.nullResponse();
+        }
+    },
+    /**
+     * Expects requestId, retryAfter, status
+     * @param {*} url 
+     * @param {*} info 
+     * @param {*} sessionID 
+     * @returns {*} { requestId, retryAfter, status }
+     */
+    { 
+        url: "/client/friend/request/send", action:(url, info, sessionID) => {
+            const result = FriendshipController.addFriendRequest(sessionID, info.to);
+            return ResponseController.getBody(result);
+        }
+    },
+    { 
+        url: "/client/friend/request/list/outbox", action: (url, info, sessionID) => {
+            const result = FriendshipController.getFriendRequestOutbox(sessionID);
+            return ResponseController.getBody(result);
+
+        }
+    },
+    { 
+        url: "/client/friend/request/list/inbox", action:(url, info, sessionID) => {
+            const result = FriendshipController.getFriendRequestInbox(sessionID);
+            return ResponseController.getBody(result);
+        }
+    },
+    /**
+     * Expects requestId, retryAfter, status
+     * @param {*} url 
+     * @param {*} info 
+     * @param {*} sessionID 
+     * @returns {*} { requestId, retryAfter, status }
+     */
+    { 
+        url: "/client/friend/request/cancel", action:(url, info, sessionID) => {
+            const result = FriendshipController.deleteFriendRequest(sessionID, info.requestId);
+            return ResponseController.getBody(result);
+        }
+    },
+    /**
+     * Expects requestId, retryAfter, status
+     * @param {string} url 
+     * @param {object} info 
+     * @param {string} sessionID 
+     * @returns {object} { requestId, retryAfter, status }
+     */
+    { 
+        url: "/client/friend/request/accept", action:(url, info, sessionID) => {
+            FriendshipController.acceptAllRequests(sessionID);
+            return ResponseController.getBody("OK");
+        }
+    },
+    /**
+     * Expects requestId, retryAfter, status
+     * @param {string} url 
+     * @param {object} info 
+     * @param {string} sessionID 
+     * @returns {object} { requestId, retryAfter, status }
+     */
+    { 
+        url: "/client/friend/request/accept-all", action:(url, info, sessionID) => {
+            FriendshipController.acceptAllRequests(sessionID);
+            return ResponseController.getBody("OK");
+        }
+    },
+    
+]
+
+ResponseController.addRoutes(FriendshipRoutes);
 ResponseController.addRoutes(HideoutRoutes);
 ResponseController.addRoutes(QuestRoutes);
 ResponseController.addRoutes(RagfairRoutes);
