@@ -107,6 +107,7 @@ class Callbacks {
 		}
 	}
 	respondNotify(sessionID, req, resp, data) {
+		console.log(respondNotify);
 		let splittedUrl = req.url.split('/');
 		sessionID = splittedUrl[splittedUrl.length - 1].split("?last_id")[0];
 		notifier_f.handler.notificationWaitAsync(resp, sessionID);

@@ -133,23 +133,6 @@ app.use(function(req, res, next) {
 function handleRoute(req, res, Route) {
 
 
-  // if(req.url === "/client/game/version/validate") {
-
-   
-  //   console.log("asdasd");
-
-  // }
-
-  // if(req.url === "/client/match/offline/end") {
-
-  //   console.log("/client/match/offline/end");
-
-  //   console.log(req.body);
-
-  // }
-
-
-
   const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
   var routedData = Route(req.url, req.body, PHPSESSID)
   if(routedData != null && routedData != undefined ) {
