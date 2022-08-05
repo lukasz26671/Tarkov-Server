@@ -108,7 +108,7 @@ wss.on('connection', (ws, request) => {
 
   global.webSocketClients.push(ws);
   // console.log(ws);
-  console.log(request);
+  // console.log(request);
   // console.log(client);
 
   if(wss.NextChannelId === wss.LastChannelId)
