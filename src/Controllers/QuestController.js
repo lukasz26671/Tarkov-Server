@@ -43,6 +43,10 @@ class QuestController {
      */
     static getRepeatableQuests = function (_info, sessionID) {
         var returnData = [];
+
+        if(ConfigController.Configs['quest'].enableRepeatableQuests === false)
+            return returnData;
+
         var pmcData = AccountController.getPmcProfile(sessionID);
         const repQuestResp = new RepeatableQuestResponse();
         // for(const trader of TradingController.getAllTraders()) {
