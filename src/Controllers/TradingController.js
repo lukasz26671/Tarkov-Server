@@ -669,7 +669,7 @@ static getLoyalty(pmcData, traderID) {
         let offers = [];
         for(const acc of AccountController.getAllAccounts()) {
           const profile = AccountController.getPmcProfile(acc._id);
-          if(profile.FleaOffers)
+          if(profile && profile.FleaOffers)
             offers = [...offers, ...profile.FleaOffers];
         }
 
