@@ -7,6 +7,7 @@ const { AccountController } = require('./AccountController');
 const { logger } = require('../../core/util/logger');
 const { ItemController } = require('./ItemController');
 const { DialogueController } = require('./DialogueController');
+const { ConfigController } = require('./ConfigController');
 
 const ItemParentsList = [
   "5485a8684bdc2da71d8b4567",
@@ -589,8 +590,11 @@ static getLoyalty(pmcData, traderID) {
 
       static getRagfairMarketPrice(data) {
 
-        const avg = ItemController.getTemplatePrice(data.templateId);
-        return { min: 0, max: 0, avg: avg };
+        const ragfairMultiplier = ConfigController.Configs["gameplay"].trading.fleaMarket.ragfairMultiplier;
+        const min = ItemController.getTemplatePrice(data.templateId);
+        const max = ItemController.getTemplatePrice(data.templateId) * ragfairMultiplier;
+        const avg = ((min + max) / 2);
+        return { min: min, max: max, avg: avg };
       }
 
       static getFleaMarketOfferBase() {
@@ -681,11 +685,13 @@ static getLoyalty(pmcData, traderID) {
             TradingController.handledOffers.push(offer._id);
 
             let offerRank = 0;
+            const ragfairMultiplier = ConfigController.Configs["gameplay"].trading.fleaMarket.ragfairMultiplier;
+
             const currentFleaMarketPrices = TradingController.getRagfairMarketPrice({ templateId: offer.items[0]._tpl });
             const currentTradingPrice = ItemController.getTemplatePrice(offer.items[0]._tpl);
-            const currentRagfairPrice = currentTradingPrice * 4;
+            const currentRagfairPrice = currentFleaMarketPrices.avg;
             offerRank = Math.min(100, Math.max(0, ((currentRagfairPrice / offer.summaryCost) * 100)));
-            const randomNumber = utility.getRandomInt(0, 100);
+            const randomNumber = utility.getRandomInt(50, 100);
             if(offerRank >= randomNumber) {
               // console.log("buy it!");
               if(global.webSocketClientBySessionId[offer.user.id]) {
@@ -728,6 +734,10 @@ static getLoyalty(pmcData, traderID) {
                 rewards
                 );
 
+              // if(global.webSocketClientBySessionId[offer.user.id]) {
+              //   global.webSocketClientBySessionId[offer.user.id].send(
+              //     JSON.stringify({ type: "new_message" }));
+              // }
             }
           }
         }
