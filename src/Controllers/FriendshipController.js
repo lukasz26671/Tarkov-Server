@@ -151,23 +151,59 @@ static getFriendRequestOutbox(sessionID) {
  */
 	 static deleteFriendRequest(sessionID, requestId) {
 		const acc = AccountController.find(sessionID);
-		// console.log(acc);
+		// Outbox
+		const frOutbox = FriendshipController.getFriendRequestOutbox(sessionID);
+		// Inbox
+		const frInbox = FriendshipController.getFriendRequestInbox(sessionID);
+FriendshipController.deleteRequestFromBox(frOutbox, requestId);
+FriendshipController.deleteRequestFromBox(frInbox, requestId);
 
-		var fr_outbox = FriendshipController.getFriendRequestOutbox(sessionID);
-		const frIndex = fr_outbox.indexOf(x=>x._id == requestId);
-		if(frIndex !== -1) {
-			fr_outbox.splice(frIndex, 1);
-			logger.logSuccess("Successfully removed friend request " + requestId);
-		}
-		else {
-			logger.logError("Unable to remove friend request " + requestId);
-		}
-		acc.friendRequestOutbox = fr_outbox;
+		// const frOutboxIndex = frOutbox.indexOf(x=>x._id === requestId);
+		// const frInboxIndex = frInbox.indexOf(x=>x._id === requestId);
+
+		// let removedRequest = frOutboxIndex !== -1 || frInboxIndex !== -1;
+
+		// if(frOutboxIndex !== -1) {
+		// 	frOutbox.splice(frOutboxIndex, 1);
+		// 	logger.logSuccess("Successfully removed friend request " + requestId);
+		// }
+
+		// if(frIndex !== -1) {
+		// 	frInbox.splice(frIndex, 1);
+		// 	logger.logSuccess("Successfully removed friend request " + requestId);
+		// }
+		
+		// if(!removedRequest) {
+		// 	logger.logError("Unable to remove friend request " + requestId);
+		// }
+
+		// acc.friendRequestOutbox = frOutbox;
+		// acc.friendRequestInbox = frInbox;
 		AccountController.saveToDisk(sessionID);
 
 		return requestId;
 	 }
 
+	 /**
+	  * 
+	  * @param {Array} box 
+	  * @param {string} requestId 
+	  */
+	 static deleteRequestFromBox(box, requestId) {
+		const friendsToKeep = [];
+		for(const f of box) {
+			if(f._id !== requestId)
+				friendsToKeep.push(f);
+		}
+
+		box = friendsToKeep;
+	 }
+
+	 /**
+	  * Adds a friend to the sessionid account
+	  * @param {string} sessionID 
+	  * @param {string} friend_id 
+	  */
 	static addFriend(sessionID, friend_id) {
 		var acc = AccountController.find(sessionID);
 		if(acc.friends === undefined) {
