@@ -375,10 +375,12 @@ class AccountController
       const profilePath = AccountController.getPmcPath(sessionID);
       let prof = AccountController.getPmcProfile(sessionID);
       // prof = AccountController.FixTradersInfo(prof);
-      const diskProf = JSON.stringify(JSON.parse(fs.readFileSync(profilePath)));
-      if(force || diskProf !== JSON.stringify(prof)) {
-        fileIO.write(profilePath, prof);
-        logger.logSuccess(`${sessionID} Profile was saved.`);
+      if(fs.existsSync(profilePath)) {
+        const diskProf = JSON.stringify(JSON.parse(fs.readFileSync(profilePath)));
+        if(force || diskProf !== JSON.stringify(prof)) {
+          fileIO.write(profilePath, prof);
+          logger.logSuccess(`${sessionID} Profile was saved.`);
+        }
       }
     }
 
