@@ -302,6 +302,11 @@ class AccountController
         loadedProfile = AccountController.AddRepeatableQuestsProperty(loadedProfile);
         // --------------------------------------------------------
         
+        // --------------------------------------------------------
+        // Add Ragfair Info
+        loadedProfile = AccountController.AddRagfairInfoProperty(loadedProfile);
+        // --------------------------------------------------------
+        
        
         AccountController.profiles[sessionID]["pmc"] = loadedProfile;
 
@@ -477,6 +482,23 @@ class AccountController
         }
         return profile;
     }
+
+    /** Adds the "RagfairInfo" property to the profile
+     * @param {*} pmcProfile 
+     * @returns {object} profile
+     */
+     static AddRagfairInfoProperty(profile)
+     {
+        if (!profile.RagfairInfo) {
+          profile.RagfairInfo = { offers: [], rating: 0, isRatingGrowing: false };
+        }
+
+        if(profile.FleaOffers && profile.FleaOffers.length > 0) {
+          profile.RagfairInfo.offers = [...profile.RagfairInfo.offers, ...profile.FleaOffers];
+
+        }
+        return profile;
+     }
 
     /** Create character profile
    * 

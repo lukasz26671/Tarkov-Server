@@ -461,8 +461,8 @@ function getFleaMarketOffersFromPlayers(sessionID, request) {
   for(const acc of AccountController.getAllAccounts()) {
 
     const profile = AccountController.getPmcProfile(acc._id);
-    if(profile.FleaOffers)
-      jsonToReturn.offers = [...jsonToReturn.offers, ...profile.FleaOffers];
+    if(profile.RagfairInfo)
+      jsonToReturn.offers = [...jsonToReturn.offers, ...profile.RagfairInfo.offers];
   }
 
   let offersFilters = []; //this is an array of item tpl who filter only items to show

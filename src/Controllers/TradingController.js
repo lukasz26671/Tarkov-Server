@@ -609,9 +609,6 @@ static getLoyalty(pmcData, traderID) {
 
         const offerBase = TradingController.getFleaMarketOfferBase();
 
-        if(!pmcData.FleaOffers) {
-          pmcData.FleaOffers = [];
-        }
         let offer = utility.DeepCopy(offerBase);
 
         offer.intId = utility.getRandomInt(0, 214712343);
@@ -646,7 +643,7 @@ static getLoyalty(pmcData, traderID) {
         offer.user.nickname = pmcData.Info.Nickname;
 
         // logger.logWarning("Adding a Flea Market offer is not yet supported by SIT");
-        pmcData.FleaOffers.push(offer);
+        pmcData.RagfairInfo.offers.push(offer);
 
 
         // console.log("addFleaMarketOffer");
@@ -669,8 +666,8 @@ static getLoyalty(pmcData, traderID) {
         let offers = [];
         for(const acc of AccountController.getAllAccounts()) {
           const profile = AccountController.getPmcProfile(acc._id);
-          if(profile && profile.FleaOffers)
-            offers = [...offers, ...profile.FleaOffers];
+          if(profile && profile.RagfairInfo && profile.RagfairInfo.offers)
+            offers = [...offers, ...profile.RagfairInfo.offers];
         }
 
         const soldOffers = [];
@@ -744,8 +741,7 @@ static getLoyalty(pmcData, traderID) {
 
         for(const acc of AccountController.getAllAccounts()) {
           const profile = AccountController.getPmcProfile(acc._id);
-          if(profile.FleaOffers)
-            profile.FleaOffers = profile.FleaOffers.filter(x => !soldOffers.includes(x._id));
+          profile.RagfairInfo.offers = profile.RagfairInfo.offers.filter(x => !soldOffers.includes(x._id));
         }
       }
 
@@ -756,8 +752,7 @@ static getLoyalty(pmcData, traderID) {
         for(const acc of AccountController.getAllAccounts()) {
       
           const profile = AccountController.getPmcProfile(acc._id);
-          if(profile.FleaOffers)
-            jsonToReturn.offers = [...jsonToReturn.offers, ...profile.FleaOffers];
+          jsonToReturn.offers = [...jsonToReturn.offers, ...profile.RagfairInfo.offers];
         }
       
         let offersFilters = []; //this is an array of item tpl who filter only items to show
