@@ -12,6 +12,7 @@ class ConfigController {
 
     static Instance = new ConfigController();
     static Configs = {};
+    static ConfigsRebuilt = false;
 
     static init() {
       ConfigController.rebuildFromBaseConfigs();
@@ -21,6 +22,9 @@ class ConfigController {
      * Fills ConfigController.Configs with parsed JSON data from user/configs directory
      */
     static rebuildFromBaseConfigs() {
+        if(ConfigController.ConfigsRebuilt)
+          return;
+
         if(ConfigController.Configs === undefined)
             ConfigController.Configs = {};
 
@@ -41,6 +45,9 @@ class ConfigController {
                 ConfigController.Configs[f.replace(".json", "")] = JSON.parse(dataRaw);
             }
         }
+
+
+        ConfigController.ConfigsRebuilt = true;
         
     }
 

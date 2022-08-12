@@ -81,8 +81,8 @@ class LootController
         // Paulo: Cough, Cough, modify these lower as people are too stupid to change it themselves
         modifierSuperRare *= (0.02 * LootController.LocationLootChanceModifierFromFile);
         modifierRare *= (0.05 * LootController.LocationLootChanceModifierFromFile);
-        modifierUnCommon *= (0.14 * LootController.LocationLootChanceModifierFromFile);
-        modifierCommon *= (0.4 * LootController.LocationLootChanceModifierFromFile);
+        modifierUnCommon *= (0.15 * LootController.LocationLootChanceModifierFromFile);
+        modifierCommon *= (0.5 * LootController.LocationLootChanceModifierFromFile);
         
         LootController.LootModifiers.modifierSuperRare = modifierSuperRare;
         LootController.LootModifiers.modifierRare = modifierRare;
@@ -143,27 +143,12 @@ class LootController
               itemRarityType = "NOT_EXIST";
             }
             else {
-              if ( itemCalculation >= 7
-              //   itemExperience >= 45
-              // // violet is good shit
-              // || backgroundColor == "violet"
-              // // the good keys and stuff are high examine
-              // || examineExperience >= 17
-              // || (itemName.includes("key") || itemName.includes("Key"))
-              // || item_price > 29999
-              ) {
+              if (itemCalculation >= 7) {
                   itemRarityType = "SUPERRARE";
-                  // console.log("SUPERRARE");
-                  // console.log(itemTemplate);
-              // } else if (itemExperience >= 16 || examineExperience >= 16) {
               } else if (itemCalculation >= 5) {
                   itemRarityType = "RARE";
-                  // console.log("RARE");
-                  // console.log(itemTemplate);
-              // } else if (itemExperience >= 13 || examineExperience >= 13 || item_price > 9499) {
               } else if (itemCalculation >= 2) {
                   itemRarityType = "UNCOMMON";
-                  // console.log(itemTemplate);
               }
             }
           } catch(err) {
@@ -198,9 +183,11 @@ class LootController
           const modifierCommon = LootController.LootModifiers.modifierCommon;
       
           if(in_additionalLootModifier === undefined)
-            in_additionalLootModifier = 1.0;
+            in_additionalLootModifier = 1.5;
             
+          in_additionalLootModifier *= 1.3;
           in_additionalLootModifier *= LootController.LocationLootChanceModifierFromFile;
+          in_additionalLootModifier *= DatabaseController.getDatabase().globals.GlobalLootChanceModifier;
           
           if(out_itemsRemoved == undefined)
             out_itemsRemoved = {};
@@ -279,7 +266,6 @@ class LootController
         const _items = in_data.Items;
         const newContainerId = utility.generateNewItemId();
 
-
         /** String Tpl Id
          * {string}
          */
@@ -290,7 +276,7 @@ class LootController
         
         const isAirdrop = containerData.Id.includes("Scripts") || containerData.Id.includes("scripts");
 
-        const LootContainerIdTable = Object.keys(global._database.locationConfigs.StaticLootTable);
+        const LootContainerIdTable = Object.keys(DatabaseController.getDatabase().locationConfigs.StaticLootTable);
         if (!LootContainerIdTable.includes(ContainerId)) {
             LootController.GenerateWeaponLoot(ContainerId, _items);
             return true;
@@ -316,7 +302,7 @@ class LootController
             let parentId = _items[0]._id;
             if(parentId == null) {
               // parentId = utility.generateNewId(undefined, 3);
-              parentId = utility.generateNewId();
+              parentId = utility.generateNewIdQuick();
               _items[0]._id = parentId;
             }
 
@@ -353,16 +339,14 @@ class LootController
                 // add current rolled index
                 indexRolled.push(RollIndex);
                 // getting rolled item
-                const rolledRandomItemToPlace = global._database.items[LootListItems[RollIndex]];
+                const rolledRandomItemToPlace = DatabaseController.getDatabase().items[LootListItems[RollIndex]];
                 
                 if (rolledRandomItemToPlace === undefined) {
                   logger.logWarning(`Undefined in container: ${ContainerId}  ${LootListItems.length} ${RollIndex}`);
                   continue;
                 }
                 let result = { success: false };
-                let maxAttempts =
-                  global._database.gameplayConfig.locationloot.containers.AttemptsToPlaceLoot > 10 ? 1 : global._database.gameplayConfig.locationloot.containers.AttemptsToPlaceLoot;
-          
+                let maxAttempts = 1;
                 // attempt to add item x times
                 while (!result.success && maxAttempts) {
                   //let currentTotal = 0;
@@ -425,7 +409,7 @@ class LootController
                 }
 
                 containerItem = {
-                  _id: utility.generateNewId(),
+                  _id: utility.generateNewIdQuick(),
                   // _id: idPrefix + idSuffix.toString(16),
                   // _id: utility.generateNewId(undefined, 3),
                   _tpl: rolledRandomItemToPlace._id,
@@ -473,9 +457,10 @@ class LootController
             let changedIds = {};
             for (const item of _items) {
 
-              const itemTemplateForNaming = global._database.items[item._tpl];
+              const itemTemplateForNaming = DatabaseController.getDatabase().items[item._tpl];
               item.itemNameForDebug = itemTemplateForNaming._props.ShortName;
-              const newId = utility.generateNewItemId();
+              const newId = utility.generateNewIdQuick();
+              // const newId = utility.generateNewItemId();
               changedIds[item._id] = newId;
               item._id = newId;
 
@@ -497,50 +482,56 @@ class LootController
         let LootList = [];
         let UniqueLootList = [];
         // get static container loot pools
-        let ItemList = global._database.locationConfigs.StaticLootTable[containerId];
+        let ItemList = DatabaseController.getDatabase().locationConfigs.StaticLootTable[containerId];
         // logger.logInfo(`Loot Item List Count :: ${ItemList.SpawnList.length}`);
       
           let itemsRemoved = {};
           let numberOfItemsRemoved = 0;
       
-        for (const item of ItemList.SpawnList) {
-        //   if (ItemParentsList.includes(item)) {
-        //     logger.logWarning(`In Container ${containerId}: there is static loot ${item} as prohibited ParentId... skipping`);
+          
+          LootList = ItemList.SpawnList;
+          LootList = LootList.filter(itemId => 
+            !itemId.QuestItem
+            && LootController.FilterItemByRarity(DatabaseController.getDatabase().items[itemId], itemsRemoved)
+            );
+        // for (const item of ItemList.SpawnList) {
+        // //   if (ItemParentsList.includes(item)) {
+        // //     logger.logWarning(`In Container ${containerId}: there is static loot ${item} as prohibited ParentId... skipping`);
+        // //     continue;
+        // //   }
+        //   const itemTemplate = DatabaseController.getDatabase().items[item];
+        //   if (typeof itemTemplate._props.LootExperience == "undefined") {
+        //     logger.logWarning(`itemTemplate._props.LootExperience == "undefined" for ${itemTemplate._id}`);
         //     continue;
         //   }
-          const itemTemplate = global._database.items[item];
-          if (typeof itemTemplate._props.LootExperience == "undefined") {
-            logger.logWarning(`itemTemplate._props.LootExperience == "undefined" for ${itemTemplate._id}`);
-            continue;
-          }
       
       
-          // --------------------------------------------
-          // Paulo: Filter out by Loot Rarity
-          if(
-            ItemList.SpawnList.length > 1 // More than 2 items to spawn
-            && !itemTemplate.QuestItem // Is not a quest item
-            && (!LootController.FilterItemByRarity(itemTemplate, itemsRemoved)) // Filtered by "Rarity"
-            ) 
-            {
-              numberOfItemsRemoved++;
-              continue; // If returned False then ignore this item
-            }
+        //   // --------------------------------------------
+        //   // Paulo: Filter out by Loot Rarity
+        //   if(
+        //     ItemList.SpawnList.length > 1 // More than 2 items to spawn
+        //     && !itemTemplate.QuestItem // Is not a quest item
+        //     && (!LootController.FilterItemByRarity(itemTemplate, itemsRemoved)) // Filtered by "Rarity"
+        //     ) 
+        //     {
+        //       numberOfItemsRemoved++;
+        //       continue; // If returned False then ignore this item
+        //     }
       
-            // ------------------------------------------------------------------------------
-            // Paulo: Filter previously generated items, so we don't loads of nuts, bolts etc
-            if(LootController.PreviouslyGeneratedItems.findIndex(x => x === item) !== -1) {
-              var countOfPrevItems = LootController.PreviouslyGeneratedItems.filter(x => x === item).length;
-              var previousItemMult = 1 - (countOfPrevItems * 0.05);
-              if(!LootController.FilterItemByRarity(itemTemplate, itemsRemoved, previousItemMult)) {
-                numberOfItemsRemoved++;
-                continue;
-              }
-            }
+        //     // ------------------------------------------------------------------------------
+        //     // Paulo: Filter previously generated items, so we don't loads of nuts, bolts etc
+        //     // if(LootController.PreviouslyGeneratedItems.findIndex(x => x === item) !== -1) {
+        //     //   var countOfPrevItems = LootController.PreviouslyGeneratedItems.filter(x => x === item).length;
+        //     //   var previousItemMult = 1 - (countOfPrevItems * 0.05);
+        //     //   if(!LootController.FilterItemByRarity(itemTemplate, itemsRemoved, previousItemMult)) {
+        //     //     numberOfItemsRemoved++;
+        //     //     continue;
+        //     //   }
+        //     // }
 
-            LootList.push(item);
-        }
-        logger.logDebug(`Loot Multiplier :: Number of Items Removed :: Total:${numberOfItemsRemoved} Common:${itemsRemoved.numberOfCommonRemoved} Uncommon:${itemsRemoved.numberOfUncommonRemoved} Rare:${itemsRemoved.numberOfRareRemoved} Superrare:${itemsRemoved.numberOfSuperrareRemoved}`);
+        //     LootList.push(item);
+        // }
+        // logger.logDebug(`Loot Multiplier :: Number of Items Removed :: Total:${numberOfItemsRemoved} Common:${itemsRemoved.numberOfCommonRemoved} Uncommon:${itemsRemoved.numberOfUncommonRemoved} Rare:${itemsRemoved.numberOfRareRemoved} Superrare:${itemsRemoved.numberOfSuperrareRemoved}`);
         
         if(LootList.length === 0)
         {
@@ -550,7 +541,7 @@ class LootController
         // Unique/Distinct the List
         UniqueLootList = [...new Set(LootList)];
         
-        LootController.PreviouslyGeneratedItems = LootController.PreviouslyGeneratedItems.concat(UniqueLootList)
+        // LootController.PreviouslyGeneratedItems = LootController.PreviouslyGeneratedItems.concat(UniqueLootList)
 
         return UniqueLootList;
       }
@@ -560,11 +551,11 @@ class LootController
         const LootList = [];
         let UniqueLootList = [];
         // get static container loot pools
-        const ItemList = global._database.locationConfigs.StaticLootTable[containerId];
+        const ItemList = DatabaseController.getDatabase().locationConfigs.StaticLootTable[containerId];
         // get dynamic container loot pools for map
-        const DynamicLootForMap = global._database.locationConfigs.DynamicLootTable[in_location];
+        const DynamicLootForMap = DatabaseController.getDatabase().locationConfigs.DynamicLootTable[in_location];
         if(DynamicLootForMap !== undefined) {
-          const DynamicLootForMapKeys = Object.keys(global._database.locationConfigs.DynamicLootTable[in_location]);
+          const DynamicLootForMapKeys = Object.keys(DatabaseController.getDatabase().locationConfigs.DynamicLootTable[in_location]);
           if(DynamicLootForMapKeys !== undefined) {
             for(var i = 0; i < container2D.length-1 && LootList.length < container2D.length-1; i++) {
               const selectedLootIndex = utility.getRandomInt(0, DynamicLootForMapKeys.length);
@@ -577,7 +568,7 @@ class LootController
                 continue;
 
               for (const item of selectedLoot) {
-                const itemTemplate = global._database.items[item];
+                const itemTemplate = DatabaseController.getDatabase().items[item];
                 if (itemTemplate._props.LootExperience === undefined) {
                   logger.logWarning(`itemTemplate._props.LootExperience == "undefined" for ${itemTemplate._id}`);
                   continue;
@@ -801,7 +792,7 @@ class LootController
                 continue mapLoot;
 
               for (const loot in lootList) {
-                let foundItem = global._database.items[lootList[loot]];
+                let foundItem = DatabaseController.getDatabase().items[lootList[loot]];
                 randomItems.push(foundItem);
               }
             }
@@ -906,7 +897,7 @@ class LootController
           if(LootController.PreviouslyGeneratedContainers.findIndex(x=>x.Id === data.Items[0]._tpl) !== -1)
             continue;
     
-          if(LootController.GenerateContainerLootAsync(data, locationLootChanceModifier, MapName))
+          if(LootController.GenerateContainerLoot(data, locationLootChanceModifier, MapName))
             count++;
     
     

@@ -446,6 +446,27 @@ exports.generateNewId = (prefix = "", version = 2) => {
     return retVal;
 }
 
+var previousItemIds = [];
+
+exports.generateNewIdQuick = () =>
+{
+    let new_id = "";
+    const first = this.getRandomInt(100000, 999999).toString();
+    while(new_id.length < 24) 
+    {
+        new_id = new_id.concat(this.getRandomInt(100000, 999999).toString());
+        new_id = new_id.concat(first.split("").reverse().join(""));
+    }
+    new_id = new_id.substring(0, 24);
+    if(previousItemIds.findIndex(x=>x === new_id) === -1) {
+        previousItemIds.push(new_id);
+    }
+    else {
+        return this.generateNewIdQuick();
+    }
+    return new_id;
+}
+
 /**
  * 
  * @param {Buffer} byteArray 
