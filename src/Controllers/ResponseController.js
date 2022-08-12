@@ -184,7 +184,8 @@ class ResponseController
             aid: sessionID,
             token: sessionID,
             taxonomy: 6,
-            activeProfileId: "pmc" + sessionID,
+            // activeProfileId: "pmc" + sessionID,
+            activeProfileId: sessionID,
             nickname: "user",
             utc_time: utility.getTimestamp(),
             backend: {
@@ -214,7 +215,8 @@ action: (url, info, sessionID) => {
             port: 0,
           },
           {
-            profileid: "pmc" + sessionID,
+            // profileid: "pmc" + sessionID,
+            profileid: sessionID,
             profileToken: null,
             status: "Free",
             sid: "",

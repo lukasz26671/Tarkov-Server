@@ -49,15 +49,16 @@ class LocaleServer {
       } else {
         currentLang = AccountController.getLanguages(sessionID);
       }
+
+      const account = AccountController.find(sessionID);
+      lang = currentLang;
+      if (account.lang.includes("/client/locale/") && account.lang != lang) 
+        account.lang = lang;
     }
     if (!currentLang){
       logger.logError("No language found for global");
     }
     
-    const account = AccountController.find(sessionID);
-    lang = currentLang;
-    if (account.lang != lang) account.lang = lang;
-
     if (utility.isUndefined(global._database.locales.global[lang]))
       return global._database.locales.global["en"];
     return global._database.locales.global[lang];

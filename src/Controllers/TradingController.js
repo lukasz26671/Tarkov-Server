@@ -741,7 +741,8 @@ static getLoyalty(pmcData, traderID) {
 
         for(const acc of AccountController.getAllAccounts()) {
           const profile = AccountController.getPmcProfile(acc._id);
-          profile.RagfairInfo.offers = profile.RagfairInfo.offers.filter(x => !soldOffers.includes(x._id));
+          if(profile && profile.RagfairInfo && profile.RagfairInfo.offers)
+            profile.RagfairInfo.offers = profile.RagfairInfo.offers.filter(x => !soldOffers.includes(x._id));
         }
       }
 

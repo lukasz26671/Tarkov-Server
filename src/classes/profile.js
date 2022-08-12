@@ -161,7 +161,9 @@ class ProfileServer {
   // }
 
   getScavProfile(sessionID) {
-    return AccountController.getProfile(sessionID, "scav");
+    const scavProfile = AccountController.getProfile(sessionID, "scav");
+    scavProfile.Info.Settings.Role = "assault";
+    return scavProfile;
   }
 
   setScavProfile(sessionID, scavData) {

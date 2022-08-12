@@ -155,7 +155,10 @@ class HealthServer {
   }
 
   healOverTime(pmcData, info, sessionID) {
-    // without hideout how much you regenerate ?
+
+    if(!pmcData)
+      return;
+
     const pmcHealth = pmcData.Health;
     const bodyParts = pmcHealth.BodyParts;
     const LastUpdate = pmcHealth.UpdateTime;

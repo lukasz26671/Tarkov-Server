@@ -371,7 +371,8 @@ class Responses {
   // }
   clientGameProfileCreate(url, info, sessionID) {
     AccountController.createProfile(info, sessionID);
-    return response_f.getBody({ uid: "pmc" + sessionID });
+    // return response_f.getBody({ uid: "pmc" + sessionID });
+    return response_f.getBody({ uid: sessionID });
   }
   clientGameProfileItemsMoving(url, info, sessionID) {
     const data = item_f.handler.handleRoutes(info, sessionID);
@@ -379,12 +380,10 @@ class Responses {
     return response_f.getBody(data);
   }
   clientGameProfileList(url, info, sessionID) {
-    // the best place to update health because its where profile is updating in client also!!!
     if (!AccountController.isWiped(sessionID) && profile_f.handler.profileAlreadyCreated(sessionID)) {
       health_f.handler.healOverTime(AccountController.getPmcProfile(sessionID), info, sessionID);
     }
-
-    return response_f.getBody(profile_f.handler.getCompleteProfile(sessionID));
+    return response_f.getBody(AccountController.getCompleteProfile(sessionID));
   }
   clientGameProfileNicknameChange(url, info, sessionID) {
     const output = profile_f.handler.changeNickname(info, sessionID);

@@ -254,6 +254,20 @@ class AccountController
     return AccountController.getProfile(sessionID, "pmc");
   }
 
+  static getCompleteProfile(sessionID) {
+    let output = [];
+
+    if (!AccountController.isWiped(sessionID)) {
+      const scavProf = profile_f.handler.getScavProfile(sessionID);
+      scavProf.Info.Settings.Role = "assault";
+      output.push(scavProf);
+      // output.push(AccountController.getPmcProfile(sessionID));
+      output.push(AccountController.getPmcProfile(sessionID));
+    }
+
+    return output;
+  }
+
     static initializeProfile(sessionID) {
       if(sessionID === undefined || sessionID === "")
         return;
@@ -379,9 +393,18 @@ class AccountController
 
       const profilePath = AccountController.getPmcPath(sessionID);
       let prof = AccountController.getPmcProfile(sessionID);
-      // prof = AccountController.FixTradersInfo(prof);
-      if(fs.existsSync(profilePath)) {
-        const diskProf = JSON.stringify(JSON.parse(fs.readFileSync(profilePath)));
+      if(prof && fs.existsSync(profilePath)) {
+
+        const profRawData = fs.readFileSync(profilePath);
+        if(!profRawData || profRawData.buffer === undefined || profRawData.byteLength === 0)
+          return;
+
+        const parsedData = JSON.parse(profRawData);
+        if(!parsedData)
+          return;
+
+        const diskProf = JSON.stringify(parsedData);
+
         if(force || diskProf !== JSON.stringify(prof)) {
           fileIO.write(profilePath, prof);
           logger.logSuccess(`${sessionID} Profile was saved.`);
@@ -536,7 +559,8 @@ class AccountController
     // }
 
     // Set defaults for new profile generation //
-    pmcData._id = "pmc" + account.id;
+    // pmcData._id = "pmc" + account.id;
+    pmcData._id = account.id;
     pmcData.aid = account.id;
     pmcData.savage = "scav" + account.id;
     pmcData.Info.Side = ChosenSideCapital;
@@ -565,6 +589,8 @@ class AccountController
     // AccountController.setWipe(account.id, false);
     account.wipe = false;
     AccountController.initializeProfile(sessionID);
+    AccountController.profiles[sessionID]["scav"] = bots_f.botHandler.generate({conditions: [{ Role: "playerscav", Limit: 1 }]}, sessionID)[0];
+    AccountController.profiles[sessionID]["pmc"] = pmcData;
     // AccountController.saveToDisk(sessionID);
   }
 
@@ -647,9 +673,9 @@ class AccountController
  */
    static getAccountLang(sessionID) {
     // AccountController needs to be at the top to check for changed accounts.
-    AccountController.reloadAccountBySessionID(sessionID);
+    // AccountController.reloadAccountBySessionID(sessionID);
     let account = AccountController.find(sessionID);
-    if (account.lang === undefined) {
+    if (account.lang === undefined || account.lang === "") {
       account.lang = "en";
       AccountController.saveToDisk(sessionID);
     }
