@@ -394,9 +394,11 @@ function completeQuest(pmcData, body, sessionID) {
   for (const quest of pmcData.Quests) {
     if (!(quest.status === "Locked" || quest.status === "Success" || quest.status === "Fail")) {
       const checkFail = getCachedQuest(quest.qid);
-      for (let failCondition of checkFail.conditions.Fail) {
-        if (checkFail.restartable === false && failCondition._parent === "Quest" && failCondition._props.target === body.qid) {
-          quest.status = "Fail";
+      if(checkFail) {
+        for (let failCondition of checkFail.conditions.Fail) {
+          if (checkFail.restartable === false && failCondition._parent === "Quest" && failCondition._props.target === body.qid) {
+            quest.status = "Fail";
+          }
         }
       }
     }
