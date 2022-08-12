@@ -175,6 +175,13 @@ class ResponseController
 
         var mainUrl = ResponseController.getBackendUrl();
         var enableIndividualIps = ConfigController.Configs["server"].serverIPs.Enable;
+        
+        let profileId = sessionID;
+        let pmcData = AccountController.getPmcProfile(sessionID);
+        if(pmcData) {
+            profileId = pmcData._id;
+        }
+
 
         let obj = {
             queued: false,
@@ -185,7 +192,7 @@ class ResponseController
             token: sessionID,
             taxonomy: 6,
             // activeProfileId: "pmc" + sessionID,
-            activeProfileId: sessionID,
+            activeProfileId: profileId,
             nickname: "user",
             utc_time: utility.getTimestamp(),
             backend: {
@@ -203,24 +210,37 @@ class ResponseController
 {
 url: "/client/profile/status",
 action: (url, info, sessionID) => {
+
+    let profileId = sessionID;
+    let scavProfileId = sessionID;
+    let pmcData = AccountController.getPmcProfile(sessionID);
+    if(pmcData) {
+        profileId = pmcData._id;
+        scavProfileId = pmcData.savage;
+    }
+
+    const ip = ResponseController.SessionIdToIpMap[sessionID];
+
+
       return ResponseController.getBody({
           maxPveCountExceeded: false,
           profiles:[
           {
-            profileid: "scav" + sessionID,
+            // profileid: "scav" + sessionID,
+            profileid: scavProfileId,
             profileToken: null,
             status: "Free",
-            sid: "",
-            ip: "",
+            sid: sessionID,
+            ip: ip ?? "",
             port: 0,
           },
           {
             // profileid: "pmc" + sessionID,
-            profileid: sessionID,
+            profileid: profileId,
             profileToken: null,
             status: "Free",
-            sid: "",
-            ip: "",
+            sid: sessionID,
+            ip: ip ?? "",
             port: 0,
           }]
         });
