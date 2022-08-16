@@ -104,7 +104,7 @@ class AccountController
 
         static reloadAccountBySessionID(sessionID) {
           if (!fileIO.exist(`./user/profiles/${sessionID}/account.json`)) {
-            logger.logWarning(`Account file for account ${sessionID} does not exist.`);
+            // logger.logWarning(`Account file for account ${sessionID} does not exist.`);
           } else {
             // Does the session exist?
             if (AccountController.accounts[sessionID] === undefined) {

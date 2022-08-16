@@ -733,18 +733,9 @@ function arrayIntersect(a, b) {
 // Searching for first item template ID and for preset ID
 function getPreset(id) {
   let itmPreset = global._database.globals.ItemPresets[id];
-  if (typeof itmPreset == "undefined") {
-    /* this was causing an error where preset id couldnt be found on the client and caused client stop loading map...
-    for(let itemP in global._database.globals.ItemPresets){
-      if(global._database.globals.ItemPresets[itemP]._items[0]._tpl == id){
-        itmPreset = global._database.globals.ItemPresets[itemP];
-        break;
-      }
-    }*/
-    if (typeof itmPreset == "undefined") {
-      logger.logWarning("Preset of id: " + id + " not found on a list (this warning is not important)");
-      return null;
-    }
+  if (!itmPreset) {
+    logger.logWarning("Preset of id: " + id + " not found on a list (this warning is not important)");
+    return null;
   }
   return itmPreset;
 }
@@ -784,8 +775,19 @@ module.exports.getContainerMap = (containerW, containerH, itemList, containerId)
 
   return container2D;
 };
-// TODO: REWORK EVERYTHING ABOVE ~Maoci
+
 module.exports.fillContainerMapWithItem = (container2D, x, y, itemW, itemH, rotate) => {
+
+  if(container2D === undefined)
+    throw "WTF, the container2D is Fucked";
+
+  if(x === undefined)
+    return container2D;
+
+  if(y === undefined)
+    return container2D;
+
+
   let itemWidth = rotate ? itemH : itemW;
   let itemHeight = rotate ? itemW : itemH;
 
@@ -794,7 +796,7 @@ module.exports.fillContainerMapWithItem = (container2D, x, y, itemW, itemH, rota
       if (container2D[tmpY][tmpX] === 0) {
         container2D[tmpY][tmpX] = 1;
       } else {
-        logger.throwErr(`Slot at (${x}, ${y}) is already filled`, "src/classes/helper.js 734");
+        // logger.throwErr(`Slot at (${x}, ${y}) is already filled`, "src/classes/helper.js 734");
       }
     }
   }
