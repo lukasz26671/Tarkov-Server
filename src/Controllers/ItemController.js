@@ -280,6 +280,9 @@ static getRandomPresetIdFromWeaponId(WepId) {
 }
 
 static getStandardPreset(templateId) {
+
+    let preset = { _items: [] };
+
     if (!ItemController.hasPreset(templateId)) {
         return false;
     }
@@ -291,8 +294,8 @@ static getStandardPreset(templateId) {
             return p;
         }
     }
-
-    return allPresets[0];
+    preset = allPresets[0];
+    return preset;
 }
 
 static getBaseItemTpl(presetId) {

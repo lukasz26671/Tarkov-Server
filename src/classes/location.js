@@ -1039,12 +1039,33 @@ class LocationServer {
 
     output["_SIT_DEBUG_RARITIES"] = LootController.LootRarities;
     output["_SIT_DEBUG_RARITIES_COUNT"] = {};
+    output["_SIT_DEBUG_RARITIES_ITEM_COUNT"] = {};
+    for(const loot of output.Loot) {
+      for(const lootItem of loot.Items.sort(
+          (a, b) => { 
+            if (a.itemNameForDebug < b.itemNameForDebug){
+              return -1;
+            }
+            if (a.itemNameForDebug > b.itemNameForDebug){
+              return 1;
+            }
+            return 0;
+          }
+        )) {
+        if(output["_SIT_DEBUG_RARITIES_ITEM_COUNT"][lootItem.itemNameForDebug] === undefined)
+          output["_SIT_DEBUG_RARITIES_ITEM_COUNT"][lootItem.itemNameForDebug] = 0;
+
+        output["_SIT_DEBUG_RARITIES_ITEM_COUNT"][lootItem.itemNameForDebug]++;
+      }
+    }
+
     for(const r in LootController.LootRarities) {
       if(output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]] === undefined)
-        output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]] = 1;
+        output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]] = 0;
 
       output["_SIT_DEBUG_RARITIES_COUNT"][LootController.LootRarities[r]]++;
     }
+
     // Loot position list for filtering the lootItem in the same position.
     if (global.serverConfig.lootDebug) {
       logger.logSuccess(
