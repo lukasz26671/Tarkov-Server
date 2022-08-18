@@ -19,6 +19,30 @@
   "waves": [
     {
       "number": 0,
+      "time_min": 15,
+      "time_max": 60,
+      "slots_min": 1,
+      "slots_max": 3,
+      "SpawnPoints": "Zone_OldHouse",
+      "BotSide": "Usec",
+      "BotPreset": "normal",
+      "WildSpawnType": "pmcBot",
+      "isPlayers": false
+    },
+    {
+      "number": 1,
+      "time_min": 20,
+      "time_max": 60,
+      "slots_min": 1,
+      "slots_max": 3,
+      "SpawnPoints": "Zone_Bridge",
+      "BotSide": "Usec",
+      "BotPreset": "normal",
+      "WildSpawnType": "pmcBot",
+      "isPlayers": false
+    },
+    {
+      "number": 2,
       "time_min": 10,
       "time_max": 30,
       "slots_min": 2,
@@ -30,7 +54,7 @@
       "isPlayers": true
     },
     {
-      "number": 1,
+      "number": 3,
       "time_min": 60,
       "time_max": 120,
       "slots_min": 2,
@@ -42,7 +66,7 @@
       "isPlayers": true
     },
     {
-      "number": 2,
+      "number": 4,
       "time_min": 90,
       "time_max": 250,
       "slots_min": 1,
@@ -54,7 +78,7 @@
       "isPlayers": false
     },
     {
-      "number": 3,
+      "number": 5,
       "time_min": 100,
       "time_max": 320,
       "slots_min": 0,
@@ -66,7 +90,7 @@
       "isPlayers": true
     },
     {
-      "number": 4,
+      "number": 6,
       "time_min": 225,
       "time_max": 450,
       "slots_min": 0,
@@ -78,7 +102,7 @@
       "isPlayers": true
     },
     {
-      "number": 5,
+      "number": 7,
       "time_min": 420,
       "time_max": 890,
       "slots_min": 1,
@@ -90,7 +114,7 @@
       "isPlayers": false
     },
     {
-      "number": 6,
+      "number": 8,
       "time_min": 300,
       "time_max": 450,
       "slots_min": 2,
@@ -102,7 +126,7 @@
       "isPlayers": true
     },
     {
-      "number": 7,
+      "number": 9,
       "time_min": 200,
       "time_max": 800,
       "slots_min": 0,
@@ -114,7 +138,7 @@
       "isPlayers": true
     },
     {
-      "number": 8,
+      "number": 10,
       "time_min": 580,
       "time_max": 800,
       "slots_min": 1,
@@ -126,7 +150,7 @@
       "isPlayers": true
     },
     {
-      "number": 9,
+      "number": 11,
       "time_min": 630,
       "time_max": 1000,
       "slots_min": 0,
@@ -138,7 +162,7 @@
       "isPlayers": false
     },
     {
-      "number": 10,
+      "number": 12,
       "time_min": 900,
       "time_max": 1200,
       "slots_min": 2,
@@ -150,7 +174,7 @@
       "isPlayers": false
     },
     {
-      "number": 11,
+      "number": 13,
       "time_min": 650,
       "time_max": 1110,
       "slots_min": 2,
@@ -162,7 +186,7 @@
       "isPlayers": false
     },
     {
-      "number": 12,
+      "number": 14,
       "time_min": 1200,
       "time_max": 1400,
       "slots_min": 1,
@@ -171,18 +195,6 @@
       "BotSide": "Savage",
       "BotPreset": "normal",
       "WildSpawnType": "assault",
-      "isPlayers": false
-    },
-    {
-      "number": 13,
-      "time_min": 15,
-      "time_max": 60,
-      "slots_min": 1,
-      "slots_max": 3,
-      "SpawnPoints": "Zone_OldHouse",
-      "BotSide": "Usec",
-      "BotPreset": "normal",
-      "WildSpawnType": "pmcBot",
       "isPlayers": false
     }
   ],
@@ -6887,7 +6899,7 @@
     },
     {
       "BossName": "exUsec",
-      "BossChance": 20,
+      "BossChance": 100,
       "BossZone": "Zone_TreatmentRocks",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -6902,7 +6914,7 @@
     },
     {
       "BossName": "exUsec",
-      "BossChance": 20,
+      "BossChance": 100,
       "BossZone": "Zone_TreatmentBeach",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -6917,7 +6929,7 @@
     },
     {
       "BossName": "exUsec",
-      "BossChance": 15,
+      "BossChance": 100,
       "BossZone": "Zone_Island",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -6932,7 +6944,7 @@
     },
     {
       "BossName": "exUsec",
-      "BossChance": 50,
+      "BossChance": 100,
       "BossZone": "Zone_RoofRocks",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -6947,7 +6959,7 @@
     },
     {
       "BossName": "exUsec",
-      "BossChance": 50,
+      "BossChance": 100,
       "BossZone": "Zone_RoofBeach",
       "BossPlayer": false,
       "BossDifficult": "normal",
@@ -6962,7 +6974,7 @@
     },
     {
       "BossName": "exUsec",
-      "BossChance": 4,
+      "BossChance": 100,
       "BossZone": "Zone_Hellicopter",
       "BossPlayer": false,
       "BossDifficult": "normal",
