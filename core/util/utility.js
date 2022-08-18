@@ -447,9 +447,12 @@ exports.generateNewId = (prefix = "", version = 2) => {
 }
 
 var previousItemIds = [];
+var previousItemIdsGenerationTime = Date.now();
 
 exports.generateNewIdQuick = () =>
 {
+
+
     let new_id = "";
     const first = this.getRandomInt(100000, 999999).toString();
     while(new_id.length < 24) 
@@ -458,12 +461,12 @@ exports.generateNewIdQuick = () =>
         new_id = new_id.concat(first.split("").reverse().join(""));
     }
     new_id = new_id.substring(0, 24);
-    if(previousItemIds.findIndex(x=>x === new_id) === -1) {
-        previousItemIds.push(new_id);
-    }
-    else {
-        return this.generateNewIdQuick();
-    }
+    // if(previousItemIds.findIndex(x=>x === new_id) === -1) {
+    //     previousItemIds.push(new_id);
+    // }
+    // else {
+    //     return this.generateNewIdQuick();
+    // }
     return new_id;
 }
 
