@@ -1,4 +1,5 @@
 "use strict";
+const { DatabaseController } = require('../Controllers/DatabaseController');
 //const { QuestEvent } = require('../Controllers/QuestController')
 const { AccountController } = require('./../Controllers/AccountController')
 
@@ -413,16 +414,23 @@ function completeQuest(pmcData, body, sessionID) {
   }
 
   let questRewards = getQuestRewards(quest, state, pmcData, sessionID);
+  let output = item_f.handler.getOutput(sessionID);
 
   // Create a dialog message for completing the quest.
-  let questLocale = global._database.locales.global[locale].quest;
+  const locales = DatabaseController.getDatabase().locales;
+  if(!locales)
+    return output;
+
+  let questLocale = locales.global[locale].quest;
+  if(!questLocale)
+    return output;
+
   questLocale = questLocale[body.qid];
   let messageContent = {
     templateId: questLocale.successMessageText,
     type: dialogue_f.getMessageTypeValue("questSuccess"),
     maxStorageTime: global._database.gameplay.other.RedeemTime * 3600,
   };
-  let output = item_f.handler.getOutput(sessionID);
   if (typeof output.profileChanges[pmcData._id].quests == "undefined") output.profileChanges[pmcData._id].quests = [];
   let questForPlayerToUpdate = utility.DeepCopy(quest);
   questForPlayerToUpdate.conditions.AvailableForStart = [];
