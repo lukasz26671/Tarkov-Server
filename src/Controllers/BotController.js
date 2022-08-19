@@ -52,6 +52,70 @@ class BotController {
 
         return bot;
     }
+
+    static generateBotName(role) {
+
+        const name_database = global._database.bots.names;
+        let name;
+        switch (role.toLowerCase()) {
+          case "bossknight":
+            name = "Knight";
+            break;
+          case "followerbigpipe":
+            name = "Big Pipe";
+            break;
+          case "followerbirdeye":
+            name = "Bird Eye";
+            break;
+          case "pmcbot":
+            name = utility.getArrayValue(name_database.normal);
+            break;
+          case "exusec":
+            name = utility.getArrayValue(name_database.exUsec);
+          break;
+          case "usec":
+            name = utility.getArrayValue(name_database.normal);
+            break;
+          case "bear":
+            name = utility.getArrayValue(name_database.normal);
+            break;
+          case "followertagilla":
+          case "bosstagilla":
+            name = utility.getArrayValue(name_database.tagilla);
+            break;
+    
+          case "followerkojaniy":
+          case "followertest":
+            name = utility.getArrayValue(name_database.followerkojany);
+            break;
+    
+          case "followergluharsecurity":
+          case "followergluharsnipe":
+          case "followergluharscout":
+          case "followergluharassault":
+            name = utility.getArrayValue(name_database.followergluhar);
+            break;
+          case "bosskojaniy":
+            name = utility.getArrayValue(name_database.bosskojany);
+            break;
+          case "marksman":
+          case "playerscav":
+          case "cursedassault":
+          case "assaultgroup":
+          case "assault":
+            name = utility.getArrayValue(name_database.scav);
+            break;
+          default:
+            name = name_database[role] !== undefined ? utility.getArrayValue(name_database[role]) : undefined;
+            if(!name) {
+              logger.logError(`Bot ${role} name not found in name list!`);
+              name = utility.getArrayValue(name_database.scav);
+            }
+            break;
+        }
+        return name;
+      }
+    
 }
 
 module.exports.BotController = BotController;

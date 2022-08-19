@@ -71,66 +71,7 @@ class BotsController {
     }
   }
 
-  static generateBotName(role) {
 
-    const name_database = global._database.bots.names;
-    let name;
-    switch (role.toLowerCase()) {
-      case "bossknight":
-        name = "Knight";
-        break;
-      case "followerbigpipe":
-        name = "Big Pipe";
-        break;
-      case "followerbirdeye":
-        name = "Bird Eye";
-        break;
-      case "usec":
-      case "exusec":
-      case "pmcbot":
-      case "bear":
-        name = utility.getArrayValue(name_database.normal);
-        break;
-      case "followertagilla":
-      case "bosstagilla":
-        name = utility.getArrayValue(name_database.tagilla);
-        break;
-
-      case "followerkojaniy":
-      case "followertest":
-        name = utility.getArrayValue(name_database.followerkojany);
-        break;
-
-      case "followergluharsecurity":
-      case "followergluharsnipe":
-      case "followergluharscout":
-      case "followergluharassault":
-        name = utility.getArrayValue(name_database.followergluhar);
-        break;
-      case "bosskojaniy":
-        name = utility.getArrayValue(name_database.bosskojany);
-        break;
-      case "marksman":
-      case "playerscav":
-      case "cursedassault":
-      case "assaultgroup":
-      case "assault":
-        //console.log(role, "role")
-        name = utility.getArrayValue(name_database.scav);
-        //console.log(name, "name")
-        break;
-
-      default:
-        // console.log(role)
-        name = name_database[role] !== undefined ? utility.getArrayValue(name_database[role]) : undefined;
-        if(!name) {
-          logger.logError(`Bot ${role} name not found in name list!`);
-          name = utility.getArrayValue(name_database.scav);
-        }
-        break;
-    }
-    return name;
-  }
 
   // generateId(bot) {
   //   const botId = utility.generateNewAccountId();
@@ -180,7 +121,7 @@ class BotsController {
       console.log(bot);
     }
 
-    bot.Info.Nickname = BotsController.generateBotName(role);
+    bot.Info.Nickname = BotController.generateBotName(role);
     bot.Info.Settings.BotDifficulty = "normal";
     if(node.experience === undefined || node.experience.reward === undefined || node.experience.reward.min === undefined) {
       logger.logError(`Bot ${role} could not find experience reward`)
@@ -214,14 +155,6 @@ class BotsController {
       // inventory is empty using fallback
       inventoryData = node.inventory[Object.keys(node.inventory)[0]];
     }
-
-    // The Punisher Role | CQ: this should be changed in the future.
-    /*
-    if (role === "followergluharsnipe") {
-      bot.Info.Settings.Role = "bossTagilla";
-    }    
-    */
-
 
     if(inventoryData && inventoryData.items && inventoryData.items.length > 0) {
       bot.Inventory = inventoryData;
