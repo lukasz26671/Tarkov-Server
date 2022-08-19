@@ -1,7 +1,7 @@
 # Tarkov Emulated Central Server
 
 ## Current known working Tarkov Version
-- 0.12.12.30.*
+- 0.12.12.31.*
 
 ## Disclaimer
 
