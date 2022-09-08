@@ -120,10 +120,11 @@ wss.on('connection', (ws, request) => {
   // Notify of Client connected
   logger.logSuccess('WebSocket Client connected ' + ws.ChannelId);
   // Send "ping" type back to the Client to make it happy
-  ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
-  // setInterval(()=>{ 
-  //   ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
-  // }, 1000);
+  // ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
+  setInterval(()=>{ 
+    
+    ws.send(JSON.stringify({ type: "ping", eventId: ws.ChannelId }));
+  }, 15000);
   wss.LastChannelId = wss.NextChannelId;
   // Respond to messages
   ws.on('message', function message(data) {
