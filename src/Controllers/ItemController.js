@@ -33,6 +33,16 @@ class ItemController
         
         return dbItems;
     }
+
+    static getDatabaseItemsList() {
+        const dbItems = DatabaseController.getDatabase().items;
+        const dbItemsKeys = Object.keys(dbItems);
+        const itemList = [];
+        for(const id of dbItemsKeys) {
+            itemList.push(dbItems[id]);
+        }
+        return itemList;
+    }
    
     /**
     * Finds an item given its id using linear search
@@ -80,6 +90,33 @@ class ItemController
         return ItemController.getDatabaseItems()[tpl]._parent === "5485a8684bdc2da71d8b4567"
    }
 
+    static isRig(tpl) {
+        return ItemController.getDatabaseItems()[tpl]._parent === "5448e5284bdc2dcb718b4567"
+    }
+
+    static isVest(tpl) {
+        return isRig(tpl);
+    }
+
+    static getAllRigs() {
+        return ItemController.getDatabaseItemsList().filter(x => ItemController.isRig(x._id));
+    }
+
+    static isArmor(tpl) {
+        return ItemController.getDatabaseItems()[tpl]._parent === "5448e54d4bdc2dcc718b4568"
+    }
+
+    static getAllArmors() {
+        return ItemController.getDatabaseItemsList().filter(x => ItemController.isArmor(x._id));
+    }
+
+    static isBackpack(tpl) {
+        return ItemController.getDatabaseItems()[tpl]._parent === "5448e53e4bdc2d60728b4567"
+    }
+
+    static getAllBackpacks() {
+        return ItemController.getDatabaseItemsList().filter(x => ItemController.isBackpack(x._id));
+    }
 
     /**
      * Create an Ammo Box via a TemplateId
