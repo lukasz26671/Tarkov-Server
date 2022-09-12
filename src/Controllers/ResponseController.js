@@ -11,6 +11,7 @@ const { logger } = require('../../core/util/logger');
 const { responses } = require('./../functions/response');
 const { CustomizationController } = require('./CustomizationController');
 const { QuestController } = require('./QuestController');
+const { LootController } = require('./LootController');
 
 
 /**
@@ -279,6 +280,14 @@ action: (url, info, sessionID) => {
         // return JSON.stringify(
       
         return JSON.stringify(airdropSettings);
+    }
+},
+{
+    url: "/client/location/getAirdropLoot",
+    action: (url, info, sessionID) => {
+        const result = LootController.GenerateAirdropLootListForAkiAirdrop()
+      
+        return JSON.stringify(result);
     }
 },
 /**
