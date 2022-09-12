@@ -530,6 +530,74 @@ class LootController
         return UniqueLootList;
       }
 
+      static GenerateAirdropLootListForAkiAirdrop() {
+        
+        const dbItems = ItemController.getDatabaseItems();
+        const dbItemsList = ItemController.getDatabaseItemsList();
+        // airdrop crate
+        const containerId = "61a89e5445a2672acf66c877";
+        const containerTemplate = dbItems[containerId];
+        let container2D = Array(containerTemplate._props.Grids[0]._props.cellsV)
+        .fill()
+        .map(() => Array(containerTemplate._props.Grids[0]._props.cellsH).fill(0));
+
+        const itemList = [];
+
+
+        const armors = ItemController.getAllArmors();
+        const rigs = ItemController.getAllRigs();
+        const backpacks = ItemController.getAllBackpacks();
+
+        let attempts = 100;
+        while(attempts-- > 0) {
+          let randomItem = LootController.GetRandomHideoutRequiredItem();
+          if(Math.random() > 0.95) {
+            // pick random armor
+            randomItem = armors[utility.getRandomInt(0, armors.length-1)];
+          }
+          else if(Math.random() > 0.95) {
+            // pick random rig
+            randomItem = rigs[utility.getRandomInt(0, rigs.length-1)];
+          }
+          else if(Math.random() > 0.95) {
+            // pick random backpack
+            randomItem = backpacks[utility.getRandomInt(0, backpacks.length-1)];
+          }
+          else if(Math.random() > 0.95) {
+            // pick random weapon preset
+
+          }
+
+          if(LootController.FilterItemByRarity(randomItem, undefined, 5)) {
+            let itemWidth = randomItem._props.Width;
+            let itemHeight = randomItem._props.Height;
+            const result = helper_f.findSlotForItem(container2D, itemWidth, itemHeight);
+            if(result.success) {
+              randomItem = JSON.parse(JSON.stringify(randomItem));
+              randomItem.slotResult = result;
+              randomItem.slotResult.itemWidth = itemWidth;
+              randomItem.slotResult.itemHeight = itemHeight;
+              container2D = helper_f.fillContainerMapWithItem(container2D, result.x, result.y, itemWidth, itemHeight, result.rotation);
+              itemList.push(randomItem);
+            }
+          }
+        }
+
+        // const presetList = itemList2.filter(x => ItemController.hasPreset(x));
+        const resultList = [];
+        for(const item of itemList) {
+          const expectedResultObj = {
+            tpl: item._id,
+            isPreset: false,
+            stackCount: 1,
+            id: utility.generateNewId(),
+          }
+          resultList.push(expectedResultObj);
+        }
+
+        return resultList;
+      }
+
       static GenerateWeaponBoxLootList(containerId, in_location, container2D) {
 
         const lootList = [];
