@@ -35,8 +35,8 @@ app.use(function(req, res, next) {
   const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
   var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
   // console.log(ip);
-  if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
-    logger.logInfo(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
+  // if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
+  //   logger.logInfo(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
 
   ResponseController.receivedCall(req, PHPSESSID);
 
@@ -132,8 +132,12 @@ app.use(function(req, res, next) {
  */
 function handleRoute(req, res, Route) {
 
-
   const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
+  var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+
+  if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
+    logger.logInfo(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
+
   var routedData = Route(req.url, req.body, PHPSESSID)
   if(routedData != null && routedData != undefined ) {
     // const deflateData = zlib.deflateSync(routedData, {});
@@ -292,6 +296,16 @@ app.use(function(req, res, next) {
 });
 
 
+app.use(function(req, res, next) {
+  const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
+  var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+
+  if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
+    logger.logError(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
+
+  next();
+});
+
 /**
  * Home Page - NOT USED
  */
@@ -305,15 +319,16 @@ app.get('/', (req,res) => {
 // });
 
 // // error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-//   console.error(err);
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
+  logger.logError(err);
+  console.error(err);
+  // render the error page
+  res.status(err.status || 500);
+  res.render(err);
+});
 
 module.exports = app;
