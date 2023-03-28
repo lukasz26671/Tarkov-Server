@@ -7,7 +7,7 @@
 	"discord": "",
 	"website": "",
 	"version": "",
-	"runSimpleHttpServer": false,
+	"runSimpleHttpServer": true,
 	"alwaysLoadModBundles": true,
 	"lootDebug": true,
 	"hideInfoLogs": false,

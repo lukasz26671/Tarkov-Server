@@ -2,7 +2,7 @@
 const utility = require('../../core/util/utility');
 const notifier = require('./notifier');
 const fs = require('fs');
-const { logger } = require('./../../core/util/logger');
+const logger= require('./../../core/util/logger')(__filename);
 
 class DialogueServer {
   constructor() {

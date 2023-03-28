@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { logger } = require('./../../core/util/logger');
+const logger= require('./../../core/util/logger')(__filename);
 
 /**
  * Config Controller. 

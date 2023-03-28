@@ -1,5 +1,5 @@
 const { TarkovSend } = require("../../core/server/tarkovSend");
-const { logger } = require("../../core/util/logger");
+const logger= require("../../core/util/logger");
 const fs = require('fs');
 
 

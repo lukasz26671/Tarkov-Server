@@ -2,6 +2,7 @@
 const utility = require('./utility');
 const util = require("util");
 const fileIO = require('./fileIO');
+const path = require('path');
 // Made by TheMaoci ~2019
 
 // colorData[0] -> front, colorData[1] -> back
@@ -29,7 +30,8 @@ const colorData = [
 ];
 
 class Logger {
-  constructor() {
+  constructor(source = "") {
+    this.sourceFileName = source;
     let file = utility.getDate() + "_" + utility.getTime() + ".log";
     
     if (!fileIO.exist('user')) {
@@ -78,8 +80,10 @@ class Logger {
     let deltaTime = serverConfig.debugTimer ? "[" + date + "] " : " ";
 
     // print data
+    let s = `${this.sourceFileName != "" ? "[" + this.sourceFileName + "] " : ""}`
     if (colors[0] !== "" || colors[1] !== "") {
-      if (type != "" && type != "LogData") console.log(setColors + type + "\x1b[0m" + deltaTime + data);
+      if (type != "" && type != "LogData") {console.log(s + setColors + type + "\x1b[0m" + deltaTime + data);}
+
       else console.log(setColors + data + "\x1b[0m");
     } else {
       if (type != "" && type != "LogData") console.log(type + deltaTime + data);
@@ -137,4 +141,4 @@ class Logger {
   }
 }
 
-module.exports.logger = new Logger();
+module.exports = function(fn) { return new Logger(path.basename(fn)) };

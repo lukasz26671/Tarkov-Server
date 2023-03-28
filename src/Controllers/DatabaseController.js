@@ -2,6 +2,7 @@ const { ConfigController } = require('./ConfigController');
 const fs = require('fs');
 const fileIO = require('./../../core/util/fileIO');
 const utility = require('./../../core/util/utility');
+const logger = require('../../core/util/logger')(__filename);
 
 class Database {
     constructor() {

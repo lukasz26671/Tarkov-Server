@@ -1,4 +1,4 @@
-const { logger } = require('../../core/util/logger');
+const logger= require('../../core/util/logger')(__filename);
 const utility = require('../../core/util/utility');
 const { AccountController } = require('./AccountController');
 const { FriendRequest } = require('./../EFT/JavaScriptTypes/FriendRequest')

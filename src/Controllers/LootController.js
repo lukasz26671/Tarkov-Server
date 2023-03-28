@@ -5,7 +5,7 @@ const utility = require('./../../core/util/utility');
 const e = require('express');
 const mathjs = require('mathjs');
 const { DatabaseController } = require('./DatabaseController');
-const { logger } = require('../../core/util/logger');
+const logger= require('../../core/util/logger')(__filename);
 
 /**
  * 

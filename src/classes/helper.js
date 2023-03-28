@@ -1,6 +1,6 @@
 "use strict";
 
-const { logger } = require("../../core/util/logger");
+const logger= require("../../core/util/logger");
 const { ItemController } = require('./../Controllers/ItemController');
 
 /* A reverse lookup for templates */

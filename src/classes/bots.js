@@ -1,6 +1,6 @@
 "use strict";
 
-const { logger } = require("../../core/util/logger");
+const logger= require("../../core/util/logger");
 const utility = require('./../../core/util/utility');
 const { BotController } = require('../Controllers/BotController');
 const { AccountController } = require("../Controllers/AccountController");

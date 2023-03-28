@@ -14,7 +14,7 @@ const fs = require('fs');
 const { certificate } = require('./../core/server/certGenerator');
 const { ConfigController } = require('./../src/Controllers/ConfigController');
 const { WebSocket } = require('ws');
-const { logger } = require('../core/util/logger');
+const logger= require('../core/util/logger')(__filename);
 const utility = require('./../core/util/utility');
 var serverIp = "127.0.0.1";
 
@@ -59,15 +59,19 @@ const httpsServer = https.createServer({
 /** ======================================================================================================
  * Https Server running on whatever port determined by outcome above
  */
-if(serverConfig.runSimpleHttpServer === true) {
-  const server = http.createServer(app);
+const server = http.createServer(app);
 
-  server.on('listening', () => {
-    console.log(">> HTTP << server listening on " + 8080);
-  })
-  server.listen(8080, ()=>{
+server.on('listening', () => {
+  logger.logSuccess("HTTP Server listening on " + server.address().address + ":" + server.address().port);
+})
+server.listen(8080, ()=>{
+});
+server.on("upgrade", (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (websocket) => {
+    wss.emit("connection", websocket, request);
   });
-}
+});
+
 
 /** ======================================================================================================
  * Https Server running on whatever port determined by outcome above

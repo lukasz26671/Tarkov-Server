@@ -1,6 +1,6 @@
 //const EventEmitter = require('events');
 const fs = require('fs');
-const { logger } = require('../../core/util/logger');
+const logger= require('../../core/util/logger')(__filename);
 const util = require('../../core/util/utility');
 const { AccountController } = require('./AccountController');
 const { ConfigController } = require('./ConfigController');

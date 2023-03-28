@@ -1,6 +1,6 @@
 const fs = require('fs');
 const utility = require('./../../core/util/utility');
-const { logger } = require('../../core/util/logger');
+const logger= require('../../core/util/logger')(__filename);
 const dialogue = require('../classes/dialogue');
 
 /**

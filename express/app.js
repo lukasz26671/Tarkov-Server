@@ -15,7 +15,8 @@ const legacyCallbacks = require("./../src/functions/callbacks.js").callbacks
 
 const cookieParser = require('cookie-parser');
 const { truncate, fstat } = require('fs');
-const { logger } = require('../core/util/logger');
+const logger= require('../core/util/logger')(__filename);
+const cors = require('cors');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.raw({ type: "application/json", limit: '50mb',
 parameterLimit: 100000,
 extended: true  }));
 app.use(cookieParser());
+app.use(cors());
 
 app.use(function(req, res, next) {
   const PHPSESSID = req.cookies != undefined && req.cookies["PHPSESSID"] !== undefined ? req.cookies["PHPSESSID"] : undefined;
@@ -136,7 +138,7 @@ function handleRoute(req, res, Route) {
   var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
 
   if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
-    logger.logInfo(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
+    logger.logInfo(`${ip}::${PHPSESSID??""}::${req.method}::${req.url}`);
 
   var routedData = Route(req.url, req.body, PHPSESSID)
   if(routedData != null && routedData != undefined ) {
@@ -301,7 +303,7 @@ app.use(function(req, res, next) {
   var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
 
   if(ResponseController.RoutesToNotLog.findIndex(x=>x == req.url) === -1)
-    logger.logError(`${ip}::${PHPSESSID}::${req.method}::${req.url}`);
+    logger.logError(`${ip}::${PHPSESSID??""}::${req.method}::${req.url}`);
 
   next();
 });

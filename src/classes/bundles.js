@@ -1,7 +1,7 @@
 "use strict";
 const fs = require('fs');
 const path = require('path');
-const { logger } = require('../../core/util/logger');
+const logger= require('../../core/util/logger')(__filename);
 const { ConfigController } = require('../Controllers/ConfigController');
 const { ResponseController } = require('../Controllers/ResponseController');
 

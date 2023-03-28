@@ -1,4 +1,4 @@
-const { logger } = require("../../core/util/logger");
+const logger= require("../../core/util/logger");
 const { AccountController } = require('../../src/Controllers/AccountController');
 const { CustomizationController } = require("../Controllers/CustomizationController");
 

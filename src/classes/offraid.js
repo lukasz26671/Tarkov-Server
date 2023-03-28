@@ -1,5 +1,5 @@
 "use strict";
-const { logger } = require('../../core/util/logger');
+const logger= require('../../core/util/logger')(__filename);
 const { AccountController } = require('../Controllers/AccountController');
 const { InsuranceController } = require('../Controllers/InsuranceController');
 const utility = require('./../../core/util/utility');

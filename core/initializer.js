@@ -61,7 +61,7 @@ class Initializer {
     global.executedDir = internal.process.cwd();
     global.fileIO = require("./util/fileIO.js");
     global.utility = require("./util/utility.js");
-    global.logger = require("./util/logger.js").logger;
+    global.logger = require("./util/logger.js")("__global__");
     //
     // -------------------------------------------------------
 
